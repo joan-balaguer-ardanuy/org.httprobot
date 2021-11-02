@@ -24,7 +24,7 @@ public class RobotSource implements MessageService {
 	@Override
 	public Configuration getConfiguration() {
 		// TODO Auto-generated method stub
-		return null;
+		return configuration;
 	}
 	
 	void LoadConfigFile(String path) {
