@@ -18,12 +18,10 @@ public class RobotSource implements MessageService {
 	Configuration configuration;
 	
 	public RobotSource() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Configuration getConfiguration() {
-		// TODO Auto-generated method stub
 		return configuration;
 	}
 	
