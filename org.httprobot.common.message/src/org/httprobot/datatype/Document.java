@@ -3,13 +3,13 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.DataType;
+import org.httprobot.AbstractDataType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.unit.Action;
 
 @XmlRootElement
-public final class Document extends DataType {
+public final class Document extends AbstractDataType {
 
 	/**
 	 * -6444128980718357234L

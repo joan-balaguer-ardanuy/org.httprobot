@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.httprobot.event.MessageEventArgs;
 
-public abstract class Html extends AbstractString {
+public abstract class AbstractHtml extends AbstractString {
 
 	/**
 	 * -6047806638957555356L
@@ -45,7 +45,7 @@ public abstract class Html extends AbstractString {
 		this.title = title;
 	}
 
-	public Html() {
+	public AbstractHtml() {
 		super();
 	}
 	
@@ -53,7 +53,7 @@ public abstract class Html extends AbstractString {
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		
-		Html html = Html.class.cast(e.getSource());
+		AbstractHtml html = AbstractHtml.class.cast(e.getSource());
 		setId(html.getId());
 		setStyle(html.getStyle());
 		setClassName(html.getClassName());

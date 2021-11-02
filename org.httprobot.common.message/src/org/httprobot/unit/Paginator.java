@@ -3,11 +3,11 @@ package org.httprobot.unit;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Unit;
+import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Paginator extends Unit {
+public final class Paginator extends AbstractUnit {
 
 	/**
 	 * -6116912845413725443L

@@ -3,13 +3,13 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.DataType;
+import org.httprobot.AbstractDataType;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.placeholder.HtmlUnit;
 import org.httprobot.placeholder.HttpAddress;
 
 @XmlRootElement
-public final class Field extends DataType {
+public final class Field extends AbstractDataType {
 
 	/**
 	 * -2640753397637192814L

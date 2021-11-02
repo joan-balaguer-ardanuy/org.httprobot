@@ -6,11 +6,11 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class DataSourceRef extends Config {
+public final class DataSourceRef extends AbstractConfig {
 
 	/**
 	 * 2652815586777993713L

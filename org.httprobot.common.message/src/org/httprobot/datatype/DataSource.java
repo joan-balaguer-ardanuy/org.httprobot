@@ -3,7 +3,7 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.DataType;
+import org.httprobot.AbstractDataType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.ServerUrl;
@@ -11,7 +11,7 @@ import org.httprobot.parameter.StartUrl;
 import org.httprobot.unit.Action;
 
 @XmlRootElement
-public final class DataSource extends DataType {
+public final class DataSource extends AbstractDataType {
 
 	/**
 	 * 5329113787974867972L

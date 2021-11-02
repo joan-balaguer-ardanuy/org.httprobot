@@ -7,11 +7,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Content;
+import org.httprobot.AbstractContent;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ContentType extends Content {
+public final class ContentType extends AbstractContent {
 
 	/**
 	 * 5107630251956423519L

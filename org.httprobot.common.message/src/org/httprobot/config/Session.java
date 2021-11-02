@@ -5,11 +5,11 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Session extends Config {
+public final class Session extends AbstractConfig {
 
 	/**
 	 * -7934455651557768961L

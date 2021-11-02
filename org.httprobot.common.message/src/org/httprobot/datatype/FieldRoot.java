@@ -5,11 +5,11 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.DataType;
+import org.httprobot.AbstractDataType;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class FieldRoot extends DataType {
+public final class FieldRoot extends AbstractDataType {
 
 	/**
 	 * -4698409081823244264L

@@ -2,10 +2,10 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Placeholder;
+import org.httprobot.AbstractPlaceholder;
 
 @XmlRootElement
-public final class WebRequest extends Placeholder {
+public final class WebRequest extends AbstractPlaceholder {
 
 	/**
 	 * -8822200462852883108L

@@ -6,13 +6,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.config.adapter.ServiceQNameAdapter;
 import org.httprobot.config.adapter.ServiceUrlAdapter;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ServiceConnection extends Config {
+public final class ServiceConnection extends AbstractConfig {
 
 	/**
 	 * 355219426287742894L

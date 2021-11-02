@@ -3,13 +3,13 @@ package org.httprobot.unit;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.httprobot.Unit;
+import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.unit.adapter.BrowserVersionAdapter;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
-public class WebLoader extends Unit {
+public class WebLoader extends AbstractUnit {
 
 	/**
 	 * 7700952400328745265L

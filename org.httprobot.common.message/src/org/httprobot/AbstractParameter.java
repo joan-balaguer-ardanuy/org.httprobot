@@ -2,7 +2,7 @@ package org.httprobot;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public abstract class Parameter 
+public abstract class AbstractParameter 
 	extends XML
 		implements java.util.Map.Entry<String,String> {
 
@@ -33,7 +33,7 @@ public abstract class Parameter
 		return oldValue;
 	}
 
-	public Parameter() {
+	public AbstractParameter() {
 		super();
 	}
 }

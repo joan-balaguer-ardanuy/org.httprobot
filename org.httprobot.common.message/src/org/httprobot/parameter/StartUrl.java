@@ -2,10 +2,10 @@ package org.httprobot.parameter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Parameter;
+import org.httprobot.AbstractParameter;
 
 @XmlRootElement
-public final class StartUrl extends Parameter {
+public final class StartUrl extends AbstractParameter {
 
 	/**
 	 * 7062497939545861806L

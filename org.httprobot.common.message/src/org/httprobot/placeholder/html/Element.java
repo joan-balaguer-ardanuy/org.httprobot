@@ -3,11 +3,11 @@ package org.httprobot.placeholder.html;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Html;
+import org.httprobot.AbstractHtml;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Element extends Html {
+public final class Element extends AbstractHtml {
 
 	/**
 	 * -6130911656253160686L

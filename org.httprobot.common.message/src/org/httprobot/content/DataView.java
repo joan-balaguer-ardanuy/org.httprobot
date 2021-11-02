@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Content;
+import org.httprobot.AbstractContent;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class DataView extends Content {
+public final class DataView extends AbstractContent {
 
 	/**
 	 * 6915946609085950660L

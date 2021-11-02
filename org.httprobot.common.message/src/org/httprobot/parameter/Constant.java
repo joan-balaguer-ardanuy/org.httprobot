@@ -2,10 +2,10 @@ package org.httprobot.parameter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Parameter;
+import org.httprobot.AbstractParameter;
 
 @XmlRootElement
-public final class Constant extends Parameter {
+public final class Constant extends AbstractParameter {
 
 	/**
 	 * 3549203523654599730L

@@ -2,10 +2,10 @@ package org.httprobot.parameter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Parameter;
+import org.httprobot.AbstractParameter;
 
 @XmlRootElement
-public final class BannedWord extends Parameter {
+public final class BannedWord extends AbstractParameter {
 
 	/**
 	 * 5344942559908082623L

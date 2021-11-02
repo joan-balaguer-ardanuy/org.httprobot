@@ -3,12 +3,12 @@ package org.httprobot.content;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Content;
+import org.httprobot.AbstractContent;
 import org.httprobot.Enums.DataType;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class FieldRef extends Content {
+public final class FieldRef extends AbstractContent {
 
 	/**
 	 * 210911811831590239L

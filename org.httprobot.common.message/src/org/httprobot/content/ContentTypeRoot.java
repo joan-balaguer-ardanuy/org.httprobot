@@ -5,11 +5,11 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Content;
+import org.httprobot.AbstractContent;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ContentTypeRoot extends Content {
+public final class ContentTypeRoot extends AbstractContent {
 
 	/**
 	 * 1632447667657457711L

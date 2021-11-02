@@ -3,7 +3,7 @@ package org.httprobot.placeholder.html;
 import java.util.Set;
 
 import org.httprobot.Control;
-import org.httprobot.Html;
+import org.httprobot.AbstractHtml;
 import org.httprobot.Manager;
 import org.httprobot.placeholder.AbstractPlaceholderManager;
 
@@ -20,7 +20,7 @@ public abstract class AbstractHtmlManager<T extends Control<?>>
 	public AbstractHtmlManager() {
 		super();
 	}
-	public AbstractHtmlManager(Html message, Class<T> type, Manager<?> parent) {
+	public AbstractHtmlManager(AbstractHtml message, Class<T> type, Manager<?> parent) {
 		super(message, type, parent);
 	}
 }

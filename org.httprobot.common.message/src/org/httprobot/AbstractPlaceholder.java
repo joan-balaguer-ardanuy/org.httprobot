@@ -11,7 +11,7 @@ import org.httprobot.placeholder.string.Split;
 import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.TryParse;
 
-public abstract class Placeholder extends XML {
+public abstract class AbstractPlaceholder extends XML {
 
 	/**
 	 * 3345969046526629498L
@@ -82,14 +82,14 @@ public abstract class Placeholder extends XML {
 		this.tryParse = tryParse;
 	}
 
-	public Placeholder() {
+	public AbstractPlaceholder() {
 		super();
 	}
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		
-		Placeholder placeholder = Placeholder.class.cast(e.getSource());
+		AbstractPlaceholder placeholder = AbstractPlaceholder.class.cast(e.getSource());
 		
 		setContains(placeholder.getContains());
 		setEquals(placeholder.getEquals());

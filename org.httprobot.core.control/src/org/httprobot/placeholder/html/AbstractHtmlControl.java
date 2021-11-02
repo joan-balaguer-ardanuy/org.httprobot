@@ -1,12 +1,12 @@
 package org.httprobot.placeholder.html;
 
 import org.httprobot.ControlListener;
-import org.httprobot.Html;
+import org.httprobot.AbstractHtml;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.AbstractOperatorControl;
 
-public class AbstractHtmlControl<TMessage extends Html>
+public class AbstractHtmlControl<TMessage extends AbstractHtml>
 	extends AbstractOperatorControl<TMessage> {
 
 	/**
@@ -28,7 +28,7 @@ public class AbstractHtmlControl<TMessage extends Html>
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		if(e.getSource().equals(this)) {
-			Html html = Html.class.cast(e.getMessage());
+			AbstractHtml html = AbstractHtml.class.cast(e.getMessage());
 			if(html.getId() != null) {
 				put(Data.ID, html.getId());
 			}

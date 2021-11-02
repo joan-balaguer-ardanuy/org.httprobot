@@ -3,11 +3,11 @@ package org.httprobot.content;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Content;
+import org.httprobot.AbstractContent;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ContentTypeRef extends Content {
+public final class ContentTypeRef extends AbstractContent {
 
 	/**
 	 * -6701067711809325948L

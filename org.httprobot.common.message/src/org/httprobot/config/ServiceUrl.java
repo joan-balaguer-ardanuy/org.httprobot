@@ -3,11 +3,11 @@ package org.httprobot.config;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ServiceUrl extends Config {
+public final class ServiceUrl extends AbstractConfig {
 
 	/**
 	 * 8383249175803013880L

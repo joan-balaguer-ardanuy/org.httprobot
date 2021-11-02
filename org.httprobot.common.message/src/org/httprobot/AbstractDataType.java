@@ -2,7 +2,7 @@ package org.httprobot;
 
 import java.util.Date;
 
-public abstract class DataType extends XML {
+public abstract class AbstractDataType extends XML {
 
 	/**
 	 * -2808293996272045037L
@@ -18,7 +18,7 @@ public abstract class DataType extends XML {
 		NTP = nTP;
 	}
 
-	public DataType() {
+	public AbstractDataType() {
 		super();
 	}
 }

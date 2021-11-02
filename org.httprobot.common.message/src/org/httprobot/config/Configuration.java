@@ -4,13 +4,13 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Configuration extends Config {
+public final class Configuration extends AbstractConfig {
 
 	/**
 	 * 8762442432069232238L

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
-import org.httprobot.Placeholder;
+import org.httprobot.AbstractPlaceholder;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.ContainsControl;
@@ -15,7 +15,7 @@ import org.httprobot.placeholder.string.SplitControl;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.TryParseControl;
 
-public abstract class AbstractPlaceholderControl<TMessage extends Placeholder>
+public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceholder>
 	extends Control<TMessage> {
 
 	/**
@@ -92,7 +92,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends Placeholder>
 	public void OnControlInitialized(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
 			
-			Placeholder placeholder = Placeholder.class.cast(e.getMessage());
+			AbstractPlaceholder placeholder = AbstractPlaceholder.class.cast(e.getMessage());
 			
 			if(placeholder.getContains() != null) {
 				new ContainsControl(placeholder.getContains(), this);

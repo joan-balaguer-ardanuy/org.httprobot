@@ -1,6 +1,6 @@
 package org.httprobot;
 
-public abstract class AbstractString extends Placeholder {
+public abstract class AbstractString extends AbstractPlaceholder {
 
 	/**
 	 * 4394718132625300544L

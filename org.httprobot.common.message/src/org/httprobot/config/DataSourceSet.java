@@ -7,11 +7,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class DataSourceSet extends Config {
+public final class DataSourceSet extends AbstractConfig {
 
 	/**
 	 * 8929734311772147046L

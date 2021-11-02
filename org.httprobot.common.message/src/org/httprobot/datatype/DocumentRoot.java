@@ -5,13 +5,13 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.DataType;
+import org.httprobot.AbstractDataType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.unit.Action;
 
 @XmlRootElement
-public final class DocumentRoot extends DataType {
+public final class DocumentRoot extends AbstractDataType {
 
 	/**
 	 * -5056915889385445752L

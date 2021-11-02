@@ -5,13 +5,13 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.httprobot.Unit;
+import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.BannedWord;
 import org.httprobot.parameter.Constant;
 
 @XmlRootElement
-public final class Action extends Unit {
+public final class Action extends AbstractUnit {
 
 	/**
 	 * 798890955203009246L

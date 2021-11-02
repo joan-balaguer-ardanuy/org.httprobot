@@ -3,12 +3,12 @@ package org.httprobot.placeholder;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Placeholder;
+import org.httprobot.AbstractPlaceholder;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.placeholder.html.Page;
 
 @XmlRootElement
-public final class HtmlUnit extends Placeholder {
+public final class HtmlUnit extends AbstractPlaceholder {
 
 	/**
 	 * -5625666546941269503L

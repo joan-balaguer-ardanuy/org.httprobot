@@ -5,11 +5,11 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Config;
+import org.httprobot.AbstractConfig;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Log extends Config {
+public final class Log extends AbstractConfig {
 
 	/**
 	 * -4278626463665433544L

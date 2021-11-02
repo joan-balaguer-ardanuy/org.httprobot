@@ -2,7 +2,7 @@ package org.httprobot.placeholder;
 
 import org.httprobot.Control;
 import org.httprobot.Manager;
-import org.httprobot.Placeholder;
+import org.httprobot.AbstractPlaceholder;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -90,7 +90,7 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 	public AbstractPlaceholderManager() {
 		super();
 	}
-	public AbstractPlaceholderManager(Placeholder message, Class<T> type, Manager<?> parent) {
+	public AbstractPlaceholderManager(AbstractPlaceholder message, Class<T> type, Manager<?> parent) {
 		super(message, type, parent);
 	}
 

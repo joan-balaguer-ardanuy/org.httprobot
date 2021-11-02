@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -45,6 +46,9 @@ public abstract class Manager<T extends Control<?>>
 	@XmlTransient
 	public Manager<?> getParent() {
 		return parent;
+	}
+	public void setParent(Manager<?> parent) {
+		this.parent = parent;
 	}
 	public T getControl() {
 		return control;
@@ -109,7 +113,14 @@ public abstract class Manager<T extends Control<?>>
 	}
 	
 	public Manager() {
-
+		super(UUID.randomUUID());
+		
+		managerListeners = new LinkedHashSet<ManagerListener>();
+		
+		currentManagerIndex = 0;
+		childManagers = new ArrayList<ManagerListener>();
+		
+		addManagerListener(this);	
 	}
 	public Manager(XML message, Class<T> type, Manager<?> parent) {
 		super(message.getUuid());
@@ -124,7 +135,10 @@ public abstract class Manager<T extends Control<?>>
 		childManagers = new ArrayList<ManagerListener>();
 		
 		addManagerListener(this);
-		addManagerListener(parent);
+		
+		if(parent != null) {
+			addManagerListener(parent);
+		}
 	}
 
 	public void addManagerListener(ManagerListener listener) {
