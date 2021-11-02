@@ -4,10 +4,10 @@ import org.httprobot.ControlListener;
 import org.httprobot.AbstractHtml;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.placeholder.string.AbstractOperatorControl;
+import org.httprobot.placeholder.string.AbstractStringControl;
 
 public class AbstractHtmlControl<TMessage extends AbstractHtml>
-	extends AbstractOperatorControl<TMessage> {
+	extends AbstractStringControl<TMessage> {
 
 	/**
 	 * 7409054080699637039L

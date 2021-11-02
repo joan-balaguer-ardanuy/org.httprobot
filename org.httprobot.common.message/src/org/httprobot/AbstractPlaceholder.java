@@ -7,7 +7,7 @@ import org.httprobot.placeholder.string.Contains;
 import org.httprobot.placeholder.string.Equals;
 import org.httprobot.placeholder.string.Trim;
 import org.httprobot.placeholder.string.Replace;
-import org.httprobot.placeholder.string.Split;
+import org.httprobot.placeholder.string.Concat;
 import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.TryParse;
 
@@ -22,7 +22,7 @@ public abstract class AbstractPlaceholder extends XML {
 	Equals equals;
 	Trim trim;
 	Replace replace;
-	Split split;
+	Concat split;
 	Substring substring;
 	TryParse tryParse;
 
@@ -59,10 +59,10 @@ public abstract class AbstractPlaceholder extends XML {
 	}
 
 	@XmlElement
-	public Split getSplit() {
+	public Concat getSplit() {
 		return split;
 	}
-	public void setSplit(Split split) {
+	public void setSplit(Concat split) {
 		this.split = split;
 	}
 

@@ -3,11 +3,11 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractString;
+import org.httprobot.XML;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class StartIndex extends AbstractString {
+public final class StartIndex extends XML {
 
 	/**
 	 * -5717213495298383613L

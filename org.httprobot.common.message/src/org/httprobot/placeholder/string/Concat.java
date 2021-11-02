@@ -7,24 +7,24 @@ import org.httprobot.AbstractString;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Split extends AbstractString {
+public final class Concat extends AbstractString {
 
 	/**
 	 * 7159704331152281866L
 	 */
 	private static final long serialVersionUID = 7159704331152281866L;
 
-	Delimiter delimiter;
+	String value;
 
 	@XmlElement
-	public Delimiter getDelimiter() {
-		return delimiter;
+	public String getValue() {
+		return value;
 	}
-	public void setDelimiter(Delimiter delimiter) {
-		this.delimiter = delimiter;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public Split() {
+	public Concat() {
 		super();
 	}
 
@@ -32,7 +32,7 @@ public final class Split extends AbstractString {
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		
-		Split split = Split.class.cast(e.getSource());
-		setDelimiter(split.getDelimiter());
+		Concat split = Concat.class.cast(e.getSource());
+		setValue(split.getValue());
 	}
 }

@@ -10,7 +10,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class TryParseControl
-	extends AbstractOperatorControl<TryParse> {
+	extends AbstractStringControl<TryParse> {
 
 	/**
 	 * -5977456131566401187L

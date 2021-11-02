@@ -11,7 +11,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class SubstringControl
-	extends AbstractOperatorControl<Substring> {
+	extends AbstractStringControl<Substring> {
 
 	/**
 	 * -8786207254600689526L

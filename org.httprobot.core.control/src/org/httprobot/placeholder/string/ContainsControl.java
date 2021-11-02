@@ -10,7 +10,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ContainsControl 
-	extends AbstractOperatorControl<Contains> {
+	extends AbstractStringControl<Contains> {
 
 	/**
 	 * -5379321827008140153L
@@ -42,14 +42,10 @@ public final class ContainsControl
 		if (e.getSource().equals(this)) {
 
 			Contains contains = Contains.class.cast(e.getMessage());
-
-			if (contains.getValue() != null) {
-				put(Data.VALUE, contains.getValue());
-				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.CONTAINS_CONTROL_LOADED));
-			} else {
-				throw new Error("ContainsControl.OnControlInitialized: Value XML message element expected.");
-			}
+			
+			put(Data.VALUE, contains.getValue());
+			// Send event to parent
+			CommandLineEvent(new CommandEventArgs(this, Command.CONTAINS_CONTROL_LOADED));
 		}
 	}
 }

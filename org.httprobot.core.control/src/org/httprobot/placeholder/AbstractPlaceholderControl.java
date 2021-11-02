@@ -11,7 +11,7 @@ import org.httprobot.placeholder.string.ContainsControl;
 import org.httprobot.placeholder.string.EqualsControl;
 import org.httprobot.placeholder.string.TrimControl;
 import org.httprobot.placeholder.string.ReplaceControl;
-import org.httprobot.placeholder.string.SplitControl;
+import org.httprobot.placeholder.string.ConcatControl;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.TryParseControl;
 
@@ -27,7 +27,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	protected EqualsControl equalsControl;
 	protected TrimControl removeControl;
 	protected ReplaceControl replaceControl;
-	protected SplitControl splitControl;
+	protected ConcatControl splitControl;
 	protected SubstringControl substringControl;
 	protected TryParseControl tryParseControl;
 	
@@ -60,10 +60,10 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 		this.replaceControl = replaceControl;
 	}
 	@XmlElement
-	public SplitControl getSplitControl() {
+	public ConcatControl getSplitControl() {
 		return splitControl;
 	}
-	public void setSplitControl(SplitControl splitControl) {
+	public void setSplitControl(ConcatControl splitControl) {
 		this.splitControl = splitControl;
 	}
 	@XmlElement
@@ -107,7 +107,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 				new ReplaceControl(placeholder.getReplace(), this);
 			}
 			else if(placeholder.getSplit() != null) {
-				new SplitControl(placeholder.getSplit(), this);
+				new ConcatControl(placeholder.getSplit(), this);
 			}
 			else if(placeholder.getSubstring() != null) {
 				new SubstringControl(placeholder.getSubstring(), this);
@@ -121,8 +121,8 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 		} else if(e.getSource() instanceof SubstringControl) {
 			substringControl = SubstringControl.class.cast(e.getSource());
 			addChildControl(substringControl);
-		} else if(e.getSource() instanceof SplitControl) {
-			splitControl = SplitControl.class.cast(e.getSource());
+		} else if(e.getSource() instanceof ConcatControl) {
+			splitControl = ConcatControl.class.cast(e.getSource());
 			addChildControl(splitControl);
 		} else if(e.getSource() instanceof ReplaceControl) {
 			replaceControl = ReplaceControl.class.cast(e.getSource());
@@ -161,7 +161,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 					} else if (control instanceof ReplaceControl ? 
 							replaceControl.equals(control) : false) {
 						replaceControl.loadControl();
-					} else if (control instanceof SplitControl ? 
+					} else if (control instanceof ConcatControl ? 
 							splitControl.equals(control) : false) {
 						splitControl.loadControl();
 					} else if (control instanceof SubstringControl ? 
@@ -183,7 +183,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.SUBSTRING, e.getMessage());
 			}
-		} else if (e.getSource() instanceof SplitControl) {
+		} else if (e.getSource() instanceof ConcatControl) {
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.SPLIT, e.getMessage());
 			}

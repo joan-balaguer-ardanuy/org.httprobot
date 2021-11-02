@@ -9,29 +9,29 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
-public final class EqualsControl
-	extends AbstractStringControl<Equals>{
+public final class ConcatControl
+	extends AbstractStringControl<Concat> {
 
 	/**
-	 * -9117585827351033039L
+	 * 4853020141248338937L
 	 */
-	private static final long serialVersionUID = -9117585827351033039L;
+	private static final long serialVersionUID = 4853020141248338937L;
 
-	public EqualsControl() {
+	public ConcatControl() {
 		super();
-		setMessage(new Equals());
+		setMessage(new Concat());
 	}
-	public EqualsControl(Equals message, ControlListener parent) {
+	public ConcatControl(Concat message, ControlListener parent) {
 		super(message, parent);
 	}
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		super.OnControlInitialized(e);
 		if(e.getSource().equals(this)) {
-			Equals equals = Equals.class.cast(e.getMessage());
+			Concat split = Concat.class.cast(e.getMessage());
 			
-			if(equals.getValue() == null) {
-				throw new Error("EqualsControl.OnControlInitialized: value XML element message.");
+			if(split.getValue() == null) {
+				throw new Error("ConcatControl.OnControlInitialized: XML Concat message value missing.");
 			}
 		}
 	}
@@ -39,12 +39,12 @@ public final class EqualsControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
-
-			Equals equals = Equals.class.cast(e.getMessage());
-
-			put(Data.VALUE, equals.getValue());
+			Concat concat = Concat.class.cast(e.getSource());
+			
+			put(Data.VALUE, concat.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.EQUALS_CONTROL_LOADED));
+			CommandLineEvent(new CommandEventArgs(this, Command.CONCAT_CONTROL_LOADED));
 		}
+		
 	}
 }

@@ -3,19 +3,19 @@ package org.httprobot.placeholder.string;
 import org.httprobot.Manager;
 import org.httprobot.event.ManagerEventArgs;
 
-public class SplitManager
-	extends AbstractStringManager<SplitControl> {
+public class ConcatManager
+	extends AbstractStringManager<ConcatControl> {
 
 	/**
 	 * -2674949404675117218L
 	 */
 	private static final long serialVersionUID = -2674949404675117218L;
 	
-	public SplitManager() {
+	public ConcatManager() {
 		super();
 	}
-	public SplitManager(Split message, Manager<?> parent) {
-		super(message, SplitControl.class, parent);
+	public ConcatManager(Concat message, Manager<?> parent) {
+		super(message, ConcatControl.class, parent);
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {

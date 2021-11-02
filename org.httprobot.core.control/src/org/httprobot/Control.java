@@ -69,8 +69,8 @@ public abstract class Control<TMessage extends XML>
 	public Control(TMessage message, ControlListener parent) {
 		super(message.getUuid());
 		
-		setMessage(message);
-		setParent(parent);
+		this.message = message;
+		this.parent = parent;
 		addCommandListener(parent);
 		
 		currentControlIndex = 0;

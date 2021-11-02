@@ -9,7 +9,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class TrimControl
-	extends AbstractOperatorControl<Trim> {
+	extends AbstractStringControl<Trim> {
 
 	/**
 	 * 807343815903651954L

@@ -10,7 +10,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ReplaceControl
-	extends AbstractOperatorControl<Replace> {
+	extends AbstractStringControl<Replace> {
 
 	/**
 	 * 7760167926576384464L

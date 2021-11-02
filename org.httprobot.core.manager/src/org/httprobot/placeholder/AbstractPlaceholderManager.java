@@ -19,9 +19,9 @@ import org.httprobot.placeholder.string.TrimManager;
 import org.httprobot.placeholder.string.Replace;
 import org.httprobot.placeholder.string.ReplaceControl;
 import org.httprobot.placeholder.string.ReplaceManager;
-import org.httprobot.placeholder.string.Split;
-import org.httprobot.placeholder.string.SplitControl;
-import org.httprobot.placeholder.string.SplitManager;
+import org.httprobot.placeholder.string.Concat;
+import org.httprobot.placeholder.string.ConcatControl;
+import org.httprobot.placeholder.string.ConcatManager;
 import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.SubstringManager;
@@ -45,7 +45,7 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 	EqualsManager equalsManager;
 	TrimManager trimManager;
 	ReplaceManager replaceManager;
-	SplitManager splitManager;
+	ConcatManager splitManager;
 	SubstringManager substringManager;
 	TryParseManager tryParseManager;
 	
@@ -154,10 +154,10 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 				addChildManager(replaceManager);
 			}
 			break;
-		case SPLIT_CONTROL_LOADED:
-			if(e.getSource() instanceof SplitControl) {
-				Split message = SplitControl.class.cast(e.getSource()).getMessage();
-				splitManager = new SplitManager(message, this);
+		case CONCAT_CONTROL_LOADED:
+			if(e.getSource() instanceof ConcatControl) {
+				Concat message = ConcatControl.class.cast(e.getSource()).getMessage();
+				splitManager = new ConcatManager(message, this);
 				addChildManager(splitManager);
 			}
 			break;
