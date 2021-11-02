@@ -10,6 +10,9 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.string.Contains;
 import org.httprobot.placeholder.string.ContainsControl;
 import org.httprobot.placeholder.string.ContainsManager;
+import org.httprobot.placeholder.string.EndsWith;
+import org.httprobot.placeholder.string.EndsWithControl;
+import org.httprobot.placeholder.string.EndsWithManager;
 import org.httprobot.placeholder.string.Equals;
 import org.httprobot.placeholder.string.EqualsControl;
 import org.httprobot.placeholder.string.EqualsManager;
@@ -19,6 +22,9 @@ import org.httprobot.placeholder.string.TrimManager;
 import org.httprobot.placeholder.string.Replace;
 import org.httprobot.placeholder.string.ReplaceControl;
 import org.httprobot.placeholder.string.ReplaceManager;
+import org.httprobot.placeholder.string.StartsWith;
+import org.httprobot.placeholder.string.StartsWithControl;
+import org.httprobot.placeholder.string.StartsWithManager;
 import org.httprobot.placeholder.string.Concat;
 import org.httprobot.placeholder.string.ConcatControl;
 import org.httprobot.placeholder.string.ConcatManager;
@@ -45,9 +51,11 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 	EqualsManager equalsManager;
 	TrimManager trimManager;
 	ReplaceManager replaceManager;
-	ConcatManager splitManager;
+	ConcatManager concatManager;
 	SubstringManager substringManager;
 	TryParseManager tryParseManager;
+	StartsWithManager startsWithManager;
+	EndsWithManager endsWithManager;
 	
 	@Override
 	public K getKey() {
@@ -74,12 +82,16 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 				trimManager.setKey(value.getValue().toString());
 			} else if(replaceManager != null) {
 				replaceManager.setKey(value.getValue().toString());
-			} else if(splitManager != null) {
-				splitManager.setKey(value.getValue().toString());
+			} else if(concatManager != null) {
+				concatManager.setKey(value.getValue().toString());
 			} else if(substringManager != null) {
 				substringManager.setKey(value.getValue().toString());
 			} else if(tryParseManager != null) {
 				tryParseManager.setKey(value.getValue().toString());
+			} else if(startsWithManager != null) {
+				startsWithManager.setKey(value.getValue().toString());
+			} else if(endsWithManager != null) {
+				endsWithManager.setKey(value.getValue().toString());
 			}
 		}
 		this.value = value;
@@ -110,13 +122,17 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 					trimManager.setValue(value);
 				} else if(replaceManager != null) {
 					replaceManager.setValue(value);
-				} else if(splitManager != null) {
-					splitManager.setValue(value);
+				} else if(concatManager != null) {
+					concatManager.setValue(value);
 				} else if(substringManager != null) {
 					substringManager.setValue(value);
 				} else if(tryParseManager != null) {
 					tryParseManager.setValue(value);
-				}	
+				} else if(startsWithManager != null) {
+					startsWithManager.setValue(value);
+				} else if(endsWithManager != null) {
+					endsWithManager.setValue(value);
+				}
 			}
 			break;
 		default:
@@ -157,8 +173,8 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 		case CONCAT_CONTROL_LOADED:
 			if(e.getSource() instanceof ConcatControl) {
 				Concat message = ConcatControl.class.cast(e.getSource()).getMessage();
-				splitManager = new ConcatManager(message, this);
-				addChildManager(splitManager);
+				concatManager = new ConcatManager(message, this);
+				addChildManager(concatManager);
 			}
 			break;
 		case SUBSTRING_CONTROL_LOADED:
@@ -173,6 +189,20 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 				TryParse message = TryParseControl.class.cast(e.getSource()).getMessage();
 				tryParseManager = new TryParseManager(message, this);
 				addChildManager(tryParseManager);
+			}
+			break;
+		case STARTS_WITH_CONTROL_LOADED:
+			if(e.getSource() instanceof StartsWithControl) {
+				StartsWith message = StartsWithControl.class.cast(e.getSource()).getMessage();
+				startsWithManager = new StartsWithManager(message, this);
+				addChildManager(startsWithManager);
+			}
+			break;
+		case ENDS_WITH_CONTROL_LOADED:
+			if(e.getSource() instanceof EndsWithControl) {
+				EndsWith message = EndsWithControl.class.cast(e.getSource()).getMessage();
+				endsWithManager = new EndsWithManager(message, this);
+				addChildManager(endsWithManager);
 			}
 			break;
 		default:

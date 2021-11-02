@@ -8,9 +8,11 @@ import org.httprobot.AbstractPlaceholder;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.ContainsControl;
+import org.httprobot.placeholder.string.EndsWithControl;
 import org.httprobot.placeholder.string.EqualsControl;
 import org.httprobot.placeholder.string.TrimControl;
 import org.httprobot.placeholder.string.ReplaceControl;
+import org.httprobot.placeholder.string.StartsWithControl;
 import org.httprobot.placeholder.string.ConcatControl;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.TryParseControl;
@@ -23,13 +25,15 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	 */
 	private static final long serialVersionUID = -138070185044904871L;
 
-	protected ContainsControl containsControl;
-	protected EqualsControl equalsControl;
-	protected TrimControl removeControl;
-	protected ReplaceControl replaceControl;
-	protected ConcatControl splitControl;
-	protected SubstringControl substringControl;
-	protected TryParseControl tryParseControl;
+	ContainsControl containsControl;
+	EqualsControl equalsControl;
+	TrimControl removeControl;
+	ReplaceControl replaceControl;
+	ConcatControl concatControl;
+	SubstringControl substringControl;
+	TryParseControl tryParseControl;
+	StartsWithControl startsWithControl;
+	EndsWithControl endsWithControl;
 	
 	@XmlElement
 	public ContainsControl getContainsControl() {
@@ -60,11 +64,11 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 		this.replaceControl = replaceControl;
 	}
 	@XmlElement
-	public ConcatControl getSplitControl() {
-		return splitControl;
+	public ConcatControl getConcatControl() {
+		return concatControl;
 	}
-	public void setSplitControl(ConcatControl splitControl) {
-		this.splitControl = splitControl;
+	public void setConcatControl(ConcatControl concatControl) {
+		this.concatControl = concatControl;
 	}
 	@XmlElement
 	public SubstringControl getSubstringControl() {
@@ -79,6 +83,20 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	}
 	public void setTryParseControl(TryParseControl tryParseControl) {
 		this.tryParseControl = tryParseControl;
+	}
+	@XmlElement
+	public StartsWithControl getStartsWithControl() {
+		return startsWithControl;
+	}
+	public void setStartsWithControl(StartsWithControl startsWithControl) {
+		this.startsWithControl = startsWithControl;
+	}
+	@XmlElement
+	public EndsWithControl getEndsWithControl() {
+		return endsWithControl;
+	}
+	public void setEndsWithControl(EndsWithControl endsWithControl) {
+		this.endsWithControl = endsWithControl;
 	}
 	
 	public AbstractPlaceholderControl() {
@@ -106,8 +124,8 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 			else if(placeholder.getReplace() != null) {
 				new ReplaceControl(placeholder.getReplace(), this);
 			}
-			else if(placeholder.getSplit() != null) {
-				new ConcatControl(placeholder.getSplit(), this);
+			else if(placeholder.getConcat() != null) {
+				new ConcatControl(placeholder.getConcat(), this);
 			}
 			else if(placeholder.getSubstring() != null) {
 				new SubstringControl(placeholder.getSubstring(), this);
@@ -122,8 +140,8 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 			substringControl = SubstringControl.class.cast(e.getSource());
 			addChildControl(substringControl);
 		} else if(e.getSource() instanceof ConcatControl) {
-			splitControl = ConcatControl.class.cast(e.getSource());
-			addChildControl(splitControl);
+			concatControl = ConcatControl.class.cast(e.getSource());
+			addChildControl(concatControl);
 		} else if(e.getSource() instanceof ReplaceControl) {
 			replaceControl = ReplaceControl.class.cast(e.getSource());
 			addChildControl(replaceControl);
@@ -162,8 +180,8 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 							replaceControl.equals(control) : false) {
 						replaceControl.loadControl();
 					} else if (control instanceof ConcatControl ? 
-							splitControl.equals(control) : false) {
-						splitControl.loadControl();
+							concatControl.equals(control) : false) {
+						concatControl.loadControl();
 					} else if (control instanceof SubstringControl ? 
 							substringControl.equals(control) : false) {
 						substringControl.loadControl();

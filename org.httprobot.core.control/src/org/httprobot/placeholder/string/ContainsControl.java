@@ -19,7 +19,6 @@ public final class ContainsControl
 	
 	public ContainsControl() {
 		super();
-		setMessage(new Contains());
 	}
 	public ContainsControl(Contains message, ControlListener parent) {
 		super(message, parent);

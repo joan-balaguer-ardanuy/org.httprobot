@@ -4,9 +4,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.placeholder.string.Contains;
+import org.httprobot.placeholder.string.EndsWith;
 import org.httprobot.placeholder.string.Equals;
 import org.httprobot.placeholder.string.Trim;
 import org.httprobot.placeholder.string.Replace;
+import org.httprobot.placeholder.string.StartsWith;
 import org.httprobot.placeholder.string.Concat;
 import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.TryParse;
@@ -22,9 +24,11 @@ public abstract class AbstractPlaceholder extends XML {
 	Equals equals;
 	Trim trim;
 	Replace replace;
-	Concat split;
+	Concat concat;
 	Substring substring;
 	TryParse tryParse;
+	StartsWith startsWith;
+	EndsWith endsWith;
 
 	@XmlElement
 	public Contains getContains() {
@@ -59,11 +63,11 @@ public abstract class AbstractPlaceholder extends XML {
 	}
 
 	@XmlElement
-	public Concat getSplit() {
-		return split;
+	public Concat getConcat() {
+		return concat;
 	}
-	public void setSplit(Concat split) {
-		this.split = split;
+	public void setConcat(Concat concat) {
+		this.concat = concat;
 	}
 
 	@XmlElement
@@ -81,7 +85,23 @@ public abstract class AbstractPlaceholder extends XML {
 	public void setTryParse(TryParse tryParse) {
 		this.tryParse = tryParse;
 	}
-
+	
+	@XmlElement
+	public StartsWith getStartsWith() {
+		return startsWith;
+	}
+	public void setStartsWith(StartsWith startsWith) {
+		this.startsWith = startsWith;
+	}
+	
+	@XmlElement
+	public EndsWith getEndsWith() {
+		return endsWith;
+	}
+	public void setEndsWith(EndsWith endsWith) {
+		this.endsWith = endsWith;
+	}
+	
 	public AbstractPlaceholder() {
 		super();
 	}
@@ -95,7 +115,7 @@ public abstract class AbstractPlaceholder extends XML {
 		setEquals(placeholder.getEquals());
 		setTrim(placeholder.getTrim());
 		setReplace(placeholder.getReplace());
-		setSplit(placeholder.getSplit());
+		setConcat(placeholder.getConcat());
 		setSubstring(placeholder.getSubstring());
 		setTryParse(placeholder.getTryParse());
 	}
