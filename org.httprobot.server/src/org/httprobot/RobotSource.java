@@ -27,25 +27,19 @@ public class RobotSource implements MessageService {
 		return null;
 	}
 	
-	void LoadConfigFile(String path) 
-	{
+	void LoadConfigFile(String path) {
 		configuration = new Configuration();
 		configuration.setPath(path);
-		
-		File file = new File(path);		
+
+		File file = new File(path);
 		InputStream is;
-		
-		try 
-		{
+
+		try {
 			is = new FileInputStream(file);
 			configuration.unmarshal(is);
-		} 
-		catch (FileNotFoundException e) 
-		{
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} 
-		catch (JAXBException e) 
-		{
+		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
