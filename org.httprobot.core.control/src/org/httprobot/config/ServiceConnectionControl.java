@@ -1,0 +1,71 @@
+package org.httprobot.config;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.httprobot.Control;
+import org.httprobot.ControlListener;
+import org.httprobot.Enums.Command;
+import org.httprobot.Enums.Data;
+import org.httprobot.event.CommandEventArgs;
+import org.httprobot.event.ControlEventArgs;
+
+@XmlRootElement
+public final class ServiceConnectionControl 
+	extends Control<ServiceConnection> {
+
+	/**
+	 * 4177732778336124009L
+	 */
+	private static final long serialVersionUID = 4177732778336124009L;
+	
+	@Override
+	@XmlElement
+	public ServiceConnection getMessage() {
+		return super.getMessage();
+	}
+	@Override
+	public void setMessage(ServiceConnection message) {
+		super.setMessage(message);
+	}
+	
+	public ServiceConnectionControl() {
+		super();
+		setMessage(new ServiceConnection());
+	}
+	public ServiceConnectionControl(ServiceConnection message, ControlListener parent) {
+		super(message, parent);
+	}
+	@Override
+	public void OnControlInitialized(ControlEventArgs e) {
+		if(e.getSource().equals(this))
+		{
+			//Cast XML message
+			ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getMessage());
+			//Check XML message integrity
+			if(serviceOptions.getQName() == null || serviceOptions.getUrl() == null) {
+				throw new Error("ServiceConnectionControl.OnControlInitialized: Malformed ServiceConnection XML message control exception");
+			}
+		}
+	}
+	@Override
+	public void OnControlLoaded(ControlEventArgs e) {
+		if(e.getSource().equals(this))
+		{
+			//Cast message
+			ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getMessage());
+			
+			if(serviceOptions.getQName() != null && serviceOptions.getUrl() != null) {
+				//Store data to current XML message control
+				put(Data.Q_NAME, serviceOptions.getQName());
+				put(Data.URL, serviceOptions.getUrl());	
+				//Send event to parent
+				CommandLineEvent(new CommandEventArgs(this, Command.SERVICE_CONNECTION_CONTROL_LOADED));
+			}
+			else
+			{
+				throw new Error("ServiceConnectionControl.OnControlLoaded: Malformed ServiceConnection XML message control exception");
+			}
+		}
+	}
+}
