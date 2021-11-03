@@ -34,7 +34,7 @@ public final class EndsWithManager
 	}
 	
 	public EndsWithManager() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	public EndsWithManager(EndsWith message, Manager<?> parent) {
 		super(message, EndsWithControl.class, parent);

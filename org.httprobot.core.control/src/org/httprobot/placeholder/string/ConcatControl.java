@@ -19,7 +19,6 @@ public final class ConcatControl
 
 	public ConcatControl() {
 		super();
-		setMessage(new Concat());
 	}
 	public ConcatControl(Concat message, ControlListener parent) {
 		super(message, parent);

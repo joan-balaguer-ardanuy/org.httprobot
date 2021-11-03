@@ -31,6 +31,12 @@ import org.httprobot.placeholder.string.ConcatManager;
 import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.SubstringManager;
+import org.httprobot.placeholder.string.ToLowerCase;
+import org.httprobot.placeholder.string.ToLowerCaseControl;
+import org.httprobot.placeholder.string.ToLowerCaseManager;
+import org.httprobot.placeholder.string.ToUpperCase;
+import org.httprobot.placeholder.string.ToUpperCaseControl;
+import org.httprobot.placeholder.string.ToUpperCaseManager;
 import org.httprobot.placeholder.string.TryParse;
 import org.httprobot.placeholder.string.TryParseControl;
 import org.httprobot.placeholder.string.TryParseManager;
@@ -56,6 +62,8 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 	TryParseManager tryParseManager;
 	StartsWithManager startsWithManager;
 	EndsWithManager endsWithManager;
+	ToUpperCaseManager toUpperCaseManager;
+	ToLowerCaseManager toLowerCaseManager;
 	
 	@Override
 	public K getKey() {
@@ -92,6 +100,10 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 				startsWithManager.setKey(value.getValue().toString());
 			} else if(endsWithManager != null) {
 				endsWithManager.setKey(value.getValue().toString());
+			} else if(toUpperCaseManager != null) {
+				toUpperCaseManager.setKey(value.getValue().toString());
+			} else if(toLowerCaseManager != null) {
+				toLowerCaseManager.setKey(value.getValue().toString());
 			}
 		}
 		this.value = value;
@@ -132,6 +144,10 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 					startsWithManager.setValue(value);
 				} else if(endsWithManager != null) {
 					endsWithManager.setValue(value);
+				} else if(toUpperCaseManager != null) {
+					toUpperCaseManager.setValue(value);
+				} else if(toLowerCaseManager != null) {
+					toLowerCaseManager.setValue(value);
 				}
 			}
 			break;
@@ -203,6 +219,20 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 				EndsWith message = EndsWithControl.class.cast(e.getSource()).getMessage();
 				endsWithManager = new EndsWithManager(message, this);
 				addChildManager(endsWithManager);
+			}
+			break;
+		case TO_UPPER_CASE_CONTROL_LOADED:
+			if(e.getSource() instanceof ToUpperCaseControl) {
+				ToUpperCase message = ToUpperCaseControl.class.cast(e.getSource()).getMessage();
+				toUpperCaseManager = new ToUpperCaseManager(message, this);
+				addChildManager(toUpperCaseManager);
+			}
+			break;
+		case TO_LOWER_CASE_CONTROL_LOADED:
+			if(e.getSource() instanceof ToLowerCaseControl) {
+				ToLowerCase message = ToLowerCaseControl.class.cast(e.getSource()).getMessage();
+				toLowerCaseManager = new ToLowerCaseManager(message, this);
+				addChildManager(toLowerCaseManager);
 			}
 			break;
 		default:

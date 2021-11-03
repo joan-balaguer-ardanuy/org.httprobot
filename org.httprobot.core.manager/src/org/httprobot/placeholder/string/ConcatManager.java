@@ -2,7 +2,6 @@ package org.httprobot.placeholder.string;
 
 import org.httprobot.Manager;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.ManagerEventArgs;
 
 public class ConcatManager
 	extends AbstractStringManager<ConcatControl> {
@@ -23,9 +22,5 @@ public class ConcatManager
 	}
 	public ConcatManager(Concat message, Manager<?> parent) {
 		super(message, ConcatControl.class, parent);
-	}
-	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		
 	}
 }

@@ -15,6 +15,8 @@ import org.httprobot.placeholder.string.ReplaceControl;
 import org.httprobot.placeholder.string.StartsWithControl;
 import org.httprobot.placeholder.string.ConcatControl;
 import org.httprobot.placeholder.string.SubstringControl;
+import org.httprobot.placeholder.string.ToLowerCaseControl;
+import org.httprobot.placeholder.string.ToUpperCaseControl;
 import org.httprobot.placeholder.string.TryParseControl;
 
 public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceholder>
@@ -34,6 +36,8 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	TryParseControl tryParseControl;
 	StartsWithControl startsWithControl;
 	EndsWithControl endsWithControl;
+	ToUpperCaseControl toUpperCaseControl;
+	ToLowerCaseControl toLowerCaseControl;
 	
 	@XmlElement
 	public ContainsControl getContainsControl() {
@@ -98,6 +102,20 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	public void setEndsWithControl(EndsWithControl endsWithControl) {
 		this.endsWithControl = endsWithControl;
 	}
+	@XmlElement
+	public ToUpperCaseControl getToUpperCaseControl() {
+		return toUpperCaseControl;
+	}
+	public void setToUpperCaseControl(ToUpperCaseControl toUpperCaseControl) {
+		this.toUpperCaseControl = toUpperCaseControl;
+	}
+	@XmlElement
+	public ToLowerCaseControl getToLowerCaseControl() {
+		return toLowerCaseControl;
+	}
+	public void setToLowerCaseControl(ToLowerCaseControl toLowerCaseControl) {
+		this.toLowerCaseControl = toLowerCaseControl;
+	}
 	
 	public AbstractPlaceholderControl() {
 		super();
@@ -112,48 +130,62 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 			
 			AbstractPlaceholder placeholder = AbstractPlaceholder.class.cast(e.getMessage());
 			
-			if(placeholder.getContains() != null) {
+			if (placeholder.getContains() != null) {
 				new ContainsControl(placeholder.getContains(), this);
-			}
-			else if(placeholder.getEquals() != null) {
+			} else if (placeholder.getEquals() != null) {
 				new EqualsControl(placeholder.getEquals(), this);
-			}
-			else if(placeholder.getTrim() != null) {
+			} else if (placeholder.getTrim() != null) {
 				new TrimControl(placeholder.getTrim(), this);
-			}
-			else if(placeholder.getReplace() != null) {
+			} else if (placeholder.getReplace() != null) {
 				new ReplaceControl(placeholder.getReplace(), this);
-			}
-			else if(placeholder.getConcat() != null) {
+			} else if (placeholder.getConcat() != null) {
 				new ConcatControl(placeholder.getConcat(), this);
-			}
-			else if(placeholder.getSubstring() != null) {
+			} else if (placeholder.getSubstring() != null) {
 				new SubstringControl(placeholder.getSubstring(), this);
-			}
-			else if(placeholder.getTryParse() != null) {
+			} else if (placeholder.getTryParse() != null) {
 				new TryParseControl(placeholder.getTryParse(), this);
+			} else if (placeholder.getStartsWith() != null) {
+				new StartsWithControl(placeholder.getStartsWith(), this);
+			} else if (placeholder.getEndsWith() != null) {
+				new EndsWithControl(placeholder.getEndsWith(), this);
+			} else if (placeholder.getToUpperCase() != null) {
+				new ToUpperCaseControl(placeholder.getToUpperCase(), this);
+			} else if (placeholder.getToLowerCase() != null) {
+				new ToLowerCaseControl(placeholder.getToLowerCase(), this);
 			}
-		} else if(e.getSource() instanceof TryParseControl) {
+		} else if (e.getSource() instanceof TryParseControl) {
 			tryParseControl = TryParseControl.class.cast(e.getSource());
 			addChildControl(tryParseControl);
-		} else if(e.getSource() instanceof SubstringControl) {
+		} else if (e.getSource() instanceof SubstringControl) {
 			substringControl = SubstringControl.class.cast(e.getSource());
 			addChildControl(substringControl);
-		} else if(e.getSource() instanceof ConcatControl) {
+		} else if (e.getSource() instanceof ConcatControl) {
 			concatControl = ConcatControl.class.cast(e.getSource());
 			addChildControl(concatControl);
-		} else if(e.getSource() instanceof ReplaceControl) {
+		} else if (e.getSource() instanceof ReplaceControl) {
 			replaceControl = ReplaceControl.class.cast(e.getSource());
 			addChildControl(replaceControl);
-		} else if(e.getSource() instanceof TrimControl) {
+		} else if (e.getSource() instanceof TrimControl) {
 			removeControl = TrimControl.class.cast(e.getSource());
 			addChildControl(removeControl);
-		} else if(e.getSource() instanceof EqualsControl) {
+		} else if (e.getSource() instanceof EqualsControl) {
 			equalsControl = EqualsControl.class.cast(e.getSource());
 			addChildControl(equalsControl);
-		} else if(e.getSource() instanceof ContainsControl) {
+		} else if (e.getSource() instanceof ContainsControl) {
 			containsControl = ContainsControl.class.cast(e.getSource());
 			addChildControl(containsControl);
+		} else if (e.getSource() instanceof StartsWithControl) {
+			startsWithControl = StartsWithControl.class.cast(e.getSource());
+			addChildControl(startsWithControl);
+		} else if (e.getSource() instanceof EndsWithControl) {
+			endsWithControl = EndsWithControl.class.cast(e.getSource());
+			addChildControl(endsWithControl);
+		} else if (e.getSource() instanceof ToUpperCaseControl) {
+			toUpperCaseControl = ToUpperCaseControl.class.cast(e.getSource());
+			addChildControl(toUpperCaseControl);
+		} else if (e.getSource() instanceof ToLowerCaseControl) {
+			toLowerCaseControl = ToLowerCaseControl.class.cast(e.getSource());
+			addChildControl(toLowerCaseControl);
 		}
 	}
 	@Override
@@ -188,6 +220,18 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 					} else if (control instanceof TryParseControl ? 
 							tryParseControl.equals(control) : false) {
 						tryParseControl.loadControl();
+					} else if (control instanceof StartsWithControl ? 
+							startsWithControl.equals(control) : false) {
+						startsWithControl.loadControl();
+					} else if (control instanceof EndsWithControl ? 
+							endsWithControl.equals(control) : false) {
+						endsWithControl.loadControl();
+					} else if (control instanceof ToUpperCaseControl ? 
+							toUpperCaseControl.equals(control) : false) {
+						toUpperCaseControl.loadControl();
+					} else if (control instanceof ToLowerCaseControl ? 
+							toLowerCaseControl.equals(control) : false) {
+						toLowerCaseControl.loadControl();
 					}
 				}
 				// Set control ready to be iterated again.
@@ -203,7 +247,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 			}
 		} else if (e.getSource() instanceof ConcatControl) {
 			if (getChildControls().contains(e.getSource())) {
-				put(Data.SPLIT, e.getMessage());
+				put(Data.CONCAT, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ReplaceControl) {
 			if (getChildControls().contains(e.getSource())) {
@@ -220,6 +264,22 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 		} else if (e.getSource() instanceof ContainsControl) {
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.CONTAINS, e.getMessage());
+			}
+		} else if (e.getSource() instanceof StartsWithControl) {
+			if (getChildControls().contains(e.getSource())) {
+				put(Data.STARTS_WITH, e.getMessage());
+			}
+		} else if (e.getSource() instanceof EndsWithControl) {
+			if (getChildControls().contains(e.getSource())) {
+				put(Data.ENDS_WITH, e.getMessage());
+			}
+		} else if (e.getSource() instanceof ToUpperCaseControl) {
+			if (getChildControls().contains(e.getSource())) {
+				put(Data.TO_UPPER_CASE, e.getMessage());
+			}
+		} else if (e.getSource() instanceof ToLowerCaseControl) {
+			if (getChildControls().contains(e.getSource())) {
+				put(Data.TO_LOWER_CASE, e.getMessage());
 			}
 		}
 	}

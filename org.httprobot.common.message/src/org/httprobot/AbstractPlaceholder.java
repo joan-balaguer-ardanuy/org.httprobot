@@ -11,6 +11,8 @@ import org.httprobot.placeholder.string.Replace;
 import org.httprobot.placeholder.string.StartsWith;
 import org.httprobot.placeholder.string.Concat;
 import org.httprobot.placeholder.string.Substring;
+import org.httprobot.placeholder.string.ToLowerCase;
+import org.httprobot.placeholder.string.ToUpperCase;
 import org.httprobot.placeholder.string.TryParse;
 
 public abstract class AbstractPlaceholder extends XML {
@@ -29,6 +31,8 @@ public abstract class AbstractPlaceholder extends XML {
 	TryParse tryParse;
 	StartsWith startsWith;
 	EndsWith endsWith;
+	ToUpperCase toUpperCase;
+	ToLowerCase toLowerCase;
 
 	@XmlElement
 	public Contains getContains() {
@@ -100,6 +104,22 @@ public abstract class AbstractPlaceholder extends XML {
 	}
 	public void setEndsWith(EndsWith endsWith) {
 		this.endsWith = endsWith;
+	}
+
+	@XmlElement
+	public ToUpperCase getToUpperCase() {
+		return toUpperCase;
+	}
+	public void setToUpperCase(ToUpperCase toUpperCase) {
+		this.toUpperCase = toUpperCase;
+	}
+	
+	@XmlElement
+	public ToLowerCase getToLowerCase() {
+		return toLowerCase;
+	}
+	public void setToLowerCase(ToLowerCase toLowerCase) {
+		this.toLowerCase = toLowerCase;
 	}
 	
 	public AbstractPlaceholder() {
