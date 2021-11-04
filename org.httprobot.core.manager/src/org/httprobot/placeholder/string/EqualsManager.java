@@ -1,9 +1,13 @@
 package org.httprobot.placeholder.string;
 
-import org.httprobot.Manager;
-import org.httprobot.event.ManagerEventArgs;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class EqualsManager 
+import org.httprobot.Manager;
+import org.httprobot.data.field.InputField;
+
+@XmlRootElement
+public final class EqualsManager 
 	extends AbstractStringManager<EqualsControl> {
 
 	/**
@@ -11,14 +15,31 @@ public class EqualsManager
 	 */
 	private static final long serialVersionUID = -481593600327061747L;
 
+	@Override
+	@XmlElement
+	public EqualsControl getControl() {
+		return super.getControl();
+	}
+	@Override
+	public void setControl(EqualsControl control) {
+		super.setControl(control);
+	}
+	
 	public EqualsManager() {
 		super();
 	}
 	public EqualsManager(Equals message, Manager<?> parent) {
 		super(message, EqualsControl.class, parent);
 	}
+	
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		
+	public String put(InputField key, String value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		if(!value.equals(getControl().getMessage().getValue())) {
+			key.setValue(null);
+		}
+		return super.put(key, value);
 	}
 }

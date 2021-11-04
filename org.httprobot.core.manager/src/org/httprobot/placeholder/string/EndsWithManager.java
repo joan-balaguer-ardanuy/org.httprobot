@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Manager;
+import org.httprobot.data.field.InputField;
 
 @XmlRootElement
 public final class EndsWithManager
@@ -29,5 +30,16 @@ public final class EndsWithManager
 	}
 	public EndsWithManager(EndsWith message, Manager<?> parent) {
 		super(message, EndsWithControl.class, parent);
+	}
+	
+	@Override
+	public String put(InputField key, String value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		if(!value.endsWith(getControl().getMessage().getValue())) {
+			key.setValue(null);
+		}
+		return super.put(key, value);
 	}
 }

@@ -19,18 +19,9 @@ public class FieldManager
 	 * -8390181286230356701L
 	 */
 	private static final long serialVersionUID = -8390181286230356701L;
-	
-	HtmlPage key;
-	InputField value;
-	
+		
 	HtmlUnitManager htmlUnitManager;
 	HttpAddressManager httpAddressManager;
-
-	@Override
-	public HtmlPage put(InputField key, HtmlPage value) {
-		
-		return super.put(key, value);
-	}
 	
 	public FieldManager() {
 		super();
@@ -39,22 +30,22 @@ public class FieldManager
 		super(message, FieldControl.class, parent);
 	}
 	
-//	@Override
-//	public InputField put(HtmlPage key, InputField value) {
-//		keySet().add(key);
-//		setKey(key);
-//		setValue(value);
-//		
-////		if(htmlUnitManager != null) {
-////			htmlUnitManager.put(key, value);
-////		} else if (httpAddressManager != null) {
-////			httpAddressManager.put(key, value);
-////		} else {
-////			throw new Error("FieldManager.put: placeholder XML message manager expected");
-////		}
-//			
-//		return super.put(key, value);
-//	}
+	@Override
+	public HtmlPage put(InputField key, HtmlPage value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		
+		if(htmlUnitManager != null) {
+			htmlUnitManager.put(key, value);
+		} else if (httpAddressManager != null) {
+			httpAddressManager.put(key, value.getUrl());
+		} else {
+			throw new Error("FieldManager.put: placeholder XML message manager expected");
+		}
+			
+		return super.put(key, value);
+	}
 
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {

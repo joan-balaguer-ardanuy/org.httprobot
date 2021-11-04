@@ -14,22 +14,22 @@ public final class Substring extends AbstractString {
 	 */
 	private static final long serialVersionUID = 7723823443728789980L;
 
-	StartIndex startIndex;
-	EndIndex endIndex;
+	Integer startIndex;
+	Integer endIndex;
 	
 	@XmlElement
-	public StartIndex getStartIndex() {
+	public Integer getStartIndex() {
 		return startIndex;
 	}
-	public void setStartIndex(StartIndex startIndex) {
+	public void setStartIndex(Integer startIndex) {
 		this.startIndex = startIndex;
 	}
 
 	@XmlElement
-	public EndIndex getEndIndex() {
+	public Integer getEndIndex() {
 		return endIndex;
 	}
-	public void setEndIndex(EndIndex endIndex) {
+	public void setEndIndex(Integer endIndex) {
 		this.endIndex = endIndex;
 	}
 	

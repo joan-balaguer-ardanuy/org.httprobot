@@ -48,57 +48,22 @@ public final class SubstringControl
 		super.OnControlInitialized(e);
 		if (e.getSource().equals(this)) {
 
-			Substring substring = Substring.class.cast(e.getMessage());
+			Substring message = Substring.class.cast(e.getMessage());
 
-			if (substring.getStartIndex() != null) {
-				new StartIndexControl(substring.getStartIndex(), this);
-			} else {
-				throw new Error("SubstringControl.OnControlInitialized: StartIndex XML element message is missing.");
+			if (message.getStartIndex() == null || message.getEndIndex() == null) {
+				throw new Error("SubstringControl.OnControlInitialized: XML message is inconsistent.");
 			}
-			if (substring.getEndIndex() != null) {
-				new EndIndexControl(substring.getEndIndex(), this);
-			} else {
-				throw new Error("SubstringControl.OnControlInitialized: EndIndex XML element message is missing.");
-			}
-		} else if(e.getSource() instanceof StartIndexControl) {
-			startIndexControl = StartIndexControl.class.cast(e.getSource());
-			addChildControl(startIndexControl);
-		} else if(e.getSource() instanceof EndIndexControl) {
-			endIndexControl = EndIndexControl.class.cast(e.getSource());
-			addChildControl(endIndexControl);
 		}
 	}
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
-
-			// Check if control has child XML controls
-			if (hasChildControls()) {
-				// Iterate through child controls
-				while (hasNext()) {
-					// Get next XML child control
-					ControlListener control = next();
-
-					if (control instanceof StartIndexControl ? startIndexControl.equals(control) : false) {
-						startIndexControl.loadControl();
-					} else if (control instanceof EndIndexControl ? endIndexControl.equals(control) : false) {
-						endIndexControl.loadControl();
-					}
-				}
-				// Set control ready to be iterated again.
-				reset();
-				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.SUBSTRING_CONTROL_LOADED));
-			}
-		} else if(e.getSource() instanceof StartIndexControl) {
-			if(getChildControls().contains(e.getSource())) {
-				put(Data.START_INDEX, e.getMessage());
-			}
-		} else if(e.getSource() instanceof EndIndexControl) {
-			if(getChildControls().contains(e.getSource())) {
-				put(Data.END_INDEX, e.getMessage());
-			}
+			Substring message = Substring.class.cast(e.getMessage());
+			put(Data.START_INDEX, message.getStartIndex());
+			put(Data.END_INDEX, message.getEndIndex());
+			// Send event to parent
+			CommandLineEvent(new CommandEventArgs(this, Command.SUBSTRING_CONTROL_LOADED));
 		}
 	}
 }

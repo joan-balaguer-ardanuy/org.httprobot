@@ -14,23 +14,23 @@ public final class Replace extends AbstractString {
 	 */
 	private static final long serialVersionUID = 4097627589074564841L;
 
-	String oldString;
-	String newString;
+	Character oldChar;
+	Character newChar;
 	
 	@XmlElement
-	public String getOldString() {
-		return oldString;
+	public Character getOldCharacter() {
+		return oldChar;
 	}
-	public void setOldString(String oldString) {
-		this.oldString = oldString;
+	public void setOldCharacter(Character oldString) {
+		this.oldChar = oldString;
 	}
 	
 	@XmlElement
-	public String getNewString() {
-		return newString;
+	public Character getNewCharacter() {
+		return newChar;
 	}
-	public void setNewString(String newString) {
-		this.newString = newString;
+	public void setNewCharacter(Character newString) {
+		this.newChar = newString;
 	}
 
 	public Replace() {
@@ -42,7 +42,7 @@ public final class Replace extends AbstractString {
 		super.OnMessageUnmarshalled(e);
 		
 		Replace replace = Replace.class.cast(e.getSource());
-		setOldString(replace.getOldString());
-		setNewString(replace.getNewString());
+		setOldCharacter(replace.getOldCharacter());
+		setNewCharacter(replace.getNewCharacter());
 	}
 }

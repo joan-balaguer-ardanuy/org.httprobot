@@ -1,9 +1,13 @@
 package org.httprobot.placeholder.string;
 
-import org.httprobot.Manager;
-import org.httprobot.event.ManagerEventArgs;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class SubstringManager
+import org.httprobot.Manager;
+import org.httprobot.data.field.InputField;
+
+@XmlRootElement
+public final class SubstringManager
 	extends AbstractStringManager<SubstringControl> {
 
 	/**
@@ -11,14 +15,30 @@ public class SubstringManager
 	 */
 	private static final long serialVersionUID = 7868954939148015302L;
 
+	@Override
+	@XmlElement
+	public SubstringControl getControl() {
+		return super.getControl();
+	}
+	@Override
+	public void setControl(SubstringControl control) {
+		super.setControl(control);
+	}
+	
 	public SubstringManager() {
 		super();
 	}
 	public SubstringManager(Substring message, Manager<?> parent) {
 		super(message, SubstringControl.class, parent);
 	}
+	
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		
+	public String put(InputField key, String value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		Substring message = getControl().getMessage();
+		key.setValue(value.substring(message.getStartIndex(), message.getEndIndex()));
+		return super.put(key, key.getValue().toString());
 	}
 }
