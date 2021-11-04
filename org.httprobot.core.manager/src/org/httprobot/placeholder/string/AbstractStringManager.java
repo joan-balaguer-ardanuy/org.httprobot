@@ -24,31 +24,7 @@ public abstract class AbstractStringManager<T extends Control<?>>
 	
 	@Override
 	public String put(InputField key, String value) {
-		if(key.getValue() != null) {
-			if(containsManager != null) {
-				containsManager.put(key, value);
-			} else if(equalsManager != null) {
-				equalsManager.put(key, value);
-			} else if(trimManager != null) {
-				trimManager.put(key, value);
-			} else if(replaceManager != null) {
-				replaceManager.put(key, value);
-			} else if(concatManager != null) {
-				concatManager.put(key, value);
-			} else if(substringManager != null) {
-				substringManager.put(key, value);
-			} else if(tryParseManager != null) {
-				tryParseManager.put(key, value);
-			} else if(startsWithManager != null) {
-				startsWithManager.put(key, value);
-			} else if(endsWithManager != null) {
-				endsWithManager.put(key, value);
-			} else if(toUpperCaseManager != null) {
-				toUpperCaseManager.put(key, value);
-			} else if(toLowerCaseManager != null) {
-				toLowerCaseManager.put(key, value);
-			}
-		}
+		
 		return super.put(key, value);
 	}
 	@Override
