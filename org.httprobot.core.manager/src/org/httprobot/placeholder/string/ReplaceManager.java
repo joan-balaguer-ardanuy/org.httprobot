@@ -1,7 +1,6 @@
 package org.httprobot.placeholder.string;
 
 import org.httprobot.Manager;
-import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ReplaceManager
@@ -12,11 +11,6 @@ public class ReplaceManager
 	 */
 	private static final long serialVersionUID = -4082786732248275675L;
 
-	@Override
-	public InputField setValue(InputField value) {
-		return super.setValue(value);
-	}
-	
 	public ReplaceManager() {
 		super();
 	}

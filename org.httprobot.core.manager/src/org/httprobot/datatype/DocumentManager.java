@@ -139,7 +139,7 @@ public class DocumentManager
 					InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
 					getDocumentLibrary().put(currentResponse, templateDocument);
 					getValue().put(templateDocument, currentResponse);
-					fieldRootManager.put(currentResponse, templateDocument);
+					fieldRootManager.put(templateDocument, currentResponse);
 				} catch (ClassCastException exception) {
 					throw new Error("DocumentManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
 				}

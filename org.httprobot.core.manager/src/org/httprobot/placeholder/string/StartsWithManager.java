@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Manager;
-import org.httprobot.data.field.InputField;
 
 @XmlRootElement
 public final class StartsWithManager 
@@ -23,14 +22,6 @@ public final class StartsWithManager
 	@Override
 	public void setControl(StartsWithControl control) {
 		super.setControl(control);
-	}
-	
-	@Override
-	public InputField setValue(InputField value) {
-		if(!getKey().startsWith(getControl().getMessage().getValue())) {
-			value.setValue(null);
-		}
-		return super.setValue(value);
 	}
 	
 	public StartsWithManager() {

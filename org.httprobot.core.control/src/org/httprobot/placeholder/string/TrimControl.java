@@ -1,5 +1,6 @@
 package org.httprobot.placeholder.string;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ControlListener;
@@ -16,6 +17,16 @@ public final class TrimControl
 	 */
 	private static final long serialVersionUID = 807343815903651954L;
 
+	@Override
+	@XmlElement
+	public Trim getMessage() {
+		return super.getMessage();
+	}
+	@Override
+	public void setMessage(Trim message) {
+		super.setMessage(message);
+	}
+	
 	public TrimControl() {
 		super();
 		setMessage(new Trim());
@@ -36,8 +47,6 @@ public final class TrimControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
-			// Set control ready to be iterated again.
-			reset();
 			// Send event to parent
 			CommandLineEvent(new CommandEventArgs(this, Command.TRIM_CONTROL_LOADED));
 		}

@@ -1,7 +1,7 @@
 package org.httprobot.datatype;
 
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
+import org.httprobot.MappingManager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -13,8 +13,7 @@ import org.httprobot.placeholder.HttpAddressManager;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class FieldManager
-	extends Manager<FieldControl>
-		implements java.util.Map.Entry<HtmlPage, InputField> {
+	extends MappingManager<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
@@ -28,31 +27,9 @@ public class FieldManager
 	HttpAddressManager httpAddressManager;
 
 	@Override
-	public HtmlPage getKey() {
-		return key;
-	}
-	public HtmlPage setKey(HtmlPage key) {
-		HtmlPage oldKey = this.key;
-		this.key = key;
-		return oldKey;
-	}
-	@Override
-	public InputField getValue() {
-		return value;
-	}
-	@Override
-	public InputField setValue(InputField value) {
-		InputField oldValue = this.value;
-		if(htmlUnitManager != null) {
-			htmlUnitManager.setKey(getKey());
-			htmlUnitManager.setValue(value);
-		} else if(httpAddressManager != null) {
-			httpAddressManager.setKey(getKey().getUrl());
-			httpAddressManager.setValue(value);
-		}
-		this.value = value;
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
+	public HtmlPage put(InputField key, HtmlPage value) {
+		
+		return super.put(key, value);
 	}
 	
 	public FieldManager() {

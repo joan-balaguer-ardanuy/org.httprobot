@@ -2,11 +2,10 @@ package org.httprobot.placeholder;
 
 import org.httprobot.Control;
 import org.httprobot.Manager;
+import org.httprobot.MappingManager;
 import org.httprobot.AbstractPlaceholder;
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.string.Contains;
 import org.httprobot.placeholder.string.ContainsControl;
 import org.httprobot.placeholder.string.ContainsManager;
@@ -41,75 +40,25 @@ import org.httprobot.placeholder.string.TryParse;
 import org.httprobot.placeholder.string.TryParseControl;
 import org.httprobot.placeholder.string.TryParseManager;
 
-public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
-	extends Manager<T> 
-		implements java.util.Map.Entry<K,InputField> {
+public abstract class AbstractPlaceholderManager<V,T extends Control<?>>
+	extends MappingManager<InputField, V, T> {
 
 	/**
 	 * -1728687948431462444L
 	 */
 	private static final long serialVersionUID = -1728687948431462444L;
-
-	K key;
-	InputField value;
 	
-	ContainsManager containsManager;
-	EqualsManager equalsManager;
-	TrimManager trimManager;
-	ReplaceManager replaceManager;
-	ConcatManager concatManager;
-	SubstringManager substringManager;
-	TryParseManager tryParseManager;
-	StartsWithManager startsWithManager;
-	EndsWithManager endsWithManager;
-	ToUpperCaseManager toUpperCaseManager;
-	ToLowerCaseManager toLowerCaseManager;
-	
-	@Override
-	public K getKey() {
-		return key;
-	}
-	public K setKey(K key) {
-		K oldKey = this.key;
-		this.key = key;
-		return oldKey;
-	}
-	@Override
-	public InputField getValue() {
-		return value;
-	}
-	@Override
-	public InputField setValue(InputField value) {
-		InputField oldValue = this.value;
-		if(value.getValue() != null) {
-			if(containsManager != null) {
-				containsManager.setKey(value.getValue().toString());
-			} else if(equalsManager != null) {
-				equalsManager.setKey(value.getValue().toString());
-			} else if(trimManager != null) {
-				trimManager.setKey(value.getValue().toString());
-			} else if(replaceManager != null) {
-				replaceManager.setKey(value.getValue().toString());
-			} else if(concatManager != null) {
-				concatManager.setKey(value.getValue().toString());
-			} else if(substringManager != null) {
-				substringManager.setKey(value.getValue().toString());
-			} else if(tryParseManager != null) {
-				tryParseManager.setKey(value.getValue().toString());
-			} else if(startsWithManager != null) {
-				startsWithManager.setKey(value.getValue().toString());
-			} else if(endsWithManager != null) {
-				endsWithManager.setKey(value.getValue().toString());
-			} else if(toUpperCaseManager != null) {
-				toUpperCaseManager.setKey(value.getValue().toString());
-			} else if(toLowerCaseManager != null) {
-				toLowerCaseManager.setKey(value.getValue().toString());
-			}
-		}
-		this.value = value;
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
+	protected ContainsManager containsManager;
+	protected EqualsManager equalsManager;
+	protected TrimManager trimManager;
+	protected ReplaceManager replaceManager;
+	protected ConcatManager concatManager;
+	protected SubstringManager substringManager;
+	protected TryParseManager tryParseManager;
+	protected StartsWithManager startsWithManager;
+	protected EndsWithManager endsWithManager;
+	protected ToUpperCaseManager toUpperCaseManager;
+	protected ToLowerCaseManager toLowerCaseManager;
 	
 	public AbstractPlaceholderManager() {
 		super();
@@ -117,44 +66,7 @@ public abstract class AbstractPlaceholderManager<K,T extends Control<?>>
 	public AbstractPlaceholderManager(AbstractPlaceholder message, Class<T> type, Manager<?> parent) {
 		super(message, type, parent);
 	}
-
-	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			
-			break;
-		case FINISHED:
-			if(e.getSource().equals(this)) {
-				if(containsManager != null) {
-					containsManager.setValue(value);
-				} else if(equalsManager != null) {
-					equalsManager.setValue(value);
-				} else if(trimManager != null) {
-					trimManager.setValue(value);
-				} else if(replaceManager != null) {
-					replaceManager.setValue(value);
-				} else if(concatManager != null) {
-					concatManager.setValue(value);
-				} else if(substringManager != null) {
-					substringManager.setValue(value);
-				} else if(tryParseManager != null) {
-					tryParseManager.setValue(value);
-				} else if(startsWithManager != null) {
-					startsWithManager.setValue(value);
-				} else if(endsWithManager != null) {
-					endsWithManager.setValue(value);
-				} else if(toUpperCaseManager != null) {
-					toUpperCaseManager.setValue(value);
-				} else if(toLowerCaseManager != null) {
-					toLowerCaseManager.setValue(value);
-				}
-			}
-			break;
-		default:
-			break;
-		}
-	}
+	
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 		switch (e.getCommand()) {

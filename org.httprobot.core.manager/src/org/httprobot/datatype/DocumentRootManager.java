@@ -127,7 +127,7 @@ public class DocumentRootManager
 					InputDocument rootTemplateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
 					getValue().put(rootTemplateDocument, currentResponse);
 					getDocumentLibrary().put(currentResponse, rootTemplateDocument);
-					fieldRootManager.put(currentResponse, rootTemplateDocument);
+					fieldRootManager.put(rootTemplateDocument, currentResponse);
 				}
 				catch (ClassCastException exception) {
 					throw new Error("DocumentRootManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
@@ -141,8 +141,8 @@ public class DocumentRootManager
 				currentDocument.addChildDocument(childDocument);
 			}
 			else if(e.getSource().equals(fieldRootManager)) {
-				for(HtmlPage htmlPage : fieldRootManager) {
-					InputDocument inputDocument = fieldRootManager.get(htmlPage);
+				for(InputDocument inputDocument : fieldRootManager) {
+					HtmlPage htmlPage = fieldRootManager.get(inputDocument);
 					getDocumentLibrary().get(htmlPage).addInputDocument(inputDocument);
 				}
 			}

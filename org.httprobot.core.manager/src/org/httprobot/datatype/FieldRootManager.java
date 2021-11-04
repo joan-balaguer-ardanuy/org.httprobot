@@ -13,7 +13,7 @@ import org.httprobot.event.ManagerEventArgs;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class FieldRootManager
-	extends MappingManager<HtmlPage, InputDocument, FieldRootControl> {
+	extends MappingManager<InputDocument, HtmlPage, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
@@ -30,16 +30,14 @@ public class FieldRootManager
 		fieldManagers = new LinkedHashMap<Field, FieldManager>();
 	}
 	@Override
-	public InputDocument put(HtmlPage key, InputDocument value) {
+	public HtmlPage put(InputDocument key, HtmlPage value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		for(Field field : fieldManagers.keySet()) {
 			FieldManager fieldManager = fieldManagers.get(field);
 			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByUUID(field.getUuid());
-//			fieldManager.put(key, inputField);
-			fieldManager.setKey(key);
-			fieldManager.setValue(inputField);
+			fieldManager.put(inputField, value);
 		}
 		return super.put(key, value);
 	}
