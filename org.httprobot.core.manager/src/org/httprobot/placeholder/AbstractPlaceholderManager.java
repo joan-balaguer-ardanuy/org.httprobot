@@ -40,8 +40,8 @@ import org.httprobot.placeholder.string.TryParse;
 import org.httprobot.placeholder.string.TryParseControl;
 import org.httprobot.placeholder.string.TryParseManager;
 
-public abstract class AbstractPlaceholderManager<V,T extends Control<?>>
-	extends MappingManager<InputField, V, T> {
+public abstract class AbstractPlaceholderManager<K, V, T extends Control<?>>
+	extends MappingManager<K, V, T> {
 
 	/**
 	 * -1728687948431462444L

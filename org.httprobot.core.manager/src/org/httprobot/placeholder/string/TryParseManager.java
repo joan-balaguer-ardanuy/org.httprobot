@@ -42,9 +42,8 @@ public class TryParseManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		TryParse tryParse = getControl().getMessage();
 		
-		switch (tryParse.getFieldType()) {
+		switch (getControl().getMessage().getFieldType()) {
 		case BASE64:
 			key.setValue(Base64.class.cast(value));
 			break;

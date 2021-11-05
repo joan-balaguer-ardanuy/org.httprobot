@@ -8,7 +8,7 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class HttpAddressManager 
-	extends AbstractPlaceholderManager<URL, HttpAddressControl> {
+	extends AbstractPlaceholderManager<InputField, URL, HttpAddressControl> {
 
 	/**
 	 * 5782528861553476045L

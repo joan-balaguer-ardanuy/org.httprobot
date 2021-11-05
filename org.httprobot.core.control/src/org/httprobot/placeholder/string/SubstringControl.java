@@ -1,6 +1,5 @@
 package org.httprobot.placeholder.string;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ControlListener;
@@ -17,25 +16,7 @@ public final class SubstringControl
 	 * -8786207254600689526L
 	 */
 	private static final long serialVersionUID = -8786207254600689526L;
-	
-	StartIndexControl startIndexControl;
-	EndIndexControl endIndexControl;
-	
-	@XmlElement
-	public StartIndexControl getStartIndexControl() {
-		return startIndexControl;
-	}
-	public void setStartIndexControl(StartIndexControl startIndexControl) {
-		this.startIndexControl = startIndexControl;
-	}
-	@XmlElement
-	public EndIndexControl getEndIndexControl() {
-		return endIndexControl;
-	}
-	public void setEndIndexControl(EndIndexControl endIndexControl) {
-		this.endIndexControl = endIndexControl;
-	}
-	
+		
 	public SubstringControl() {
 		super();
 		setMessage(new Substring());

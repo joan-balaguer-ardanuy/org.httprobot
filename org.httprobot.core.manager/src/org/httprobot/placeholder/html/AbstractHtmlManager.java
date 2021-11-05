@@ -1,16 +1,12 @@
 package org.httprobot.placeholder.html;
 
-import java.util.Set;
-
 import org.httprobot.Control;
 import org.httprobot.AbstractHtml;
 import org.httprobot.Manager;
 import org.httprobot.placeholder.AbstractPlaceholderManager;
 
-import com.gargoylesoftware.htmlunit.html.DomNode;
-
-public abstract class AbstractHtmlManager<T extends Control<?>>
-	extends AbstractPlaceholderManager<Set<DomNode>,T> {
+public abstract class AbstractHtmlManager<K,V,T extends Control<?>>
+	extends AbstractPlaceholderManager<K,V,T> {
 
 	/**
 	 * 957350695292804803L

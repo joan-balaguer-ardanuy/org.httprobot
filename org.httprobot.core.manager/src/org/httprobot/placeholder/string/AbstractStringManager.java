@@ -8,7 +8,7 @@ import org.httprobot.AbstractString;
 import org.httprobot.placeholder.AbstractPlaceholderManager;
 
 public abstract class AbstractStringManager<T extends Control<?>>
-	extends AbstractPlaceholderManager<String,T> {
+	extends AbstractPlaceholderManager<InputField, String,T> {
 
 	/**
 	 * 9016980694923790707L
