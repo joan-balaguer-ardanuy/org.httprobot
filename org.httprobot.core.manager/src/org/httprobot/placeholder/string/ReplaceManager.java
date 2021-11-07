@@ -38,7 +38,7 @@ public final class ReplaceManager
 		setKey(key);
 		setValue(value);
 		Replace message = getControl().getMessage();
-		key.setValue(value.replace(message.getOldCharacter(), message.getNewCharacter()));
+		key.setValue(value.replace(message.getOldString(), message.getNewString()));
 		return super.put(key, key.getValue().toString());
 	}
 }

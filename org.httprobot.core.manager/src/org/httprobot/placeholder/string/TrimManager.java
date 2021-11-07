@@ -7,7 +7,7 @@ import org.httprobot.Manager;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public class TrimManager 
+public final class TrimManager 
 	extends AbstractStringManager<TrimControl> {
 
 	/**

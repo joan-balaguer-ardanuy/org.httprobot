@@ -9,7 +9,7 @@ import org.httprobot.event.ManagerEventArgs;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 
 public class AnchorManager
-	extends AbstractHtmlManager<InputField, Set<DomNode> ,AnchorControl>{
+	extends AbstractHtmlManager<InputField, Set<DomNode>, AnchorControl>{
 
 	/**
 	 * 2578347858674092447L

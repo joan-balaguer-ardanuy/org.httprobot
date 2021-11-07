@@ -29,10 +29,10 @@ public final class ReplaceControl
 		super.OnControlInitialized(e);
 		if(e.getSource().equals(this)) {
 			Replace replace = Replace.class.cast(e.getMessage());
-			if(replace.getOldCharacter() == null) {
+			if(replace.getOldString() == null) {
 				throw new Error("ReplaceControl.OnControlInitialized: OldString XML element message is missing.");
 			}
-			if(replace.getNewCharacter() == null) {
+			if(replace.getNewString() == null) {
 				throw new Error("ReplaceControl.OnControlInitialized: NewString XML element message is missing.");
 			}
 		}
@@ -44,13 +44,13 @@ public final class ReplaceControl
 
 			Replace replace = Replace.class.cast(e.getMessage());
 
-			if (replace.getOldCharacter() != null) {
-				put(Data.OLD_STRING, replace.getOldCharacter());
+			if (replace.getOldString() != null) {
+				put(Data.OLD_STRING, replace.getOldString());
 			} else {
 				throw new Error("ReplaceControl.OnControlInitialized: OldString XML message element expected.");
 			}
-			if (replace.getNewCharacter() != null) {
-				put(Data.NEW_STRING, replace.getNewCharacter());
+			if (replace.getNewString() != null) {
+				put(Data.NEW_STRING, replace.getNewString());
 			} else {
 				throw new Error("ReplaceControl.OnControlInitialized: NewString XML message element expected.");
 			}

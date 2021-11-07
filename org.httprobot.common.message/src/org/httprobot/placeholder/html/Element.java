@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractHtml;
 import org.httprobot.event.MessageEventArgs;
+import org.httprobot.unit.IsInstance;
 
 @XmlRootElement
 public final class Element extends AbstractHtml {
@@ -18,6 +19,9 @@ public final class Element extends AbstractHtml {
 	String nodeName;
 	String tagName;
 	String id;
+	
+	Element element;
+	IsInstance isInstance;
 	
 	@XmlElement
 	public String getXPath() {

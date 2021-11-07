@@ -52,7 +52,6 @@ public final class ActionControl
 	
 	public ActionControl() {
 		super();
-		setMessage(new Action());
 	}
 	public ActionControl(Action message, ControlListener parent) {
 		super(message, parent);

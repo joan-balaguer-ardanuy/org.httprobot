@@ -59,8 +59,6 @@ public class ActionManager
 			}
 		}
 		keySet().add(key);
-		setKey(key);
-		setValue(value);
 		
 		for(HtmlAnchor anchor : key.getAnchors()) {
 			String hrefAttribute = anchor.getHrefAttribute();

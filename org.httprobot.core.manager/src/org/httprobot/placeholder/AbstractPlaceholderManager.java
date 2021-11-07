@@ -4,7 +4,6 @@ import org.httprobot.Control;
 import org.httprobot.Manager;
 import org.httprobot.MappingManager;
 import org.httprobot.AbstractPlaceholder;
-import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.placeholder.string.Contains;
 import org.httprobot.placeholder.string.ContainsControl;

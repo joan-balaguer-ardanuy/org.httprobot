@@ -112,6 +112,8 @@ public class WebLoaderManager
 	}
 	public HtmlPage getPage(WebRequest request) {
 		client = new Client(getControl().getMessage().getBrowserVersion());
+		client.getOptions().setUseInsecureSSL(true);
+		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		try {
 			HtmlPage output = client.getPage(request);
 			client.close();
