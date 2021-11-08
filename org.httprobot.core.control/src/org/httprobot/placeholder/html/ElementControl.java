@@ -21,6 +21,7 @@ public final class ElementControl
 	
 	IsInstanceControl isInstanceControl;
 	ElementControl elementControl;
+	ContainsElementControl containsElementControl;
 	
 	@Override
 	@XmlElement
@@ -43,12 +44,27 @@ public final class ElementControl
 		super.OnControlInitialized(e);
 		if (e.getSource().equals(this)) {
 			Element element = Element.class.cast(e.getMessage());
-			if (element.getNodeName() == null ? 
-					element.getXPath() == null ? 
-							element.getTagName() == null
-							: false : false) {
-				throw new Error("ElementControl.OnControlInitialized: XML message is inconsistent.");
+			if (element.getXPath() == null) {
+				throw new Error("ElementControl.OnControlInitialized: XPath expression is missing.");
 			}
+			if(element.getIsInstance() != null) {
+				new IsInstanceControl(element.getIsInstance(), this);
+			}
+			if(element.getContainsElement() != null) {
+				new ContainsElementControl(element.getContainsElement(), this);
+			}
+			if(element.getElement() != null) {
+				new ElementControl(element.getElement(), this);
+			}
+		} else if(e.getSource() instanceof IsInstanceControl) {
+			isInstanceControl = IsInstanceControl.class.cast(e.getSource());
+			addChildControl(isInstanceControl);
+		} else if(e.getSource() instanceof ElementControl) {
+			elementControl = ElementControl.class.cast(e.getSource());
+			addChildControl(elementControl);
+		} else if(e.getSource() instanceof ContainsElementControl) {
+			containsElementControl = ContainsElementControl.class.cast(e.getSource());
+			addChildControl(containsElementControl);
 		}
 	}
 	@Override
@@ -56,9 +72,7 @@ public final class ElementControl
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
 			Element element = Element.class.cast(e.getMessage());
-			put(Data.NODE_NAME, element.getNodeName());
 			put(Data.XPATH, element.getXPath());
-			put(Data.TAG_NAME, element.getTagName());
 			
 			//Check if control has child XML message controls
 			if(hasChildControls())
@@ -72,6 +86,9 @@ public final class ElementControl
 					if(control instanceof IsInstanceControl ?
 							isInstanceControl.equals(control) : false) {
 						isInstanceControl.loadControl();
+					} else if(control instanceof ContainsElementControl ?
+							containsElementControl.equals(control) : false) {
+						containsElementControl.loadControl();
 					} else if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) {
 						elementControl.loadControl();

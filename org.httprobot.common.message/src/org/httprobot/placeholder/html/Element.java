@@ -16,12 +16,10 @@ public final class Element extends AbstractHtml {
 	private static final long serialVersionUID = -6130911656253160686L;
 	
 	String xPath;
-	String nodeName;
-	String tagName;
-	String id;
 	
 	Element element;
 	IsInstance isInstance;
+	ContainsElement containsElement;
 	
 	@XmlElement
 	public String getXPath() {
@@ -31,27 +29,27 @@ public final class Element extends AbstractHtml {
 		this.xPath = xPath;
 	}
 	@XmlElement
-	public String getNodeName() {
-		return nodeName;
+	public Element getElement() {
+		return element;
 	}
-	public void setNodeName(String nodeName) {
-		this.nodeName = nodeName;
-	}
-	@XmlElement
-	public String getTagName() {
-		return tagName;
-	}
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
+	public void setElement(Element element) {
+		this.element = element;
 	}
 	@XmlElement
-	public String getId() {
-		return id;
+	public IsInstance getIsInstance() {
+		return isInstance;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setIsInstance(IsInstance isInstance) {
+		this.isInstance = isInstance;
 	}
-
+	@XmlElement
+	public ContainsElement getContainsElement() {
+		return containsElement;
+	}
+	public void setContainsElement(ContainsElement containsElement) {
+		this.containsElement = containsElement;
+	}
+	
 	public Element() {
 		super();
 	}
@@ -62,8 +60,6 @@ public final class Element extends AbstractHtml {
 		
 		Element element = Element.class.cast(e.getSource());
 		setXPath(element.getXPath());
-		setNodeName(element.getNodeName());
-		setTagName(element.getTagName());
-		setId(element.getId());
+		
 	}
 }
