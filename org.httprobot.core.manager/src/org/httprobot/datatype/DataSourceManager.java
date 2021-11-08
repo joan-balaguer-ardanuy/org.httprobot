@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -70,7 +71,7 @@ public final class DataSourceManager
 	public DataSourceManager() {
 		super();
 	}
-	public DataSourceManager(DataSource message, Manager<?> parent) {
+	public DataSourceManager(DataSource message, ManagerListener parent) {
 		super(message, DataSourceControl.class, parent);
 	}
 

@@ -1,7 +1,7 @@
 package org.httprobot.placeholder.string;
 
 import org.httprobot.Control;
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.AbstractString;
@@ -18,7 +18,7 @@ public abstract class AbstractStringManager<T extends Control<?>>
 	public AbstractStringManager() {
 		super();
 	}
-	public AbstractStringManager(AbstractString message, Class<T> type, Manager<?> parent) {
+	public AbstractStringManager(AbstractString message, Class<T> type, ManagerListener parent) {
 		super(message, type, parent);
 	}
 	

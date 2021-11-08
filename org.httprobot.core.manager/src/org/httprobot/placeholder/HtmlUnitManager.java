@@ -2,7 +2,7 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -20,7 +20,7 @@ public final class HtmlUnitManager
 	
 	public HtmlUnitManager() {
 	}
-	public HtmlUnitManager(HtmlUnit message, Manager<?> parent) {
+	public HtmlUnitManager(HtmlUnit message, ManagerListener parent) {
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {

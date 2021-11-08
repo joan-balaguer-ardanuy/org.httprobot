@@ -1,6 +1,7 @@
 package org.httprobot.content;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -36,7 +37,7 @@ public class FieldRefManager
 	public FieldRefManager() {
 		super();
 	}
-	public FieldRefManager(FieldRef message, Manager<?> parent) {
+	public FieldRefManager(FieldRef message, ManagerListener parent) {
 		super(message, FieldRefControl.class, parent);
 	}
 	

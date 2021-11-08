@@ -1,13 +1,17 @@
 package org.httprobot;
 
+import java.util.Map;
+
 import org.httprobot.config.Configuration;
 import org.httprobot.config.ConfigurationManager;
 import org.httprobot.config.ServiceConnection;
 import org.httprobot.config.ServiceConnectionManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
+import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.FieldRef;
 import org.httprobot.data.DocumentLibrary;
+import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.datatype.DataSource;
@@ -27,6 +31,55 @@ public class Precursor
 	ServiceConnection serviceConnection;
 	ConfigurationManager configurationManager;
 	Configuration configuration;
+	
+	@Override
+	public ManagerListener getParent() {
+		return this;
+	}
+	@Override
+	public void setParent(ManagerListener parent) {
+		
+	}
+	@Override
+	public ContentTypeRoot getContentTypeRoot() {
+		return configurationManager.getContentTypeRoot();
+	}
+	@Override
+	public void setContentTypeRoot(ContentTypeRoot contentTypeRoot) {
+		configurationManager.setContentTypeRoot(contentTypeRoot);
+	}
+	@Override
+	public DocumentLibrary getDocumentLibrary() {
+		return configurationManager.getDocumentLibrary();
+	}
+	@Override
+	public void setDocumentLibrary(DocumentLibrary documentLibrary) {
+		configurationManager.setDocumentLibrary(documentLibrary);
+	}
+	@Override
+	public TemplateLibrary getTemplateLibrary() {
+		return configurationManager.getTemplateLibrary();
+	}
+	@Override
+	public void setTemplateLibrary(TemplateLibrary templateLibrary) {
+		configurationManager.setTemplateLibrary(templateLibrary);
+	}
+	@Override
+	public Map<String, String> getConstants() {
+		return configurationManager.getConstants();
+	}
+	@Override
+	public void setConstants(Map<String, String> constants) {
+		configurationManager.setConstants(constants);
+	}
+	@Override
+	public Map<String, String> getBannedWords() {
+		return configurationManager.getBannedWords();
+	}
+	@Override
+	public void setBannedWords(Map<String, String> bannedWords) {
+		configurationManager.setBannedWords(bannedWords);
+	}
 	
 	public Precursor() {
 		super();
@@ -85,4 +138,5 @@ public class Precursor
 			break;
 		}
 	}
+	
 }

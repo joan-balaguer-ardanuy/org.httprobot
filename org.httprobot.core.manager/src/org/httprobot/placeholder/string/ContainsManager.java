@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -28,7 +28,7 @@ public final class ContainsManager
 	public ContainsManager() {
 		super();
 	}
-	public ContainsManager(Contains message, Manager<?> parent) {
+	public ContainsManager(Contains message, ManagerListener parent) {
 		super(message, ContainsControl.class, parent);
 	}
 	

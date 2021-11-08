@@ -1,6 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ServerUrlManager 
@@ -28,7 +29,7 @@ public class ServerUrlManager
 	public ServerUrlManager() {
 		super();
 	}
-	public ServerUrlManager(ServerUrl message, Manager<?> parent) {
+	public ServerUrlManager(ServerUrl message, ManagerListener parent) {
 		super(message, ServerUrlControl.class, parent);
 	}
 	

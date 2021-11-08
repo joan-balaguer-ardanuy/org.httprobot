@@ -1,7 +1,7 @@
 package org.httprobot.unit;
 
 import org.httprobot.Enums.Data;
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -19,7 +19,7 @@ public class PaginatorManager
 	public PaginatorManager() {
 	
 	}
-	public PaginatorManager(Paginator message, Manager<?> parent) {
+	public PaginatorManager(Paginator message, ManagerListener parent) {
 		super(message, PaginatorControl.class, parent);
 	}
 

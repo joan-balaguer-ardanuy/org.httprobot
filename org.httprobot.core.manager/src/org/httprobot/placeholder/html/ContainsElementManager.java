@@ -2,7 +2,7 @@ package org.httprobot.placeholder.html;
 
 import java.util.List;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 import com.gargoylesoftware.htmlunit.html.DomNode;
@@ -18,7 +18,7 @@ public class ContainsElementManager
 	public ContainsElementManager() {
 		super();
 	}
-	public ContainsElementManager(ContainsElement message, Manager<?> parent) {
+	public ContainsElementManager(ContainsElement message, ManagerListener parent) {
 		super(message, ContainsElementControl.class, parent);
 	}
 

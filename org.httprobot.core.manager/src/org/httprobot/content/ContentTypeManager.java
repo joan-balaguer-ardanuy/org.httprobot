@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
@@ -31,7 +32,7 @@ public class ContentTypeManager
 	public ContentTypeManager() {
 		super();
 	}
-	public ContentTypeManager(ContentType message, Manager<?> parent) {
+	public ContentTypeManager(ContentType message, ManagerListener parent) {
 		super(message, ContentTypeControl.class, parent);
 		contentTypeRefCount = 0;
 		contentTypeManagers = new LinkedHashMap<ContentTypeRef, ContentTypeManager>();

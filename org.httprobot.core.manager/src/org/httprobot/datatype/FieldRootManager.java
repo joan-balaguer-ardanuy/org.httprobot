@@ -3,7 +3,7 @@ package org.httprobot.datatype;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
@@ -25,7 +25,7 @@ public class FieldRootManager
 	public FieldRootManager() {
 		super();
 	}
-	public FieldRootManager(FieldRoot message, Manager<?> parent) {
+	public FieldRootManager(FieldRoot message, ManagerListener parent) {
 		super(message, FieldRootControl.class, parent);
 		fieldManagers = new LinkedHashMap<Field, FieldManager>();
 	}

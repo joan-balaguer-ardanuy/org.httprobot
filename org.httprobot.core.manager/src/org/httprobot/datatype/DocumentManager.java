@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.httprobot.Enums.Data;
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -44,7 +44,7 @@ public class DocumentManager
 	public DocumentManager() {
 		super();
 	}
-	public DocumentManager(Document message, Manager<?> parent) {
+	public DocumentManager(Document message, ManagerListener parent) {
 		super(message, DocumentControl.class, parent);
 	}
 	

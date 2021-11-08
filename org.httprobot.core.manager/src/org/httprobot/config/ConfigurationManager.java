@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.Enums.Data;
 import org.httprobot.MappingManager;
 import org.httprobot.content.ContentTypeRoot;
@@ -48,7 +48,7 @@ public final class ConfigurationManager
 		setBannedWords(new LinkedHashMap<String,String>());
 		setConstants(new LinkedHashMap<String,String>());
 	}
-	public ConfigurationManager(Configuration message, Manager<?> parent) {
+	public ConfigurationManager(Configuration message, ManagerListener parent) {
 		super(message, ConfigurationControl.class, parent);
 		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceManager>();
 		setTemplateLibrary(new TemplateLibrary());

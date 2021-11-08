@@ -3,7 +3,7 @@ package org.httprobot.placeholder.html;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -20,7 +20,7 @@ public class PageManager
 	public PageManager() {
 		super();
 	}
-	public PageManager(Page message, Manager<?> parent) {
+	public PageManager(Page message, ManagerListener parent) {
 		super(message, PageControl.class, parent);
 	}
 	@Override

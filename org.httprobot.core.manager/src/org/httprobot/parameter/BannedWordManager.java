@@ -1,6 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class BannedWordManager
@@ -27,7 +28,7 @@ public class BannedWordManager
 	
 	public BannedWordManager() {
 	}
-	public BannedWordManager(BannedWord message, Manager<?> parent) {
+	public BannedWordManager(BannedWord message, ManagerListener parent) {
 		super(message, BannedWordControl.class, parent);
 	}
 	@Override

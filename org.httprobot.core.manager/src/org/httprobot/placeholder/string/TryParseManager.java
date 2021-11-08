@@ -8,7 +8,7 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -33,7 +33,7 @@ public class TryParseManager
 	public TryParseManager() {
 		super();
 	}
-	public TryParseManager(TryParse message, Manager<?> parent) {
+	public TryParseManager(TryParse message, ManagerListener parent) {
 		super(message, TryParseControl.class, parent);
 	}
 

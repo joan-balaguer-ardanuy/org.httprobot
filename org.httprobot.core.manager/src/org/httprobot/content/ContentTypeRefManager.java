@@ -1,6 +1,7 @@
 package org.httprobot.content;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -35,7 +36,7 @@ public class ContentTypeRefManager
 	public ContentTypeRefManager() {
 		super();
 	}
-	public ContentTypeRefManager(ContentTypeRef message, Manager<?> parent) {
+	public ContentTypeRefManager(ContentTypeRef message, ManagerListener parent) {
 		super(message, ContentTypeRefControl.class, parent);
 	}
 	

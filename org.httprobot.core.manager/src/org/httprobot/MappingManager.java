@@ -52,7 +52,7 @@ public abstract class MappingManager<K,V,T extends Control<?>>
 	public MappingManager() {
 		super();
 	}
-	public MappingManager(XML message, Class<T> type, Manager<?> parent) {
+	public MappingManager(XML message, Class<T> type, ManagerListener parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

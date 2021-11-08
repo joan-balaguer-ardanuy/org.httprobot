@@ -34,7 +34,7 @@ public abstract class Manager<T extends Control<?>>
 	int currentManagerIndex;
 	List<ManagerListener> childManagers;
 
-	Manager<?> parent;
+	ManagerListener parent;
 	
 	ContentTypeRoot contentTypeRoot;
 	DocumentLibrary documentLibrary;
@@ -44,10 +44,10 @@ public abstract class Manager<T extends Control<?>>
 	Map<String, String> parameterConstants;
 
 	@XmlTransient
-	public Manager<?> getParent() {
+	public ManagerListener getParent() {
 		return parent;
 	}
-	public void setParent(Manager<?> parent) {
+	public void setParent(ManagerListener parent) {
 		this.parent = parent;
 	}
 	public T getControl() {
@@ -122,7 +122,7 @@ public abstract class Manager<T extends Control<?>>
 		
 		addManagerListener(this);	
 	}
-	public Manager(XML message, Class<T> type, Manager<?> parent) {
+	public Manager(XML message, Class<T> type, ManagerListener parent) {
 		super(message.getUuid());
 
 		control = instance(type, message, this);
@@ -135,10 +135,7 @@ public abstract class Manager<T extends Control<?>>
 		childManagers = new ArrayList<ManagerListener>();
 		
 		addManagerListener(this);
-		
-		if(parent != null) {
-			addManagerListener(parent);
-		}
+		addManagerListener(parent);
 	}
 
 	public void addManagerListener(ManagerListener listener) {

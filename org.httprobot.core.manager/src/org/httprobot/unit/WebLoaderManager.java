@@ -5,7 +5,7 @@ import org.httprobot.MappingManager;
 import java.io.IOException;
 
 import org.httprobot.Enums.Data;
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.Client;
@@ -30,7 +30,7 @@ public class WebLoaderManager
 	public WebLoaderManager() {
 		super();
 	}
-	public WebLoaderManager(WebLoader message, Manager<?> parent) {
+	public WebLoaderManager(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
 	}

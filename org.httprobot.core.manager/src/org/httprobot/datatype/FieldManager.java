@@ -1,6 +1,6 @@
 package org.httprobot.datatype;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -26,7 +26,7 @@ public class FieldManager
 	public FieldManager() {
 		super();
 	}
-	public FieldManager(Field message, Manager<?> parent) {
+	public FieldManager(Field message, ManagerListener parent) {
 		super(message, FieldControl.class, parent);
 	}
 	

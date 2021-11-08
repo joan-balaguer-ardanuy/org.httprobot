@@ -2,7 +2,7 @@ package org.httprobot.placeholder;
 
 import java.net.URL;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -18,7 +18,7 @@ public class HttpAddressManager
 	public HttpAddressManager() {
 		super();
 	}
-	public HttpAddressManager(HttpAddress message, Manager<?> parent) {
+	public HttpAddressManager(HttpAddress message, ManagerListener parent) {
 		super(message, HttpAddressControl.class, parent);
 	}
 	@Override

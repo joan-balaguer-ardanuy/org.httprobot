@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -41,7 +41,7 @@ public class ActionManager
 		super();
 	}
 
-	public ActionManager(Action message, Manager<?> parent) {
+	public ActionManager(Action message, ManagerListener parent) {
 		super(message, ActionControl.class, parent);
 		
 		webLoaderManager = new WebLoaderManager(message.getWebLoader(), this);

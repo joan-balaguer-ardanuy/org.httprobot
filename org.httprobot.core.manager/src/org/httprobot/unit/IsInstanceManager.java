@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -15,7 +15,7 @@ public class IsInstanceManager
 	public IsInstanceManager() {
 		super();
 	}
-	public IsInstanceManager(IsInstance message, Manager<?> parent) {
+	public IsInstanceManager(IsInstance message, ManagerListener parent) {
 		super(message, IsInstanceControl.class, parent);
 	}
 	@Override

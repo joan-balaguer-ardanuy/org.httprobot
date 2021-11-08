@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
@@ -67,7 +68,7 @@ public final class ContentTypeRootManager
 	public ContentTypeRootManager() {
 		super();
 	}
-	public ContentTypeRootManager(ContentTypeRoot message, Manager<?> parent) {
+	public ContentTypeRootManager(ContentTypeRoot message, ManagerListener parent) {
 		super(message, ContentTypeRootControl.class, parent);
 		contentTypeIndex = new LinkedHashMap<ContentTypeRef, ContentType>();
 		

@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -43,7 +43,7 @@ public final class ElementManager
 	public ElementManager() {
 		super();
 	}
-	public ElementManager(Element message, Manager<?> parent) {
+	public ElementManager(Element message, ManagerListener parent) {
 		super(message, ElementControl.class, parent);
 	}
 	@Override

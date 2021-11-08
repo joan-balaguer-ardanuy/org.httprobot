@@ -2,7 +2,7 @@ package org.httprobot.placeholder.html;
 
 import java.util.Set;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -19,7 +19,7 @@ public class AnchorManager
 	public AnchorManager() {
 		super();
 	}
-	public AnchorManager(Anchor message, Manager<?> parent) {
+	public AnchorManager(Anchor message, ManagerListener parent) {
 		super(message, AnchorControl.class, parent);
 	}
 	@Override

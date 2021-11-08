@@ -1,6 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class StartUrlManager
@@ -30,7 +31,7 @@ public class StartUrlManager
 	public StartUrlManager() {
 		super();
 	}
-	public StartUrlManager(StartUrl message, Manager<?> parent) {
+	public StartUrlManager(StartUrl message, ManagerListener parent) {
 		super(message, StartUrlControl.class, parent);
 	}
 	

@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -50,7 +51,7 @@ public final class ServiceConnectionManager
 	public ServiceConnectionManager() {
 		super();
 	}
-	public ServiceConnectionManager(ServiceConnection message, Manager<?> parent) {
+	public ServiceConnectionManager(ServiceConnection message, ManagerListener parent) {
 		super(message, ServiceConnectionControl.class, parent);
 	}
 	

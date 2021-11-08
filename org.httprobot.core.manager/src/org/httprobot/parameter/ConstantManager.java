@@ -1,6 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ConstantManager 
@@ -27,7 +28,7 @@ public class ConstantManager
 	
 	public ConstantManager() {
 	}
-	public ConstantManager(Constant message, Manager<?> parent) {
+	public ConstantManager(Constant message, ManagerListener parent) {
 		super(message, ConstantControl.class, parent);
 	}
 	

@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -28,7 +28,7 @@ public final class SubstringManager
 	public SubstringManager() {
 		super();
 	}
-	public SubstringManager(Substring message, Manager<?> parent) {
+	public SubstringManager(Substring message, ManagerListener parent) {
 		super(message, SubstringControl.class, parent);
 	}
 	
