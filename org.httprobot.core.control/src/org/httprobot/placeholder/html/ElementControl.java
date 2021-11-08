@@ -20,6 +20,7 @@ public final class ElementControl
 	private static final long serialVersionUID = -1055172865009492574L;
 	
 	IsInstanceControl isInstanceControl;
+	ContainsElementControl containsElementControl;
 	ElementControl elementControl;
 	
 	@Override
@@ -49,6 +50,24 @@ public final class ElementControl
 							: false : false) {
 				throw new Error("ElementControl.OnControlInitialized: XML message is inconsistent.");
 			}
+			if(element.getElement() != null) {
+				new ElementControl(element.getElement(), this);
+			}
+			if(element.getContainsElement() != null) {
+				new ContainsElementControl(element.getContainsElement(), this);
+			}
+			if(element.getIsInstance() != null) {
+				new IsInstanceControl(element.getIsInstance(), this);
+			}
+		} else if(e.getSource() instanceof IsInstanceControl) {
+			isInstanceControl = IsInstanceControl.class.cast(e.getSource());
+			addChildControl(isInstanceControl);
+		} else if(e.getSource() instanceof ContainsElementControl) {
+			containsElementControl = ContainsElementControl.class.cast(e.getSource());
+			addChildControl(containsElementControl);
+		} else if(e.getSource() instanceof ElementControl) {
+			elementControl = ElementControl.class.cast(e.getSource());
+			addChildControl(elementControl);
 		}
 	}
 	@Override
@@ -75,6 +94,9 @@ public final class ElementControl
 					} else if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) {
 						elementControl.loadControl();
+					} else if(control instanceof ContainsElementControl ?
+							containsElementControl.equals(control) : false) {
+						containsElementControl.loadControl();
 					}
 				}
 			}
