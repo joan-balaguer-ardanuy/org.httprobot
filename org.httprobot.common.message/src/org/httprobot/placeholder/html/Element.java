@@ -21,7 +21,6 @@ public final class Element extends AbstractHtml {
 	String id;
 	
 	Element element;
-	ContainsElement containsElement;
 	IsInstance isInstance;
 	
 	@XmlElement
@@ -52,28 +51,7 @@ public final class Element extends AbstractHtml {
 	public void setId(String id) {
 		this.id = id;
 	}
-	@XmlElement
-	public Element getElement() {
-		return element;
-	}
-	public void setElement(Element element) {
-		this.element = element;
-	}
-	@XmlElement
-	public ContainsElement getContainsElement() {
-		return containsElement;
-	}
-	public void setContainsElement(ContainsElement containsElement) {
-		this.containsElement = containsElement;
-	}
-	@XmlElement
-	public IsInstance getIsInstance() {
-		return isInstance;
-	}
-	public void setIsInstance(IsInstance isInstance) {
-		this.isInstance = isInstance;
-	}
-	
+
 	public Element() {
 		super();
 	}

@@ -51,7 +51,7 @@ public final class ContainsElementControl
 			ContainsElement element = ContainsElement.class.cast(e.getMessage());
 			put(Data.XPATH, element.getXPath());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.CONTAINS_ELEMENT_CONTROL_LOADED));
+			CommandLineEvent(new CommandEventArgs(this, Command.ELEMENT_CONTROL_LOADED));
 		}
 	}
 }
