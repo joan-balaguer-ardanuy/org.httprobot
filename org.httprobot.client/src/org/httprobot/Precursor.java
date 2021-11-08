@@ -87,8 +87,7 @@ public class Precursor
 	public Precursor(ServiceConnection message) {
 		super(message.getUuid());
 		serviceConnection = message;
-		serviceConnectionManager = new ServiceConnectionManager(message, null);
-		serviceConnectionManager.addManagerListener(this);
+		serviceConnectionManager = new ServiceConnectionManager(message, this);
 	}
 	@Override
 	public void start() {
@@ -129,8 +128,7 @@ public class Precursor
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
 				configuration = webService.getConfiguration();
-				configurationManager = new ConfigurationManager(configuration, null);
-				configurationManager.addManagerListener(this);
+				configurationManager = new ConfigurationManager(configuration, this);
 				configurationManager.start();
 			}
 			break;

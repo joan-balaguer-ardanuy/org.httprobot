@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.MappingManager;
 import org.httprobot.data.document.InputDocument;
