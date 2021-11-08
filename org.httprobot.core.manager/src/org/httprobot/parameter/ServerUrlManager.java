@@ -1,11 +1,11 @@
 package org.httprobot.parameter;
 
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ServerUrlManager 
-	extends Manager<ServerUrlControl>
+	extends AbstractManager<ServerUrlControl>
 		implements java.util.Map.Entry<String, String> {
 
 	/**

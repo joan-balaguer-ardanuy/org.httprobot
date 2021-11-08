@@ -8,7 +8,7 @@ import java.util.Set;
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.parameter.BannedWord;
@@ -23,7 +23,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class ActionManager
-	extends MappingManager<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends Manager<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L

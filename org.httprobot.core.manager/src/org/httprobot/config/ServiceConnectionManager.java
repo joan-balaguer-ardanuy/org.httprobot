@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.net.WebService;
 
 @XmlRootElement
 public final class ServiceConnectionManager 
-	extends Manager<ServiceConnectionControl> 
+	extends AbstractManager<ServiceConnectionControl> 
 		implements java.util.Map.Entry<ServiceConnection, WebService> {
 
 	/**

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.Enums.Data;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.content.ContentTypeRootManager;
@@ -21,7 +21,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ConfigurationManager
-	extends MappingManager<DataSource, DocumentLibrary, ConfigurationControl> {
+	extends Manager<DataSource, DocumentLibrary, ConfigurationControl> {
 
 	/**
 	 * 634599347187276700L

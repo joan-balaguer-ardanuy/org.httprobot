@@ -2,7 +2,7 @@ package org.httprobot.placeholder;
 
 import org.httprobot.Control;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.AbstractPlaceholder;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.placeholder.string.Contains;
@@ -40,7 +40,7 @@ import org.httprobot.placeholder.string.TryParseControl;
 import org.httprobot.placeholder.string.TryParseManager;
 
 public abstract class AbstractPlaceholderManager<K, V, T extends Control<?>>
-	extends MappingManager<K, V, T> {
+	extends Manager<K, V, T> {
 
 	/**
 	 * -1728687948431462444L

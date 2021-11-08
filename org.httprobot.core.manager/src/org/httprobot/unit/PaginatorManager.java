@@ -2,14 +2,14 @@ package org.httprobot.unit;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.event.ManagerEventArgs;
 
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class PaginatorManager 
-	extends MappingManager<HtmlPage, HtmlAnchor, PaginatorControl> {
+	extends Manager<HtmlPage, HtmlAnchor, PaginatorControl> {
 
 	/**
 	 * 6281489078874071651L

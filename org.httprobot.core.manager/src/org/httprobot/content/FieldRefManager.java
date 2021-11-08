@@ -1,6 +1,6 @@
 package org.httprobot.content;
 
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.data.field.InputField;
@@ -8,7 +8,7 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class FieldRefManager 
-	extends Manager<FieldRefControl> 
+	extends AbstractManager<FieldRefControl> 
 		implements java.util.Map.Entry<FieldRef, InputField>{
 
 	/**

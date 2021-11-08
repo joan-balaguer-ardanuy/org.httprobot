@@ -1,7 +1,7 @@
 package org.httprobot.datatype;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.placeholder.HttpAddressManager;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class FieldManager
-	extends MappingManager<InputField, HtmlPage, FieldControl> {
+	extends Manager<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L

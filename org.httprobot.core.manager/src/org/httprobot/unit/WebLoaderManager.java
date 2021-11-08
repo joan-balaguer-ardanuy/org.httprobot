@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class WebLoaderManager
-	extends MappingManager<WebRequest, HtmlPage, WebLoaderControl> {
+	extends Manager<WebRequest, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L

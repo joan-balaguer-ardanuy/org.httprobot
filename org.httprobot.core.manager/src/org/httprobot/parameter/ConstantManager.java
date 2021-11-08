@@ -1,11 +1,11 @@
 package org.httprobot.parameter;
 
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ConstantManager 
-	extends Manager<ConstantControl> 
+	extends AbstractManager<ConstantControl> 
 		implements java.util.Map.Entry<String, String> {
 
 	/**

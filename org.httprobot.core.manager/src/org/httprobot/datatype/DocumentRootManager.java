@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.Manager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -26,7 +26,7 @@ import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class DocumentRootManager
-	extends MappingManager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
+	extends Manager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L

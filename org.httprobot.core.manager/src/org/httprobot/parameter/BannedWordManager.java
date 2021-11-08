@@ -1,11 +1,11 @@
 package org.httprobot.parameter;
 
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class BannedWordManager
-	extends Manager<BannedWordControl> 
+	extends AbstractManager<BannedWordControl> 
 		implements java.util.Map.Entry<String,String> {
 
 	/**

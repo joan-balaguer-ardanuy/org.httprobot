@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -32,7 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 @XmlRootElement
 public final class DataSourceManager 
-	extends Manager<DataSourceControl> 
+	extends AbstractManager<DataSourceControl> 
 		implements java.util.Map.Entry<ContentTypeRef, DocumentLibrary> {
 
 	/**

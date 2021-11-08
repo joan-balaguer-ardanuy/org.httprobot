@@ -1,13 +1,13 @@
 package org.httprobot.content;
 
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ContentTypeRefManager 
-	extends Manager<ContentTypeRefControl> 
+	extends AbstractManager<ContentTypeRefControl> 
 		implements java.util.Map.Entry<ContentTypeRef, ContentType> {
 
 	/**

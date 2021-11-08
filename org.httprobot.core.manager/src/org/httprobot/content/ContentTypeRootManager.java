@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.Manager;
+import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
@@ -19,7 +19,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootManager 
-	extends Manager<ContentTypeRootControl>
+	extends AbstractManager<ContentTypeRootControl>
 		implements java.util.Map.Entry<ContentTypeRoot, TemplateLibrary> {
 
 	/**
