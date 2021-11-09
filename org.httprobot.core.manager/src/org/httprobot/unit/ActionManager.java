@@ -2,6 +2,7 @@ package org.httprobot.unit;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,8 +18,10 @@ import org.httprobot.parameter.BannedWordManager;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
+import org.httprobot.placeholder.html.ElementManager;
 
 import com.gargoylesoftware.htmlunit.WebRequest;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -33,9 +36,12 @@ public class ActionManager
 	WebLoaderManager webLoaderManager;
 	Map<Constant, ConstantManager> constantManagers;
 	Map<BannedWord, BannedWordManager> bannedWordManagers;
+	ElementManager elementManager;
 	
 	WebRequest currentOutputRequest;
 	HtmlPage currentOutputPage;
+
+	Set<HtmlAnchor> anchors;
 	
 	public ActionManager() {
 		super();
@@ -45,6 +51,7 @@ public class ActionManager
 		super(message, ActionControl.class, parent);
 		
 		webLoaderManager = new WebLoaderManager(message.getWebLoader(), this);
+		elementManager = new ElementManager(message.getElement(), this);
 	}
 	@Override
 	public Set<HtmlPage> put(HtmlPage key, Set<HtmlPage> value) {
@@ -60,7 +67,9 @@ public class ActionManager
 		}
 		keySet().add(key);
 		
-		for(HtmlAnchor anchor : key.getAnchors()) {
+		elementManager.put(key, new LinkedHashSet<DomNode>());
+		
+		for(HtmlAnchor anchor : anchors) {
 			String hrefAttribute = anchor.getHrefAttribute();
 			if(hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
 				if(!containsBannedWord(hrefAttribute)) {
@@ -176,6 +185,18 @@ public class ActionManager
 				ManagerEvent(new ManagerEventArgs(this, 
 						new Node<WebRequest, HtmlPage>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
+			}
+			break;
+		case DOM_SET_COMPLETED:
+			if(e.getSource().equals(elementManager)) {
+				@SuppressWarnings("unchecked")
+				Set<DomNode> set = (Set<DomNode>) e.getValue();
+				
+				for(DomNode node : set) {
+					if(node instanceof HtmlAnchor) {
+						anchors.add((HtmlAnchor) node);
+					}
+				}
 			}
 			break;
 		default:

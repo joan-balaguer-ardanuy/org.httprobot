@@ -49,7 +49,8 @@ public class Enums {
 		PAGE_LOADED,
 		STARTED,
 		SYSTEM_CONTENT_TYPE_ROOT_LOADED,
-		ACTION_WEB_LOADED
+		ACTION_WEB_LOADED,
+		DOM_SET_COMPLETED
 	}
 	public enum Command {
 		SET_PATH,

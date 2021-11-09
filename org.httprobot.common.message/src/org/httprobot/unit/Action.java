@@ -9,6 +9,7 @@ import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.BannedWord;
 import org.httprobot.parameter.Constant;
+import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
 public final class Action extends AbstractUnit {
@@ -22,6 +23,7 @@ public final class Action extends AbstractUnit {
 	String httpAddress;
 	String method;
 	WebLoader webLoader;
+	Element element;
 	LinkedHashSet<Constant> constant;
 	LinkedHashSet<BannedWord> bannedWord;
 	
@@ -66,6 +68,13 @@ public final class Action extends AbstractUnit {
 	}
 	public void setBannedWord(LinkedHashSet<BannedWord> bannedWord) {
 		this.bannedWord = bannedWord;
+	}
+	@XmlElement
+	public Element getElement() {
+		return element;
+	}
+	public void setElement(Element element) {
+		this.element = element;
 	}
 	
 	public Action() {

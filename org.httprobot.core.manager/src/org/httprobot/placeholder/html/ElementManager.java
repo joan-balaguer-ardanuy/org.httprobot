@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.Enums.Data;
+import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.unit.IsInstance;
@@ -113,7 +114,9 @@ public final class ElementManager
 			
 			break;
 		case FINISHED:
-			
+			if(e.getSource().equals(elementManager)) {
+				ManagerEvent(new ManagerEventArgs(this, elementManager.getValue(), ManagerEventType.DOM_SET_COMPLETED));
+			}
 			break;
 		default:
 			break;

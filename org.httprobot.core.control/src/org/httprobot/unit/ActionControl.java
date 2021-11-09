@@ -14,6 +14,7 @@ import org.httprobot.parameter.BannedWord;
 import org.httprobot.parameter.BannedWordControl;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
+import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class ActionControl
@@ -27,6 +28,7 @@ public final class ActionControl
 	LinkedHashSet<ConstantControl> constant;
 	LinkedHashSet<BannedWordControl> bannedWord;
 	WebLoaderControl webLoaderControl;
+	ElementControl elementControl;
 	
 	@XmlElement
 	public WebLoaderControl getWebLoaderControl() {
@@ -49,6 +51,13 @@ public final class ActionControl
 	public void setBannedWord(LinkedHashSet<BannedWordControl> bannedWord) {
 		this.bannedWord = bannedWord;
 	}
+	@XmlElement
+	public ElementControl getElementControl() {
+		return elementControl;
+	}
+	public void setElementControl(ElementControl elementControl) {
+		this.elementControl = elementControl;
+	}
 	
 	public ActionControl() {
 		super();
@@ -56,6 +65,7 @@ public final class ActionControl
 	public ActionControl(Action message, ControlListener parent) {
 		super(message, parent);
 	}
+	
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
@@ -70,7 +80,9 @@ public final class ActionControl
 			if (action.getHttpAddress() == null) {
 				throw new Error("ActionControl.OnControlInitialized: httpAddress XML message element expected.");
 			}
-			
+			if(action.getElement() != null) {
+				new ElementControl(action.getElement(), this);
+			}
 			for (Constant constant : action.getConstant()) {
 				new ConstantControl(constant, this);
 			}
@@ -85,6 +97,9 @@ public final class ActionControl
 			ConstantControl childConstant = ConstantControl.class.cast(e.getSource());
 			constant.add(childConstant);
 			addChildControl(childConstant);
+		} else if(e.getSource() instanceof ElementControl) {
+			elementControl = ElementControl.class.cast(e.getSource());
+			addChildControl(elementControl);
 		}
 	}
 	@Override
@@ -109,8 +124,10 @@ public final class ActionControl
 					if(control instanceof PaginatorControl ?
 							webLoaderControl.equals(control) : false) {
 						webLoaderControl.loadControl();
-					}
-					else if(control instanceof ConstantControl ?
+					} else if(control instanceof ElementControl ?
+							elementControl.equals(control) : false) { 
+						elementControl.loadControl();
+					} else if(control instanceof ConstantControl ?
 							!action.getConstant().isEmpty() ?
 									constant.contains(control)
 									: false : false) {
@@ -120,8 +137,7 @@ public final class ActionControl
 								childConstantControl.loadControl();
 							}
 						}		
-					}
-					else if(control instanceof BannedWordControl ?
+					} else if(control instanceof BannedWordControl ?
 							!action.getBannedWord().isEmpty() ?
 									bannedWord.contains(control)
 									: false : false) {
@@ -138,6 +154,11 @@ public final class ActionControl
 				// Send event to parent
 				CommandLineEvent(new CommandEventArgs(this, Command.ACTION_CONTROL_LOADED));
 			}
+		}
+		else if(e.getSource() instanceof ElementControl) {
+			if(getChildControls().contains(e.getSource())) {
+				put(Data.ELEMENT, e.getMessage());
+			}	
 		}
 		else if(e.getSource() instanceof BannedWordControl) {
 			if(getChildControls().contains(e.getSource())) {
