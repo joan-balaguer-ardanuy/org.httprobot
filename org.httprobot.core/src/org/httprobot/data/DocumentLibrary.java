@@ -5,10 +5,9 @@ import org.httprobot.content.FieldRef;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
 import org.httprobot.data.field.FieldLibrary;
+import org.openqa.selenium.WebElement;
 
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
-public class DocumentLibrary extends InputDocumentLibrary<HtmlPage, FieldRef> {
+public class DocumentLibrary extends InputDocumentLibrary<WebElement, FieldRef> {
 	
 	ContentTypeRef contentTypeRef;
 
@@ -25,7 +24,7 @@ public class DocumentLibrary extends InputDocumentLibrary<HtmlPage, FieldRef> {
 		this.contentTypeRef = contentTypeRef;
 	}
 	@Override
-	public InputDocument put(HtmlPage key, InputDocument value) {
+	public InputDocument put(WebElement key, InputDocument value) {
 		
 		if(value.getContentType().getUuid().equals(this.contentTypeRef.getUuid()))
 		{	

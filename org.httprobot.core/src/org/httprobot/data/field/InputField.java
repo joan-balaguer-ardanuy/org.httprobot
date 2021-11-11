@@ -2,8 +2,7 @@ package org.httprobot.data.field;
 
 import org.apache.solr.common.SolrInputField;
 import org.httprobot.content.FieldRef;
-
-import com.gargoylesoftware.htmlunit.html.DomNode;
+import org.openqa.selenium.WebElement;
 
 public class InputField extends SolrInputField {
 
@@ -14,7 +13,7 @@ public class InputField extends SolrInputField {
 	
 	FieldRef fieldRef;
 	Boolean isParsed;
-	Boolean isDomNode;
+	Boolean isWebElement;
 	
 	public FieldRef getFieldRef() {
 		return fieldRef;
@@ -32,12 +31,12 @@ public class InputField extends SolrInputField {
 		this.isParsed = isParsed;
 	}
 
-	public Boolean getIsDomNode() {
-		return isDomNode;
+	public Boolean getIsWebElement() {
+		return isWebElement;
 	}
 
-	public void setIsDomNode(Boolean isDomNode) {
-		this.isDomNode = isDomNode;
+	public void setIsWebElement(Boolean isWebElement) {
+		this.isWebElement = isWebElement;
 	}
 	
 	public InputField(FieldRef fieldRef)
@@ -62,11 +61,11 @@ public class InputField extends SolrInputField {
 
 	public void setValue(Object v) {
 
-		if (v instanceof DomNode) {
-			this.setIsDomNode(true);
+		if (v instanceof WebElement) {
+			this.setIsWebElement(true);
 			setIsParsed(false);
 		} else {
-			this.setIsDomNode(false);
+			this.setIsWebElement(false);
 
 			switch (getFieldRef().getDataType()) {
 			case BOOLEAN:

@@ -25,9 +25,6 @@ public class WebLoaderControl extends Control<WebLoader> {
 		if(e.getSource().equals(this)) {
 			WebLoader webLoader = WebLoader.class.cast(e.getMessage());
 			
-			if(webLoader.getBrowserVersion() == null) {
-				throw new Error("WebLoaderControl.OnControlInitialized: BrowserVersion element is missing.");
-			}
 			if(webLoader.getTime() == null) {
 				throw new Error("WebLoaderControl.OnControlInitialized: Time element is missing.");
 			}
@@ -45,7 +42,6 @@ public class WebLoaderControl extends Control<WebLoader> {
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
-			put(Data.BROWSER_VERSION, getMessage().getBrowserVersion());
 			put(Data.TIME, getMessage().getTime());
 
 			// Check if control has child XML message controls
