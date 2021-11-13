@@ -1,6 +1,10 @@
 package org.httprobot.datatype;
 
 import org.httprobot.ManagerListener;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.httprobot.Manager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -9,11 +13,10 @@ import org.httprobot.placeholder.HtmlUnitControl;
 import org.httprobot.placeholder.HtmlUnitManager;
 import org.httprobot.placeholder.HttpAddressControl;
 import org.httprobot.placeholder.HttpAddressManager;
-
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 public class FieldManager
-	extends Manager<InputField, HtmlPage, FieldControl> {
+	extends Manager<InputField, WebElement, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
@@ -31,7 +34,7 @@ public class FieldManager
 	}
 	
 	@Override
-	public HtmlPage put(InputField key, HtmlPage value) {
+	public WebElement put(InputField key, WebElement value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
@@ -39,7 +42,12 @@ public class FieldManager
 		if(htmlUnitManager != null) {
 			htmlUnitManager.put(key, value);
 		} else if (httpAddressManager != null) {
-			httpAddressManager.put(key, value.getUrl());
+			try {
+				httpAddressManager.put(key, new URL(getWebDriver().getCurrentUrl()));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			throw new Error("FieldManager.put: placeholder XML message manager expected");
 		}

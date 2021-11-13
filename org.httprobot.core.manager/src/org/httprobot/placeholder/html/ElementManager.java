@@ -7,27 +7,23 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.unit.IsInstance;
-import org.httprobot.unit.IsInstanceControl;
-import org.httprobot.unit.IsInstanceManager;
-
-import com.gargoylesoftware.htmlunit.html.DomNode;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 @XmlRootElement
 public final class ElementManager
-	extends AbstractHtmlManager<DomNode, Set<DomNode>, ElementControl> {
+	extends AbstractHtmlManager<WebElement, Set<WebElement>, ElementControl> {
 
 	/**
 	 * 8813593464366243836L
 	 */
 	private static final long serialVersionUID = 8813593464366243836L;
 	
-	IsInstanceManager isInstanceManager;
 	ElementManager elementManager;
 	ContainsElementManager containsElementManager;
 	
@@ -48,26 +44,20 @@ public final class ElementManager
 		super(message, ElementControl.class, parent);
 	}
 	@Override
-	public Set<DomNode> put(DomNode key, Set<DomNode> value) {
+	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		keySet().add(key);
-		if(isInstanceManager != null) {
-			List<Object> result = key.getByXPath(getControl().getMessage().getXPath());
-			for(Object object : result) {
-				isInstanceManager.put(object, null);
-				if(isInstanceManager.getValue()) {
-					DomNode output = (DomNode) isInstanceManager.getKey();
-					value.add(output);
-					if(containsElementManager != null) {
-						containsElementManager.put(output, null);
-						if(containsElementManager.getValue()) {
-							if(elementManager != null) {
-								elementManager.put(output, new LinkedHashSet<DomNode>());
-							}
-						}
-					} else if(elementManager != null) {
-						elementManager.put(output, new LinkedHashSet<DomNode>());
+		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
+		for (WebElement webElement : result) {
+			value.add(webElement);
+			if (containsElementManager != null) {
+				containsElementManager.put(webElement, null);
+				if (containsElementManager.getValue()) {
+					if (elementManager != null) {
+						elementManager.put(webElement, new LinkedHashSet<WebElement>());
 					}
 				}
+			} else if (elementManager != null) {
+				elementManager.put(webElement, new LinkedHashSet<WebElement>());
 			}
 		}
 		return super.put(key, value);
@@ -75,15 +65,6 @@ public final class ElementManager
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case IS_INSTANCE_CONTROL_LOADED:
-			if(e.getSource() instanceof IsInstanceControl) {
-				IsInstance isInstance = IsInstanceControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.IS_INSTANCE).equals(isInstance)) {
-					isInstanceManager = new IsInstanceManager(isInstance, this);
-					addChildManager(isInstanceManager);
-				}
-			}
-			break;
 		case CONTAINS_ELEMENT_CONTROL_LOADED:
 			if(e.getSource() instanceof ContainsElementControl) {
 				ContainsElement containsElement = ContainsElementControl.class.cast(e.getSource()).getMessage();

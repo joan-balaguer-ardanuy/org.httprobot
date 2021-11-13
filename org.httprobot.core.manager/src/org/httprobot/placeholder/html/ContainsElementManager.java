@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
-
-import com.gargoylesoftware.htmlunit.html.DomNode;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class ContainsElementManager 
-	extends AbstractHtmlManager<DomNode, Boolean, ContainsElementControl>{
+	extends AbstractHtmlManager<WebElement, Boolean, ContainsElementControl>{
 
 	/**
 	 * -756242644019692484L
@@ -23,8 +23,8 @@ public class ContainsElementManager
 	}
 
 	@Override
-	public Boolean put(DomNode key, Boolean value) {
-		List<Object> result = key.getByXPath(getControl().getMessage().getXPath());
+	public Boolean put(WebElement key, Boolean value) {
+		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
 		if(!result.isEmpty()) {
 			value = true;
 		} else {

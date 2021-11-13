@@ -27,8 +27,7 @@ import org.httprobot.parameter.StartUrlManager;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 @XmlRootElement
 public final class DataSourceManager 
@@ -63,7 +62,7 @@ public final class DataSourceManager
 		DocumentLibrary oldValue = this.value;
 		this.value = value;
 		setDocumentLibrary(value);
-		actionManager.put(null, new LinkedHashSet<HtmlPage>());
+		actionManager.put(null, new LinkedHashSet<WebElement>());
 		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
 		return oldValue;
 	}
@@ -149,11 +148,11 @@ public final class DataSourceManager
 				currentContentType = contentTypeRefManager.getValue();
 			} else if (e.getSource().equals(actionManager)) {
 				// No more than one expected.
-				for (HtmlPage pageKey : actionManager) {
+				for (WebElement pageKey : actionManager) {
 					// Get the returned pages by first request.
-					Set<HtmlPage> actiontData = this.actionManager.get(pageKey);
+					Set<WebElement> actiontData = this.actionManager.get(pageKey);
 					// Put loaded data on document root message manager
-					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, HtmlPage>());
+					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, WebElement>());
 				}
 			}
 			break;

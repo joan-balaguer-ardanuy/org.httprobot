@@ -1,5 +1,6 @@
 package org.httprobot.datatype;
 
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -21,12 +22,10 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 public class DocumentRootManager
-	extends Manager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
+	extends Manager<Set<WebElement>, Map<InputDocument, WebElement>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L
@@ -38,8 +37,8 @@ public class DocumentRootManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
-	WebRequest currentRequest;
-	HtmlPage currentResponse;
+	URL currentRequest;
+	WebElement currentResponse;
 	
 	public DocumentRootManager() {
 		super();
@@ -49,12 +48,12 @@ public class DocumentRootManager
 	}
 	
 	@Override
-	public Map<InputDocument, HtmlPage> put(Set<HtmlPage> key, Map<InputDocument, HtmlPage> value) {
+	public Map<InputDocument, WebElement> put(Set<WebElement> key, Map<InputDocument, WebElement> value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		for(HtmlPage htmlPage : key) {
-			actionManager.put(htmlPage, new LinkedHashSet<HtmlPage>());
+		for(WebElement htmlPage : key) {
+			actionManager.put(htmlPage, new LinkedHashSet<WebElement>());
 		}
 		return super.put(key, value);
 	}
@@ -112,7 +111,7 @@ public class DocumentRootManager
 				FieldLibrary<FieldRef> templateFields = getTemplateLibrary().getTemplateFieldLibrary();
 				setDocumentLibrary(new DocumentLibrary(contentTypeRefManager.getKey(), templateDocument, templateFields));
 			} else if (e.getSource().equals(actionManager)) {
-				Map<InputDocument, HtmlPage> documentOutputData = new LinkedHashMap<InputDocument, HtmlPage>();
+				Map<InputDocument, WebElement> documentOutputData = new LinkedHashMap<InputDocument, WebElement>();
 				documentManager.put(getValue(), documentOutputData);
 			}
 			break;
@@ -120,7 +119,7 @@ public class DocumentRootManager
 			if(e.getSource().equals(actionManager)) {
 				try {
 					@SuppressWarnings("unchecked")
-					Entry<WebRequest,HtmlPage> entry = (Entry<WebRequest,HtmlPage>)e.getValue();
+					Entry<URL,WebElement> entry = (Entry<URL,WebElement>)e.getValue();
 					currentRequest = entry.getKey();
 					currentResponse = entry.getValue();
 					
@@ -142,7 +141,7 @@ public class DocumentRootManager
 			}
 			else if(e.getSource().equals(fieldRootManager)) {
 				for(InputDocument inputDocument : fieldRootManager) {
-					HtmlPage htmlPage = fieldRootManager.get(inputDocument);
+					WebElement htmlPage = fieldRootManager.get(inputDocument);
 					getDocumentLibrary().get(htmlPage).addInputDocument(inputDocument);
 				}
 			}

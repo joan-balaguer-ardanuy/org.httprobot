@@ -5,11 +5,10 @@ import java.util.Set;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
-
-import com.gargoylesoftware.htmlunit.html.DomNode;
+import org.openqa.selenium.WebElement;
 
 public class AnchorManager
-	extends AbstractHtmlManager<InputField, Set<DomNode>, AnchorControl>{
+	extends AbstractHtmlManager<InputField, Set<WebElement>, AnchorControl>{
 
 	/**
 	 * 2578347858674092447L

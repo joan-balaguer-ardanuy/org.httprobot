@@ -6,11 +6,10 @@ import java.util.Set;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
-
-import com.gargoylesoftware.htmlunit.html.DomNode;
+import org.openqa.selenium.WebElement;
 
 public class PageManager
-	extends AbstractHtmlManager<Map<InputField,Set<DomNode>>,Map<InputField,Set<DomNode>>, PageControl> {
+	extends AbstractHtmlManager<Map<InputField,Set<WebElement>>,Map<InputField,Set<WebElement>>, PageControl> {
 	
 	/**
 	 * 4976479148819311844L

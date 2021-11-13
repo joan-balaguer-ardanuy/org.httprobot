@@ -1,5 +1,6 @@
 package org.httprobot.datatype;
 
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -21,12 +22,10 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 public class DocumentManager
-	extends Manager<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
+	extends Manager<Map<InputDocument, WebElement>, Map<InputDocument, WebElement>, DocumentControl> {
 
 	/**
 	 * -7967388989379246404L
@@ -38,8 +37,8 @@ public class DocumentManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
-	WebRequest currentRequest;
-	HtmlPage currentResponse;
+	URL currentRequest;
+	WebElement currentResponse;
 	
 	public DocumentManager() {
 		super();
@@ -49,15 +48,15 @@ public class DocumentManager
 	}
 	
 	@Override
-	public Map<InputDocument, HtmlPage> put(Map<InputDocument, HtmlPage> key, Map<InputDocument, HtmlPage> value) {
+	public Map<InputDocument, WebElement> put(Map<InputDocument, WebElement> key, Map<InputDocument, WebElement> value) {
 		keySet().add(key);
 		
 		setKey(key);
 		setValue(value);
 		
 		for(InputDocument inputDocument : key.keySet()) {
-			HtmlPage pageKey = key.get(inputDocument);
-			Set<HtmlPage> actionOutput = new LinkedHashSet<HtmlPage>();
+			WebElement pageKey = key.get(inputDocument);
+			Set<WebElement> actionOutput = new LinkedHashSet<WebElement>();
 			actionManager.put(pageKey, actionOutput);
 		}
 		
@@ -120,7 +119,7 @@ public class DocumentManager
 			break;
 		case FINISHED:
 			if(e.getSource().equals(actionManager)) {
-				Map<InputDocument, HtmlPage> documentOutputData = new LinkedHashMap<InputDocument, HtmlPage>();
+				Map<InputDocument, WebElement> documentOutputData = new LinkedHashMap<InputDocument, WebElement>();
 				documentManager.put(getValue(), documentOutputData);
 			} else if(e.getSource().equals(contentTypeRefManager)) {
 				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
@@ -132,7 +131,7 @@ public class DocumentManager
 			if (e.getSource().equals(actionManager)) {
 				try {
 					@SuppressWarnings("unchecked")
-					Entry<WebRequest, HtmlPage> entry = (Entry<WebRequest, HtmlPage>) e.getValue();
+					Entry<URL, WebElement> entry = (Entry<URL, WebElement>) e.getValue();
 					currentRequest = entry.getKey();
 					currentResponse = entry.getValue();
 

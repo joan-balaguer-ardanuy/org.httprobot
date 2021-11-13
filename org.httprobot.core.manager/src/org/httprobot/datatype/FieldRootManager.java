@@ -9,11 +9,10 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 public class FieldRootManager
-	extends Manager<InputDocument, HtmlPage, FieldRootControl> {
+	extends Manager<InputDocument, WebElement, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
@@ -30,7 +29,7 @@ public class FieldRootManager
 		fieldManagers = new LinkedHashMap<Field, FieldManager>();
 	}
 	@Override
-	public HtmlPage put(InputDocument key, HtmlPage value) {
+	public WebElement put(InputDocument key, WebElement value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);

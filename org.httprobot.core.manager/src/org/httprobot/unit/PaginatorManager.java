@@ -1,15 +1,14 @@
 package org.httprobot.unit;
 
 import org.httprobot.Enums.Data;
-import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
+import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
-
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class PaginatorManager 
-	extends Manager<HtmlPage, HtmlAnchor, PaginatorControl> {
+	extends Manager<WebElement, WebElement, PaginatorControl> {
 
 	/**
 	 * 6281489078874071651L
@@ -24,14 +23,14 @@ public class PaginatorManager
 	}
 
 	@Override
-	public HtmlAnchor put(HtmlPage key, HtmlAnchor value) {
+	public WebElement put(WebElement key, WebElement value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		
-		for(HtmlAnchor anchor : key.getAnchors()) {
-			if (anchor.getFirstChild() != null) {
-				if (anchor.getFirstChild().getTextContent().contains(getControl().get(Data.PAGINATOR_ANCHOR).toString())) {
+		for(WebElement anchor : key.findElements(By.xpath(".//a"))) {
+			if (anchor != null) {
+				if (anchor.getText().contains(getControl().get(Data.PAGINATOR_ANCHOR).toString())) {
 					value = anchor;
 					setValue(value);
 				}

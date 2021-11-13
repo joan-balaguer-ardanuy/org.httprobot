@@ -3,28 +3,28 @@ package org.httprobot.unit;
 import org.httprobot.Manager;
 
 import java.io.IOException;
+import java.net.URL;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.Client;
-
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class WebLoaderManager
-	extends Manager<WebRequest, HtmlPage, WebLoaderControl> {
+	extends Manager<URL, WebElement, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
 	 */
 	private static final long serialVersionUID = 7605117314181749897L;
 
-	Client client;
-	HtmlAnchor nextPageAnchor;
+	WebDriver client;
+	WebElement nextPageAnchor;
 	PaginatorManager paginatorManager;
 	
 	public WebLoaderManager() {
@@ -33,10 +33,11 @@ public class WebLoaderManager
 	public WebLoaderManager(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
+		client = new FirefoxDriver();
 	}
 
 	@Override
-	public HtmlPage put(WebRequest key, HtmlPage value) {
+	public WebElement put(URL key, WebElement value) {
 		if (value == null) {
 			keySet().add(key);
 			setKey(key);
@@ -55,8 +56,11 @@ public class WebLoaderManager
 
 			if (nextPageAnchor != null) {
 				try {
-					setValue(nextPageAnchor.click());
-					setKey(new WebRequest(getValue().getUrl()));
+					Actions action = new Actions(client);
+					action.moveToElement(nextPageAnchor).click().perform();
+
+					setKey(new URL(nextPageAnchor.getAttribute("href")));
+					setValue(client.findElement(By.xpath("//html")));
 
 					paginatorManager.put(getValue(), null);
 
@@ -110,16 +114,11 @@ public class WebLoaderManager
 			break;
 		}
 	}
-	public HtmlPage getPage(WebRequest request) {
-		client = new Client(getControl().getMessage().getBrowserVersion());
-		client.getOptions().setUseInsecureSSL(true);
-		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
-		try {
-			HtmlPage output = client.getPage(request);
-			client.close();
-			return output;
-		} catch (FailingHttpStatusCodeException | IOException e) {
-			return null;
-		}
+	public WebElement getPage(URL request) {
+		client = new FirefoxDriver();
+		client.get(request.toString());
+		WebElement output = client.findElement(By.xpath("/html"));
+		client.quit();
+		return output;
 	}
 }

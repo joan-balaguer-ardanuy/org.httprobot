@@ -6,6 +6,7 @@ import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ManagerEventArgs;
+import org.openqa.selenium.WebDriver;
 
 public interface ManagerListener extends MessageListener {
 	
@@ -14,6 +15,9 @@ public interface ManagerListener extends MessageListener {
 	
 	ManagerListener getParent();
 	void setParent(ManagerListener parent);
+	
+	WebDriver getWebDriver();
+	void setWebDriver(WebDriver driver);
 	
 	ContentTypeRoot getContentTypeRoot();
 	void setContentTypeRoot(ContentTypeRoot contentTypeRoot);

@@ -19,14 +19,10 @@ import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
 import org.httprobot.placeholder.html.ElementManager;
-
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebElement;
 
 public class ActionManager
-	extends Manager<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends Manager<WebElement, Set<WebElement>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L
@@ -38,10 +34,10 @@ public class ActionManager
 	Map<BannedWord, BannedWordManager> bannedWordManagers;
 	ElementManager elementManager;
 	
-	WebRequest currentOutputRequest;
-	HtmlPage currentOutputPage;
+	URL currentOutputRequest;
+	WebElement currentOutputPage;
 
-	Set<HtmlAnchor> anchors;
+	Set<WebElement> anchors;
 	
 	public ActionManager() {
 		super();
@@ -54,28 +50,27 @@ public class ActionManager
 		elementManager = new ElementManager(message.getElement(), this);
 	}
 	@Override
-	public Set<HtmlPage> put(HtmlPage key, Set<HtmlPage> value) {
+	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		if(key == null) {
 			String httpAddress = String.class.cast(getControl().get(Data.HTTP_ADDRESS));
 			httpAddress = deParameterizeURL(httpAddress);
 			try {
-				WebRequest webRequest = new WebRequest(new URL(httpAddress));
-				key = webLoaderManager.getPage(webRequest);
+				key = webLoaderManager.getPage(new URL(httpAddress));
 			} catch (MalformedURLException e) {
 				throw new Error("ActionManager.put: bad first URL", e);
 			}
 		}
 		keySet().add(key);
 		
-		elementManager.put(key, new LinkedHashSet<DomNode>());
+		elementManager.put(key, new LinkedHashSet<WebElement>());
 		
-		for(HtmlAnchor anchor : anchors) {
-			String hrefAttribute = anchor.getHrefAttribute();
+		for(WebElement anchor : anchors) {
+			String hrefAttribute = anchor.getAttribute("href");
 			if(hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
 				if(!containsBannedWord(hrefAttribute)) {
 					try {
 						URL url = new URL(hrefAttribute);
-						webLoaderManager.put(new WebRequest(url), null);
+						webLoaderManager.put(url, null);
 					} catch (MalformedURLException e) {
 						throw new Error("ActionManager.put: Malformed URL object.", e);
 					}
@@ -89,7 +84,7 @@ public class ActionManager
 						
 						try {
 							URL url = new URL(finalUrl);
-							webLoaderManager.put(new WebRequest(url), null);
+							webLoaderManager.put(url, null);
 						} catch (MalformedURLException e) {
 							throw new Error("ActionManager.put: Malformed URL object.", e);
 						}
@@ -183,19 +178,17 @@ public class ActionManager
 				getValue().add(currentOutputPage);
 				
 				ManagerEvent(new ManagerEventArgs(this, 
-						new Node<WebRequest, HtmlPage>(currentOutputRequest, currentOutputPage), 
+						new Node<URL, WebElement>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
 			}
 			break;
 		case DOM_SET_COMPLETED:
 			if(e.getSource().equals(elementManager)) {
 				@SuppressWarnings("unchecked")
-				Set<DomNode> set = (Set<DomNode>) e.getValue();
+				Set<WebElement> set = (Set<WebElement>) e.getValue();
 				
-				for(DomNode node : set) {
-					if(node instanceof HtmlAnchor) {
-						anchors.add((HtmlAnchor) node);
-					}
+				for(WebElement node : set) {
+					anchors.add(node);
 				}
 			}
 			break;

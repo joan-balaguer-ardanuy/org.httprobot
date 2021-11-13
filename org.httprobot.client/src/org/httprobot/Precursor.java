@@ -17,6 +17,7 @@ import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
+import org.openqa.selenium.WebDriver;
 
 public class Precursor
 	extends XML
@@ -79,6 +80,14 @@ public class Precursor
 	@Override
 	public void setBannedWords(Map<String, String> bannedWords) {
 		configurationManager.setBannedWords(bannedWords);
+	}
+	@Override
+	public WebDriver getWebDriver() {
+		return configurationManager.getWebDriver();
+	}
+	@Override
+	public void setWebDriver(WebDriver driver) {
+		configurationManager.setWebDriver(driver);
 	}
 	
 	public Precursor() {

@@ -16,6 +16,7 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.openqa.selenium.WebDriver;
 
 public abstract class AbstractManager<T extends Control<?>> 
 	extends XML 
@@ -35,6 +36,7 @@ public abstract class AbstractManager<T extends Control<?>>
 	List<ManagerListener> childManagers;
 
 	ManagerListener parent;
+	WebDriver webDriver;
 	
 	ContentTypeRoot contentTypeRoot;
 	DocumentLibrary documentLibrary;
@@ -43,6 +45,7 @@ public abstract class AbstractManager<T extends Control<?>>
 	Map<String, String> parameterBannedWords;
 	Map<String, String> parameterConstants;
 
+	
 	@XmlTransient
 	public ManagerListener getParent() {
 		return parent;
@@ -110,6 +113,16 @@ public abstract class AbstractManager<T extends Control<?>>
 	}
 	public void setConstants(Map<String, String> constants) {
 		this.parameterConstants = constants;
+	}
+	public WebDriver getWebDriver() {
+		if (webDriver != null) {
+			return webDriver;
+		} else if (parent != null) {
+			return parent.getWebDriver();
+		} else return null;
+	}
+	public void setWebDriver(WebDriver webDriver) {
+		this.webDriver = webDriver;
 	}
 	
 	public AbstractManager() {
