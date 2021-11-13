@@ -9,7 +9,7 @@ import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebElement;
 
 @XmlRootElement
-public final class HtmlUnitManager
+public final class SeleniumManager
 	extends AbstractPlaceholderManager<InputField, WebElement, HtmlUnitControl> {
 
 	/**
@@ -17,9 +17,9 @@ public final class HtmlUnitManager
 	 */
 	private static final long serialVersionUID = 239612135819734039L;
 	
-	public HtmlUnitManager() {
+	public SeleniumManager() {
 	}
-	public HtmlUnitManager(HtmlUnit message, ManagerListener parent) {
+	public SeleniumManager(HtmlUnit message, ManagerListener parent) {
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {

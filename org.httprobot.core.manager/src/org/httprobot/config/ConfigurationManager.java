@@ -30,7 +30,7 @@ public final class ConfigurationManager
 
 	ContentTypeRootManager contentTypeRootManager;
 	Map<DataSource, DataSourceManager> dataSouceManagers;
-	
+
 	@Override
 	@XmlElement
 	public ConfigurationControl getControl() {

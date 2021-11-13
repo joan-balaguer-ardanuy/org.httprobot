@@ -114,6 +114,7 @@ public abstract class AbstractManager<T extends Control<?>>
 	public void setConstants(Map<String, String> constants) {
 		this.parameterConstants = constants;
 	}
+	@XmlTransient
 	public WebDriver getWebDriver() {
 		if (webDriver != null) {
 			return webDriver;
@@ -122,7 +123,11 @@ public abstract class AbstractManager<T extends Control<?>>
 		} else return null;
 	}
 	public void setWebDriver(WebDriver webDriver) {
-		this.webDriver = webDriver;
+		if(parent != null) {
+			parent.setWebDriver(webDriver);
+		} else {
+			this.webDriver = webDriver;
+		}
 	}
 	
 	public AbstractManager() {

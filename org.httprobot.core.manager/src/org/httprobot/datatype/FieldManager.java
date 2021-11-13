@@ -10,7 +10,7 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.HtmlUnitControl;
-import org.httprobot.placeholder.HtmlUnitManager;
+import org.httprobot.placeholder.SeleniumManager;
 import org.httprobot.placeholder.HttpAddressControl;
 import org.httprobot.placeholder.HttpAddressManager;
 import org.openqa.selenium.WebElement;
@@ -23,7 +23,7 @@ public class FieldManager
 	 */
 	private static final long serialVersionUID = -8390181286230356701L;
 		
-	HtmlUnitManager htmlUnitManager;
+	SeleniumManager htmlUnitManager;
 	HttpAddressManager httpAddressManager;
 	
 	public FieldManager() {
@@ -61,7 +61,7 @@ public class FieldManager
 		case HTML_UNIT_CONTROL_LOADED:
 			if(e.getSource() instanceof HtmlUnitControl) {
 				HtmlUnitControl htmlUnitControl = HtmlUnitControl.class.cast(e.getSource());
-				htmlUnitManager = new HtmlUnitManager(htmlUnitControl.getMessage(), this);
+				htmlUnitManager = new SeleniumManager(htmlUnitControl.getMessage(), this);
 				addChildManager(htmlUnitManager);
 			}
 			break;

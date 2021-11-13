@@ -10,7 +10,6 @@ import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -23,7 +22,6 @@ public class WebLoaderManager
 	 */
 	private static final long serialVersionUID = 7605117314181749897L;
 
-	WebDriver client;
 	WebElement nextPageAnchor;
 	PaginatorManager paginatorManager;
 	
@@ -33,7 +31,7 @@ public class WebLoaderManager
 	public WebLoaderManager(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
-		client = new FirefoxDriver();
+		setWebDriver(new FirefoxDriver());
 	}
 
 	@Override
@@ -56,11 +54,11 @@ public class WebLoaderManager
 
 			if (nextPageAnchor != null) {
 				try {
-					Actions action = new Actions(client);
+					Actions action = new Actions(getWebDriver());
 					action.moveToElement(nextPageAnchor).click().perform();
 
 					setKey(new URL(nextPageAnchor.getAttribute("href")));
-					setValue(client.findElement(By.xpath("//html")));
+					setValue(getWebDriver().findElement(By.xpath("/html")));
 
 					paginatorManager.put(getValue(), null);
 
@@ -115,10 +113,10 @@ public class WebLoaderManager
 		}
 	}
 	public WebElement getPage(URL request) {
-		client = new FirefoxDriver();
-		client.get(request.toString());
-		WebElement output = client.findElement(By.xpath("/html"));
-		client.quit();
+		setWebDriver(new FirefoxDriver());
+		getWebDriver().get(request.toString());
+		WebElement output = getWebDriver().findElement(By.xpath("/html"));
+		getWebDriver().quit();
 		return output;
 	}
 }
