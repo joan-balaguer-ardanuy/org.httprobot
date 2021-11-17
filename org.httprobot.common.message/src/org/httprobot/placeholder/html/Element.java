@@ -1,11 +1,11 @@
 package org.httprobot.placeholder.html;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractHtml;
 import org.httprobot.event.MessageEventArgs;
-import org.httprobot.unit.IsInstance;
 
 @XmlRootElement
 public final class Element extends AbstractHtml {
@@ -16,10 +16,9 @@ public final class Element extends AbstractHtml {
 	private static final long serialVersionUID = -6130911656253160686L;
 	
 	String xPath;
-	
-	Element element;
-	IsInstance isInstance;
-	ContainsElement containsElement;
+	Boolean click;
+	Boolean store;
+	String javaScript;
 	
 	@XmlElement
 	public String getXPath() {
@@ -28,26 +27,26 @@ public final class Element extends AbstractHtml {
 	public void setXPath(String xPath) {
 		this.xPath = xPath;
 	}
+	@XmlAttribute
+	public Boolean getClick() {
+		return click;
+	}
+	public void setClick(Boolean click) {
+		this.click = click;
+	}
+	@XmlAttribute
+	public Boolean getStore() {
+		return store;
+	}
+	public void setStore(Boolean store) {
+		this.store = store;
+	}
 	@XmlElement
-	public Element getElement() {
-		return element;
+	public String getJavaScript() {
+		return javaScript;
 	}
-	public void setElement(Element element) {
-		this.element = element;
-	}
-	@XmlElement
-	public IsInstance getIsInstance() {
-		return isInstance;
-	}
-	public void setIsInstance(IsInstance isInstance) {
-		this.isInstance = isInstance;
-	}
-	@XmlElement
-	public ContainsElement getContainsElement() {
-		return containsElement;
-	}
-	public void setContainsElement(ContainsElement containsElement) {
-		this.containsElement = containsElement;
+	public void setJavaScript(String javaScript) {
+		this.javaScript = javaScript;
 	}
 	
 	public Element() {
@@ -60,6 +59,8 @@ public final class Element extends AbstractHtml {
 		
 		Element element = Element.class.cast(e.getSource());
 		setXPath(element.getXPath());
+		setClick(element.getClick());
+		setJavaScript(element.getJavaScript());
 		
 	}
 }

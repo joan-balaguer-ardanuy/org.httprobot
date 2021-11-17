@@ -8,7 +8,6 @@ import org.httprobot.Enums.Command;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.unit.IsInstanceControl;
 
 @XmlRootElement
 public final class ElementControl 
@@ -18,10 +17,6 @@ public final class ElementControl
 	 * -1055172865009492574L
 	 */
 	private static final long serialVersionUID = -1055172865009492574L;
-	
-	IsInstanceControl isInstanceControl;
-	ElementControl elementControl;
-	ContainsElementControl containsElementControl;
 	
 	@Override
 	@XmlElement
@@ -47,24 +42,12 @@ public final class ElementControl
 			if (element.getXPath() == null) {
 				throw new Error("ElementControl.OnControlInitialized: XPath expression is missing.");
 			}
-			if(element.getIsInstance() != null) {
-				new IsInstanceControl(element.getIsInstance(), this);
-			}
 			if(element.getContainsElement() != null) {
 				new ContainsElementControl(element.getContainsElement(), this);
 			}
 			if(element.getElement() != null) {
 				new ElementControl(element.getElement(), this);
 			}
-		} else if(e.getSource() instanceof IsInstanceControl) {
-			isInstanceControl = IsInstanceControl.class.cast(e.getSource());
-			addChildControl(isInstanceControl);
-		} else if(e.getSource() instanceof ElementControl) {
-			elementControl = ElementControl.class.cast(e.getSource());
-			addChildControl(elementControl);
-		} else if(e.getSource() instanceof ContainsElementControl) {
-			containsElementControl = ContainsElementControl.class.cast(e.getSource());
-			addChildControl(containsElementControl);
 		}
 	}
 	@Override
@@ -73,28 +56,9 @@ public final class ElementControl
 		if (e.getSource().equals(this)) {
 			Element element = Element.class.cast(e.getMessage());
 			put(Data.XPATH, element.getXPath());
+			put(Data.CLICK, element.getClick());
+			put(Data.JAVASCRIPT, element.getJavaScript());
 			
-			//Check if control has child XML message controls
-			if(hasChildControls())
-			{
-				//Iterate through child XML message controls
-				while(hasNext())
-				{
-					//Get next child XML message control
-					ControlListener control = next();
-					
-					if(control instanceof IsInstanceControl ?
-							isInstanceControl.equals(control) : false) {
-						isInstanceControl.loadControl();
-					} else if(control instanceof ContainsElementControl ?
-							containsElementControl.equals(control) : false) {
-						containsElementControl.loadControl();
-					} else if(control instanceof ElementControl ?
-							elementControl.equals(control) : false) {
-						elementControl.loadControl();
-					}
-				}
-			}
 			reset();
 			// Send event to parent
 			CommandLineEvent(new CommandEventArgs(this, Command.ELEMENT_CONTROL_LOADED));

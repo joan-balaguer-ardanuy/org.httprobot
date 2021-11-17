@@ -19,7 +19,9 @@ import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
 import org.httprobot.placeholder.html.ElementManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
 	extends Manager<WebElement, Set<WebElement>, ActionControl> {
@@ -52,7 +54,7 @@ public class ActionManager
 	@Override
 	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		if(key == null) {
-			String httpAddress = String.class.cast(getControl().get(Data.HTTP_ADDRESS));
+			String httpAddress = getControl().get(Data.HTTP_ADDRESS).toString();
 			httpAddress = deParameterizeURL(httpAddress);
 			try {
 				key = webLoaderManager.getPage(new URL(httpAddress));
@@ -182,13 +184,24 @@ public class ActionManager
 						ManagerEventType.ACTION_WEB_LOADED));
 			}
 			break;
-		case DOM_SET_COMPLETED:
+		case ELEMENT_SET_COMPLETED:
 			if(e.getSource().equals(elementManager)) {
 				@SuppressWarnings("unchecked")
 				Set<WebElement> set = (Set<WebElement>) e.getValue();
 				
 				for(WebElement node : set) {
+					
 					anchors.add(node);
+				}
+			}
+			break;
+		case NEW_ELEMENT:
+			if(e.getSource().equals(elementManager)) {
+				WebElement webElement = WebElement.class.cast(e.getValue());
+				if(elementManager.getControl().getMessage().getStore()) {
+					if(webElement.getTagName().equals("a")) {
+						anchors.add(webElement);
+					}
 				}
 			}
 			break;
@@ -196,6 +209,8 @@ public class ActionManager
 			break;
 		}
 	}
+
+	
 	
 	public class Node<K,V> implements java.util.Map.Entry<K, V> {
 

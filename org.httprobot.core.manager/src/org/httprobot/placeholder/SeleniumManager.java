@@ -6,11 +6,12 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.placeholder.html.AbstractHtmlManager;
 import org.openqa.selenium.WebElement;
 
 @XmlRootElement
 public final class SeleniumManager
-	extends AbstractPlaceholderManager<InputField, WebElement, HtmlUnitControl> {
+	extends AbstractHtmlManager<InputField, WebElement, HtmlUnitControl> {
 
 	/**
 	 * 239612135819734039L

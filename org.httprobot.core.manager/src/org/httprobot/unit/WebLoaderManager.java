@@ -37,19 +37,14 @@ public class WebLoaderManager
 	@Override
 	public WebElement put(URL key, WebElement value) {
 		if (value == null) {
-			keySet().add(key);
-			setKey(key);
-			setValue(getPage(key));
+			value = getPage(key);
 			
-			paginatorManager.put(getValue(), null);
+			paginatorManager.put(value, null);
 
 			waitPeriodTime();
 
-			put(getKey(), getValue());
+			put(key, value);
 		} else {
-			keySet().add(key);
-			setKey(key);
-			setValue(value);
 			super.put(key, value);
 
 			if (nextPageAnchor != null) {
@@ -57,14 +52,14 @@ public class WebLoaderManager
 					Actions action = new Actions(getWebDriver());
 					action.moveToElement(nextPageAnchor).click().perform();
 
-					setKey(new URL(nextPageAnchor.getAttribute("href")));
-					setValue(getWebDriver().findElement(By.xpath("/html")));
+					key = new URL(nextPageAnchor.getAttribute("href"));
+					value = getWebDriver().findElement(By.xpath("/html"));
 
-					paginatorManager.put(getValue(), null);
+					paginatorManager.put(value, null);
 
 					waitPeriodTime();
 
-					put(getKey(), getValue());
+					put(key, value);
 
 				} catch (IOException e) {
 					throw new Error("WebLoaderManager.put: bad next page anchor html element.", e);

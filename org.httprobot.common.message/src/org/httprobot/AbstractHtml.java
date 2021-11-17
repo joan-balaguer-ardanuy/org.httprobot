@@ -1,8 +1,11 @@
 package org.httprobot;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.event.MessageEventArgs;
+import org.httprobot.placeholder.html.ContainsElement;
+import org.httprobot.placeholder.html.Element;
 
 public abstract class AbstractHtml extends AbstractString {
 
@@ -15,6 +18,8 @@ public abstract class AbstractHtml extends AbstractString {
 	String style;
 	String className;
 	String title;
+	Element element;
+	ContainsElement containsElement;
 	
 	@XmlAttribute
 	public String getId() {
@@ -44,7 +49,21 @@ public abstract class AbstractHtml extends AbstractString {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	@XmlElement
+	public Element getElement() {
+		return element;
+	}
+	public void setElement(Element element) {
+		this.element = element;
+	}
+	@XmlElement
+	public ContainsElement getContainsElement() {
+		return containsElement;
+	}
+	public void setContainsElement(ContainsElement containsElement) {
+		this.containsElement = containsElement;
+	}
+	
 	public AbstractHtml() {
 		super();
 	}
@@ -58,5 +77,7 @@ public abstract class AbstractHtml extends AbstractString {
 		setStyle(html.getStyle());
 		setClassName(html.getClassName());
 		setTitle(html.getTitle());
+		setContainsElement(html.getContainsElement());
+		setElement(html.getElement());
 	}
 }

@@ -50,7 +50,8 @@ public class Enums {
 		STARTED,
 		SYSTEM_CONTENT_TYPE_ROOT_LOADED,
 		ACTION_WEB_LOADED,
-		DOM_SET_COMPLETED
+		ELEMENT_SET_COMPLETED,
+		NEW_ELEMENT
 	}
 	public enum Command {
 		SET_PATH,
@@ -183,7 +184,9 @@ public class Enums {
 		SERVICE_CONNECTION,
 		TIME,
 		BROWSER_VERSION,
-		CONTAINS_ELEMENT
+		CONTAINS_ELEMENT,
+		CLICK,
+		JAVASCRIPT
 	}
 	@XmlEnum
 	public enum ParameterType

@@ -13,7 +13,9 @@ import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 @XmlRootElement
 public final class ElementManager
@@ -23,9 +25,6 @@ public final class ElementManager
 	 * 8813593464366243836L
 	 */
 	private static final long serialVersionUID = 8813593464366243836L;
-	
-	ElementManager elementManager;
-	ContainsElementManager containsElementManager;
 	
 	@Override
 	@XmlElement
@@ -49,6 +48,7 @@ public final class ElementManager
 		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
 		for (WebElement webElement : result) {
 			value.add(webElement);
+			ManagerEvent(new ManagerEventArgs(this, webElement, ManagerEventType.NEW_ELEMENT));
 			if (containsElementManager != null) {
 				containsElementManager.put(webElement, null);
 				if (containsElementManager.getValue()) {
@@ -63,31 +63,6 @@ public final class ElementManager
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
-		switch (e.getCommand()) {
-		case CONTAINS_ELEMENT_CONTROL_LOADED:
-			if(e.getSource() instanceof ContainsElementControl) {
-				ContainsElement containsElement = ContainsElementControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.CONTAINS_ELEMENT).equals(containsElement)) {
-					containsElementManager = new ContainsElementManager(containsElement, this);
-					addChildManager(containsElementManager);
-				}
-			}
-			break;
-		case ELEMENT_CONTROL_LOADED:
-			if(e.getSource() instanceof ElementControl) {
-				Element containsElement = ElementControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.ELEMENT).equals(containsElement)) {
-					elementManager = new ElementManager(containsElement, this);
-					addChildManager(elementManager);
-				}
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
 
  		switch (e.getManagerEventType()) {
@@ -96,7 +71,7 @@ public final class ElementManager
 			break;
 		case FINISHED:
 			if(e.getSource().equals(elementManager)) {
-				ManagerEvent(new ManagerEventArgs(this, elementManager.getValue(), ManagerEventType.DOM_SET_COMPLETED));
+				ManagerEvent(new ManagerEventArgs(this, elementManager.getValue(), ManagerEventType.ELEMENT_SET_COMPLETED));
 			}
 			break;
 		default:
