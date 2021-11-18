@@ -50,7 +50,6 @@ public class DocumentManager
 	@Override
 	public Map<InputDocument, WebElement> put(Map<InputDocument, WebElement> key, Map<InputDocument, WebElement> value) {
 		keySet().add(key);
-		
 		setKey(key);
 		setValue(value);
 		

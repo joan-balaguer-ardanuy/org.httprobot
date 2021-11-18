@@ -10,9 +10,15 @@ import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
 	extends Manager<URL, WebElement, WebLoaderControl> {
@@ -22,7 +28,7 @@ public class WebLoaderManager
 	 */
 	private static final long serialVersionUID = 7605117314181749897L;
 
-	WebElement nextPageAnchor;
+	WebElement nextPageElement;
 	PaginatorManager paginatorManager;
 	
 	public WebLoaderManager() {
@@ -31,7 +37,20 @@ public class WebLoaderManager
 	public WebLoaderManager(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
-		setWebDriver(new FirefoxDriver());
+	}
+	private void loadWebDriver() {
+		WebDriver driver;
+		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setPreference("permissions.default.image", 2);
+			FirefoxOptions options = new FirefoxOptions();
+			options.setProfile(profile);
+			options.setCapability(Capability.PROFILE, profile);
+			driver = new FirefoxDriver(options);
+		} else {
+			driver = new FirefoxDriver();
+		}
+		setWebDriver(driver);
 	}
 
 	@Override
@@ -45,19 +64,22 @@ public class WebLoaderManager
 
 			put(key, value);
 		} else {
+			keySet().add(key);
+			setKey(key);
+			setValue(value);
 			super.put(key, value);
 
-			if (nextPageAnchor != null) {
+			if (nextPageElement != null) {
 				try {
-					Actions action = new Actions(getWebDriver());
-					action.moveToElement(nextPageAnchor).click().perform();
+					WebDriver driver = getWebDriver();
+					Actions action = new Actions(driver);
+					
+					javascriptAction(driver, action);
 
-					key = new URL(nextPageAnchor.getAttribute("href"));
-					value = getWebDriver().findElement(By.xpath("/html"));
+					key = new URL(nextPageElement.getAttribute(getControl().get(Data.NEXT_PAGE).toString()));
+					value = driver.findElement(By.xpath("/html"));
 
 					paginatorManager.put(value, null);
-
-					waitPeriodTime();
 
 					put(key, value);
 
@@ -67,6 +89,20 @@ public class WebLoaderManager
 			}
 		}
 		return null;
+	}
+	private void javascriptAction(WebDriver driver, Actions action) {
+		try {
+			String script = getControl().get(Data.JAVASCRIPT).toString();
+			if (script != null) {
+				((JavascriptExecutor) driver).executeScript(script, nextPageElement);
+			}
+			waitPeriodTime();
+
+			action.moveToElement(nextPageElement).click().perform();
+		} catch (MoveTargetOutOfBoundsException ex) {
+			// ignore this exception, repeat the process
+			javascriptAction(driver, action);
+		}
 	}
 	public void waitPeriodTime() {
 		try {
@@ -96,11 +132,13 @@ public class WebLoaderManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			
+			if(e.getSource().equals(this)) {
+				loadWebDriver();
+			}
 			break;
 		case FINISHED:
 			if(e.getSource().equals(paginatorManager)) {
-				nextPageAnchor = paginatorManager.getValue();
+				nextPageElement = paginatorManager.getValue();
 			}
 			break;
 		default:

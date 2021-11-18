@@ -44,6 +44,7 @@ public final class PaginatorControl
 			
 			if(paginator.getUuid() != null)
 			{
+				put(Data.XPATH, paginator.getXPath());
 				put(Data.PAGINATOR_ANCHOR, paginator.getAnchorValue());
 				put(Data.PAGINATOR_HREF, paginator.getAnchorHrefAttributeValue());
 				put(Data.PAGINATOR_INCREMENT, paginator.getPaginatorIncrement());

@@ -18,6 +18,7 @@ public final class Paginator extends AbstractUnit {
 	String anchorValue;
 	Integer paginatorIncrement;
 	String paginatorUrlPattern;
+	String XPath;
 	
 	@XmlElement
 	public String getAnchorHrefAttributeValue() {
@@ -51,6 +52,14 @@ public final class Paginator extends AbstractUnit {
 		this.paginatorUrlPattern = paginatorUrlPattern;
 	}
 
+	@XmlElement
+	public String getXPath() {
+		return XPath;
+	}
+	public void setXPath(String xPath) {
+		XPath = xPath;
+	}
+	
 	public Paginator() {
 		super();
 	}

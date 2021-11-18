@@ -23,11 +23,15 @@ public class PaginatorManager
 	}
 
 	@Override
-	public WebElement put(WebElement key, WebElement value) {		
-		for(WebElement anchor : key.findElements(By.xpath(".//a"))) {
-			if (anchor != null) {
-				if (anchor.getText().contains(getControl().get(Data.PAGINATOR_ANCHOR).toString())) {
-					value = anchor;
+	public WebElement put(WebElement key, WebElement value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		
+		for(WebElement element : key.findElements(By.xpath(getControl().get(Data.XPATH).toString()))) {
+			if (element != null) {
+				if (element.getText().contains(getControl().get(Data.PAGINATOR_ANCHOR).toString())) {
+					value = element;
 					break;
 				}
 			}

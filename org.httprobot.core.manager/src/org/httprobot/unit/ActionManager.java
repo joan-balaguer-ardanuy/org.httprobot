@@ -39,7 +39,7 @@ public class ActionManager
 	URL currentOutputRequest;
 	WebElement currentOutputPage;
 
-	Set<WebElement> anchors;
+	Set<WebElement> elements;
 	
 	public ActionManager() {
 		super();
@@ -63,11 +63,13 @@ public class ActionManager
 			}
 		}
 		keySet().add(key);
+		setKey(key);
+		setValue(value);
 		
 		elementManager.put(key, new LinkedHashSet<WebElement>());
 		
-		for(WebElement anchor : anchors) {
-			String hrefAttribute = anchor.getAttribute("href");
+		for(WebElement element : elements) {
+			String hrefAttribute = element.getAttribute("href");
 			if(hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
 				if(!containsBannedWord(hrefAttribute)) {
 					try {
@@ -94,7 +96,7 @@ public class ActionManager
 				}
 			}
 		}
-		return super.put(getKey(), getValue());
+		return super.put(key, value);
 	}
 
 	private boolean containsBannedWord(String href) {
@@ -191,17 +193,15 @@ public class ActionManager
 				
 				for(WebElement node : set) {
 					
-					anchors.add(node);
+					elements.add(node);
 				}
 			}
 			break;
 		case NEW_ELEMENT:
 			if(e.getSource().equals(elementManager)) {
 				WebElement webElement = WebElement.class.cast(e.getValue());
-				if(elementManager.getControl().getMessage().getStore()) {
-					if(webElement.getTagName().equals("a")) {
-						anchors.add(webElement);
-					}
+				if((Boolean) elementManager.getControl().get(Data.STORE)) {
+					elements.add(webElement);
 				}
 			}
 			break;

@@ -1,5 +1,6 @@
 package org.httprobot.unit;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
@@ -13,6 +14,9 @@ public class WebLoader extends AbstractUnit {
 	
 	Integer time;
 	Paginator paginator;
+	String javaScript;
+	String nextPageAttribute;
+	Boolean disallowImages;
 	
 	@XmlElement
 	public Integer getTime() {
@@ -20,6 +24,27 @@ public class WebLoader extends AbstractUnit {
 	}
 	public void setTime(Integer periodTime) {
 		this.time = periodTime;
+	}
+	@XmlElement
+	public String getJavaScript() {
+		return javaScript;
+	}
+	public void setJavaScript(String javaScript) {
+		this.javaScript = javaScript;
+	}
+	@XmlElement
+	public String getNextPageAttribute() {
+		return nextPageAttribute;
+	}
+	public void setNextPageAttribute(String nextPageAttribute) {
+		this.nextPageAttribute = nextPageAttribute;
+	}
+	@XmlAttribute
+	public Boolean getDisallowImages() {
+		return disallowImages;
+	}
+	public void setDisallowImages(Boolean disallowImages) {
+		this.disallowImages = disallowImages;
 	}
 	@XmlElement
 	public Paginator getPaginator() {

@@ -58,14 +58,11 @@ public final class ConfigurationManager
 	}
 	@Override
 	public DocumentLibrary put(DataSource key, DocumentLibrary value) {
-		if(containsKey(key)) {
-			setKey(key);
-			setValue(value);
-			setDocumentLibrary(value);
-			dataSouceManagers.get(key).setValue(value);
-			return super.put(key, value);
-		}
-		return null;
+		setKey(key);
+		setValue(value);
+		setDocumentLibrary(value);
+		dataSouceManagers.get(key).setValue(value);
+		return super.put(key, value);
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {

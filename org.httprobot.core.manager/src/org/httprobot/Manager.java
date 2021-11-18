@@ -80,9 +80,6 @@ public abstract class Manager<K,V,T extends Control<?>>
 	}
 	@Override
 	public V put(K key, V value) {
-		keySet().add(key);
-		setKey(key);
-		setValue(value);
 		V oldValue = outputData.put(key, value);
 		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
 		return oldValue;

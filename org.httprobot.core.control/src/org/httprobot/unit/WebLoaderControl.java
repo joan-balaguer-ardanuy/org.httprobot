@@ -43,7 +43,10 @@ public class WebLoaderControl extends Control<WebLoader> {
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
 			put(Data.TIME, getMessage().getTime());
-
+			put(Data.JAVASCRIPT, getMessage().getJavaScript());
+			put(Data.NEXT_PAGE, getMessage().getNextPageAttribute());
+			put(Data.DISALLOW_IMAGES, getMessage().getDisallowImages());
+			
 			// Check if control has child XML message controls
 			if (hasChildControls()) {
 				// Iterate through child XML message controls

@@ -45,6 +45,8 @@ public final class ElementManager
 	@Override
 	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		keySet().add(key);
+		setKey(key);
+		setValue(value);
 		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
 		for (WebElement webElement : result) {
 			value.add(webElement);

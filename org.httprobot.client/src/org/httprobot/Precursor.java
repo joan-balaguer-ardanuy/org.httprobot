@@ -28,6 +28,8 @@ public class Precursor
 	 */
 	private static final long serialVersionUID = 322360610738419712L;
 
+	WebDriver driver;
+	
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
 	ConfigurationManager configurationManager;
@@ -35,7 +37,7 @@ public class Precursor
 	
 	@Override
 	public ManagerListener getParent() {
-		return this;
+		return null;
 	}
 	@Override
 	public void setParent(ManagerListener parent) {
@@ -83,11 +85,11 @@ public class Precursor
 	}
 	@Override
 	public WebDriver getWebDriver() {
-		return configurationManager.getWebDriver();
+		return driver;
 	}
 	@Override
 	public void setWebDriver(WebDriver driver) {
-		configurationManager.setWebDriver(driver);
+		this.driver = driver;
 	}
 	
 	public Precursor() {

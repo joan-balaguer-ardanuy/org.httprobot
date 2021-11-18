@@ -24,6 +24,10 @@ public class ContainsElementManager
 
 	@Override
 	public Boolean put(WebElement key, Boolean value) {
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
+		
 		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
 		if(!result.isEmpty()) {
 			value = true;

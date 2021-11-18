@@ -40,13 +40,10 @@ public class ContentTypeManager
 	}
 	@Override
 	public InputDocument put(ContentType key, InputDocument value) {
-		if(getUuid().equals(key.getUuid()) && value == null) {
-			value = templateDocument.deepInputCopy();
-			setKey(key);
-			setValue(value);
-			return super.put(key, value);
-		}
-		return null;
+		value = templateDocument.deepInputCopy();
+		setKey(key);
+		setValue(value);
+		return super.put(key, value);
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
