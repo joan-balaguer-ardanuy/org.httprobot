@@ -29,7 +29,7 @@ public final class Paginator extends AbstractUnit {
 	}
 
 	@XmlElement
-	public String getAnchorValue() {
+	public String getAnchorText() {
 		return anchorValue;
 	}
 	public void setAnchorValue(String anchorValue) {
@@ -70,7 +70,7 @@ public final class Paginator extends AbstractUnit {
 		
 		Paginator paginator = Paginator.class.cast(e.getSource());
 		setAnchorHrefAttributeValue(paginator.getAnchorHrefAttributeValue());
-		setAnchorValue(paginator.getAnchorValue());
+		setAnchorValue(paginator.getAnchorText());
 		setPaginatorIncrement(paginator.getPaginatorIncrement());
 		setPaginatorUrlPattern(paginator.getPaginatorUrlPattern());
 	}

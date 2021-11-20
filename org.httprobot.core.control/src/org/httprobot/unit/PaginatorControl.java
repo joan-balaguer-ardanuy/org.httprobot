@@ -31,7 +31,7 @@ public final class PaginatorControl
 		{
 			Paginator paginator = Paginator.class.cast(e.getMessage());
 			
-			if(paginator.getAnchorValue() == null || paginator.getPaginatorIncrement() == null) {
+			if(paginator.getAnchorText() == null || paginator.getPaginatorIncrement() == null) {
 				throw new Error("PaginatorControl.OnControlInitialized: Paginator XML message missing fields");
 			}
 		}
@@ -45,7 +45,7 @@ public final class PaginatorControl
 			if(paginator.getUuid() != null)
 			{
 				put(Data.XPATH, paginator.getXPath());
-				put(Data.PAGINATOR_ANCHOR, paginator.getAnchorValue());
+				put(Data.PAGINATOR_ANCHOR_TEXT, paginator.getAnchorText());
 				put(Data.PAGINATOR_HREF, paginator.getAnchorHrefAttributeValue());
 				put(Data.PAGINATOR_INCREMENT, paginator.getPaginatorIncrement());
 				put(Data.PAGINATOR_URL_PATTERN, paginator.getPaginatorUrlPattern());

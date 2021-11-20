@@ -28,12 +28,15 @@ public class PaginatorManager
 		setKey(key);
 		setValue(value);
 		
-		for(WebElement element : key.findElements(By.xpath(getControl().get(Data.XPATH).toString()))) {
-			if (element != null) {
-				if (element.getText().contains(getControl().get(Data.PAGINATOR_ANCHOR).toString())) {
+		for(WebElement element : key.findElements(By.xpath((String) getControl().get(Data.XPATH)))) {
+			if (element.isDisplayed() || element.isEnabled()) {
+				if (element.getText().contains((String) getControl().get(Data.PAGINATOR_ANCHOR_TEXT))) {
 					value = element;
+					setValue(value);
 					break;
 				}
+			} else {
+				break;
 			}
 		}
 		return super.put(key, value);

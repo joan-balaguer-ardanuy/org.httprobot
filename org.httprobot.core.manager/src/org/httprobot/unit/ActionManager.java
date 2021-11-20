@@ -1,10 +1,14 @@
 package org.httprobot.unit;
 
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
@@ -18,10 +22,11 @@ import org.httprobot.parameter.BannedWordManager;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
-import org.httprobot.placeholder.html.ElementManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 public class ActionManager
 	extends Manager<WebElement, Set<WebElement>, ActionControl> {
@@ -54,7 +59,7 @@ public class ActionManager
 	@Override
 	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		if(key == null) {
-			String httpAddress = getControl().get(Data.HTTP_ADDRESS).toString();
+			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
 			httpAddress = deParameterizeURL(httpAddress);
 			try {
 				key = webLoaderManager.getPage(new URL(httpAddress));
@@ -210,7 +215,24 @@ public class ActionManager
 		}
 	}
 
-	
+	private static Document convertStringToXMLDocument(String xmlString) {
+		// Parser that produces DOM object trees from XML content
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+		// API to obtain DOM Document instance
+		DocumentBuilder builder = null;
+		try {
+			// Create DocumentBuilder with default configuration
+			builder = factory.newDocumentBuilder();
+
+			// Parse the content to Document object
+			Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+			return doc;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public class Node<K,V> implements java.util.Map.Entry<K, V> {
 

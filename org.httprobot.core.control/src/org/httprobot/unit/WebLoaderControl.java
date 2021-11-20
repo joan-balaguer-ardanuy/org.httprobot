@@ -30,8 +30,6 @@ public class WebLoaderControl extends Control<WebLoader> {
 			}
 			if(webLoader.getPaginator() != null) {
 				new PaginatorControl(webLoader.getPaginator(), this);
-			} else {
-				throw new Error("ActionControl.OnControlInitialized: WebOptions XML message element expected.");
 			}
 		} else if (e.getSource() instanceof PaginatorControl) {
 			paginatorControl = PaginatorControl.class.cast(e.getSource());
@@ -44,7 +42,7 @@ public class WebLoaderControl extends Control<WebLoader> {
 		if (e.getSource().equals(this)) {
 			put(Data.TIME, getMessage().getTime());
 			put(Data.JAVASCRIPT, getMessage().getJavaScript());
-			put(Data.NEXT_PAGE, getMessage().getNextPageAttribute());
+			put(Data.NEXT_PAGE_ATTRIBUTE, getMessage().getNextPageAttribute());
 			put(Data.DISALLOW_IMAGES, getMessage().getDisallowImages());
 			
 			// Check if control has child XML message controls

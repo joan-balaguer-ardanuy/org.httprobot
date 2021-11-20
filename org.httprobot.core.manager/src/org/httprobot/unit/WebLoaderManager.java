@@ -11,6 +11,7 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -38,7 +39,7 @@ public class WebLoaderManager
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
 	}
-	private void loadWebDriver() {
+	private void instanceWebDriver() {
 		WebDriver driver;
 		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
 			FirefoxProfile profile = new FirefoxProfile();
@@ -74,9 +75,9 @@ public class WebLoaderManager
 					WebDriver driver = getWebDriver();
 					Actions action = new Actions(driver);
 					
-					javascriptAction(driver, action);
+					clickElementAction(driver, action);
 
-					key = new URL(nextPageElement.getAttribute(getControl().get(Data.NEXT_PAGE).toString()));
+					key = new URL(nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE)));
 					value = driver.findElement(By.xpath("/html"));
 
 					paginatorManager.put(value, null);
@@ -90,9 +91,11 @@ public class WebLoaderManager
 		}
 		return null;
 	}
-	private void javascriptAction(WebDriver driver, Actions action) {
+	private void clickElementAction(WebDriver driver, Actions action) {
 		try {
-			String script = getControl().get(Data.JAVASCRIPT).toString();
+			String script = getControl().get(Data.JAVASCRIPT) != null ?
+					(String) getControl().get(Data.JAVASCRIPT) : null;
+			
 			if (script != null) {
 				((JavascriptExecutor) driver).executeScript(script, nextPageElement);
 			}
@@ -101,12 +104,14 @@ public class WebLoaderManager
 			action.moveToElement(nextPageElement).click().perform();
 		} catch (MoveTargetOutOfBoundsException ex) {
 			// ignore this exception, repeat the process
-			javascriptAction(driver, action);
+			clickElementAction(driver, action);
+		} catch(StaleElementReferenceException ex) {
+			return;
 		}
 	}
 	public void waitPeriodTime() {
 		try {
-			Thread.sleep(getControl().getMessage().getTime());
+			Thread.sleep((Integer) getControl().get(Data.TIME));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -133,7 +138,7 @@ public class WebLoaderManager
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(this)) {
-				loadWebDriver();
+				instanceWebDriver();
 			}
 			break;
 		case FINISHED:
