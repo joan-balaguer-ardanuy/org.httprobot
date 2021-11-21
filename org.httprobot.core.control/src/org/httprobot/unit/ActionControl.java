@@ -10,8 +10,6 @@ import org.httprobot.Enums.Command;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.parameter.BannedWord;
-import org.httprobot.parameter.BannedWordControl;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.placeholder.html.ElementControl;
@@ -26,7 +24,6 @@ public final class ActionControl
 	private static final long serialVersionUID = -3447883786428247992L;
 	
 	LinkedHashSet<ConstantControl> constant;
-	LinkedHashSet<BannedWordControl> bannedWord;
 	WebLoaderControl webLoaderControl;
 	ElementControl elementControl;
 	
@@ -43,13 +40,6 @@ public final class ActionControl
 	}
 	public void setConstant(LinkedHashSet<ConstantControl> constant) {
 		this.constant = constant;
-	}
-	@XmlElement
-	public LinkedHashSet<BannedWordControl> getBannedWord() {
-		return bannedWord;
-	}
-	public void setBannedWord(LinkedHashSet<BannedWordControl> bannedWord) {
-		this.bannedWord = bannedWord;
 	}
 	@XmlElement
 	public ElementControl getElementControl() {
@@ -72,7 +62,6 @@ public final class ActionControl
 			Action action = Action.class.cast(e.getMessage());
 
 			constant = new LinkedHashSet<ConstantControl>();
-			bannedWord = new LinkedHashSet<BannedWordControl>();
 
 			if (action.getStrictMode() == null) {
 				throw new Error("ActionControl.OnControlInitialized: strictMode XML message attribute expected.");
@@ -86,13 +75,7 @@ public final class ActionControl
 			for (Constant constant : action.getConstant()) {
 				new ConstantControl(constant, this);
 			}
-			for (BannedWord bannedWord : action.getBannedWord()) {
-				new BannedWordControl(bannedWord, this);
-			}
-		} else if (e.getSource() instanceof BannedWordControl) {
-			BannedWordControl childBannedWord = BannedWordControl.class.cast(e.getSource());
-			bannedWord.add(childBannedWord);
-			addChildControl(childBannedWord);
+			
 		} else if (e.getSource() instanceof ConstantControl) {
 			ConstantControl childConstant = ConstantControl.class.cast(e.getSource());
 			constant.add(childConstant);
@@ -137,16 +120,6 @@ public final class ActionControl
 								childConstantControl.loadControl();
 							}
 						}		
-					} else if(control instanceof BannedWordControl ?
-							!action.getBannedWord().isEmpty() ?
-									bannedWord.contains(control)
-									: false : false) {
-						BannedWordControl childBannedWordControl = BannedWordControl.class.cast(control);
-						for(BannedWord bannedWord : action.getBannedWord()) {
-							if(childBannedWordControl.getUuid().equals(bannedWord.getUuid())) {
-								childBannedWordControl.loadControl();
-							}
-						}
 					}
 				}
 				// Set control ready to be iterated again.
@@ -155,20 +128,14 @@ public final class ActionControl
 				CommandLineEvent(new CommandEventArgs(this, Command.ACTION_CONTROL_LOADED));
 			}
 		}
-		else if(e.getSource() instanceof ElementControl) {
-			if(getChildControls().contains(e.getSource())) {
+		else if (e.getSource() instanceof ElementControl) {
+			if (getChildControls().contains(e.getSource())) {
 				put(Data.ELEMENT, e.getMessage());
-			}	
-		}
-		else if(e.getSource() instanceof BannedWordControl) {
-			if(getChildControls().contains(e.getSource())) {
-				put(Data.BANNED_WORD, e.getMessage());
-			}	
-		}
-		else if(e.getSource() instanceof ConstantControl) {
-			if(getChildControls().contains(e.getSource())) {
+			}
+		} else if (e.getSource() instanceof ConstantControl) {
+			if (getChildControls().contains(e.getSource())) {
 				put(Data.CONSTANT, e.getMessage());
-			}	
+			}
 		}
 	}
 }

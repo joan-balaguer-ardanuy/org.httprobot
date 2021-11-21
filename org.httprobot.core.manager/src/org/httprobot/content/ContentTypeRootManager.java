@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.AbstractManager;
+import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
@@ -19,15 +19,12 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootManager 
-	extends AbstractManager<ContentTypeRootControl>
-		implements java.util.Map.Entry<ContentTypeRoot, TemplateLibrary> {
+	extends Manager<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
 
 	/**
 	 * 1379517986287192515L
 	 */
 	private static final long serialVersionUID = 1379517986287192515L;
-
-	TemplateLibrary value;
 	
 	Map<ContentTypeRef, ContentType> contentTypeIndex;
 	
@@ -38,23 +35,6 @@ public final class ContentTypeRootManager
 	InputDocumentLibrary<ContentTypeRef, FieldRef> inputDocumentLibrary;
 	FieldLibrary<FieldRef> fieldLibrary;
 
-	@Override
-	public ContentTypeRoot getKey() {
-		return getControl().getMessage();
-	}
-	@Override
-	public TemplateLibrary getValue() {
-		return value;
-	}
-	@Override
-	public TemplateLibrary setValue(TemplateLibrary value) {
-		TemplateLibrary oldValue = this.value;
-		value.putAll(inputDocumentLibrary);
-		value.getTemplateFieldLibrary().putAll(fieldLibrary);
-		this.value = value;
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
 	@Override
 	@XmlElement
 	public ContentTypeRootControl getControl() {
@@ -81,8 +61,23 @@ public final class ContentTypeRootManager
 	}
 
 	@Override
+	public TemplateLibrary put(ContentTypeRoot key, TemplateLibrary value) {
+		if (keySet().contains(key)) {
+			value.putAll(inputDocumentLibrary);
+			value.getTemplateFieldLibrary().putAll(fieldLibrary);
+		}
+		return super.put(key, value);
+	}
+	
+	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 		switch (e.getCommand()) {
+		case CONTENT_TYPE_ROOT_CONTROL_LOADED:
+			if(e.getSource() instanceof ContentTypeRootControl) {
+				ContentTypeRoot contentTypeRoot = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
+				keySet().add(contentTypeRoot);
+			}
+			break;
 		case FIELD_REF_CONTROL_LOADED:
 			if(e.getSource() instanceof FieldRefControl) {
 				FieldRefControl fieldRefControl = FieldRefControl.class.cast(e.getSource());
@@ -126,23 +121,32 @@ public final class ContentTypeRootManager
 		case STARTED:
 			if(e.getSource() instanceof ContentTypeRefManager) {
 				ContentTypeRefManager contentTypeRefManager = ContentTypeRefManager.class.cast(e.getSource());
-				for(ContentType contentType : contentTypeManagers.keySet()) {
-					if(contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-						contentTypeRefManager.setValue(contentType);
-						break;
+				for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
+					for(ContentType contentType : contentTypeManagers.keySet()) {
+						if(contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+							contentTypeRefManager.put(contentTypeRef, contentType);
+							break;
+						}
 					}
 				}
 			} else if(e.getSource() instanceof FieldRefManager) {
+				// Cast sources
 				FieldRefManager fieldRefManager = FieldRefManager.class.cast(e.getSource());
-				if(fieldRefManager.equals(fieldRefManagers.get(fieldRefManager.getKey()))) {
-					InputField inputField = new InputField(fieldRefManager.getKey());
-					fieldRefManager.setValue(inputField);
+				for (FieldRef fieldRef : fieldRefManager) {
+					// Check if manager is a child of current object
+					if (fieldRefManager.equals(this.fieldRefManagers.get(fieldRef))) {
+						// Initialize new SOLR field
+						InputField inputField = new InputField(fieldRef);
+						// Set matching message as input data
+						fieldRefManager.put(fieldRef, inputField);
+					}
 				}
 			} else if(e.getSource() instanceof ContentTypeManager) {
 				ContentTypeManager contentTypeManager = ContentTypeManager.class.cast(e.getSource());
 				for(ContentType contentType : contentTypeManager) {
 					if(contentTypeManager.equals(contentTypeManagers.get(contentType))) {
-						contentTypeManager.put(contentType, null);
+						InputDocument templateDocument = new InputDocument(contentTypeManager.getControl().getMessage());
+						contentTypeManager.put(contentType, templateDocument);
 					}
 				}
 			}
@@ -150,12 +154,19 @@ public final class ContentTypeRootManager
 		case FINISHED:
 			if(e.getSource() instanceof ContentTypeRefManager) {
 				ContentTypeRefManager contentTypeRefManager  = ContentTypeRefManager.class.cast(e.getSource());
-				ContentType contentType = contentTypeRefManager.getValue();
-				contentTypeIndex.put(contentTypeRefManager.getKey(), contentType);
+				for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
+					ContentType contentType = contentTypeRefManager.get(contentTypeRef);
+					contentTypeIndex.put(contentTypeRef, contentType);
+				}
 			} else if(e.getSource() instanceof FieldRefManager) {
 				FieldRefManager fieldRefManager = FieldRefManager.class.cast(e.getSource());
-				if(fieldRefManager.getParent() instanceof ContentTypeRootManager) {
-					fieldLibrary.put(fieldRefManager.getKey(), fieldRefManager.getValue());
+				// Check only for FieldRef manager children
+				if (fieldRefManager.getParent() instanceof ContentTypeRootManager) {
+					for (FieldRef fieldRef : fieldRefManager) {
+						InputField inputField = fieldRefManager.get(fieldRef);
+						// Store FieldRef manager output data
+						this.fieldLibrary.put(fieldRef, inputField);
+					}
 				}
 			} else if(e.getSource() instanceof ContentTypeManager) {
 				ContentTypeManager contentTypeManager = ContentTypeManager.class.cast(e.getSource());

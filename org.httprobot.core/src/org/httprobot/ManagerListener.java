@@ -31,8 +31,5 @@ public interface ManagerListener extends MessageListener {
 	Map<String,String> getConstants();
 	void setConstants(Map<String,String> constants);
 	
-	Map<String,String> getBannedWords();
-	void setBannedWords(Map<String,String> bannedWords);
-	
 	void OnManagerEvent(ManagerEventArgs e);
 }

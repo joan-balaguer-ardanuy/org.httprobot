@@ -1,37 +1,19 @@
 package org.httprobot.content;
 
-import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ContentTypeRefManager 
-	extends AbstractManager<ContentTypeRefControl> 
-		implements java.util.Map.Entry<ContentTypeRef, ContentType> {
+	extends Manager<ContentTypeRef, ContentType, ContentTypeRefControl> {
 
 	/**
 	 * 2966040272596645359L
 	 */
 	private static final long serialVersionUID = 2966040272596645359L;
-
-	ContentType value;
-	
-	@Override
-	public ContentTypeRef getKey() {
-		return getControl().getMessage();
-	}
-	@Override
-	public ContentType getValue() {
-		return value;
-	}
-	@Override
-	public ContentType setValue(ContentType value) {
-		ContentType oldValue = this.value;
-		this.value = value;
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
 	
 	public ContentTypeRefManager() {
 		super();
@@ -41,8 +23,28 @@ public class ContentTypeRefManager
 	}
 	
 	@Override
+	public ContentType put(ContentTypeRef key, ContentType value) {
+		if(keySet().contains(key)) {
+			if(value.getUuid().equals(key.getUuid())) {
+				return super.put(key, value);		
+			}
+		}
+		return null;
+	}
+	
+	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
+		switch (e.getCommand()) {
+		case CONTENT_TYPE_REF_CONTROL_LOADED:
+			if (e.getSource() instanceof ContentTypeRefControl) {
+				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
+				keySet().add(contentTypeRef);
+			}
+			break;
 
+		default:
+			break;
+		}
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {

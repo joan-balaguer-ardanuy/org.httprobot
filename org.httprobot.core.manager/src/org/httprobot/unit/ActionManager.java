@@ -16,15 +16,10 @@ import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.parameter.BannedWord;
-import org.httprobot.parameter.BannedWordControl;
-import org.httprobot.parameter.BannedWordManager;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -38,7 +33,6 @@ public class ActionManager
 
 	WebLoaderManager webLoaderManager;
 	Map<Constant, ConstantManager> constantManagers;
-	Map<BannedWord, BannedWordManager> bannedWordManagers;
 	ElementManager elementManager;
 	
 	URL currentOutputRequest;
@@ -75,44 +69,33 @@ public class ActionManager
 		
 		for(WebElement element : elements) {
 			String hrefAttribute = element.getAttribute("href");
-			if(hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
-				if(!containsBannedWord(hrefAttribute)) {
+			if (hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
+
+				try {
+					URL url = new URL(hrefAttribute);
+					webLoaderManager.put(url, null);
+				} catch (MalformedURLException e) {
+					throw new Error("ActionManager.put: Malformed URL object.", e);
+				}
+
+			}
+			else if (hrefAttribute.startsWith("/")) {
+				hrefAttribute = hrefAttribute.substring(1);
+				if (!hrefAttribute.isEmpty()) {
+
+					String finalUrl = getConstants().get("[@server_url]") + hrefAttribute;
+
 					try {
-						URL url = new URL(hrefAttribute);
+						URL url = new URL(finalUrl);
 						webLoaderManager.put(url, null);
 					} catch (MalformedURLException e) {
 						throw new Error("ActionManager.put: Malformed URL object.", e);
 					}
-				}
-			}
-			else if(hrefAttribute.startsWith("/")) {
-				hrefAttribute = hrefAttribute.substring(1);
-				if(!hrefAttribute.isEmpty()) {
-					if(!containsBannedWord(hrefAttribute)) {
-						String finalUrl = getConstants().get("[@server_url]") + hrefAttribute;
-						
-						try {
-							URL url = new URL(finalUrl);
-							webLoaderManager.put(url, null);
-						} catch (MalformedURLException e) {
-							throw new Error("ActionManager.put: Malformed URL object.", e);
-						}
-					}
+
 				}
 			}
 		}
 		return super.put(key, value);
-	}
-
-	private boolean containsBannedWord(String href) {
-		for (String key : getBannedWords().keySet()) {
-			String value = getBannedWords().get(key);
-
-			if (href.contains(value)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private String deParameterizeURL(String url) {
@@ -148,16 +131,6 @@ public class ActionManager
 				}
 			}
 			break;
-		case BANNED_WORD_CONTROL_LOADED:
-			if(e.getSource() instanceof BannedWordControl) {
-				BannedWord bannedWord = BannedWordControl.class.cast(e.getSource()).getMessage();
-				if (getControl().get(Data.BANNED_WORD).equals(bannedWord)) {
-					BannedWordManager bannedWordManager = new BannedWordManager(bannedWord, this);
-					bannedWordManagers.put(bannedWord, bannedWordManager);
-					addChildManager(bannedWordManager);
-				}
-			}
-			break;
 		default:
 			break;
 		}
@@ -170,12 +143,6 @@ public class ActionManager
 				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
-				}
-			}
-			else if(e.getSource() instanceof BannedWordManager) {
-				BannedWordManager bannedWordManager = BannedWordManager.class.cast(e.getSource());
-				if(bannedWordManagers.containsValue(bannedWordManager)) {
-					getBannedWords().put(bannedWordManager.getKey(), bannedWordManager.getValue());
 				}
 			}
 			break;

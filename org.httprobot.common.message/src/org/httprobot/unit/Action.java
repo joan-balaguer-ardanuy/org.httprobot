@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
-import org.httprobot.parameter.BannedWord;
 import org.httprobot.parameter.Constant;
 import org.httprobot.placeholder.html.Element;
 
@@ -25,7 +24,6 @@ public final class Action extends AbstractUnit {
 	WebLoader webLoader;
 	Element element;
 	LinkedHashSet<Constant> constant;
-	LinkedHashSet<BannedWord> bannedWord;
 	
 	@XmlAttribute
 	public Boolean getStrictMode() {
@@ -63,13 +61,6 @@ public final class Action extends AbstractUnit {
 		this.constant = constant;
 	}
 	@XmlElement
-	public LinkedHashSet<BannedWord> getBannedWord() {
-		return bannedWord;
-	}
-	public void setBannedWord(LinkedHashSet<BannedWord> bannedWord) {
-		this.bannedWord = bannedWord;
-	}
-	@XmlElement
 	public Element getElement() {
 		return element;
 	}
@@ -80,7 +71,6 @@ public final class Action extends AbstractUnit {
 	public Action() {
 		super();
 		constant = new LinkedHashSet<Constant>();
-		bannedWord = new LinkedHashSet<BannedWord>();
 	}
 
 	@Override
@@ -93,6 +83,5 @@ public final class Action extends AbstractUnit {
 		setMethod(action.getMethod());
 		setWebLoader(action.getWebLoader());
 		setConstant(action.getConstant());
-		setBannedWord(action.getBannedWord());
 	}
 }

@@ -93,17 +93,6 @@ public abstract class AbstractManager<T extends Control<?>>
 		this.templateLibrary = templateLibrary;
 	}
 	@XmlTransient
-	public Map<String,String> getBannedWords() {
-		if (parameterBannedWords != null) {
-			return parameterBannedWords;
-		} else if (parent != null) {
-			return parent.getBannedWords();
-		} else return null;
-	}
-	public void setBannedWords(Map<String, String> bannedWords) {
-		this.parameterBannedWords = bannedWords;
-	}
-	@XmlTransient
 	public Map<String, String> getConstants() {
 		if (parameterConstants != null) {
 			return parameterConstants;

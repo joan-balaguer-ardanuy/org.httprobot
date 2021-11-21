@@ -76,14 +76,6 @@ public class Precursor
 		configurationManager.setConstants(constants);
 	}
 	@Override
-	public Map<String, String> getBannedWords() {
-		return configurationManager.getBannedWords();
-	}
-	@Override
-	public void setBannedWords(Map<String, String> bannedWords) {
-		configurationManager.setBannedWords(bannedWords);
-	}
-	@Override
 	public WebDriver getWebDriver() {
 		return driver;
 	}

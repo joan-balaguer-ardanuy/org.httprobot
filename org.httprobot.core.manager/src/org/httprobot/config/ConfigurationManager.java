@@ -45,14 +45,12 @@ public final class ConfigurationManager
 		super();
 		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceManager>();
 		setTemplateLibrary(new TemplateLibrary());
-		setBannedWords(new LinkedHashMap<String,String>());
 		setConstants(new LinkedHashMap<String,String>());
 	}
 	public ConfigurationManager(Configuration message, ManagerListener parent) {
 		super(message, ConfigurationControl.class, parent);
 		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceManager>();
 		setTemplateLibrary(new TemplateLibrary());
-		setBannedWords(new LinkedHashMap<String,String>());
 		setConstants(new LinkedHashMap<String,String>());
 		setContentTypeRoot(message.getContentTypeRoot());
 	}

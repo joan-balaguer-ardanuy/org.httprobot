@@ -7,8 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Enums.Data;
-import org.httprobot.Enums.ManagerEventType;
-import org.httprobot.AbstractManager;
+import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -31,16 +30,13 @@ import org.openqa.selenium.WebElement;
 
 @XmlRootElement
 public final class DataSourceManager 
-	extends AbstractManager<DataSourceControl> 
-		implements java.util.Map.Entry<ContentTypeRef, DocumentLibrary> {
+	extends Manager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L
 	 */
 	private static final long serialVersionUID = -8406916752533216986L;
 
-	DocumentLibrary value;
-	
 	ActionManager actionManager;
 	ContentTypeRefManager contentTypeRefManager;
 	DocumentRootManager documentRootManager;
@@ -48,24 +44,6 @@ public final class DataSourceManager
 	StartUrlManager startUrlManager;
 	
 	ContentType currentContentType;
-
-	@Override
-	public ContentTypeRef getKey() {
-		return contentTypeRefManager.getKey();
-	}
-	@Override
-	public DocumentLibrary getValue() {
-		return value;
-	}
-	@Override
-	public DocumentLibrary setValue(DocumentLibrary value) {
-		DocumentLibrary oldValue = this.value;
-		this.value = value;
-		setDocumentLibrary(value);
-		actionManager.put(null, new LinkedHashSet<WebElement>());
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
 	
 	public DataSourceManager() {
 		super();
@@ -74,6 +52,14 @@ public final class DataSourceManager
 		super(message, DataSourceControl.class, parent);
 	}
 
+	@Override
+	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
+		if(keySet().contains(key)) {
+			setDocumentLibrary(value);
+			actionManager.put(null, new LinkedHashSet<WebElement>());
+		}
+		return super.put(key, value);
+	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 
@@ -117,6 +103,7 @@ public final class DataSourceManager
 		case CONTENT_TYPE_REF_CONTROL_LOADED:
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
+				keySet().add(contentTypeRef);
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
 					addChildManager(contentTypeRefManager);
@@ -133,8 +120,10 @@ public final class DataSourceManager
 		case STARTED:
 			if (e.getSource().equals(contentTypeRefManager)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-						contentTypeRefManager.setValue(contentType);
+					for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
+						if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+							contentTypeRefManager.put(contentTypeRef, contentType);
+						}
 					}
 				}
 			} else if(e.getSource().equals(serverUrlManager)) {
@@ -145,7 +134,10 @@ public final class DataSourceManager
 			break;
 		case FINISHED:
 			if (e.getSource().equals(contentTypeRefManager)) {
-				currentContentType = contentTypeRefManager.getValue();
+				for(ContentTypeRef contentTypeRef : this.contentTypeRefManager) {
+					//Set current content type
+					this.currentContentType = this.contentTypeRefManager.get(contentTypeRef);	
+				}
 			} else if (e.getSource().equals(actionManager)) {
 				// No more than one expected.
 				for (WebElement pageKey : actionManager) {
