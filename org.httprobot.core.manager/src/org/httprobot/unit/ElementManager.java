@@ -14,9 +14,7 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlManager;
 import org.httprobot.placeholder.html.ContainsElement;
-import org.httprobot.placeholder.html.ContainsElementControl;
 import org.httprobot.placeholder.html.Element;
-import org.httprobot.placeholder.html.ElementControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

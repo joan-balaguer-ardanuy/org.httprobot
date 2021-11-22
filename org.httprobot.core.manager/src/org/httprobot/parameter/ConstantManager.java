@@ -1,6 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.AbstractManager;
+import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -23,6 +24,8 @@ public class ConstantManager
 	}
 	@Override
 	public String setValue(String value) {
+		getControl().getMessage().setValue(value);
+		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
 		return null;
 	}
 	

@@ -19,7 +19,6 @@ public final class AnchorControl
 	
 	public AnchorControl() {
 		super();
-		setMessage(new Anchor());
 	}
 	public AnchorControl(Anchor message, ControlListener parent) {
 		super(message, parent);

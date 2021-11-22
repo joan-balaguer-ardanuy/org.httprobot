@@ -8,6 +8,7 @@ import org.httprobot.Enums.Command;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.unit.ElementControl;
 
 @XmlRootElement
 public final class PageControl 

@@ -12,7 +12,6 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
-import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class ActionControl

@@ -5,6 +5,8 @@ import org.httprobot.AbstractHtml;
 import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.AbstractStringControl;
+import org.httprobot.unit.ContainsElementControl;
+import org.httprobot.unit.ElementControl;
 
 public class AbstractHtmlControl<TMessage extends AbstractHtml>
 	extends AbstractStringControl<TMessage> {
