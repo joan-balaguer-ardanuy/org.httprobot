@@ -154,7 +154,6 @@ public class WebLoaderManager
 		setWebDriver(new FirefoxDriver());
 		getWebDriver().get(request.toString());
 		WebElement output = getWebDriver().findElement(By.xpath("/html"));
-		getWebDriver().quit();
 		return output;
 	}
 }

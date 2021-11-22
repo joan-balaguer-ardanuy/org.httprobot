@@ -13,8 +13,6 @@ import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlManager;
-import org.httprobot.placeholder.html.ContainsElement;
-import org.httprobot.placeholder.html.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -52,18 +50,18 @@ public final class ElementManager
 		setKey(key);
 		setValue(value);
 		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
-		for (WebElement webElement : result) {
-			value.add(webElement);
-			ManagerEvent(new ManagerEventArgs(this, webElement, ManagerEventType.NEW_ELEMENT));
+		for (WebElement element : result) {
+			value.add(element);
+			ManagerEvent(new ManagerEventArgs(this, element, ManagerEventType.NEW_ELEMENT));
 			if (containsElementManager != null) {
-				containsElementManager.put(webElement, null);
+				containsElementManager.put(element, null);
 				if (containsElementManager.getValue()) {
 					if (elementManager != null) {
-						elementManager.put(webElement, new LinkedHashSet<WebElement>());
+						elementManager.put(element, new LinkedHashSet<WebElement>());
 					}
 				}
 			} else if (elementManager != null) {
-				elementManager.put(webElement, new LinkedHashSet<WebElement>());
+				elementManager.put(element, new LinkedHashSet<WebElement>());
 			}
 		}
 		return super.put(key, value);
@@ -75,10 +73,7 @@ public final class ElementManager
 		case STARTED:
 			
 			break;
-		case FINISHED:
-			if(e.getSource().equals(elementManager)) {
-				ManagerEvent(new ManagerEventArgs(this, elementManager.getValue(), ManagerEventType.ELEMENT_SET_COMPLETED));
-			}
+		case NEW_ELEMENT:
 			break;
 		default:
 			break;

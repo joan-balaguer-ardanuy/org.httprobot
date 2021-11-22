@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractHtml;
 import org.httprobot.event.MessageEventArgs;
+import org.httprobot.unit.Element;
 
 @XmlRootElement
 public final class Page extends AbstractHtml {

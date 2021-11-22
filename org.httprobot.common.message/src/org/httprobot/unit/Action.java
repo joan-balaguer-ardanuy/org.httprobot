@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractUnit;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
-import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
 public final class Action extends AbstractUnit {

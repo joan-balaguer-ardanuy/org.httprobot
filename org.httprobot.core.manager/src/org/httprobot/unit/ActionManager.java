@@ -70,14 +70,12 @@ public class ActionManager
 		for(WebElement element : elements) {
 			String hrefAttribute = element.getAttribute("href");
 			if (hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
-
 				try {
 					URL url = new URL(hrefAttribute);
 					webLoaderManager.put(url, null);
 				} catch (MalformedURLException e) {
 					throw new Error("ActionManager.put: Malformed URL object.", e);
 				}
-
 			}
 			else if (hrefAttribute.startsWith("/")) {
 				hrefAttribute = hrefAttribute.substring(1);
@@ -158,19 +156,8 @@ public class ActionManager
 						ManagerEventType.ACTION_WEB_LOADED));
 			}
 			break;
-		case ELEMENT_SET_COMPLETED:
-			if(e.getSource().equals(elementManager)) {
-				@SuppressWarnings("unchecked")
-				Set<WebElement> set = (Set<WebElement>) e.getValue();
-				
-				for(WebElement node : set) {
-					
-					elements.add(node);
-				}
-			}
-			break;
 		case NEW_ELEMENT:
-			if(e.getSource().equals(elementManager)) {
+			if(e.getSource() instanceof ElementManager) {
 				WebElement webElement = WebElement.class.cast(e.getValue());
 				if((Boolean) elementManager.getControl().get(Data.STORE)) {
 					elements.add(webElement);

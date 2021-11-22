@@ -114,8 +114,6 @@ public abstract class AbstractManager<T extends Control<?>>
 	public void setWebDriver(WebDriver webDriver) {
 		if(parent != null) {
 			parent.setWebDriver(webDriver);
-		} else {
-			this.webDriver = webDriver;
 		}
 	}
 	

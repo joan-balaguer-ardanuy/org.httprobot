@@ -9,7 +9,6 @@ import org.httprobot.Enums.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlControl;
-import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
 public final class ElementControl 
