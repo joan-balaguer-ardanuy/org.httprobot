@@ -39,54 +39,34 @@ public class WebLoaderManager
 		super(message, WebLoaderControl.class, parent);
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
 	}
-	private void instanceWebDriver() {
-		WebDriver driver;
-		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
-			FirefoxProfile profile = new FirefoxProfile();
-			profile.setPreference("permissions.default.image", 2);
-			FirefoxOptions options = new FirefoxOptions();
-			options.setProfile(profile);
-			options.setCapability(Capability.PROFILE, profile);
-			driver = new FirefoxDriver(options);
-		} else {
-			driver = new FirefoxDriver();
-		}
-		setWebDriver(driver);
-	}
 
 	@Override
 	public WebElement put(URL key, WebElement value) {
-		if (value == null) {
-			value = getPage(key);
-			
-			paginatorManager.put(value, null);
+		keySet().add(key);
+		setKey(key);
+		setValue(value);
 
-			waitPeriodTime();
+		paginatorManager.put(value, null);
+		waitPeriodTime();
 
-			put(key, value);
-		} else {
-			keySet().add(key);
-			setKey(key);
-			setValue(value);
-			super.put(key, value);
+		super.put(key, value);
 
-			if (nextPageElement != null) {
-				try {
-					WebDriver driver = getWebDriver();
-					Actions action = new Actions(driver);
-					
-					clickElementAction(driver, action);
+		if (nextPageElement != null) {
+			try {
+				WebDriver driver = getWebDriver();
+				Actions action = new Actions(driver);
 
-					key = new URL(nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE)));
-					value = driver.findElement(By.xpath("/html"));
+				clickElementAction(driver, action);
 
-					paginatorManager.put(value, null);
+				key = new URL(nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE)));
+				value = driver.findElement(By.xpath("/html"));
 
-					put(key, value);
+				paginatorManager.put(value, null);
 
-				} catch (IOException e) {
-					throw new Error("WebLoaderManager.put: bad next page anchor html element.", e);
-				}
+				put(key, value);
+
+			} catch (IOException e) {
+				throw new Error("WebLoaderManager.put: bad next page anchor html element.", e);
 			}
 		}
 		return null;
@@ -137,9 +117,7 @@ public class WebLoaderManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(this)) {
-				instanceWebDriver();
-			}
+			
 			break;
 		case FINISHED:
 			if(e.getSource().equals(paginatorManager)) {
@@ -151,7 +129,6 @@ public class WebLoaderManager
 		}
 	}
 	public WebElement getPage(URL request) {
-		setWebDriver(new FirefoxDriver());
 		getWebDriver().get(request.toString());
 		WebElement output = getWebDriver().findElement(By.xpath("/html"));
 		return output;

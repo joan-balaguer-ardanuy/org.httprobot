@@ -19,7 +19,15 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -38,17 +46,28 @@ public class ActionManager
 	URL currentOutputRequest;
 	WebElement currentOutputPage;
 
-	Set<WebElement> elements;
+	Set<WebElement> clickableElements;
 	
 	public ActionManager() {
 		super();
 	}
-
 	public ActionManager(Action message, ManagerListener parent) {
 		super(message, ActionControl.class, parent);
-		
-		webLoaderManager = new WebLoaderManager(message.getWebLoader(), this);
-		elementManager = new ElementManager(message.getElement(), this);
+	}
+	
+	private void instanceWebDriver() {
+		WebDriver driver;
+		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setPreference("permissions.default.image", 2);
+			FirefoxOptions options = new FirefoxOptions();
+			options.setProfile(profile);
+			options.setCapability(Capability.PROFILE, profile);
+			driver = new FirefoxDriver(options);
+		} else {
+			driver = new FirefoxDriver();
+		}
+		setWebDriver(driver);
 	}
 	@Override
 	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
@@ -67,30 +86,16 @@ public class ActionManager
 		
 		elementManager.put(key, new LinkedHashSet<WebElement>());
 		
-		for(WebElement element : elements) {
-			String hrefAttribute = element.getAttribute("href");
-			if (hrefAttribute.startsWith("http://") || hrefAttribute.startsWith("https://")) {
-				try {
-					URL url = new URL(hrefAttribute);
-					webLoaderManager.put(url, null);
-				} catch (MalformedURLException e) {
-					throw new Error("ActionManager.put: Malformed URL object.", e);
-				}
-			}
-			else if (hrefAttribute.startsWith("/")) {
-				hrefAttribute = hrefAttribute.substring(1);
-				if (!hrefAttribute.isEmpty()) {
-
-					String finalUrl = getConstants().get("[@server_url]") + hrefAttribute;
-
-					try {
-						URL url = new URL(finalUrl);
-						webLoaderManager.put(url, null);
-					} catch (MalformedURLException e) {
-						throw new Error("ActionManager.put: Malformed URL object.", e);
-					}
-
-				}
+		for(WebElement element : clickableElements) {
+			WebDriver driver = getWebDriver();
+			Actions action = new Actions(driver);
+			action.moveToElement(element).click().perform();
+			
+			try {
+				URL url = new URL(driver.getCurrentUrl());
+				webLoaderManager.put(url, driver.findElement(By.xpath("/html")));
+			} catch (MalformedURLException e) {
+				throw new Error("ActionManager.put: Malformed URL object.", e);
 			}
 		}
 		return super.put(key, value);
@@ -129,6 +134,15 @@ public class ActionManager
 				}
 			}
 			break;
+		case ELEMENT_CONTROL_LOADED:
+			if(e.getSource() instanceof ElementControl) {
+				Element element = ElementControl.class.cast(e.getSource()).getMessage();
+				if(getControl().get(Data.WEB_LOADER).equals(element)) {
+					elementManager = new ElementManager(element, this);
+					addChildManager(elementManager);
+				}
+			}
+			break;
 		default:
 			break;
 		}
@@ -137,14 +151,17 @@ public class ActionManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource() instanceof ConstantManager) {
+			if(e.getSource().equals(this)) {
+				instanceWebDriver();
+			}
+			else if(e.getSource() instanceof ConstantManager) {
 				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
 				}
 			}
 			break;
-		case FINISHED:
+		case FINISHED: 
 			if(e.getSource().equals(webLoaderManager)) {
 				currentOutputPage = webLoaderManager.getValue();
 				currentOutputRequest = webLoaderManager.getKey();
@@ -158,9 +175,20 @@ public class ActionManager
 			break;
 		case NEW_ELEMENT:
 			if(e.getSource() instanceof ElementManager) {
+				ElementManager elementManager = ElementManager.class.cast(e.getSource());
 				WebElement webElement = WebElement.class.cast(e.getValue());
-				if((Boolean) elementManager.getControl().get(Data.STORE)) {
-					elements.add(webElement);
+				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
+					WebDriver driver = getWebDriver();
+					Actions action = new Actions(driver);
+					String script = elementManager.getControl().get(Data.JAVASCRIPT) != null ?
+							(String) elementManager.getControl().get(Data.JAVASCRIPT) : null;
+					if(script != null) {
+						((JavascriptExecutor) driver).executeScript(script, webElement);
+					}
+					action.moveToElement(webElement).click().perform();
+				}
+				else if((Boolean) elementManager.getControl().get(Data.STORE)) {
+					clickableElements.add(webElement);
 				}
 			}
 			break;

@@ -15,17 +15,19 @@ public final class Element extends AbstractHtml {
 	 */
 	private static final long serialVersionUID = -6130911656253160686L;
 	
-	String xPath;
+	String XPath;
 	Boolean click;
 	Boolean store;
 	String javaScript;
+	ContainsElement containsElement;
+	Element element;
 	
 	@XmlElement
 	public String getXPath() {
-		return xPath;
+		return XPath;
 	}
 	public void setXPath(String xPath) {
-		this.xPath = xPath;
+		this.XPath = xPath;
 	}
 	@XmlAttribute
 	public Boolean getClick() {
@@ -48,6 +50,20 @@ public final class Element extends AbstractHtml {
 	public void setJavaScript(String javaScript) {
 		this.javaScript = javaScript;
 	}
+	@XmlElement
+	public ContainsElement getContainsElement() {
+		return containsElement;
+	}
+	public void setContainsElement(ContainsElement containsElement) {
+		this.containsElement = containsElement;
+	}
+	@XmlElement
+	public Element getElement() {
+		return element;
+	}
+	public void setElement(Element element) {
+		this.element = element;
+	}
 	
 	public Element() {
 		super();
@@ -60,7 +76,9 @@ public final class Element extends AbstractHtml {
 		Element element = Element.class.cast(e.getSource());
 		setXPath(element.getXPath());
 		setClick(element.getClick());
+		setStore(element.getStore());
 		setJavaScript(element.getJavaScript());
-		
+		setContainsElement(element.getContainsElement());
+		setElement(element.getElement());
 	}
 }

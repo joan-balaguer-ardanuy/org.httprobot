@@ -20,6 +20,7 @@ public final class Action extends AbstractUnit {
 	Boolean strictMode;
 	String httpAddress;
 	String method;
+	String javaScript;
 	WebLoader webLoader;
 	Element element;
 	LinkedHashSet<Constant> constant;
@@ -44,6 +45,13 @@ public final class Action extends AbstractUnit {
 	}
 	public void setMethod(String method) {
 		this.method = method;
+	}
+	@XmlElement
+	public String getJavaScript() {
+		return javaScript;
+	}
+	public void setJavaScript(String javaScript) {
+		this.javaScript = javaScript;
 	}
 	@XmlElement
 	public WebLoader getWebLoader() {

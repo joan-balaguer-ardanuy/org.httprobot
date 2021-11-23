@@ -14,14 +14,14 @@ public final class ContainsElement extends AbstractHtml {
 	 */
 	private static final long serialVersionUID = 7670821045022565695L;
 
-	String xPath;
+	String XPath;
 
 	@XmlElement
 	public String getXPath() {
-		return xPath;
+		return XPath;
 	}
 	public void setXPath(String xPath) {
-		this.xPath = xPath;
+		this.XPath = xPath;
 	}
 
 	public ContainsElement() {

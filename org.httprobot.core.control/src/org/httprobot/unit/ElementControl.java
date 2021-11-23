@@ -19,6 +19,9 @@ public final class ElementControl
 	 */
 	private static final long serialVersionUID = -1055172865009492574L;
 	
+	ElementControl elementControl;
+	ContainsElementControl containsElementControl;
+	
 	@Override
 	@XmlElement
 	public Element getMessage() {
@@ -58,8 +61,27 @@ public final class ElementControl
 			Element element = Element.class.cast(e.getMessage());
 			put(Data.XPATH, element.getXPath());
 			put(Data.CLICK, element.getClick());
+			put(Data.STORE, element.getStore());
 			put(Data.JAVASCRIPT, element.getJavaScript());
 			
+			//Check if control has child XML message controls
+			if(hasChildControls())
+			{
+				//Iterate through child XML message controls
+				while(hasNext())
+				{
+					//Get next child XML message control
+					ControlListener control = next();
+					
+					if(control instanceof ElementControl ?
+							elementControl.equals(control) : false) {
+						elementControl.loadControl();
+					} else if(control instanceof ContainsElementControl ?
+							containsElementControl.equals(control) : false) {
+						containsElementControl.loadControl();
+					}
+				}
+			}
 			reset();
 			// Send event to parent
 			CommandLineEvent(new CommandEventArgs(this, Command.ELEMENT_CONTROL_LOADED));

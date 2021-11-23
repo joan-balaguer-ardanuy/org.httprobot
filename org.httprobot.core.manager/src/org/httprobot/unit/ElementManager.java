@@ -49,19 +49,19 @@ public final class ElementManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		List<WebElement> result = key.findElements(By.xpath(getControl().getMessage().getXPath()));
+		List<WebElement> result = key.findElements(By.xpath((String) getControl().get(Data.XPATH)));
 		for (WebElement element : result) {
 			value.add(element);
 			ManagerEvent(new ManagerEventArgs(this, element, ManagerEventType.NEW_ELEMENT));
 			if (containsElementManager != null) {
-				containsElementManager.put(element, null);
+				containsElementManager.put(key, null);
 				if (containsElementManager.getValue()) {
 					if (elementManager != null) {
-						elementManager.put(element, new LinkedHashSet<WebElement>());
+						elementManager.put(key, new LinkedHashSet<WebElement>());
 					}
 				}
 			} else if (elementManager != null) {
-				elementManager.put(element, new LinkedHashSet<WebElement>());
+				elementManager.put(key, new LinkedHashSet<WebElement>());
 			}
 		}
 		return super.put(key, value);
@@ -74,6 +74,9 @@ public final class ElementManager
 			
 			break;
 		case NEW_ELEMENT:
+			if(!e.getSource().equals(this)) {
+				ManagerEvent(e);
+			}
 			break;
 		default:
 			break;

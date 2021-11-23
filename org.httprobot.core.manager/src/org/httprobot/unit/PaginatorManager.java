@@ -33,13 +33,13 @@ public class PaginatorManager
 				if (element.getText().contains((String) getControl().get(Data.PAGINATOR_ANCHOR_TEXT))) {
 					value = element;
 					setValue(value);
-					break;
+					return super.put(key, value);
 				}
 			} else {
 				break;
 			}
 		}
-		return super.put(key, value);
+		return null;
 	}
 	
 	@Override
