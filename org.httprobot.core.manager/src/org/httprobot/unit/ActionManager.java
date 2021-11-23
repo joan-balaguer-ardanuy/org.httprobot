@@ -150,7 +150,6 @@ public class ActionManager
 				ManagerEvent(new ManagerEventArgs(this, 
 						new Node<URL, WebElement>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
-
 			}
 			break;
 		case NEW_ELEMENT:
