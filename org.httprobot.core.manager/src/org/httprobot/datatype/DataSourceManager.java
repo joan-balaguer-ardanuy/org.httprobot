@@ -17,6 +17,7 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.net.WebDocument;
 import org.httprobot.parameter.ServerUrl;
 import org.httprobot.parameter.ServerUrlControl;
 import org.httprobot.parameter.ServerUrlManager;

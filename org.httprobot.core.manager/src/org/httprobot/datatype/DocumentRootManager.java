@@ -37,8 +37,10 @@ public class DocumentRootManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
+
 	URL currentRequest;
 	WebElement currentResponse;
+
 	
 	public DocumentRootManager() {
 		super();
@@ -118,6 +120,7 @@ public class DocumentRootManager
 		case ACTION_WEB_LOADED:
 			if(e.getSource().equals(actionManager)) {
 				try {
+
 					@SuppressWarnings("unchecked")
 					Entry<URL,WebElement> entry = (Entry<URL,WebElement>)e.getValue();
 					currentRequest = entry.getKey();

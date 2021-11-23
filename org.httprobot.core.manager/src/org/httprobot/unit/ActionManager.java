@@ -23,11 +23,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -55,20 +51,6 @@ public class ActionManager
 		super(message, ActionControl.class, parent);
 	}
 	
-	private void instanceWebDriver() {
-		WebDriver driver;
-		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
-			FirefoxProfile profile = new FirefoxProfile();
-			profile.setPreference("permissions.default.image", 2);
-			FirefoxOptions options = new FirefoxOptions();
-			options.setProfile(profile);
-			options.setCapability(Capability.PROFILE, profile);
-			driver = new FirefoxDriver(options);
-		} else {
-			driver = new FirefoxDriver();
-		}
-		setWebDriver(driver);
-	}
 	@Override
 	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
 		if(key == null) {
@@ -151,10 +133,7 @@ public class ActionManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(this)) {
-				instanceWebDriver();
-			}
-			else if(e.getSource() instanceof ConstantManager) {
+			if(e.getSource() instanceof ConstantManager) {
 				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
@@ -168,9 +147,13 @@ public class ActionManager
 				
 				getValue().add(currentOutputPage);
 				
+
+				ManagerEvent(new ManagerEventArgs(this, currentOutputPage, ManagerEventType.ACTION_WEB_LOADED));
+
 				ManagerEvent(new ManagerEventArgs(this, 
 						new Node<URL, WebElement>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
+
 			}
 			break;
 		case NEW_ELEMENT:

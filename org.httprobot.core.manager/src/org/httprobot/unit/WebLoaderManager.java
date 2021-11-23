@@ -40,6 +40,20 @@ public class WebLoaderManager
 		paginatorManager = new PaginatorManager(message.getPaginator(), this);
 	}
 
+	private void instanceWebDriver() {
+		WebDriver driver;
+		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setPreference("permissions.default.image", 2);
+			FirefoxOptions options = new FirefoxOptions();
+			options.setProfile(profile);
+			options.setCapability(Capability.PROFILE, profile);
+			driver = new FirefoxDriver(options);
+		} else {
+			driver = new FirefoxDriver();
+		}
+		setWebDriver(driver);
+	}
 	@Override
 	public WebElement put(URL key, WebElement value) {
 		keySet().add(key);
@@ -117,7 +131,9 @@ public class WebLoaderManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			
+			if(e.getSource().equals(this)) {
+				instanceWebDriver();
+			}
 			break;
 		case FINISHED:
 			if(e.getSource().equals(paginatorManager)) {
