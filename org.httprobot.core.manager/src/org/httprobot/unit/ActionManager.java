@@ -147,9 +147,6 @@ public class ActionManager
 				
 				getValue().add(currentOutputPage);
 				
-
-				ManagerEvent(new ManagerEventArgs(this, currentOutputPage, ManagerEventType.ACTION_WEB_LOADED));
-
 				ManagerEvent(new ManagerEventArgs(this, 
 						new Node<URL, WebElement>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
