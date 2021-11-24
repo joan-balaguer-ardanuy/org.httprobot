@@ -1,14 +1,8 @@
 package org.httprobot.unit;
 
-import java.io.StringReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.httprobot.Enums.Data;
 import org.httprobot.Enums.ManagerEventType;
@@ -24,8 +18,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
 public class ActionManager
 	extends Manager<WebElement, Set<WebElement>, ActionControl> {
@@ -39,7 +31,7 @@ public class ActionManager
 	Map<Constant, ConstantManager> constantManagers;
 	ElementManager elementManager;
 	
-	URL currentOutputRequest;
+	String currentOutputRequest;
 	WebElement currentOutputPage;
 
 	Set<WebElement> clickableElements;
@@ -56,11 +48,7 @@ public class ActionManager
 		if(key == null) {
 			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
 			httpAddress = deParameterizeURL(httpAddress);
-			try {
-				key = webLoaderManager.getPage(new URL(httpAddress));
-			} catch (MalformedURLException e) {
-				throw new Error("ActionManager.put: bad first URL", e);
-			}
+			key = webLoaderManager.getPage(httpAddress);
 		}
 		keySet().add(key);
 		setKey(key);
@@ -71,14 +59,14 @@ public class ActionManager
 		for(WebElement element : clickableElements) {
 			WebDriver driver = getWebDriver();
 			Actions action = new Actions(driver);
+			String script = getControl().get(Data.JAVASCRIPT) != null ?
+					(String) getControl().get(Data.JAVASCRIPT) : null;
+			if(script != null) {
+				((JavascriptExecutor) driver).executeScript(script, element);
+			}
 			action.moveToElement(element).click().perform();
 			
-			try {
-				URL url = new URL(driver.getCurrentUrl());
-				webLoaderManager.put(url, driver.findElement(By.xpath("/html")));
-			} catch (MalformedURLException e) {
-				throw new Error("ActionManager.put: Malformed URL object.", e);
-			}
+			webLoaderManager.put(driver.getCurrentUrl(), driver.findElement(By.xpath("/html")));
 		}
 		return super.put(key, value);
 	}
@@ -148,7 +136,7 @@ public class ActionManager
 				getValue().add(currentOutputPage);
 				
 				ManagerEvent(new ManagerEventArgs(this, 
-						new Node<URL, WebElement>(currentOutputRequest, currentOutputPage), 
+						new Node<String, WebElement>(currentOutputRequest, currentOutputPage), 
 						ManagerEventType.ACTION_WEB_LOADED));
 			}
 			break;
@@ -174,25 +162,6 @@ public class ActionManager
 		default:
 			break;
 		}
-	}
-
-	private static Document convertStringToXMLDocument(String xmlString) {
-		// Parser that produces DOM object trees from XML content
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-		// API to obtain DOM Document instance
-		DocumentBuilder builder = null;
-		try {
-			// Create DocumentBuilder with default configuration
-			builder = factory.newDocumentBuilder();
-
-			// Parse the content to Document object
-			Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
-			return doc;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	public class Node<K,V> implements java.util.Map.Entry<K, V> {

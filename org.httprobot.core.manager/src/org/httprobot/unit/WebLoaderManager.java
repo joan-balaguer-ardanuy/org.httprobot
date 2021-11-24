@@ -22,7 +22,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
-	extends Manager<URL, WebElement, WebLoaderControl> {
+	extends Manager<String, WebElement, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
@@ -55,33 +55,28 @@ public class WebLoaderManager
 		setWebDriver(driver);
 	}
 	@Override
-	public WebElement put(URL key, WebElement value) {
+	public WebElement put(String key, WebElement value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 
 		paginatorManager.put(value, null);
-		waitPeriodTime();
+		waitTime();
 
 		super.put(key, value);
 
 		if (nextPageElement != null) {
-			try {
-				WebDriver driver = getWebDriver();
-				Actions action = new Actions(driver);
+			WebDriver driver = getWebDriver();
+			Actions action = new Actions(driver);
 
-				clickElementAction(driver, action);
+			clickElementAction(driver, action);
 
-				key = new URL(nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE)));
-				value = driver.findElement(By.xpath("/html"));
+			key = nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE));
+			value = driver.findElement(By.xpath("/html"));
 
-				paginatorManager.put(value, null);
+			paginatorManager.put(value, null);
 
-				put(key, value);
-
-			} catch (IOException e) {
-				throw new Error("WebLoaderManager.put: bad next page anchor html element.", e);
-			}
+			put(key, value);
 		}
 		return null;
 	}
@@ -93,7 +88,7 @@ public class WebLoaderManager
 			if (script != null) {
 				((JavascriptExecutor) driver).executeScript(script, nextPageElement);
 			}
-			waitPeriodTime();
+			waitTime();
 
 			action.moveToElement(nextPageElement).click().perform();
 		} catch (MoveTargetOutOfBoundsException ex) {
@@ -103,7 +98,7 @@ public class WebLoaderManager
 			return;
 		}
 	}
-	public void waitPeriodTime() {
+	public void waitTime() {
 		try {
 			Thread.sleep((Integer) getControl().get(Data.TIME));
 		} catch (InterruptedException e) {
@@ -144,8 +139,8 @@ public class WebLoaderManager
 			break;
 		}
 	}
-	public WebElement getPage(URL request) {
-		getWebDriver().get(request.toString());
+	public WebElement getPage(String request) {
+		getWebDriver().get(request);
 		WebElement output = getWebDriver().findElement(By.xpath("/html"));
 		return output;
 	}
