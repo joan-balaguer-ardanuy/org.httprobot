@@ -8,7 +8,7 @@ import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.net.WebDocument;
 import org.openqa.selenium.WebElement;
 
-public class DocumentLibrary extends InputDocumentLibrary<WebElement, FieldRef> {
+public class DocumentLibrary extends InputDocumentLibrary<WebDocument, FieldRef> {
 	
 	ContentTypeRef contentTypeRef;
 
@@ -25,7 +25,7 @@ public class DocumentLibrary extends InputDocumentLibrary<WebElement, FieldRef> 
 		this.contentTypeRef = contentTypeRef;
 	}
 	@Override
-	public InputDocument put(WebElement key, InputDocument value) {
+	public InputDocument put(WebDocument key, InputDocument value) {
 		
 		if(value.getContentType().getUuid().equals(this.contentTypeRef.getUuid()))
 		{	

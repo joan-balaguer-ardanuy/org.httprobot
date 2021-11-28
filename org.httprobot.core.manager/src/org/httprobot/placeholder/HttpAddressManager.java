@@ -1,14 +1,12 @@
 package org.httprobot.placeholder;
 
-import java.net.URL;
-
 import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class HttpAddressManager 
-	extends AbstractPlaceholderManager<InputField, URL, HttpAddressControl> {
+	extends AbstractPlaceholderManager<InputField, String, HttpAddressControl> {
 
 	/**
 	 * 5782528861553476045L
@@ -30,7 +28,7 @@ public class HttpAddressManager
 		
 	}
 	@Override
-	public URL put(InputField key, URL value) {
+	public String put(InputField key, String value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);

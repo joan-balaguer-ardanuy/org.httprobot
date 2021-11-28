@@ -10,6 +10,7 @@ import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.net.WebDocument;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
@@ -20,7 +21,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
-	extends Manager<WebElement, Set<WebElement>, ActionControl> {
+	extends Manager<WebDocument, Set<WebDocument>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L
@@ -31,8 +32,7 @@ public class ActionManager
 	Map<Constant, ConstantManager> constantManagers;
 	ElementManager elementManager;
 	
-	String currentOutputRequest;
-	WebElement currentOutputPage;
+	WebDocument currentOutput;
 
 	Set<WebElement> clickableElements;
 	
@@ -44,17 +44,22 @@ public class ActionManager
 	}
 	
 	@Override
-	public Set<WebElement> put(WebElement key, Set<WebElement> value) {
+	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
+		WebElement htmlPage;
 		if(key == null) {
 			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
 			httpAddress = deParameterizeURL(httpAddress);
-			key = webLoaderManager.getPage(httpAddress);
+			htmlPage = webLoaderManager.getPage(httpAddress);
+			key = new WebDocument(httpAddress, htmlPage);
+		}
+		else {
+			htmlPage = webLoaderManager.getPage(key.getUrl());
 		}
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		
-		elementManager.put(key, new LinkedHashSet<WebElement>());
+		elementManager.put(htmlPage, new LinkedHashSet<WebElement>());
 		
 		for(WebElement element : clickableElements) {
 			WebDriver driver = getWebDriver();
@@ -70,17 +75,48 @@ public class ActionManager
 		}
 		return super.put(key, value);
 	}
-
-	private String deParameterizeURL(String url) {
-		// De-parameterization of current address
-		for (String paramName : getConstants().keySet()) {
-			// Replace all instances of
-			if (url.contains(paramName)) {
-				String paramValue = getConstants().get(paramName);
-				url = url.replace(paramName, paramValue);
+	@Override
+	public void OnManagerEvent(ManagerEventArgs e) {
+		switch (e.getManagerEventType()) {
+		case STARTED:
+			if(e.getSource() instanceof ConstantManager) {
+				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
+				if(constantManagers.containsValue(constantManager)) {
+					getConstants().put(constantManager.getKey(), constantManager.getValue());
+				}
 			}
+			break;
+		case FINISHED: 
+			if(e.getSource().equals(webLoaderManager)) {
+				currentOutput = new WebDocument(webLoaderManager.getKey(), webLoaderManager.getValue());
+				
+				getValue().add(currentOutput);
+				
+				ManagerEvent(new ManagerEventArgs(this, currentOutput, ManagerEventType.ACTION_WEB_LOADED));
+			}
+			break;
+		case NEW_ELEMENT:
+			if(e.getSource() instanceof ElementManager) {
+				ElementManager elementManager = ElementManager.class.cast(e.getSource());
+				WebElement webElement = WebElement.class.cast(e.getValue());
+				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
+					WebDriver driver = getWebDriver();
+					Actions action = new Actions(driver);
+					String script = elementManager.getControl().get(Data.JAVASCRIPT) != null ?
+							(String) elementManager.getControl().get(Data.JAVASCRIPT) : null;
+					if(script != null) {
+						((JavascriptExecutor) driver).executeScript(script, webElement);
+					}
+					action.moveToElement(webElement).click().perform();
+				}
+				else if((Boolean) elementManager.getControl().get(Data.STORE)) {
+					clickableElements.add(webElement);
+				}
+			}
+			break;
+		default:
+			break;
 		}
-		return url;
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
@@ -117,51 +153,16 @@ public class ActionManager
 			break;
 		}
 	}
-	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			if(e.getSource() instanceof ConstantManager) {
-				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
-				if(constantManagers.containsValue(constantManager)) {
-					getConstants().put(constantManager.getKey(), constantManager.getValue());
-				}
+	private String deParameterizeURL(String url) {
+		// De-parameterization of current address
+		for (String paramName : getConstants().keySet()) {
+			// Replace all instances of
+			if (url.contains(paramName)) {
+				String paramValue = getConstants().get(paramName);
+				url = url.replace(paramName, paramValue);
 			}
-			break;
-		case FINISHED: 
-			if(e.getSource().equals(webLoaderManager)) {
-				currentOutputPage = webLoaderManager.getValue();
-				currentOutputRequest = webLoaderManager.getKey();
-				
-				getValue().add(currentOutputPage);
-				
-				ManagerEvent(new ManagerEventArgs(this, 
-						new Node<String, WebElement>(currentOutputRequest, currentOutputPage), 
-						ManagerEventType.ACTION_WEB_LOADED));
-			}
-			break;
-		case NEW_ELEMENT:
-			if(e.getSource() instanceof ElementManager) {
-				ElementManager elementManager = ElementManager.class.cast(e.getSource());
-				WebElement webElement = WebElement.class.cast(e.getValue());
-				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
-					WebDriver driver = getWebDriver();
-					Actions action = new Actions(driver);
-					String script = elementManager.getControl().get(Data.JAVASCRIPT) != null ?
-							(String) elementManager.getControl().get(Data.JAVASCRIPT) : null;
-					if(script != null) {
-						((JavascriptExecutor) driver).executeScript(script, webElement);
-					}
-					action.moveToElement(webElement).click().perform();
-				}
-				else if((Boolean) elementManager.getControl().get(Data.STORE)) {
-					clickableElements.add(webElement);
-				}
-			}
-			break;
-		default:
-			break;
 		}
+		return url;
 	}
 	
 	public class Node<K,V> implements java.util.Map.Entry<K, V> {

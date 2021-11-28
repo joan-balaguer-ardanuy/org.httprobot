@@ -36,15 +36,12 @@ public abstract class AbstractManager<T extends Control<?>>
 	List<ManagerListener> childManagers;
 
 	ManagerListener parent;
-	WebDriver webDriver;
 	
 	ContentTypeRoot contentTypeRoot;
 	DocumentLibrary documentLibrary;
 	TemplateLibrary templateLibrary;
 	
-	Map<String, String> parameterBannedWords;
 	Map<String, String> parameterConstants;
-
 	
 	@XmlTransient
 	public ManagerListener getParent() {
@@ -105,9 +102,7 @@ public abstract class AbstractManager<T extends Control<?>>
 	}
 	@XmlTransient
 	public WebDriver getWebDriver() {
-		if (webDriver != null) {
-			return webDriver;
-		} else if (parent != null) {
+		if (parent != null) {
 			return parent.getWebDriver();
 		} else return null;
 	}

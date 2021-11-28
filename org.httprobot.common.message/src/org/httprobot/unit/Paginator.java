@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractUnit;
+import org.httprobot.Enums.GetMethod;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
@@ -14,6 +15,7 @@ public final class Paginator extends AbstractUnit {
 	 */
 	private static final long serialVersionUID = -6116912845413725443L;
 	
+	GetMethod getMethod;
 	String anchorHrefAttributeValue;
 	String anchorValue;
 	Integer paginatorIncrement;

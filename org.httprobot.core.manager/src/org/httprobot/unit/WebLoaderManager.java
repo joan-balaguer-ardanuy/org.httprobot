@@ -2,9 +2,6 @@ package org.httprobot.unit;
 
 import org.httprobot.Manager;
 
-import java.io.IOException;
-import java.net.URL;
-
 import org.httprobot.Enums.Data;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
@@ -60,10 +57,10 @@ public class WebLoaderManager
 		setKey(key);
 		setValue(value);
 
+		super.put(key, value);
+		
 		paginatorManager.put(value, null);
 		waitTime();
-
-		super.put(key, value);
 
 		if (nextPageElement != null) {
 			WebDriver driver = getWebDriver();
@@ -71,7 +68,7 @@ public class WebLoaderManager
 
 			clickElementAction(driver, action);
 
-			key = nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE));
+			key = driver.getCurrentUrl();
 			value = driver.findElement(By.xpath("/html"));
 
 			paginatorManager.put(value, null);
@@ -140,8 +137,9 @@ public class WebLoaderManager
 		}
 	}
 	public WebElement getPage(String request) {
-		getWebDriver().get(request);
-		WebElement output = getWebDriver().findElement(By.xpath("/html"));
+		WebDriver driver = getWebDriver();
+		driver.get(request);
+		WebElement output = driver.findElement(By.xpath("/html"));		
 		return output;
 	}
 }

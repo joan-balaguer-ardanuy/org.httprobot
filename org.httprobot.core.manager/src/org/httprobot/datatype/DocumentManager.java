@@ -19,13 +19,14 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.net.WebDocument;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 import org.openqa.selenium.WebElement;
 
 public class DocumentManager
-	extends Manager<Map<InputDocument, WebElement>, Map<InputDocument, WebElement>, DocumentControl> {
+	extends Manager<Map<InputDocument, WebDocument>, Map<InputDocument, WebDocument>, DocumentControl> {
 
 	/**
 	 * -7967388989379246404L
@@ -37,8 +38,7 @@ public class DocumentManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
-	URL currentRequest;
-	WebElement currentResponse;
+	WebDocument currentResponse;
 	
 	public DocumentManager() {
 		super();
@@ -48,18 +48,69 @@ public class DocumentManager
 	}
 	
 	@Override
-	public Map<InputDocument, WebElement> put(Map<InputDocument, WebElement> key, Map<InputDocument, WebElement> value) {
+	public Map<InputDocument, WebDocument> put(Map<InputDocument, WebDocument> key, Map<InputDocument, WebDocument> value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		
 		for(InputDocument inputDocument : key.keySet()) {
-			WebElement pageKey = key.get(inputDocument);
-			Set<WebElement> actionOutput = new LinkedHashSet<WebElement>();
+			WebDocument pageKey = key.get(inputDocument);
+			Set<WebDocument> actionOutput = new LinkedHashSet<WebDocument>();
 			actionManager.put(pageKey, actionOutput);
 		}
 		
 		return super.put(key, value);
+	}
+	@Override
+	public void OnManagerEvent(ManagerEventArgs e) {
+		switch (e.getManagerEventType()) {
+		case STARTED:
+			if(e.getSource().equals(contentTypeRefManager)) {
+				for(ContentType contentType : getContentTypeRoot().getContentType()) {
+					if(contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
+						contentTypeRefManager.setValue(contentType);
+					}
+				}
+			}
+			break;
+		case FINISHED:
+			if(e.getSource().equals(actionManager)) {
+				Map<InputDocument, WebDocument> documentOutputData = new LinkedHashMap<InputDocument, WebDocument>();
+				documentManager.put(getValue(), documentOutputData);
+			} else if(e.getSource().equals(contentTypeRefManager)) {
+				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
+				FieldLibrary<FieldRef> templateFields = getTemplateLibrary().getTemplateFieldLibrary();
+				setDocumentLibrary(new DocumentLibrary(contentTypeRefManager.getKey(), templateDocument, templateFields));
+			}
+			break;
+		case ACTION_WEB_LOADED:
+			if (e.getSource().equals(actionManager)) {
+				try {
+					currentResponse = (WebDocument) e.getValue();
+
+					InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
+					getDocumentLibrary().put(currentResponse, templateDocument);
+					getValue().put(templateDocument, currentResponse);
+					fieldRootManager.put(templateDocument, currentResponse);
+				} catch (ClassCastException exception) {
+					throw new Error("DocumentManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
+				}
+			}
+			break;
+		case DOCUMENT_COMPLETED:
+			if(e.getSource().equals(documentManager)) {
+				InputDocument childDocument = InputDocument.class.cast(e.getValue());
+				InputDocument currentDocument = getDocumentLibrary().get(currentResponse);
+				currentDocument.addChildDocument(childDocument);
+			} else if(e.getSource().equals(fieldRootManager)) {
+				InputDocument inputDocument = InputDocument.class.cast(e.getValue());
+				getDocumentLibrary().put(currentResponse, inputDocument);
+				ManagerEvent(e);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
@@ -98,60 +149,6 @@ public class DocumentManager
 					DocumentManager documentManager = new DocumentManager(document, this);
 					addChildManager(documentManager);
 				}
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			if(e.getSource().equals(contentTypeRefManager)) {
-				for(ContentType contentType : getContentTypeRoot().getContentType()) {
-					if(contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
-						contentTypeRefManager.setValue(contentType);
-					}
-				}
-			}
-			break;
-		case FINISHED:
-			if(e.getSource().equals(actionManager)) {
-				Map<InputDocument, WebElement> documentOutputData = new LinkedHashMap<InputDocument, WebElement>();
-				documentManager.put(getValue(), documentOutputData);
-			} else if(e.getSource().equals(contentTypeRefManager)) {
-				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
-				FieldLibrary<FieldRef> templateFields = getTemplateLibrary().getTemplateFieldLibrary();
-				setDocumentLibrary(new DocumentLibrary(contentTypeRefManager.getKey(), templateDocument, templateFields));
-			}
-			break;
-		case ACTION_WEB_LOADED:
-			if (e.getSource().equals(actionManager)) {
-				try {
-					@SuppressWarnings("unchecked")
-					Entry<URL, WebElement> entry = (Entry<URL, WebElement>) e.getValue();
-					currentRequest = entry.getKey();
-					currentResponse = entry.getValue();
-
-					InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
-					getDocumentLibrary().put(currentResponse, templateDocument);
-					getValue().put(templateDocument, currentResponse);
-					fieldRootManager.put(templateDocument, currentResponse);
-				} catch (ClassCastException exception) {
-					throw new Error("DocumentManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
-				}
-			}
-			break;
-		case DOCUMENT_COMPLETED:
-			if(e.getSource().equals(documentManager)) {
-				InputDocument childDocument = InputDocument.class.cast(e.getValue());
-				InputDocument currentDocument = getDocumentLibrary().get(currentResponse);
-				currentDocument.addChildDocument(childDocument);
-			} else if(e.getSource().equals(fieldRootManager)) {
-				InputDocument inputDocument = InputDocument.class.cast(e.getValue());
-				getDocumentLibrary().put(currentResponse, inputDocument);
-				ManagerEvent(e);
 			}
 			break;
 		default:

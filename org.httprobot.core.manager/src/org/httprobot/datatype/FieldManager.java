@@ -2,9 +2,6 @@ package org.httprobot.datatype;
 
 import org.httprobot.ManagerListener;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.httprobot.Manager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -14,17 +11,16 @@ import org.httprobot.placeholder.HtmlUnitControl;
 import org.httprobot.placeholder.HtmlManager;
 import org.httprobot.placeholder.HttpAddressControl;
 import org.httprobot.placeholder.HttpAddressManager;
-import org.openqa.selenium.WebElement;
 
 public class FieldManager
-	extends Manager<InputField, WebElement, FieldControl> {
+	extends Manager<InputField, WebDocument, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
 	 */
 	private static final long serialVersionUID = -8390181286230356701L;
 		
-	HtmlManager htmlUnitManager;
+	HtmlManager htmlManager;
 	HttpAddressManager httpAddressManager;
 	
 	public FieldManager() {
@@ -35,20 +31,15 @@ public class FieldManager
 	}
 	
 	@Override
-	public WebElement put(InputField key, WebElement value) {
+	public WebDocument put(InputField key, WebDocument value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		
-		if(htmlUnitManager != null) {
-			htmlUnitManager.put(key, value);
+		if(htmlManager != null) {
+			htmlManager.put(key, value.getDocument());
 		} else if (httpAddressManager != null) {
-			try {
-				httpAddressManager.put(key, new URL(getWebDriver().getCurrentUrl()));
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			httpAddressManager.put(key, value.getUrl());
 		} else {
 			throw new Error("FieldManager.put: placeholder XML message manager expected");
 		}
@@ -62,8 +53,8 @@ public class FieldManager
 		case HTML_UNIT_CONTROL_LOADED:
 			if(e.getSource() instanceof HtmlUnitControl) {
 				HtmlUnitControl htmlUnitControl = HtmlUnitControl.class.cast(e.getSource());
-				htmlUnitManager = new HtmlManager(htmlUnitControl.getMessage(), this);
-				addChildManager(htmlUnitManager);
+				htmlManager = new HtmlManager(htmlUnitControl.getMessage(), this);
+				addChildManager(htmlManager);
 			}
 			break;
 		case HTTP_ADDRESS_CONTROL_LOADED:

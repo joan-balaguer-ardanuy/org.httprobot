@@ -27,7 +27,6 @@ import org.httprobot.parameter.StartUrlManager;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-import org.openqa.selenium.WebElement;
 
 @XmlRootElement
 public final class DataSourceManager 
@@ -57,9 +56,47 @@ public final class DataSourceManager
 	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
 		if(keySet().contains(key)) {
 			setDocumentLibrary(value);
-			actionManager.put(null, new LinkedHashSet<WebElement>());
+			actionManager.put(null, new LinkedHashSet<WebDocument>());
 		}
 		return super.put(key, value);
+	}
+	@Override
+	public void OnManagerEvent(ManagerEventArgs e) {
+		switch (e.getManagerEventType()) {
+		case STARTED:
+			if (e.getSource().equals(contentTypeRefManager)) {
+				for (ContentType contentType : getContentTypeRoot().getContentType()) {
+					for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
+						if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+							contentTypeRefManager.put(contentTypeRef, contentType);
+						}
+					}
+				}
+			} else if(e.getSource().equals(serverUrlManager)) {
+				getConstants().put(serverUrlManager.getKey(), serverUrlManager.getValue());
+			} else if(e.getSource().equals(startUrlManager)) {
+				getConstants().put(startUrlManager.getKey(), startUrlManager.getValue());
+			}
+			break;
+		case FINISHED:
+			if (e.getSource().equals(contentTypeRefManager)) {
+				for(ContentTypeRef contentTypeRef : this.contentTypeRefManager) {
+					//Set current content type
+					this.currentContentType = this.contentTypeRefManager.get(contentTypeRef);	
+				}
+			} else if (e.getSource().equals(actionManager)) {
+				// No more than one expected.
+				for (WebDocument key : actionManager) {
+					// Get the returned pages by first request.
+					Set<WebDocument> actiontData = this.actionManager.get(key);
+					// Put loaded data on document root message manager
+					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, WebDocument>());
+				}
+			}
+			break;
+		default:
+			break;
+		}
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
@@ -108,44 +145,6 @@ public final class DataSourceManager
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
 					addChildManager(contentTypeRefManager);
-				}
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			if (e.getSource().equals(contentTypeRefManager)) {
-				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
-						if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-							contentTypeRefManager.put(contentTypeRef, contentType);
-						}
-					}
-				}
-			} else if(e.getSource().equals(serverUrlManager)) {
-				getConstants().put(serverUrlManager.getKey(), serverUrlManager.getValue());
-			} else if(e.getSource().equals(startUrlManager)) {
-				getConstants().put(startUrlManager.getKey(), startUrlManager.getValue());
-			}
-			break;
-		case FINISHED:
-			if (e.getSource().equals(contentTypeRefManager)) {
-				for(ContentTypeRef contentTypeRef : this.contentTypeRefManager) {
-					//Set current content type
-					this.currentContentType = this.contentTypeRefManager.get(contentTypeRef);	
-				}
-			} else if (e.getSource().equals(actionManager)) {
-				// No more than one expected.
-				for (WebElement pageKey : actionManager) {
-					// Get the returned pages by first request.
-					Set<WebElement> actiontData = this.actionManager.get(pageKey);
-					// Put loaded data on document root message manager
-					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, WebElement>());
 				}
 			}
 			break;

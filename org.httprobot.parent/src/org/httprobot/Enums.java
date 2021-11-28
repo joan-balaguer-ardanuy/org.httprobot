@@ -159,6 +159,22 @@ public class Enums {
 		XPATH
 	}
 	@XmlEnum
+	public enum GetMethod
+	{
+		@XmlEnumValue(value = "CLICK_NEXT_ELEMENT")
+		CLICK_NEXT_ELEMENT,
+		@XmlEnumValue(value = "HTTP_GET")
+		HTTP_GET
+	}
+	@XmlEnum
+	public enum FinalCondition
+	{
+		@XmlEnumValue(value = "MISSING_ELEMENT")
+		MISSING_ELEMENT,
+		@XmlEnumValue(value = "END_MESSAGE")
+		END_MESSAGE
+	}
+	@XmlEnum
 	public enum DataType
 	{
 		@XmlEnumValue(value = "BASE64")

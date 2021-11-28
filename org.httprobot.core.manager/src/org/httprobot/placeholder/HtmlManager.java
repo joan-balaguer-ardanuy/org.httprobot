@@ -9,10 +9,11 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebDocument;
 import org.httprobot.placeholder.html.AbstractHtmlManager;
 import org.openqa.selenium.WebElement;
+import org.w3c.dom.Document;
 
 @XmlRootElement
 public final class HtmlManager
-	extends AbstractHtmlManager<InputField, WebElement, HtmlUnitControl> {
+	extends AbstractHtmlManager<InputField, Document, HtmlUnitControl> {
 
 	/**
 	 * 239612135819734039L

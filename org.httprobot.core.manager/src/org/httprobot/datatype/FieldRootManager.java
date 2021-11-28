@@ -13,7 +13,7 @@ import org.httprobot.net.WebDocument;
 import org.openqa.selenium.WebElement;
 
 public class FieldRootManager
-	extends Manager<InputDocument, WebElement, FieldRootControl> {
+	extends Manager<InputDocument, WebDocument, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
@@ -30,7 +30,7 @@ public class FieldRootManager
 		fieldManagers = new LinkedHashMap<Field, FieldManager>();
 	}
 	@Override
-	public WebElement put(InputDocument key, WebElement value) {
+	public WebDocument put(InputDocument key, WebDocument value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
