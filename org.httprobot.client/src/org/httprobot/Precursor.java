@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.configuration.Application;
-import org.httprobot.configuration.Robot;
-import org.httprobot.configuration.RobotManager;
+import org.httprobot.configuration.Source;
+import org.httprobot.configuration.SourceManager;
 import org.httprobot.configuration.ServiceConnection;
 import org.httprobot.configuration.ServiceConnectionManager;
 import org.httprobot.content.ContentType;
@@ -38,8 +38,8 @@ public final class Precursor
 	Application appConfig;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
-	RobotManager configurationManager;
-	Robot configuration;
+	SourceManager configurationManager;
+	Source configuration;
 	
 	@Override
 	public ManagerListener getParent() {
@@ -138,7 +138,7 @@ public final class Precursor
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
 				configuration = webService.getConfiguration();
-				configurationManager = new RobotManager(configuration, this);
+				configurationManager = new SourceManager(configuration, this);
 				configurationManager.start();
 			}
 			break;

@@ -9,24 +9,24 @@ import javax.jws.WebService;
 import javax.xml.bind.JAXBException;
 import javax.xml.ws.Endpoint;
 
-import org.httprobot.configuration.Robot;
+import org.httprobot.configuration.Source;
 import org.httprobot.net.MessageService;
 
 @WebService(endpointInterface = "org.httprobot.net.MessageService")
 public class RobotSource implements MessageService {
 
-	Robot configuration;
+	Source configuration;
 	
 	public RobotSource() {
 	}
 
 	@Override
-	public Robot getConfiguration() {
+	public Source getConfiguration() {
 		return configuration;
 	}
 	
 	void LoadConfigFile(String path) {
-		configuration = new Robot();
+		configuration = new Source();
 		configuration.setPath(path);
 
 		File file = new File(path);

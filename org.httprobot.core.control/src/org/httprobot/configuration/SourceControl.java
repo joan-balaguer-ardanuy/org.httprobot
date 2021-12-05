@@ -8,7 +8,7 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
-import org.httprobot.configuration.Robot;
+import org.httprobot.configuration.Source;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
@@ -16,8 +16,8 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
-public final class RobotControl
-	extends Control<Robot> {
+public final class SourceControl
+	extends Control<Source> {
 
 	/**
 	 * 352106218223736293L
@@ -46,27 +46,27 @@ public final class RobotControl
 	}
 	@Override
 	@XmlElement
-	public Robot getMessage() {
+	public Source getMessage() {
 		return super.getMessage();
 	}
 	@Override
-	public void setMessage(Robot message) {
+	public void setMessage(Source message) {
 		super.setMessage(message);
 	}
 	
-	public RobotControl() {
+	public SourceControl() {
 		super();
 
-		setMessage(new Robot());
+		setMessage(new Source());
 	}
-	public RobotControl(Robot message, ControlListener parent) {
+	public SourceControl(Source message, ControlListener parent) {
 		super(message, parent);
 	}
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
 			// Cast Configuration XML message
-			Robot config = Robot.class.cast(e.getMessage());
+			Source config = Source.class.cast(e.getMessage());
 
 			if (config.getContentTypeRoot() != null) {
 				// Initialize ContentTypeRoot message control.
@@ -99,7 +99,7 @@ public final class RobotControl
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
-			Robot config = Robot.class.cast(e.getMessage());
+			Source config = Source.class.cast(e.getMessage());
 
 			// Check if control has child XML controls
 			if (hasChildControls()) {

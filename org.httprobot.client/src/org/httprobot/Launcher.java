@@ -11,14 +11,14 @@ import org.httprobot.configuration.Application;
 
 public class Launcher {
 
-	Application appConfig;
+	Application application;
 	Precursor precursor;
 	
 	public Launcher(String path) {
-		appConfig = LoadAppConfigFile(path);
+		application = LoadAppConfigFile(path);
 		
 		//Initialize precursor
-		precursor = new Precursor(appConfig);
+		precursor = new Precursor(application);
 		precursor.start();
 	}
 	

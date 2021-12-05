@@ -10,7 +10,7 @@ import org.httprobot.datatype.DataSource;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Robot extends AbstractConfiguration {
+public final class Source extends AbstractConfiguration {
 
 	/**
 	 * 8762442432069232238L
@@ -34,7 +34,7 @@ public final class Robot extends AbstractConfiguration {
 	public void setDataSource(LinkedHashSet<DataSource> dataSource) {
 		this.dataSource = dataSource;
 	}
-	public Robot() {
+	public Source() {
 		super();
 	}
 
@@ -42,7 +42,7 @@ public final class Robot extends AbstractConfiguration {
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		
-		Robot configuration = Robot.class.cast(e.getSource());
+		Source configuration = Source.class.cast(e.getSource());
 		setContentTypeRoot(configuration.getContentTypeRoot());
 		setDataSource(configuration.getDataSource());
 	}

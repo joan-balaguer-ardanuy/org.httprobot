@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.configuration.Robot;
-import org.httprobot.configuration.RobotControl;
+import org.httprobot.configuration.Source;
+import org.httprobot.configuration.SourceControl;
 import org.httprobot.Data;
 import org.httprobot.Manager;
 import org.httprobot.content.ContentTypeRoot;
@@ -22,8 +22,8 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
-public final class RobotManager
-	extends Manager<DataSource, DocumentLibrary, RobotControl> {
+public final class SourceManager
+	extends Manager<DataSource, DocumentLibrary, SourceControl> {
 
 	/**
 	 * 634599347187276700L
@@ -35,22 +35,22 @@ public final class RobotManager
 
 	@Override
 	@XmlElement
-	public RobotControl getControl() {
+	public SourceControl getControl() {
 		return super.getControl();
 	}
 	@Override
-	public void setControl(RobotControl control) {
+	public void setControl(SourceControl control) {
 		super.setControl(control);
 	}
 	
-	public RobotManager() {
+	public SourceManager() {
 		super();
 		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceManager>();
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
 	}
-	public RobotManager(Robot message, ManagerListener parent) {
-		super(message, RobotControl.class, parent);
+	public SourceManager(Source message, ManagerListener parent) {
+		super(message, SourceControl.class, parent);
 		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceManager>();
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
