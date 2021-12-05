@@ -26,8 +26,6 @@ public class RobotWriter {
 		try {
 			robot = new Robot();
 			
-			robot.setPath("robot.xml");
-			
 			URL url = new URL("http://localhost:8888/ws/server?wsdl");
 			QName qname = new QName("http://org.httprobot/", "RobotSourceService");
 			

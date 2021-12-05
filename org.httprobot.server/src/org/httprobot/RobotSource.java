@@ -15,26 +15,25 @@ import org.httprobot.net.MessageService;
 @WebService(endpointInterface = "org.httprobot.net.MessageService")
 public class RobotSource implements MessageService {
 
-	Source configuration;
+	Source source;
 	
 	public RobotSource() {
 	}
 
 	@Override
 	public Source getConfiguration() {
-		return configuration;
+		return source;
 	}
 	
 	void LoadConfigFile(String path) {
-		configuration = new Source();
-		configuration.setPath(path);
+		source = new Source();
 
 		File file = new File(path);
 		InputStream is;
 
 		try {
 			is = new FileInputStream(file);
-			configuration.unmarshal(is);
+			source.unmarshal(is);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

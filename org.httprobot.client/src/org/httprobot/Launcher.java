@@ -15,16 +15,16 @@ public class Launcher {
 	Precursor precursor;
 	
 	public Launcher(String path) {
-		robot = LoadAppConfigFile(path);
+		robot = LoadRobotFile(path);
 		
 		//Initialize precursor
 		precursor = new Precursor(robot);
 		precursor.start();
 	}
 	
-	private Robot LoadAppConfigFile(String path) 
+	private Robot LoadRobotFile(String path) 
 	{
-		Robot appConfig = new Robot();
+		Robot robot = new Robot();
 		
 		File file = new File(path);	
 		InputStream is;
@@ -32,8 +32,8 @@ public class Launcher {
 		try 
 		{
 			is = new FileInputStream(file);
-			appConfig.unmarshal(is);
-			return appConfig;
+			robot.unmarshal(is);
+			return robot;
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -47,6 +47,6 @@ public class Launcher {
 		return null;		
 	}
 	public static void main(String[] args) {
-		new Launcher("./AppConfig.xml");
+		new Launcher("./robot.xml");
 	}
 }

@@ -12,20 +12,8 @@ public abstract class CLI implements CommandListener {
 	 * 1182412397820363386L
 	 */
 	private static final long serialVersionUID = 1182412397820363386L;
-
-	String path;
 	
 	Set<CommandListener> commandListeners;
-	
-	@Override
-	public String getPath() {
-		return path;
-	}
-
-	@Override
-	public void setPath(String path) {
-		this.path = path;
-	}
 	
 	public CLI() {
 		this.commandListeners = new LinkedHashSet<CommandListener>();

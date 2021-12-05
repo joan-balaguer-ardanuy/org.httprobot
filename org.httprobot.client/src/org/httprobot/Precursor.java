@@ -38,8 +38,8 @@ public final class Precursor
 	Robot appConfig;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
-	SourceManager configurationManager;
-	Source configuration;
+	SourceManager sourceManager;
+	Source source;
 	
 	@Override
 	public ManagerListener getParent() {
@@ -51,35 +51,35 @@ public final class Precursor
 	}
 	@Override
 	public ContentTypeRoot getContentTypeRoot() {
-		return configurationManager.getContentTypeRoot();
+		return sourceManager.getContentTypeRoot();
 	}
 	@Override
 	public void setContentTypeRoot(ContentTypeRoot contentTypeRoot) {
-		configurationManager.setContentTypeRoot(contentTypeRoot);
+		sourceManager.setContentTypeRoot(contentTypeRoot);
 	}
 	@Override
 	public DocumentLibrary getDocumentLibrary() {
-		return configurationManager.getDocumentLibrary();
+		return sourceManager.getDocumentLibrary();
 	}
 	@Override
 	public void setDocumentLibrary(DocumentLibrary documentLibrary) {
-		configurationManager.setDocumentLibrary(documentLibrary);
+		sourceManager.setDocumentLibrary(documentLibrary);
 	}
 	@Override
 	public TemplateLibrary getTemplateLibrary() {
-		return configurationManager.getTemplateLibrary();
+		return sourceManager.getTemplateLibrary();
 	}
 	@Override
 	public void setTemplateLibrary(TemplateLibrary templateLibrary) {
-		configurationManager.setTemplateLibrary(templateLibrary);
+		sourceManager.setTemplateLibrary(templateLibrary);
 	}
 	@Override
 	public Map<String, String> getConstants() {
-		return configurationManager.getConstants();
+		return sourceManager.getConstants();
 	}
 	@Override
 	public void setConstants(Map<String, String> constants) {
-		configurationManager.setConstants(constants);
+		sourceManager.setConstants(constants);
 	}
 	@Override
 	public WebDriver getWebDriver() {
@@ -111,22 +111,22 @@ public final class Precursor
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(this.configurationManager)) {
-				for(DataSource dataSource : this.configurationManager) {
+			if(e.getSource().equals(this.sourceManager)) {
+				for(DataSource dataSource : this.sourceManager) {
 					//Get data source's content type reference
 					ContentTypeRef contentTypeRef = dataSource.getContentTypeRef();
 					//Look for matching content type
-					for(ContentType contentType : this.configuration.getContentTypeRoot().getContentType())
+					for(ContentType contentType : this.source.getContentTypeRoot().getContentType())
 					{
 						//Match UUID
 						if(contentTypeRef.getUuid().equals(contentType.getUuid()))
 						{	
-							InputDocument templateDocument = configurationManager.getTemplateLibrary().get(contentTypeRef);
-							FieldLibrary<FieldRef> fieldTemplates = configurationManager.getTemplateLibrary().getTemplateFieldLibrary();
+							InputDocument templateDocument = sourceManager.getTemplateLibrary().get(contentTypeRef);
+							FieldLibrary<FieldRef> fieldTemplates = sourceManager.getTemplateLibrary().getTemplateFieldLibrary();
 							//Initialize document library
 							DocumentLibrary documentLibrary = new DocumentLibrary(contentTypeRef, templateDocument, fieldTemplates);
 							//Put data
-							this.configurationManager.put(dataSource, documentLibrary);
+							this.sourceManager.put(dataSource, documentLibrary);
 							
 							break;
 						}
@@ -137,9 +137,9 @@ public final class Precursor
 		case FINISHED:
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
-				configuration = webService.getConfiguration();
-				configurationManager = new SourceManager(configuration, this);
-				configurationManager.start();
+				source = webService.getConfiguration();
+				sourceManager = new SourceManager(source, this);
+				sourceManager.start();
 			}
 			break;
 		default:

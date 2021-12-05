@@ -108,47 +108,25 @@ public abstract class XML
 			}
 		}
 	}
-	public final void unmarshal(InputStream inputStream) throws JAXBException
-	{
-		if(getPath() != null)
-		{
-			try 
-			{
-				jaxbContext = JAXBContext.newInstance(this.getClass());
-				jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				MessageListener obj = MessageListener.class.cast(jaxbUnmarshaller.unmarshal(inputStream));
-				XmlEvent(new MessageEventArgs(obj, XmlEventType.MESSAGE_UNMARSHALLED));
-			} 
-			catch (Exception e) 
-			{
-				throw new JAXBException(e.getMessage(), e.getCause());
-			}
-		}
-		else
-		{
-			throw new JAXBException(this.getClass().toString() + ".unmarshal(ObjectInputStream): Destination path is null");
+	public final void unmarshal(InputStream inputStream) throws JAXBException {
+		try {
+			jaxbContext = JAXBContext.newInstance(this.getClass());
+			jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			MessageListener obj = MessageListener.class.cast(jaxbUnmarshaller.unmarshal(inputStream));
+			XmlEvent(new MessageEventArgs(obj, XmlEventType.MESSAGE_UNMARSHALLED));
+		} catch (Exception e) {
+			throw new JAXBException(e.getMessage(), e.getCause());
 		}
 	}
-	public final void marshal(OutputStream outputStrem) throws JAXBException
-	{
-		if (getPath() != null) 
-		{
-			try 
-			{
-				jaxbContext = JAXBContext.newInstance(this.getClass());
-				jaxbMarshaller = jaxbContext.createMarshaller();
-				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);		
-				jaxbMarshaller.marshal(this, outputStrem);
-				XmlEvent(new MessageEventArgs(this, XmlEventType.MESSAGE_MARSHALLED));
-			}
-			catch (JAXBException e) 
-			{
-				throw new JAXBException(e.getMessage(), e.getCause());
-			}
-		}
-		else
-		{
-			throw new JAXBException(this.getClass().toString() + ".marshal(OutputStream): Destination path is null");
+	public final void marshal(OutputStream outputStrem) throws JAXBException {
+		try {
+			jaxbContext = JAXBContext.newInstance(this.getClass());
+			jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(this, outputStrem);
+			XmlEvent(new MessageEventArgs(this, XmlEventType.MESSAGE_MARSHALLED));
+		} catch (JAXBException e) {
+			throw new JAXBException(e.getMessage(), e.getCause());
 		}
 	}
 	/* (non-Javadoc)
