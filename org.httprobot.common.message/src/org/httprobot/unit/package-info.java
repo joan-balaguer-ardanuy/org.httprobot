@@ -3,7 +3,7 @@
  */
 @XmlSchema(
 namespace = "http://org.httprobot/unit", elementFormDefault = XmlNsForm.QUALIFIED,
-xmlns={ @XmlNs(prefix="unit", namespaceURI="http://org.httprobot/unit/")} )
+xmlns={ @XmlNs(prefix="org.httprobot.unit", namespaceURI="http://org.httprobot/unit")} )
 /**
  * @author joan
  *

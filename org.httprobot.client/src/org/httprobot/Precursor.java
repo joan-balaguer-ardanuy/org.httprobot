@@ -35,7 +35,7 @@ public final class Precursor
 
 	WebDriver driver;
 	
-	Robot appConfig;
+	Robot robot;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
 	SourceManager sourceManager;
@@ -111,12 +111,12 @@ public final class Precursor
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(this.sourceManager)) {
-				for(DataSource dataSource : this.sourceManager) {
+			if(e.getSource().equals(sourceManager)) {
+				for(DataSource dataSource : sourceManager) {
 					//Get data source's content type reference
 					ContentTypeRef contentTypeRef = dataSource.getContentTypeRef();
 					//Look for matching content type
-					for(ContentType contentType : this.source.getContentTypeRoot().getContentType())
+					for(ContentType contentType : source.getContentTypeRoot().getContentType())
 					{
 						//Match UUID
 						if(contentTypeRef.getUuid().equals(contentType.getUuid()))
@@ -126,7 +126,7 @@ public final class Precursor
 							//Initialize document library
 							DocumentLibrary documentLibrary = new DocumentLibrary(contentTypeRef, templateDocument, fieldTemplates);
 							//Put data
-							this.sourceManager.put(dataSource, documentLibrary);
+							sourceManager.put(dataSource, documentLibrary);
 							
 							break;
 						}
