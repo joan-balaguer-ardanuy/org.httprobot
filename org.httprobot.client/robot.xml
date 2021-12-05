@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<org.httprobot.configuration:application xmlns:org.httprobot="http://org.httprobot" xmlns:org.httprobot.configuration="http://org.httprobot/config">
-    <org.httprobot:path>AppConfig.xml</org.httprobot:path>
+<org.httprobot.configuration:robot xmlns:org.httprobot="http://org.httprobot" xmlns:org.httprobot.configuration="http://org.httprobot/configuration">
+    <org.httprobot:path>robot.xml</org.httprobot:path>
     <org.httprobot:browserVersion>FIREFOX</org.httprobot:browserVersion>
     <org.httprobot.configuration:driverPath>/home/joan/lib/WebDriver/bin/geckodriver</org.httprobot.configuration:driverPath>
     <org.httprobot.configuration:driverProperty>webdriver.gecko.driver</org.httprobot.configuration:driverProperty>
     <org.httprobot.configuration:serviceConnection>
         <org.httprobot.configuration:QName localPart="RobotSourceService" namespaceURI="http://org.httprobot/" prefix=""/>
-        <org.httprobot.configuration:url file="/ws/server?wsdl" host="localhost" port="8888" protocol="http" url="http://localhost:8888/ws/server?wsdl"/>
+        <org.httprobot.configuration:URL file="/ws/server?wsdl" host="localhost" port="8888" protocol="http" url="http://localhost:8888/ws/server?wsdl"/>
     </org.httprobot.configuration:serviceConnection>
-</org.httprobot.configuration:application>
+</org.httprobot.configuration:robot>

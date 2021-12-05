@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.configuration.Application;
+import org.httprobot.configuration.Robot;
 import org.httprobot.configuration.Source;
 import org.httprobot.configuration.SourceManager;
 import org.httprobot.configuration.ServiceConnection;
@@ -35,7 +35,7 @@ public final class Precursor
 
 	WebDriver driver;
 	
-	Application appConfig;
+	Robot appConfig;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
 	SourceManager configurationManager;
@@ -93,7 +93,7 @@ public final class Precursor
 	public Precursor() {
 		super();
 	}
-	public Precursor(Application message) {
+	public Precursor(Robot message) {
 		super(message.getUuid());
 		serviceConnection = message.getServiceConnection();
 		serviceConnectionManager = new ServiceConnectionManager(message.getServiceConnection(), this);

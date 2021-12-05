@@ -31,10 +31,10 @@ public final class ServiceConnection extends AbstractConfiguration {
 	}
 	
 	@XmlJavaTypeAdapter(value = ServiceUrlAdapter.class)
-	public URL getUrl() {
+	public URL getURL() {
 		return url;
 	}
-	public void setUrl(URL url) {
+	public void setURL(URL url) {
 		this.url = url;
 	}
 
@@ -49,6 +49,6 @@ public final class ServiceConnection extends AbstractConfiguration {
 		ServiceConnection serviceConnection = ServiceConnection.class.cast(e.getSource());
 		
 		setQName(serviceConnection.getQName());
-		setUrl(serviceConnection.getUrl());
+		setURL(serviceConnection.getURL());
 	}
 }

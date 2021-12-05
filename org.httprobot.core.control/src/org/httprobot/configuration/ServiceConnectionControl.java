@@ -7,7 +7,6 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
-import org.httprobot.configuration.ServiceConnection;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
@@ -44,7 +43,7 @@ public final class ServiceConnectionControl
 			//Cast XML message
 			ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getMessage());
 			//Check XML message integrity
-			if(serviceOptions.getQName() == null || serviceOptions.getUrl() == null) {
+			if(serviceOptions.getQName() == null || serviceOptions.getURL() == null) {
 				throw new Error("ServiceConnectionControl.OnControlInitialized: Malformed ServiceConnection XML message control exception");
 			}
 		}
@@ -56,10 +55,10 @@ public final class ServiceConnectionControl
 			//Cast message
 			ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getMessage());
 			
-			if(serviceOptions.getQName() != null && serviceOptions.getUrl() != null) {
+			if(serviceOptions.getQName() != null && serviceOptions.getURL() != null) {
 				//Store data to current XML message control
 				put(Data.Q_NAME, serviceOptions.getQName());
-				put(Data.URL, serviceOptions.getUrl());	
+				put(Data.URL, serviceOptions.getURL());	
 				//Send event to parent
 				CommandLineEvent(new CommandEventArgs(this, Command.SERVICE_CONNECTION_CONTROL_LOADED));
 			}

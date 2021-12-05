@@ -11,36 +11,36 @@ import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
 import org.httprobot.BrowserVersion;
-import org.httprobot.configuration.Application;
+import org.httprobot.configuration.Robot;
 import org.httprobot.configuration.ServiceConnection;
 
-public class AppConfigWriter {
+public class RobotWriter {
 	
-	static Application app_config;
+	static Robot robot;
 	
-	public AppConfigWriter() {
+	public RobotWriter() {
 		
 	}
 
 	public static void main(String[] args) {
 		try {
-			app_config = new Application();
+			robot = new Robot();
 			
-			app_config.setPath("AppConfig.xml");
+			robot.setPath("robot.xml");
 			
 			URL url = new URL("http://localhost:8888/ws/server?wsdl");
 			QName qname = new QName("http://org.httprobot/", "RobotSourceService");
 			
 			ServiceConnection serviceConnection = new ServiceConnection();
-			serviceConnection.setUrl(url);
+			serviceConnection.setURL(url);
 			serviceConnection.setQName(qname);
 			
-			app_config.setServiceConnection(serviceConnection);
-			app_config.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
-			app_config.setDriverProperty("webdriver.gecko.driver");
-			app_config.setBrowserVersion(BrowserVersion.FIREFOX);
+			robot.setServiceConnection(serviceConnection);
+			robot.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
+			robot.setDriverProperty("webdriver.gecko.driver");
+			robot.setBrowserVersion(BrowserVersion.FIREFOX);
 		
-			File file = new File("AppConfig.xml");
+			File file = new File("robot.xml");
 			WriteAppConfig(file);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class AppConfigWriter {
 	{
 		try {
 			OutputStream os = new FileOutputStream(file);
-			app_config.marshal(os);
+			robot.marshal(os);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

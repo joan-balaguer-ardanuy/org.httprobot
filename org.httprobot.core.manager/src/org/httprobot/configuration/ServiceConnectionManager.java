@@ -6,8 +6,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.ManagerEventType;
 import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
-import org.httprobot.configuration.ServiceConnection;
-import org.httprobot.configuration.ServiceConnectionControl;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -61,7 +59,7 @@ public final class ServiceConnectionManager
 	public void OnControlLoaded(ControlEventArgs e) {
 		if(e.getMessage() instanceof ServiceConnection) {
 			ServiceConnection message = ServiceConnection.class.cast(e.getMessage());
-			setValue(new WebService(message.getUrl(), message.getQName()));
+			setValue(new WebService(message.getURL(), message.getQName()));
 		}
 	}
 	@Override

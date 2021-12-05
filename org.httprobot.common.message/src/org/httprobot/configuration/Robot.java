@@ -8,7 +8,7 @@ import org.httprobot.BrowserVersion;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class Application extends AbstractConfiguration {
+public final class Robot extends AbstractConfiguration {
 	
 	/**
 	 * -7265402834372126641L
@@ -49,14 +49,14 @@ public final class Application extends AbstractConfiguration {
 		this.serviceConnection = serviceConnection;
 	}
 
-	public Application() {
+	public Robot() {
 		super();
 	}
 	
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
-		Application config = Application.class.cast(e.getSource());
+		Robot config = Robot.class.cast(e.getSource());
 		setDriverPath(config.getDriverPath());
 		setServiceConnection(config.getServiceConnection());
 	}

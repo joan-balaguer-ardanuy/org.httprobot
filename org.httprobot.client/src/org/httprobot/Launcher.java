@@ -7,24 +7,24 @@ import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.httprobot.configuration.Application;
+import org.httprobot.configuration.Robot;
 
 public class Launcher {
 
-	Application application;
+	Robot robot;
 	Precursor precursor;
 	
 	public Launcher(String path) {
-		application = LoadAppConfigFile(path);
+		robot = LoadAppConfigFile(path);
 		
 		//Initialize precursor
-		precursor = new Precursor(application);
+		precursor = new Precursor(robot);
 		precursor.start();
 	}
 	
-	private Application LoadAppConfigFile(String path) 
+	private Robot LoadAppConfigFile(String path) 
 	{
-		Application appConfig = new Application();
+		Robot appConfig = new Robot();
 		
 		File file = new File(path);	
 		InputStream is;

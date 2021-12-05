@@ -8,7 +8,6 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
-import org.httprobot.configuration.Source;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
