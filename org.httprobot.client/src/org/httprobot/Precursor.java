@@ -2,6 +2,9 @@ package org.httprobot;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.httprobot.config.AppConfig;
 import org.httprobot.config.Configuration;
 import org.httprobot.config.ConfigurationManager;
 import org.httprobot.config.ServiceConnection;
@@ -18,8 +21,10 @@ import org.httprobot.datatype.DataSource;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class Precursor
+@XmlRootElement
+public final class Precursor
 	extends XML
 		implements ManagerListener {
 
@@ -30,6 +35,7 @@ public class Precursor
 
 	WebDriver driver;
 	
+	AppConfig appConfig;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
 	ConfigurationManager configurationManager;
@@ -87,10 +93,11 @@ public class Precursor
 	public Precursor() {
 		super();
 	}
-	public Precursor(ServiceConnection message) {
+	public Precursor(AppConfig message) {
 		super(message.getUuid());
-		serviceConnection = message;
-		serviceConnectionManager = new ServiceConnectionManager(message, this);
+		serviceConnection = message.getServiceConnection();
+		serviceConnectionManager = new ServiceConnectionManager(message.getServiceConnection(), this);
+		driver = new FirefoxDriver();
 	}
 	@Override
 	public void start() {
@@ -139,5 +146,4 @@ public class Precursor
 			break;
 		}
 	}
-	
 }
