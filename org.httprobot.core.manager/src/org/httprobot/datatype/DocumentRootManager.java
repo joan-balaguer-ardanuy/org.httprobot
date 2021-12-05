@@ -1,12 +1,11 @@
 package org.httprobot.datatype;
 
-import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
 import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
 import org.httprobot.content.ContentType;
@@ -23,7 +22,6 @@ import org.httprobot.net.WebDocument;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-import org.openqa.selenium.WebElement;
 
 public class DocumentRootManager
 	extends Manager<Set<WebDocument>, Map<InputDocument, WebDocument>, DocumentRootControl> {
@@ -52,8 +50,8 @@ public class DocumentRootManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		for(WebDocument htmlPage : key) {
-			actionManager.put(htmlPage, new LinkedHashSet<WebDocument>());
+		for(WebDocument webDocument : key) {
+			actionManager.put(webDocument, new LinkedHashSet<WebDocument>());
 		}
 		return super.put(key, value);
 	}
@@ -63,9 +61,11 @@ public class DocumentRootManager
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefManager)) {
-				for(ContentType contentType : getContentTypeRoot().getContentType()) {
-					if(contentType.getUuid().equals(contentTypeRefManager.getKey().getUuid())) {
-						contentTypeRefManager.setValue(contentType);
+				for (ContentTypeRef contentTypeRef : contentTypeRefManager) {
+					for (ContentType contentType : getContentTypeRoot().getContentType()) {
+						if (contentType.getUuid().equals(contentTypeRefManager.getKey().getUuid())) {
+							contentTypeRefManager.put(contentTypeRef, contentType);
+						}
 					}
 				}
 			}
@@ -89,8 +89,7 @@ public class DocumentRootManager
 					getValue().put(rootTemplateDocument, currentResponse);
 					getDocumentLibrary().put(currentResponse, rootTemplateDocument);
 					fieldRootManager.put(rootTemplateDocument, currentResponse);
-				}
-				catch (ClassCastException exception) {
+				} catch (ClassCastException exception) {
 					throw new Error("DocumentRootManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
 				}
 			}
@@ -100,8 +99,7 @@ public class DocumentRootManager
 				InputDocument childDocument = InputDocument.class.cast(e.getValue());
 				InputDocument currentDocument = getDocumentLibrary().get(currentResponse);
 				currentDocument.addChildDocument(childDocument);
-			}
-			else if(e.getSource().equals(fieldRootManager)) {
+			} else if(e.getSource().equals(fieldRootManager)) {
 				for(InputDocument inputDocument : fieldRootManager) {
 					WebDocument htmlPage = fieldRootManager.get(inputDocument);
 					getDocumentLibrary().get(htmlPage).addInputDocument(inputDocument);

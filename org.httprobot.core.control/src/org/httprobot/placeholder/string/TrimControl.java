@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ControlListener;
-import org.httprobot.Enums.Command;
+import org.httprobot.Command;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 

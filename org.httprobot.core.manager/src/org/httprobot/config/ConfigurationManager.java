@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
 import org.httprobot.Manager;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;

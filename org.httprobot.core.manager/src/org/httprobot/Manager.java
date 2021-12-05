@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.event.ManagerEventArgs;
 
 public abstract class Manager<K,V,T extends Control<?>> 

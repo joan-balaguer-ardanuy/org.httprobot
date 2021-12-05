@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Enums.Data;
-import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.Data;
+import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;

@@ -1,7 +1,7 @@
 package org.httprobot.event;
 
-import org.httprobot.Enums.Command;
-import org.httprobot.Enums.EventType;
+import org.httprobot.Command;
+import org.httprobot.EventType;
 import org.httprobot.MessageListener;
 
 public class CommandEventArgs extends EventArgs {

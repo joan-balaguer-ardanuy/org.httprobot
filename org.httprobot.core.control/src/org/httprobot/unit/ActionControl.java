@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
-import org.httprobot.Enums.Command;
-import org.httprobot.Enums.Data;
+import org.httprobot.Command;
+import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.parameter.Constant;
@@ -62,7 +62,7 @@ public final class ActionControl
 
 			constant = new LinkedHashSet<ConstantControl>();
 
-			if (action.getStrictMode() == null) {
+			if (action.getClearQuery() == null) {
 				throw new Error("ActionControl.OnControlInitialized: strictMode XML message attribute expected.");
 			}
 			if (action.getHttpAddress() == null) {
@@ -90,7 +90,7 @@ public final class ActionControl
 			Action action = Action.class.cast(e.getMessage());
 			
 			//Set non-controled data
-			put(Data.STRICT_MODE, action.getStrictMode());
+			put(Data.CLEAR_QUERY, action.getClearQuery());
 			put(Data.HTTP_ADDRESS, action.getHttpAddress());
 			put(Data.METHOD, action.getMethod());
 			
@@ -103,10 +103,7 @@ public final class ActionControl
 					//Get next child XML message control
 					ControlListener control = next();
 					
-					if(control instanceof PaginatorControl ?
-							webLoaderControl.equals(control) : false) {
-						webLoaderControl.loadControl();
-					} else if(control instanceof ElementControl ?
+					if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) { 
 						elementControl.loadControl();
 					} else if(control instanceof ConstantControl ?

@@ -1,7 +1,7 @@
 package org.httprobot.event;
 
-import org.httprobot.Enums.EventType;
-import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.EventType;
+import org.httprobot.ManagerEventType;
 
 public class ManagerEventArgs extends EventArgs {
 

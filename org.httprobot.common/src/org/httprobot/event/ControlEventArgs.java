@@ -1,7 +1,7 @@
 package org.httprobot.event;
 
-import org.httprobot.Enums.ControlEventType;
-import org.httprobot.Enums.EventType;
+import org.httprobot.ControlEventType;
+import org.httprobot.EventType;
 import org.httprobot.MessageListener;
 
 public class ControlEventArgs extends EventArgs {

@@ -2,7 +2,7 @@ package org.httprobot.event;
 
 import java.util.EventObject;
 
-import org.httprobot.Enums.EventType;
+import org.httprobot.EventType;
 
 public abstract class EventArgs extends EventObject {
 

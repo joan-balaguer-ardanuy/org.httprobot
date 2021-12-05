@@ -1,29 +1,42 @@
 package org.httprobot.unit;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.httprobot.AbstractUnit;
+import org.httprobot.NextPageMethod;
 import org.httprobot.event.MessageEventArgs;
 
-public class WebLoader extends AbstractUnit {
+@XmlRootElement
+public final class WebLoader extends AbstractUnit {
 
 	/**
 	 * 7700952400328745265L
 	 */
 	private static final long serialVersionUID = 7700952400328745265L;
-	
+
+	NextPageMethod nextPageMethod;
 	Integer time;
-	Paginator paginator;
 	String javaScript;
 	String nextPageAttribute;
-	Boolean disallowImages;
+	String nextPageText;
+	String XPath;
+	String urlPattern;
+	Integer startIndex;
 	
+	@XmlElement
+	public NextPageMethod getNextPageMethod() {
+		return nextPageMethod;
+	}
+	public void setNextPageMethod(NextPageMethod nextPageMethod) {
+		this.nextPageMethod = nextPageMethod;
+	}
 	@XmlElement
 	public Integer getTime() {
 		return time;
 	}
-	public void setTime(Integer periodTime) {
-		this.time = periodTime;
+	public void setTime(Integer time) {
+		this.time = time;
 	}
 	@XmlElement
 	public String getJavaScript() {
@@ -39,21 +52,35 @@ public class WebLoader extends AbstractUnit {
 	public void setNextPageAttribute(String nextPageAttribute) {
 		this.nextPageAttribute = nextPageAttribute;
 	}
-	@XmlAttribute
-	public Boolean getDisallowImages() {
-		return disallowImages;
+	@XmlElement
+	public String getNextPageText() {
+		return nextPageText;
 	}
-	public void setDisallowImages(Boolean disallowImages) {
-		this.disallowImages = disallowImages;
+	public void setNextPageText(String nextPageText) {
+		this.nextPageText = nextPageText;
 	}
 	@XmlElement
-	public Paginator getPaginator() {
-		return paginator;
+	public String getXPath() {
+		return XPath;
 	}
-	public void setPaginator(Paginator paginator) {
-		this.paginator = paginator;
+	public void setXPath(String xPath) {
+		XPath = xPath;
 	}
-	
+	@XmlElement
+	public String getUrlPattern() {
+		return urlPattern;
+	}
+	public void setUrlPattern(String urlPattern) {
+		this.urlPattern = urlPattern;
+	}
+	@XmlElement
+	public Integer getStartIndex() {
+		return startIndex;
+	}
+	public void setStartIndex(Integer startIndex) {
+		this.startIndex = startIndex;
+	}
+
 	public WebLoader() {
 		
 	}
@@ -64,6 +91,5 @@ public class WebLoader extends AbstractUnit {
 		
 		WebLoader webLoader = WebLoader.class.cast(e.getSource());
 		setTime(webLoader.getTime());
-		setPaginator(webLoader.getPaginator());
 	}
 }

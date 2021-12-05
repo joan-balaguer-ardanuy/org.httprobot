@@ -8,7 +8,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.openqa.selenium.WebElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -17,13 +16,12 @@ public class WebDocument {
 
 	String url;
 	Document document;
-	WebElement webElement;
 	
 	public String getUrl() {
 		return url;
 	}
-	public void setRequest(String request) {
-		this.url = request;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	public Document getDocument() {
 		return document;
@@ -31,25 +29,15 @@ public class WebDocument {
 	public void setDocument(Document document) {
 		this.document = document;
 	}
-	public WebElement getWebElement() {
-		return webElement;
-	}
-	public void setWebElement(WebElement webElement) {
-		this.webElement = webElement;
-	}
 	public WebDocument() {
 
 	}
-	public WebDocument(String request) {
-		this.url = request;
-	}
-	public WebDocument(String request, Document document) {
-		this.url = request;
+	public WebDocument(String url, Document document) {
+		this.url = url;
 		this.document = document;
 	}
-	public WebDocument(String request, WebElement documentElement) {
-		this(request, convertStringToXMLDocument(documentElement.getAttribute("outerHTML")));
-		this.webElement = documentElement;
+	public WebDocument(String url, String xmlString) {
+		this(url, convertStringToXMLDocument(xmlString));
 	}
 	
 	public NodeList getByXpath(String expression) {

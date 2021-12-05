@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.Enums.ControlEventType;
-import org.httprobot.Enums.Data;
 import org.httprobot.event.ControlEventArgs;
 
 public abstract class Control<TMessage extends XML> 

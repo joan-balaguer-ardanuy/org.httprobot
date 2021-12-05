@@ -16,7 +16,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.httprobot.Enums.XmlEventType;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.MessageEventArgs;
 

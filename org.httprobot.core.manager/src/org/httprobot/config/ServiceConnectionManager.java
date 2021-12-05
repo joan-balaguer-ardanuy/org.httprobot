@@ -3,7 +3,7 @@ package org.httprobot.config;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.ManagerEventType;
 import org.httprobot.AbstractManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;

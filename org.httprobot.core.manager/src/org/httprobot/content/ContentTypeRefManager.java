@@ -1,8 +1,6 @@
 package org.httprobot.content;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.Enums.Data;
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;

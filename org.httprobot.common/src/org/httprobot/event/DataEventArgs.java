@@ -1,6 +1,6 @@
 package org.httprobot.event;
 
-import org.httprobot.Enums.EventType;
+import org.httprobot.EventType;
 
 public class DataEventArgs extends EventArgs {
 

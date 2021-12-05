@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;

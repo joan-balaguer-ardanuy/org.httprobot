@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Enums.ManagerEventType;
 import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.TemplateLibrary;

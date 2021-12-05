@@ -2,24 +2,22 @@ package org.httprobot.unit;
 
 import org.httprobot.Manager;
 
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
+import org.httprobot.NextPageMethod;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.net.WebDocument;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
-	extends Manager<String, WebElement, WebLoaderControl> {
+	extends Manager<String, WebDocument, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
@@ -27,63 +25,70 @@ public class WebLoaderManager
 	private static final long serialVersionUID = 7605117314181749897L;
 
 	WebElement nextPageElement;
-	PaginatorManager paginatorManager;
+	Integer pageNumber;
 	
 	public WebLoaderManager() {
 		super();
 	}
 	public WebLoaderManager(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
-		paginatorManager = new PaginatorManager(message.getPaginator(), this);
-	}
-
-	private void instanceWebDriver() {
-		WebDriver driver;
-		if ((Boolean) getControl().get(Data.DISALLOW_IMAGES)) {
-			FirefoxProfile profile = new FirefoxProfile();
-			profile.setPreference("permissions.default.image", 2);
-			FirefoxOptions options = new FirefoxOptions();
-			options.setProfile(profile);
-			options.setCapability(Capability.PROFILE, profile);
-			driver = new FirefoxDriver(options);
-		} else {
-			driver = new FirefoxDriver();
-		}
-		setWebDriver(driver);
+		pageNumber = message.getStartIndex();
 	}
 	@Override
-	public WebElement put(String key, WebElement value) {
+	public WebDocument put(String key, WebDocument value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-
-		super.put(key, value);
 		
-		paginatorManager.put(value, null);
+		super.put(key, value);
 		waitTime();
+		
+		WebDriver driver = getWebDriver();
+		NextPageMethod method = (NextPageMethod) getControl().get(Data.NEXT_PAGE_METHOD);
+		
+		switch (method) {
+		case CLICK_NEXT_ELEMENT:
+			findNextElement(driver);
 
-		if (nextPageElement != null) {
-			WebDriver driver = getWebDriver();
-			Actions action = new Actions(driver);
+			if (nextPageElement != null) {
 
-			clickElementAction(driver, action);
+				Actions action = new Actions(driver);
+				clickElementAction(driver, action);
 
-			key = driver.getCurrentUrl();
-			value = driver.findElement(By.xpath("/html"));
+				key = nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE));
+				value = new WebDocument(key, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 
-			paginatorManager.put(value, null);
-
+				put(key, value);
+			}
+			break;
+		case INCREMENTAL_HTTP_GET:
+			String url = key + ((String) getControl().get(Data.URL_PATTERN)).replace("[#]", pageNumber.toString());;
+			pageNumber++;
+			driver.get(url);
+			value = new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 			put(key, value);
+			break;
+		default:
+			break;
 		}
 		return null;
 	}
+	private void findNextElement(WebDriver driver) {
+		WebElement element = driver.findElement(By.xpath((String) getControl().get(Data.XPATH)));
+		if (element.isDisplayed() || element.isEnabled()) {
+			if (element.getText().contains((String) getControl().get(Data.NEXT_PAGE_TEXT))) {
+				nextPageElement = element;
+			} else {
+				nextPageElement = null;
+			}
+		} else {
+			nextPageElement = null;
+		}
+	}
 	private void clickElementAction(WebDriver driver, Actions action) {
-		try {
-			String script = getControl().get(Data.JAVASCRIPT) != null ?
-					(String) getControl().get(Data.JAVASCRIPT) : null;
-			
-			if (script != null) {
-				((JavascriptExecutor) driver).executeScript(script, nextPageElement);
+		try {			
+			if (getControl().get(Data.JAVASCRIPT) != null) {
+				((JavascriptExecutor) driver).executeScript((String) getControl().get(Data.JAVASCRIPT), nextPageElement);
 			}
 			waitTime();
 
@@ -104,42 +109,18 @@ public class WebLoaderManager
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
-		switch (e.getCommand()) {
-		case PAGINATOR_CONTROL_LOADED:
-			if(e.getSource() instanceof PaginatorControl) {
-				Paginator paginator = PaginatorControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.PAGINATOR).equals(paginator)) {
-					paginatorManager = new PaginatorManager();
-					addChildManager(paginatorManager);
-				}
-			}
-			break;
-
-		default:
-			break;
-		}
+		
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(this)) {
-				instanceWebDriver();
-			}
 			break;
 		case FINISHED:
-			if(e.getSource().equals(paginatorManager)) {
-				nextPageElement = paginatorManager.getValue();
-			}
+			
 			break;
 		default:
 			break;
 		}
-	}
-	public WebElement getPage(String request) {
-		WebDriver driver = getWebDriver();
-		driver.get(request);
-		WebElement output = driver.findElement(By.xpath("/html"));		
-		return output;
 	}
 }

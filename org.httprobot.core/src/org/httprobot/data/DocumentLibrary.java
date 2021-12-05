@@ -6,7 +6,6 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.net.WebDocument;
-import org.openqa.selenium.WebElement;
 
 public class DocumentLibrary extends InputDocumentLibrary<WebDocument, FieldRef> {
 	

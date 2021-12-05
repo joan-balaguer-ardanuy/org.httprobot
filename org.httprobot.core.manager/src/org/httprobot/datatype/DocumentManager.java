@@ -1,12 +1,11 @@
 package org.httprobot.datatype;
 
-import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
 import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
 import org.httprobot.content.ContentType;
@@ -23,7 +22,6 @@ import org.httprobot.net.WebDocument;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
-import org.openqa.selenium.WebElement;
 
 public class DocumentManager
 	extends Manager<Map<InputDocument, WebDocument>, Map<InputDocument, WebDocument>, DocumentControl> {
@@ -66,9 +64,11 @@ public class DocumentManager
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefManager)) {
-				for(ContentType contentType : getContentTypeRoot().getContentType()) {
-					if(contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
-						contentTypeRefManager.setValue(contentType);
+				for (ContentTypeRef contentTypeRef : contentTypeRefManager) {
+					for (ContentType contentType : getContentTypeRoot().getContentType()) {
+						if (contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
+							contentTypeRefManager.put(contentTypeRef, contentType);
+						}
 					}
 				}
 			}

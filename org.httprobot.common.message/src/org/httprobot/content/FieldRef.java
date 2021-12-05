@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractContent;
-import org.httprobot.Enums.DataType;
+import org.httprobot.DataType;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement

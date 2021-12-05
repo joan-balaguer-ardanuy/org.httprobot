@@ -2,7 +2,7 @@ package org.httprobot.placeholder.html;
 
 import org.httprobot.ControlListener;
 import org.httprobot.AbstractHtml;
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.AbstractStringControl;
 import org.httprobot.unit.ContainsElementControl;

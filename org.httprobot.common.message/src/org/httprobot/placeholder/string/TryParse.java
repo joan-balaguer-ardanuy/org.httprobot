@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Enums.FieldType;
+import org.httprobot.FieldType;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.AbstractString;
 

@@ -3,8 +3,8 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ControlListener;
-import org.httprobot.Enums.Command;
-import org.httprobot.Enums.Data;
+import org.httprobot.Command;
+import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 

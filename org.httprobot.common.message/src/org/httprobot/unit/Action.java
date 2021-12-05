@@ -17,7 +17,7 @@ public final class Action extends AbstractUnit {
 	 */
 	private static final long serialVersionUID = 798890955203009246L;
 
-	Boolean strictMode;
+	Boolean clearUrl;
 	String httpAddress;
 	String method;
 	String javaScript;
@@ -26,11 +26,11 @@ public final class Action extends AbstractUnit {
 	LinkedHashSet<Constant> constant;
 	
 	@XmlAttribute
-	public Boolean getStrictMode() {
-		return strictMode;
+	public Boolean getClearQuery() {
+		return clearUrl;
 	}
-	public void setStrictMode(Boolean strictMode) {
-		this.strictMode = strictMode;
+	public void setClearUrl(Boolean strictMode) {
+		this.clearUrl = strictMode;
 	}
 	@XmlElement
 	public String getHttpAddress() {
@@ -85,7 +85,7 @@ public final class Action extends AbstractUnit {
 		super.OnMessageUnmarshalled(e);
 		
 		Action action = Action.class.cast(e.getSource());
-		setStrictMode(action.getStrictMode());
+		setClearUrl(action.getClearQuery());
 		setHttpAddress(action.getHttpAddress());
 		setMethod(action.getMethod());
 		setWebLoader(action.getWebLoader());

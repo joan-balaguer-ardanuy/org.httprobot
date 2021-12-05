@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.AbstractPlaceholder;
-import org.httprobot.Enums.Data;
+import org.httprobot.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.ContainsControl;
 import org.httprobot.placeholder.string.EndsWithControl;

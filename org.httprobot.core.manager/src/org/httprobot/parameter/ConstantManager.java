@@ -1,7 +1,7 @@
 package org.httprobot.parameter;
 
 import org.httprobot.AbstractManager;
-import org.httprobot.Enums.ManagerEventType;
+import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 

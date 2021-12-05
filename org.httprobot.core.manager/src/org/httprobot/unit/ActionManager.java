@@ -1,11 +1,18 @@
 package org.httprobot.unit;
 
+import java.io.StringWriter;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.Enums.Data;
-import org.httprobot.Enums.ManagerEventType;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.httprobot.Data;
+import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
@@ -45,33 +52,52 @@ public class ActionManager
 	
 	@Override
 	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
+		WebDriver driver = getWebDriver();
 		WebElement htmlPage;
+		
 		if(key == null) {
 			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
 			httpAddress = deParameterizeURL(httpAddress);
-			htmlPage = webLoaderManager.getPage(httpAddress);
-			key = new WebDocument(httpAddress, htmlPage);
+			htmlPage = getPage(driver, httpAddress);
+			key = new WebDocument(httpAddress, htmlPage.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 		}
 		else {
-			htmlPage = webLoaderManager.getPage(key.getUrl());
+			try {
+				DOMSource domSource = new DOMSource(key.getDocument());
+				StringWriter writer = new StringWriter();
+				StreamResult result = new StreamResult(writer);
+				TransformerFactory tf = TransformerFactory.newInstance();
+				Transformer transformer = tf.newTransformer();
+				transformer.transform(domSource, result);
+
+				htmlPage = getPage(driver, "data:text/html;charset=utf-8," + writer.toString());
+			} catch (TransformerException ex) {
+				ex.printStackTrace();
+				return null;
+			}
 		}
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		
 		elementManager.put(htmlPage, new LinkedHashSet<WebElement>());
-		
-		for(WebElement element : clickableElements) {
-			WebDriver driver = getWebDriver();
-			Actions action = new Actions(driver);
-			String script = getControl().get(Data.JAVASCRIPT) != null ?
-					(String) getControl().get(Data.JAVASCRIPT) : null;
-			if(script != null) {
-				((JavascriptExecutor) driver).executeScript(script, element);
+
+		Actions action = new Actions(driver);
+
+		for (WebElement element : clickableElements) {
+
+			if (getControl().get(Data.JAVASCRIPT) != null) {
+				((JavascriptExecutor) driver).executeScript((String) getControl().get(Data.JAVASCRIPT), element);
 			}
 			action.moveToElement(element).click().perform();
-			
-			webLoaderManager.put(driver.getCurrentUrl(), driver.findElement(By.xpath("/html")));
+
+			String url = driver.getCurrentUrl();
+
+			if (((Boolean) getControl().get(Data.CLEAR_QUERY))) {
+				url = url.substring(0, url.lastIndexOf('/') + 1);
+			}
+
+			webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
 		}
 		return super.put(key, value);
 	}
@@ -88,10 +114,8 @@ public class ActionManager
 			break;
 		case FINISHED: 
 			if(e.getSource().equals(webLoaderManager)) {
-				currentOutput = new WebDocument(webLoaderManager.getKey(), webLoaderManager.getValue());
-				
+				currentOutput = webLoaderManager.getValue();
 				getValue().add(currentOutput);
-				
 				ManagerEvent(new ManagerEventArgs(this, currentOutput, ManagerEventType.ACTION_WEB_LOADED));
 			}
 			break;
@@ -102,14 +126,12 @@ public class ActionManager
 				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
 					WebDriver driver = getWebDriver();
 					Actions action = new Actions(driver);
-					String script = elementManager.getControl().get(Data.JAVASCRIPT) != null ?
-							(String) elementManager.getControl().get(Data.JAVASCRIPT) : null;
-					if(script != null) {
-						((JavascriptExecutor) driver).executeScript(script, webElement);
+					
+					if(elementManager.getControl().get(Data.JAVASCRIPT) != null) {
+						((JavascriptExecutor) driver).executeScript((String) elementManager.getControl().get(Data.JAVASCRIPT), webElement);
 					}
 					action.moveToElement(webElement).click().perform();
-				}
-				else if((Boolean) elementManager.getControl().get(Data.STORE)) {
+				} else if((Boolean) elementManager.getControl().get(Data.STORE)) {
 					clickableElements.add(webElement);
 				}
 			}
@@ -153,6 +175,10 @@ public class ActionManager
 			break;
 		}
 	}
+	private WebElement getPage(WebDriver driver, String url) {
+		driver.get(url);
+		return driver.findElement(By.xpath("/html"));	
+	}
 	private String deParameterizeURL(String url) {
 		// De-parameterization of current address
 		for (String paramName : getConstants().keySet()) {
@@ -163,29 +189,5 @@ public class ActionManager
 			}
 		}
 		return url;
-	}
-	
-	public class Node<K,V> implements java.util.Map.Entry<K, V> {
-
-		K key;
-		V value;
-		
-		public Node(K key, V value) {
-			this.key = key;
-			this.value = value;
-		}
-		
-		@Override
-		public K getKey() {
-			return key;
-		}
-		@Override
-		public V getValue() {
-			return value;
-		}
-		@Override
-		public V setValue(V value) {
-			return null;
-		}
 	}
 }

@@ -1,7 +1,7 @@
 package org.httprobot.event;
 
-import org.httprobot.Enums.EventType;
-import org.httprobot.Enums.XmlEventType;
+import org.httprobot.EventType;
+import org.httprobot.XmlEventType;
 import org.httprobot.MessageListener;
 
 public class MessageEventArgs extends EventArgs {

@@ -10,7 +10,6 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebDocument;
-import org.openqa.selenium.WebElement;
 
 public class FieldRootManager
 	extends Manager<InputDocument, WebDocument, FieldRootControl> {
