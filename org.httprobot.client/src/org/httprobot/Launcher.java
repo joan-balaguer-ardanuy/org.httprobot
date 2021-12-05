@@ -7,11 +7,11 @@ import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.httprobot.config.AppConfig;
+import org.httprobot.configuration.Application;
 
 public class Launcher {
 
-	AppConfig appConfig;
+	Application appConfig;
 	Precursor precursor;
 	
 	public Launcher(String path) {
@@ -22,9 +22,9 @@ public class Launcher {
 		precursor.start();
 	}
 	
-	private AppConfig LoadAppConfigFile(String path) 
+	private Application LoadAppConfigFile(String path) 
 	{
-		AppConfig appConfig = new AppConfig();
+		Application appConfig = new Application();
 		
 		File file = new File(path);	
 		InputStream is;
@@ -45,5 +45,8 @@ public class Launcher {
 		}
 		
 		return null;		
+	}
+	public static void main(String[] args) {
+		new Launcher("./AppConfig.xml");
 	}
 }

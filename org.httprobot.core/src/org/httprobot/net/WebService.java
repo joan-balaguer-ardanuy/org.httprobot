@@ -4,15 +4,15 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import org.httprobot.config.Configuration;
+import org.httprobot.configuration.Robot;
 
 public class WebService
 	extends Service 
 		implements MessageService {
 	
 	@Override
-	public Configuration getConfiguration() {
-		Configuration message = this.getPort(MessageService.class).getConfiguration();
+	public Robot getConfiguration() {
+		Robot message = this.getPort(MessageService.class).getConfiguration();
 		return message;
 	}
 	

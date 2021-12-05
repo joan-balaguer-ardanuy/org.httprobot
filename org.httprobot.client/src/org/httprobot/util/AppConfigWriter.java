@@ -11,12 +11,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
 import org.httprobot.BrowserVersion;
-import org.httprobot.config.AppConfig;
-import org.httprobot.config.ServiceConnection;
+import org.httprobot.configuration.Application;
+import org.httprobot.configuration.ServiceConnection;
 
 public class AppConfigWriter {
 	
-	static AppConfig app_config;
+	static Application app_config;
 	
 	public AppConfigWriter() {
 		
@@ -24,7 +24,7 @@ public class AppConfigWriter {
 
 	public static void main(String[] args) {
 		try {
-			app_config = new AppConfig();
+			app_config = new Application();
 			
 			app_config.setPath("AppConfig.xml");
 			

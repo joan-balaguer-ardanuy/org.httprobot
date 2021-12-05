@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<config:appConfig xmlns:config="http://org.httprobot/config" xmlns:org.httprobot="http://org.httprobot">
+<org.httprobot.configuration:application xmlns:org.httprobot="http://org.httprobot" xmlns:org.httprobot.configuration="http://org.httprobot/config">
     <org.httprobot:path>AppConfig.xml</org.httprobot:path>
     <org.httprobot:browserVersion>FIREFOX</org.httprobot:browserVersion>
-    <config:driverPath>/home/joan/lib/WebDriver/bin/geckodriver</config:driverPath>
-    <config:driverProperty>webdriver.gecko.driver</config:driverProperty>
-    <config:serviceConnection>
-        <config:QName localPart="RobotSourceService" namespaceURI="http://org.httprobot/" prefix=""/>
-        <config:url file="/ws/server?wsdl" host="localhost" port="8888" protocol="http" url="http://localhost:8888/ws/server?wsdl"/>
-    </config:serviceConnection>
-</config:appConfig>
+    <org.httprobot.configuration:driverPath>/home/joan/lib/WebDriver/bin/geckodriver</org.httprobot.configuration:driverPath>
+    <org.httprobot.configuration:driverProperty>webdriver.gecko.driver</org.httprobot.configuration:driverProperty>
+    <org.httprobot.configuration:serviceConnection>
+        <org.httprobot.configuration:QName localPart="RobotSourceService" namespaceURI="http://org.httprobot/" prefix=""/>
+        <org.httprobot.configuration:url file="/ws/server?wsdl" host="localhost" port="8888" protocol="http" url="http://localhost:8888/ws/server?wsdl"/>
+    </org.httprobot.configuration:serviceConnection>
+</org.httprobot.configuration:application>

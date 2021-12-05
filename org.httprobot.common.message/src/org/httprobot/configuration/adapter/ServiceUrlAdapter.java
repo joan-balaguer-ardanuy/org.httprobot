@@ -1,10 +1,10 @@
-package org.httprobot.config.adapter;
+package org.httprobot.configuration.adapter;
 
 import java.net.URL;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.httprobot.config.ServiceUrl;
+import org.httprobot.configuration.ServiceUrl;
 
 public class ServiceUrlAdapter extends XmlAdapter<ServiceUrl, URL>{
 

@@ -1,9 +1,9 @@
-package org.httprobot.config.adapter;
+package org.httprobot.configuration.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.namespace.QName;
 
-import org.httprobot.config.ServiceQName;
+import org.httprobot.configuration.ServiceQName;
 
 public class ServiceQNameAdapter extends XmlAdapter<ServiceQName, QName> {
 

@@ -1,4 +1,4 @@
-package org.httprobot.config;
+package org.httprobot.configuration;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -7,6 +7,7 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
+import org.httprobot.configuration.ServiceConnection;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 

@@ -1,4 +1,4 @@
-package org.httprobot.config;
+package org.httprobot.configuration;
 
 import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,6 +8,7 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
+import org.httprobot.configuration.Robot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
@@ -15,8 +16,8 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
-public final class ConfigurationControl
-	extends Control<Configuration> {
+public final class RobotControl
+	extends Control<Robot> {
 
 	/**
 	 * 352106218223736293L
@@ -45,27 +46,27 @@ public final class ConfigurationControl
 	}
 	@Override
 	@XmlElement
-	public Configuration getMessage() {
+	public Robot getMessage() {
 		return super.getMessage();
 	}
 	@Override
-	public void setMessage(Configuration message) {
+	public void setMessage(Robot message) {
 		super.setMessage(message);
 	}
 	
-	public ConfigurationControl() {
+	public RobotControl() {
 		super();
 
-		setMessage(new Configuration());
+		setMessage(new Robot());
 	}
-	public ConfigurationControl(Configuration message, ControlListener parent) {
+	public RobotControl(Robot message, ControlListener parent) {
 		super(message, parent);
 	}
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
 			// Cast Configuration XML message
-			Configuration config = Configuration.class.cast(e.getMessage());
+			Robot config = Robot.class.cast(e.getMessage());
 
 			if (config.getContentTypeRoot() != null) {
 				// Initialize ContentTypeRoot message control.
@@ -98,7 +99,7 @@ public final class ConfigurationControl
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
-			Configuration config = Configuration.class.cast(e.getMessage());
+			Robot config = Robot.class.cast(e.getMessage());
 
 			// Check if control has child XML controls
 			if (hasChildControls()) {

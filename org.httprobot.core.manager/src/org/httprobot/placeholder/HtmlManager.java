@@ -6,9 +6,7 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
 import org.httprobot.placeholder.html.AbstractHtmlManager;
-import org.openqa.selenium.WebElement;
 import org.w3c.dom.Document;
 
 @XmlRootElement

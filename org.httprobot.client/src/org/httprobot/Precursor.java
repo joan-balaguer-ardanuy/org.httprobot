@@ -4,11 +4,11 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.config.AppConfig;
-import org.httprobot.config.Configuration;
-import org.httprobot.config.ConfigurationManager;
-import org.httprobot.config.ServiceConnection;
-import org.httprobot.config.ServiceConnectionManager;
+import org.httprobot.configuration.Application;
+import org.httprobot.configuration.Robot;
+import org.httprobot.configuration.RobotManager;
+import org.httprobot.configuration.ServiceConnection;
+import org.httprobot.configuration.ServiceConnectionManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRoot;
@@ -35,11 +35,11 @@ public final class Precursor
 
 	WebDriver driver;
 	
-	AppConfig appConfig;
+	Application appConfig;
 	ServiceConnectionManager serviceConnectionManager;
 	ServiceConnection serviceConnection;
-	ConfigurationManager configurationManager;
-	Configuration configuration;
+	RobotManager configurationManager;
+	Robot configuration;
 	
 	@Override
 	public ManagerListener getParent() {
@@ -93,7 +93,7 @@ public final class Precursor
 	public Precursor() {
 		super();
 	}
-	public Precursor(AppConfig message) {
+	public Precursor(Application message) {
 		super(message.getUuid());
 		serviceConnection = message.getServiceConnection();
 		serviceConnectionManager = new ServiceConnectionManager(message.getServiceConnection(), this);
@@ -138,7 +138,7 @@ public final class Precursor
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
 				configuration = webService.getConfiguration();
-				configurationManager = new ConfigurationManager(configuration, this);
+				configurationManager = new RobotManager(configuration, this);
 				configurationManager.start();
 			}
 			break;

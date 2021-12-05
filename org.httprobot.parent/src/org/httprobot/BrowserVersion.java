@@ -3,7 +3,7 @@ package org.httprobot;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "BrowserVersion", namespace = "http://org.httprobot")
+@XmlType(name = "BrowserVersion")
 @XmlEnum
 public enum BrowserVersion
 {

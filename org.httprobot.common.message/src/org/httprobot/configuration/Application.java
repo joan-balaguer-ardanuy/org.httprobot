@@ -1,14 +1,14 @@
-package org.httprobot.config;
+package org.httprobot.configuration;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractConfig;
+import org.httprobot.AbstractConfiguration;
 import org.httprobot.BrowserVersion;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class AppConfig extends AbstractConfig {
+public final class Application extends AbstractConfiguration {
 	
 	/**
 	 * -7265402834372126641L
@@ -20,7 +20,7 @@ public final class AppConfig extends AbstractConfig {
 	private String driverPath;
 	private ServiceConnection serviceConnection;
 	
-	@XmlElement(namespace = "http://org.httprobot/config")
+	@XmlElement
 	public String getDriverProperty() {
 		return driverProperty;
 	}
@@ -34,14 +34,14 @@ public final class AppConfig extends AbstractConfig {
 	public void setBrowserVersion(BrowserVersion browserVersion) {
 		this.browserVersion = browserVersion;
 	}
-	@XmlElement(namespace = "http://org.httprobot/config")
+	@XmlElement
 	public String getDriverPath() {
 		return driverPath;
 	}
 	public void setDriverPath(String driverPath) {
 		this.driverPath = driverPath;
 	}
-	@XmlElement(namespace = "http://org.httprobot/config")
+	@XmlElement
 	public ServiceConnection getServiceConnection() {
 		return serviceConnection;
 	}
@@ -49,14 +49,14 @@ public final class AppConfig extends AbstractConfig {
 		this.serviceConnection = serviceConnection;
 	}
 
-	public AppConfig() {
+	public Application() {
 		super();
 	}
 	
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
-		AppConfig config = AppConfig.class.cast(e.getSource());
+		Application config = Application.class.cast(e.getSource());
 		setDriverPath(config.getDriverPath());
 		setServiceConnection(config.getServiceConnection());
 	}

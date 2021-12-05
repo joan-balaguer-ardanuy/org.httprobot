@@ -1,13 +1,13 @@
-package org.httprobot.config;
+package org.httprobot.configuration;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractConfig;
+import org.httprobot.AbstractConfiguration;
 import org.httprobot.event.MessageEventArgs;
 
 @XmlRootElement
-public final class ServiceUrl extends AbstractConfig {
+public final class ServiceUrl extends AbstractConfiguration {
 
 	/**
 	 * 8383249175803013880L
