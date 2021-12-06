@@ -20,7 +20,6 @@ import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
-import org.openqa.selenium.WebDriver;
 
 /**
  * Precursor class. Inherits {@link XML}.
@@ -43,7 +42,7 @@ public final class Precursor
 	/**
 	 * The {@link Selenium} configuration XML message.
 	 */
-	Selenium robot;
+	Selenium selenium;
 	/**
 	 * The {@link ServiceConnection} XML message {@link Manager}.
 	 */
@@ -103,11 +102,12 @@ public final class Precursor
 	}
 	@Override
 	public Selenium getSelenium() {
-		return robot;
+		return selenium;
 	}
 	@Override
-	public void setSelenium(Selenium robot) {
-		this.robot = robot;
+	public void setSelenium(Selenium selenium) {
+		this.selenium = selenium;
+		this.selenium.loadWebDriver();
 	}
 	
 	/**
@@ -118,12 +118,12 @@ public final class Precursor
 	}
 	/**
 	 * {@link Precursor} class constructor.
-	 * @param message the {@link Selenium} configuration XML message
+	 * @param selenium the {@link Selenium} configuration XML message
 	 */
-	public Precursor(Selenium message, ServiceConnection serviceConnection) {
-		super(message.getUuid());
-		// Set JVM property for the Selenium WebDriver
-		System.setProperty(message.getDriverProperty(), message.getDriverPath());
+	public Precursor(Selenium selenium, ServiceConnection serviceConnection) {
+		super(selenium.getUuid());
+		// Set Selenium XML message
+		this.selenium = selenium;
 		// Set ServiceConnection XML message
 		this.serviceConnection = serviceConnection;
 		// Instance ServiceConnectionManager

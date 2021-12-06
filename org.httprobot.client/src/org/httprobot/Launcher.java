@@ -26,7 +26,7 @@ public class Launcher {
 	/**
 	 * The {@link Selenium} configuration XML message
 	 */
-	Selenium robot;
+	Selenium selenium;
 	/**
 	 * The {@link Precursor} XML message
 	 */
@@ -38,11 +38,11 @@ public class Launcher {
 	 */
 	public Launcher(String robotPath, String serviceConnectionPath) {
 		// Load robot configuration
-		robot = loadRobotFile(robotPath);
+		selenium = loadSeleniumFile(robotPath);
 		// Load service connection data
 		serviceConnection = loadServiceConnectionFile(serviceConnectionPath);
 		// Initialize precursor
-		precursor = new Precursor(robot, serviceConnection);
+		precursor = new Precursor(selenium, serviceConnection);
 		// Start precursor
 		precursor.start();
 	}
@@ -52,16 +52,16 @@ public class Launcher {
 	 * @param path the path where file is located
 	 * @return the {@link Selenium} configuration XML message
 	 */
-	private Selenium loadRobotFile(String path) {
-		Selenium robot = new Selenium();
+	private Selenium loadSeleniumFile(String path) {
+		Selenium selenium = new Selenium();
 		
 		File file = new File(path);
 		InputStream is;
 
 		try {
 			is = new FileInputStream(file);
-			robot.unmarshal(is);
-			return robot;
+			selenium.unmarshal(is);
+			return selenium;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

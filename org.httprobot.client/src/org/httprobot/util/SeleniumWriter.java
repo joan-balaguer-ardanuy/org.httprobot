@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import javax.xml.bind.JAXBException;
 import org.httprobot.BrowserVersion;
+import org.httprobot.Constants;
 import org.httprobot.configuration.Selenium;
 
 public class SeleniumWriter {
@@ -19,7 +20,7 @@ public class SeleniumWriter {
 	public static void main(String[] args) {
 		selenium = new Selenium();
 		selenium.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
-		selenium.setDriverProperty("webdriver.gecko.driver");
+		selenium.setDriverProperty(Constants.FIREFOX_DRIVER_PROPERTY);
 		selenium.setBrowserVersion(BrowserVersion.FIREFOX);
 	
 		File file = new File("selenium.xml");

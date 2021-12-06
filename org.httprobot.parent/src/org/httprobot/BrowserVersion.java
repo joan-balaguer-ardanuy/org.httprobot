@@ -8,9 +8,5 @@ import javax.xml.bind.annotation.XmlType;
 public enum BrowserVersion
 {
 	CHROME,
-	EDGE,
 	FIREFOX,
-	IE,
-	OPERA,
-	REMOTE
 }

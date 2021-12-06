@@ -16,7 +16,6 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.openqa.selenium.WebDriver;
 
 public abstract class AbstractManager<T extends Control<?>> 
 	extends XML 
@@ -106,9 +105,9 @@ public abstract class AbstractManager<T extends Control<?>>
 			return parent.getSelenium();
 		} else return null;
 	}
-	public void setSelenium(Selenium robot) {
+	public void setSelenium(Selenium selenium) {
 		if(parent != null) {
-			parent.setSelenium(robot);
+			parent.setSelenium(selenium);
 		}
 	}
 	

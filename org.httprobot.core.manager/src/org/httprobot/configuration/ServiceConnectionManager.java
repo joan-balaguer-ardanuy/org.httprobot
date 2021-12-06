@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerEventType;
 import org.httprobot.AbstractManager;
+import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
@@ -13,8 +14,7 @@ import org.httprobot.net.WebService;
 
 @XmlRootElement
 public final class ServiceConnectionManager 
-	extends AbstractManager<ServiceConnectionControl> 
-		implements java.util.Map.Entry<ServiceConnection, WebService> {
+	extends Manager<ServiceConnection, WebService, ServiceConnectionControl> {
 
 	/**
 	 * 798195388983416568L
@@ -55,6 +55,10 @@ public final class ServiceConnectionManager
 		super(message, ServiceConnectionControl.class, parent);
 	}
 	
+	@Override
+	public WebService put(ServiceConnection key, WebService value) {
+		return super.put(key, value);
+	}
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if(e.getMessage() instanceof ServiceConnection) {

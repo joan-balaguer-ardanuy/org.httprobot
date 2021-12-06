@@ -2,8 +2,10 @@ package org.httprobot;
 
 public class Constants {
 
-	public static String HTTP_PROTOCOL = "http://";
-	public static String HTTPS_PROTOCOL = "https://";
-	public static String SERVER_URL_KEY = "[@server_url]";
-	public static String START_URL_KEY = "[@start_url]";
+	public static String FIREFOX_DRIVER_PROPERTY = "webdriver.gecko.driver";
+	public static String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
+	public static String FIREFOX_PERMISSION_IMAGE = "permissions.default.image";
+	public static String CHROME_PERMISSION_IMAGE = "images";
+	public static String CHROME_PROFILE_DEFAULT_CONTENT = "profile.default_content_setting_values";
+	public static String CHROME_PREFERENCES = "prefs";
 }

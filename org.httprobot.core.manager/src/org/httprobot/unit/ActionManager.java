@@ -92,21 +92,12 @@ public class ActionManager
 				}
 				action.moveToElement(element).click().perform();
 
-				putWebDocument(driver);
+				loadWebDocument(driver);
 			}
 		} else {
-			putWebDocument(driver);
+			loadWebDocument(driver);
 		}
 		return super.put(key, value);
-	}
-	private void putWebDocument(WebDriver driver) {
-		String url = driver.getCurrentUrl();
-
-		if (((Boolean) getControl().get(Data.CLEAR_QUERY))) {
-			url = url.substring(0, url.lastIndexOf('/') + 1);
-		}
-
-		webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
@@ -181,6 +172,15 @@ public class ActionManager
 		default:
 			break;
 		}
+	}
+	private void loadWebDocument(WebDriver driver) {
+		String url = driver.getCurrentUrl();
+
+		if (((Boolean) getControl().get(Data.CLEAR_QUERY))) {
+			url = url.substring(0, url.lastIndexOf('/') + 1);
+		}
+
+		webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
 	}
 	private WebElement getPage(WebDriver driver, String url) {
 		driver.get(url);

@@ -31,7 +31,6 @@ public final class ServiceConnectionControl
 	
 	public ServiceConnectionControl() {
 		super();
-		setMessage(new ServiceConnection());
 	}
 	public ServiceConnectionControl(ServiceConnection message, ControlListener parent) {
 		super(message, parent);
