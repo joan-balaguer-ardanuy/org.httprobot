@@ -61,7 +61,7 @@ public final class ElementControl
 			Element element = Element.class.cast(e.getMessage());
 			put(Data.XPATH, element.getXPath());
 			put(Data.CLICK, element.getClick());
-			put(Data.STORE, element.getStore());
+			put(Data.ADD, element.getStore());
 			put(Data.JAVASCRIPT, element.getJavaScript());
 			
 			//Check if control has child XML message controls

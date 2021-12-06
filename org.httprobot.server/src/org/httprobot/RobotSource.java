@@ -21,7 +21,7 @@ public class RobotSource implements MessageService {
 	}
 
 	@Override
-	public Source getConfiguration() {
+	public Source getSource() {
 		return source;
 	}
 	

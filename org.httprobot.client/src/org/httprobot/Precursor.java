@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.configuration.Robot;
+import org.httprobot.configuration.Selenium;
 import org.httprobot.configuration.Source;
 import org.httprobot.configuration.SourceManager;
 import org.httprobot.configuration.ServiceConnection;
@@ -21,8 +21,15 @@ import org.httprobot.datatype.DataSource;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
+/**
+ * Precursor class. Inherits {@link XML}.
+ * This class is the parent of parents XML messages.
+ * It is {@link ManagerListener} and listens for
+ * {@link ServiceConnectionManager} and {@link SourceManager}.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class Precursor
 	extends XML
@@ -32,13 +39,26 @@ public final class Precursor
 	 * 322360610738419712L
 	 */
 	private static final long serialVersionUID = 322360610738419712L;
-
-	WebDriver driver;
 	
-	Robot robot;
+	/**
+	 * The {@link Selenium} configuration XML message.
+	 */
+	Selenium robot;
+	/**
+	 * The {@link ServiceConnection} XML message {@link Manager}.
+	 */
 	ServiceConnectionManager serviceConnectionManager;
+	/**
+	 * The {@link ServiceConnection} XML message.
+	 */
 	ServiceConnection serviceConnection;
+	/**
+	 * The {@link Source} configuration XML message {@link Manager}.
+	 */
 	SourceManager sourceManager;
+	/**
+	 * The {@link Source} XML message.
+	 */
 	Source source;
 	
 	@Override
@@ -82,25 +102,36 @@ public final class Precursor
 		sourceManager.setConstants(constants);
 	}
 	@Override
-	public WebDriver getWebDriver() {
-		return driver;
+	public Selenium getSelenium() {
+		return robot;
 	}
 	@Override
-	public void setWebDriver(WebDriver driver) {
-		this.driver = driver;
+	public void setSelenium(Selenium robot) {
+		this.robot = robot;
 	}
 	
+	/**
+	 * {@link Precursor} default class constructor.
+	 */
 	public Precursor() {
 		super();
 	}
-	public Precursor(Robot message) {
+	/**
+	 * {@link Precursor} class constructor.
+	 * @param message the {@link Selenium} configuration XML message
+	 */
+	public Precursor(Selenium message, ServiceConnection serviceConnection) {
 		super(message.getUuid());
-		serviceConnection = message.getServiceConnection();
-		serviceConnectionManager = new ServiceConnectionManager(message.getServiceConnection(), this);
-		driver = new FirefoxDriver();
+		// Set JVM property for the Selenium WebDriver
+		System.setProperty(message.getDriverProperty(), message.getDriverPath());
+		// Set ServiceConnection XML message
+		this.serviceConnection = serviceConnection;
+		// Instance ServiceConnectionManager
+		serviceConnectionManager = new ServiceConnectionManager(serviceConnection, this);
 	}
 	@Override
 	public void start() {
+		// Starts connecting to org.httprobot WebService server
 		serviceConnectionManager.start();
 	}
 	@Override
@@ -116,18 +147,15 @@ public final class Precursor
 					//Get data source's content type reference
 					ContentTypeRef contentTypeRef = dataSource.getContentTypeRef();
 					//Look for matching content type
-					for(ContentType contentType : source.getContentTypeRoot().getContentType())
-					{
+					for(ContentType contentType : source.getContentTypeRoot().getContentType()) {
 						//Match UUID
-						if(contentTypeRef.getUuid().equals(contentType.getUuid()))
-						{	
+						if(contentTypeRef.getUuid().equals(contentType.getUuid())) {	
 							InputDocument templateDocument = sourceManager.getTemplateLibrary().get(contentTypeRef);
 							FieldLibrary<FieldRef> fieldTemplates = sourceManager.getTemplateLibrary().getTemplateFieldLibrary();
 							//Initialize document library
 							DocumentLibrary documentLibrary = new DocumentLibrary(contentTypeRef, templateDocument, fieldTemplates);
 							//Put data
 							sourceManager.put(dataSource, documentLibrary);
-							
 							break;
 						}
 					}
@@ -137,7 +165,7 @@ public final class Precursor
 		case FINISHED:
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
-				source = webService.getConfiguration();
+				source = webService.getSource();
 				sourceManager = new SourceManager(source, this);
 				sourceManager.start();
 			}

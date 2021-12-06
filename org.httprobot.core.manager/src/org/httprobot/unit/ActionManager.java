@@ -52,7 +52,7 @@ public class ActionManager
 	
 	@Override
 	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
-		WebDriver driver = getWebDriver();
+		WebDriver driver = getSelenium().getWebDriver();
 		WebElement htmlPage;
 		
 		if(key == null) {
@@ -79,27 +79,34 @@ public class ActionManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		
-		elementManager.put(htmlPage, new LinkedHashSet<WebElement>());
 
-		Actions action = new Actions(driver);
+		if (elementManager != null) {
+			elementManager.put(htmlPage, new LinkedHashSet<WebElement>());
 
-		for (WebElement element : clickableElements) {
+			Actions action = new Actions(driver);
 
-			if (getControl().get(Data.JAVASCRIPT) != null) {
-				((JavascriptExecutor) driver).executeScript((String) getControl().get(Data.JAVASCRIPT), element);
+			for (WebElement element : clickableElements) {
+
+				if (getControl().get(Data.JAVASCRIPT) != null) {
+					((JavascriptExecutor) driver).executeScript((String) getControl().get(Data.JAVASCRIPT), element);
+				}
+				action.moveToElement(element).click().perform();
+
+				putWebDocument(driver);
 			}
-			action.moveToElement(element).click().perform();
-
-			String url = driver.getCurrentUrl();
-
-			if (((Boolean) getControl().get(Data.CLEAR_QUERY))) {
-				url = url.substring(0, url.lastIndexOf('/') + 1);
-			}
-
-			webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
+		} else {
+			putWebDocument(driver);
 		}
 		return super.put(key, value);
+	}
+	private void putWebDocument(WebDriver driver) {
+		String url = driver.getCurrentUrl();
+
+		if (((Boolean) getControl().get(Data.CLEAR_QUERY))) {
+			url = url.substring(0, url.lastIndexOf('/') + 1);
+		}
+
+		webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
@@ -124,14 +131,14 @@ public class ActionManager
 				ElementManager elementManager = ElementManager.class.cast(e.getSource());
 				WebElement webElement = WebElement.class.cast(e.getValue());
 				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
-					WebDriver driver = getWebDriver();
+					WebDriver driver = getSelenium().getWebDriver();
 					Actions action = new Actions(driver);
 					
 					if(elementManager.getControl().get(Data.JAVASCRIPT) != null) {
 						((JavascriptExecutor) driver).executeScript((String) elementManager.getControl().get(Data.JAVASCRIPT), webElement);
 					}
 					action.moveToElement(webElement).click().perform();
-				} else if((Boolean) elementManager.getControl().get(Data.STORE)) {
+				} else if((Boolean) elementManager.getControl().get(Data.ADD)) {
 					clickableElements.add(webElement);
 				}
 			}

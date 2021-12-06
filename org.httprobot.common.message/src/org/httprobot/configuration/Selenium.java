@@ -2,13 +2,15 @@ package org.httprobot.configuration;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.httprobot.AbstractConfiguration;
 import org.httprobot.BrowserVersion;
 import org.httprobot.event.MessageEventArgs;
+import org.openqa.selenium.WebDriver;
 
 @XmlRootElement
-public final class Robot extends AbstractConfiguration {
+public final class Selenium extends AbstractConfiguration {
 	
 	/**
 	 * -7265402834372126641L
@@ -18,7 +20,10 @@ public final class Robot extends AbstractConfiguration {
 	private BrowserVersion browserVersion;
 	private String driverProperty;
 	private String driverPath;
-	private ServiceConnection serviceConnection;
+	/**
+	 * The Selenium's {@link WebDriver}.
+	 */
+	WebDriver webDriver;
 	
 	@XmlElement
 	public String getDriverProperty() {
@@ -41,23 +46,24 @@ public final class Robot extends AbstractConfiguration {
 	public void setDriverPath(String driverPath) {
 		this.driverPath = driverPath;
 	}
-	@XmlElement
-	public ServiceConnection getServiceConnection() {
-		return serviceConnection;
+	@XmlTransient
+	public WebDriver getWebDriver() {
+		return webDriver;
 	}
-	public void setServiceConnection(ServiceConnection serviceConnection) {
-		this.serviceConnection = serviceConnection;
+	public void setWebDriver(WebDriver webDriver) {
+		this.webDriver = webDriver;
 	}
-
-	public Robot() {
+	
+	public Selenium() {
 		super();
 	}
 	
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
-		Robot config = Robot.class.cast(e.getSource());
-		setDriverPath(config.getDriverPath());
-		setServiceConnection(config.getServiceConnection());
+		Selenium robot = Selenium.class.cast(e.getSource());
+		setDriverPath(robot.getDriverPath());
+		setDriverProperty(robot.getDriverProperty());
+		setBrowserVersion(robot.getBrowserVersion());
 	}
 }

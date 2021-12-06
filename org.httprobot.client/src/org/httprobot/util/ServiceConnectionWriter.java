@@ -10,46 +10,37 @@ import java.net.URL;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
-import org.httprobot.BrowserVersion;
-import org.httprobot.configuration.Robot;
 import org.httprobot.configuration.ServiceConnection;
 
-public class RobotWriter {
+public class ServiceConnectionWriter {
+
+	static ServiceConnection serviceConnection;
 	
-	static Robot robot;
-	
-	public RobotWriter() {
-		
+	public ServiceConnectionWriter() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
+		serviceConnection = new ServiceConnection();
 		try {
-			robot = new Robot();
-			
 			URL url = new URL("http://localhost:8888/ws/server?wsdl");
 			QName qname = new QName("http://org.httprobot/", "RobotSourceService");
 			
-			ServiceConnection serviceConnection = new ServiceConnection();
+			serviceConnection = new ServiceConnection();
 			serviceConnection.setURL(url);
 			serviceConnection.setQName(qname);
 			
-			robot.setServiceConnection(serviceConnection);
-			robot.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
-			robot.setDriverProperty("webdriver.gecko.driver");
-			robot.setBrowserVersion(BrowserVersion.FIREFOX);
-		
-			File file = new File("robot.xml");
-			WriteAppConfig(file);
+			File file = new File("serviceConnection.xml");
+			WriteServiceConnection(file);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void WriteAppConfig(File file) 
+	public static void WriteServiceConnection(File file) 
 	{
 		try {
 			OutputStream os = new FileOutputStream(file);
-			robot.marshal(os);
+			serviceConnection.marshal(os);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

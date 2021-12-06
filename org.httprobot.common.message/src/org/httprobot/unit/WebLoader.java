@@ -91,5 +91,12 @@ public final class WebLoader extends AbstractUnit {
 		
 		WebLoader webLoader = WebLoader.class.cast(e.getSource());
 		setTime(webLoader.getTime());
+		setNextPageMethod(webLoader.getNextPageMethod());
+		setJavaScript(webLoader.getJavaScript());
+		setNextPageAttribute(webLoader.getNextPageAttribute());
+		setNextPageText(webLoader.getNextPageText());
+		setXPath(webLoader.getXPath());
+		setUrlPattern(webLoader.getUrlPattern());
+		setStartIndex(webLoader.getStartIndex());
 	}
 }

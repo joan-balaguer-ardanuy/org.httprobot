@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.httprobot.configuration.Selenium;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
@@ -100,14 +101,14 @@ public abstract class AbstractManager<T extends Control<?>>
 		this.parameterConstants = constants;
 	}
 	@XmlTransient
-	public WebDriver getWebDriver() {
+	public Selenium getSelenium() {
 		if (parent != null) {
-			return parent.getWebDriver();
+			return parent.getSelenium();
 		} else return null;
 	}
-	public void setWebDriver(WebDriver webDriver) {
+	public void setSelenium(Selenium robot) {
 		if(parent != null) {
-			parent.setWebDriver(webDriver);
+			parent.setSelenium(robot);
 		}
 	}
 	

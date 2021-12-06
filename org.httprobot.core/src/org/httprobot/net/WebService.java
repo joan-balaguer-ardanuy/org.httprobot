@@ -11,8 +11,8 @@ public class WebService
 		implements MessageService {
 	
 	@Override
-	public Source getConfiguration() {
-		Source message = this.getPort(MessageService.class).getConfiguration();
+	public Source getSource() {
+		Source message = this.getPort(MessageService.class).getSource();
 		return message;
 	}
 	

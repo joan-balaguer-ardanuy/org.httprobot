@@ -27,10 +27,10 @@ public final class ActionControl
 	ElementControl elementControl;
 	
 	@XmlElement
-	public WebLoaderControl getWebLoaderControl() {
+	public WebLoaderControl getPaginatorControl() {
 		return webLoaderControl;
 	}
-	public void setWebLoaderControl(WebLoaderControl paginatorControl) {
+	public void setPaginatorControl(WebLoaderControl paginatorControl) {
 		this.webLoaderControl = paginatorControl;
 	}
 	@XmlElement
@@ -82,6 +82,9 @@ public final class ActionControl
 		} else if(e.getSource() instanceof ElementControl) {
 			elementControl = ElementControl.class.cast(e.getSource());
 			addChildControl(elementControl);
+		} else if(e.getSource() instanceof WebLoaderControl) {
+			webLoaderControl = WebLoaderControl.class.cast(e.getSource());
+			addChildControl(webLoaderControl);
 		}
 	}
 	@Override
@@ -106,6 +109,9 @@ public final class ActionControl
 					if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) { 
 						elementControl.loadControl();
+					} else if(control instanceof WebLoaderControl ?
+							webLoaderControl.equals(control) : false) {
+						webLoaderControl.loadControl();
 					} else if(control instanceof ConstantControl ?
 							!action.getConstant().isEmpty() ?
 									constant.contains(control)

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<org.httprobot.configuration:serviceConnection xmlns:org.httprobot="http://org.httprobot" xmlns:org.httprobot.configuration="http://org.httprobot/configuration">
+    <org.httprobot.configuration:QName localPart="RobotSourceService" namespaceURI="http://org.httprobot/" prefix=""/>
+    <org.httprobot.configuration:URL file="/ws/server?wsdl" host="localhost" port="8888" protocol="http" url="http://localhost:8888/ws/server?wsdl"/>
+</org.httprobot.configuration:serviceConnection>

@@ -12,5 +12,5 @@ import org.httprobot.configuration.Source;
 public interface MessageService {
 
 	@WebMethod
-	Source getConfiguration();
+	Source getSource();
 }
