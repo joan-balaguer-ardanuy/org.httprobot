@@ -148,7 +148,6 @@ public abstract class Manager<T extends Control<? extends XML>>
 			listener.OnManagerEvent(e);
 		}
 	}
-	
 	public void addChildManager(ManagerListener manager) {
 		childManagers.add(manager);
 	}
@@ -169,17 +168,14 @@ public abstract class Manager<T extends Control<? extends XML>>
 		currentManagerIndex++;
 		return listener;
 	}
-
 	@Override
 	public void start() {
 		control.loadControl();
 	}
-
 	@Override
 	public void stop() {
 		
 	}
-
 	@Override
 	public abstract void OnManagerEvent(ManagerEventArgs e);
 
@@ -187,7 +183,6 @@ public abstract class Manager<T extends Control<? extends XML>>
 	public void OnControlInitialized(ControlEventArgs e) {
 		
 	}
-
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (hasChildManagers()) {

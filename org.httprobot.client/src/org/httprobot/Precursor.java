@@ -140,24 +140,26 @@ public final class Precursor
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(sourceManager)) {
-				for(DataSource dataSource : sourceManager) {
-					//Get data source's content type reference
+			if (e.getSource().equals(sourceManager)) {
+				for (DataSource dataSource : sourceManager) {
+					// Get data source's content type reference
 					ContentTypeRef contentTypeRef = dataSource.getContentTypeRef();
-					//Look for matching content type
-					for(ContentType contentType : source.getContentTypeRoot().getContentType()) {
-						//Match UUID
-						if(contentTypeRef.getUuid().equals(contentType.getUuid())) {	
+					// Look for matching content type
+					for (ContentType contentType : source.getContentTypeRoot().getContentType()) {
+						// Match UUID
+						if (contentTypeRef.getUuid().equals(contentType.getUuid())) {
 							InputDocument templateDocument = sourceManager.getTemplateLibrary().get(contentTypeRef);
 							FieldLibrary<FieldRef> fieldTemplates = sourceManager.getTemplateLibrary().getTemplateFieldLibrary();
-							//Initialize document library
+							// Initialize document library
 							DocumentLibrary documentLibrary = new DocumentLibrary(contentTypeRef, templateDocument, fieldTemplates);
-							//Put data
+							// Put data
 							sourceManager.put(dataSource, documentLibrary);
 							break;
 						}
 					}
 				}
+			} else if (e.getSource().equals(serviceConnectionManager)) {
+				serviceConnectionManager.setValue(new WebService(serviceConnection.getURL(), serviceConnection.getQName()));
 			}
 			break;
 		case FINISHED:

@@ -61,11 +61,9 @@ public class DocumentRootManager
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefManager)) {
-				for (ContentTypeRef contentTypeRef : contentTypeRefManager) {
-					for (ContentType contentType : getContentTypeRoot().getContentType()) {
-						if (contentType.getUuid().equals(contentTypeRefManager.getKey().getUuid())) {
-							contentTypeRefManager.put(contentTypeRef, contentType);
-						}
+				for (ContentType contentType : getContentTypeRoot().getContentType()) {
+					if (contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
+						contentTypeRefManager.setValue(contentType);
 					}
 				}
 			}

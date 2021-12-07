@@ -50,13 +50,11 @@ public class DocumentManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		
 		for(InputDocument inputDocument : key.keySet()) {
 			WebDocument pageKey = key.get(inputDocument);
 			Set<WebDocument> actionOutput = new LinkedHashSet<WebDocument>();
 			actionManager.put(pageKey, actionOutput);
 		}
-		
 		return super.put(key, value);
 	}
 	@Override
@@ -64,11 +62,9 @@ public class DocumentManager
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefManager)) {
-				for (ContentTypeRef contentTypeRef : contentTypeRefManager) {
-					for (ContentType contentType : getContentTypeRoot().getContentType()) {
-						if (contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
-							contentTypeRefManager.put(contentTypeRef, contentType);
-						}
+				for (ContentType contentType : getContentTypeRoot().getContentType()) {
+					if (contentType.getUuid().equals(contentTypeRefManager.getUuid())) {
+						contentTypeRefManager.setValue(contentType);
 					}
 				}
 			}

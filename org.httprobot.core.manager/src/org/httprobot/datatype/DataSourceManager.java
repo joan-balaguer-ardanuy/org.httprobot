@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
-import org.httprobot.MapManager;
+import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -30,7 +30,7 @@ import org.httprobot.unit.ActionManager;
 
 @XmlRootElement
 public final class DataSourceManager 
-	extends MapManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+	extends EntryManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L
@@ -53,12 +53,10 @@ public final class DataSourceManager
 	}
 
 	@Override
-	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
-		if(keySet().contains(key)) {
-			setDocumentLibrary(value);
-			actionManager.put(null, new LinkedHashSet<WebDocument>());
-		}
-		return super.put(key, value);
+	public DocumentLibrary setValue(DocumentLibrary value) {
+		setDocumentLibrary(value);
+		actionManager.put(null, new LinkedHashSet<WebDocument>());
+		return super.setValue(value);
 	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
@@ -66,10 +64,8 @@ public final class DataSourceManager
 		case STARTED:
 			if (e.getSource().equals(contentTypeRefManager)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
-						if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-							contentTypeRefManager.put(contentTypeRef, contentType);
-						}
+					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+						contentTypeRefManager.setValue(contentType);
 					}
 				}
 			} else if(e.getSource().equals(serverUrlManager)) {
@@ -80,10 +76,8 @@ public final class DataSourceManager
 			break;
 		case FINISHED:
 			if (e.getSource().equals(contentTypeRefManager)) {
-				for(ContentTypeRef contentTypeRef : this.contentTypeRefManager) {
-					//Set current content type
-					this.currentContentType = this.contentTypeRefManager.get(contentTypeRef);	
-				}
+				//Set current content type
+				this.currentContentType = this.contentTypeRefManager.getValue();
 			} else if (e.getSource().equals(actionManager)) {
 				// No more than one expected.
 				for (WebDocument key : actionManager) {
@@ -141,7 +135,7 @@ public final class DataSourceManager
 		case CONTENT_TYPE_REF_CONTROL_LOADED:
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
-				keySet().add(contentTypeRef);
+				setKey(contentTypeRef);
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
 					addChildManager(contentTypeRefManager);

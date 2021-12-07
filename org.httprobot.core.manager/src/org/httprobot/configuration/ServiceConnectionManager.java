@@ -3,11 +3,8 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.MapManager;
 import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 
@@ -37,17 +34,6 @@ public final class ServiceConnectionManager
 		super(message, ServiceConnectionControl.class, parent);
 	}
 	
-	@Override
-	public void OnControlLoaded(ControlEventArgs e) {
-		if(e.getMessage() instanceof ServiceConnection) {
-			ServiceConnection message = ServiceConnection.class.cast(e.getMessage());
-			setValue(new WebService(message.getURL(), message.getQName()));
-		}
-	}
-	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
-		
-	}
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
 		

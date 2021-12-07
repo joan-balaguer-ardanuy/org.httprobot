@@ -1,5 +1,7 @@
 package org.httprobot.datatype;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.httprobot.ManagerListener;
 
 import org.httprobot.MapManager;
@@ -12,7 +14,8 @@ import org.httprobot.placeholder.HtmlManager;
 import org.httprobot.placeholder.HttpAddressControl;
 import org.httprobot.placeholder.HttpAddressManager;
 
-public class FieldManager
+@XmlRootElement
+public final class FieldManager
 	extends MapManager<InputField, WebDocument, FieldControl> {
 
 	/**

@@ -45,13 +45,13 @@ public abstract class Control<TMessage extends XML>
 	public void setParent(ControlListener parent) {
 		this.parent = parent;
 	}
-	
 	public List<ControlListener> getChildControls() {
 		return childControls;
 	}
 	public void setChildControls(List<ControlListener> childControls) {
 		this.childControls = childControls;
 	}
+	
 	public Control() {
 		super();
 		
@@ -104,7 +104,6 @@ public abstract class Control<TMessage extends XML>
 
 	@Override
 	public abstract void OnControlLoaded(ControlEventArgs e);
-
 	
 	protected final void ControlEvent(ControlEventArgs e) {
 		for(ControlListener listener : controlEventListeners) {
@@ -121,7 +120,6 @@ public abstract class Control<TMessage extends XML>
 
 		}
 	}
-	
 	public boolean hasChildControls()
 	{
 		boolean isEmpty = (childControls != null ? childControls.isEmpty() : true);

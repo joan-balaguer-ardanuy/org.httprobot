@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.MapManager;
+import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
@@ -18,7 +18,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootManager 
-	extends MapManager<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
+	extends EntryManager<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
 
 	/**
 	 * 1379517986287192515L
@@ -60,12 +60,10 @@ public final class ContentTypeRootManager
 	}
 
 	@Override
-	public TemplateLibrary put(ContentTypeRoot key, TemplateLibrary value) {
-		if (keySet().contains(key)) {
-			value.putAll(inputDocumentLibrary);
-			value.getTemplateFieldLibrary().putAll(fieldLibrary);
-		}
-		return super.put(key, value);
+	public TemplateLibrary setValue(TemplateLibrary value) {
+		value.putAll(inputDocumentLibrary);
+		value.getTemplateFieldLibrary().putAll(fieldLibrary);
+		return super.setValue(value);
 	}
 	
 	@Override
@@ -74,7 +72,7 @@ public final class ContentTypeRootManager
 		case CONTENT_TYPE_ROOT_CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRootControl) {
 				ContentTypeRoot contentTypeRoot = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
-				keySet().add(contentTypeRoot);
+				setKey(contentTypeRoot);
 			}
 			break;
 		case FIELD_REF_CONTROL_LOADED:
@@ -120,26 +118,23 @@ public final class ContentTypeRootManager
 		case STARTED:
 			if(e.getSource() instanceof ContentTypeRefManager) {
 				ContentTypeRefManager contentTypeRefManager = ContentTypeRefManager.class.cast(e.getSource());
-				for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
-					for(ContentType contentType : contentTypeManagers.keySet()) {
-						if(contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-							contentTypeRefManager.put(contentTypeRef, contentType);
-							break;
-						}
+				for (ContentType contentType : contentTypeManagers.keySet()) {
+					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+						contentTypeRefManager.setValue(contentType);
+						break;
 					}
 				}
 			} else if(e.getSource() instanceof FieldRefManager) {
 				// Cast sources
 				FieldRefManager fieldRefManager = FieldRefManager.class.cast(e.getSource());
-				for (FieldRef fieldRef : fieldRefManager) {
-					// Check if manager is a child of current object
-					if (fieldRefManager.equals(this.fieldRefManagers.get(fieldRef))) {
-						// Initialize new SOLR field
-						InputField inputField = new InputField(fieldRef);
-						// Set matching message as input data
-						fieldRefManager.put(fieldRef, inputField);
-					}
+				// Check if manager is a child of current object
+				if (fieldRefManager.equals(this.fieldRefManagers.get(fieldRefManager.getKey()))) {
+					// Initialize new SOLR field
+					InputField inputField = new InputField(fieldRefManager.getKey());
+					// Set matching message as input data
+					fieldRefManager.setValue(inputField);
 				}
+
 			} else if(e.getSource() instanceof ContentTypeManager) {
 				ContentTypeManager contentTypeManager = ContentTypeManager.class.cast(e.getSource());
 				for(ContentType contentType : contentTypeManager) {
@@ -153,19 +148,14 @@ public final class ContentTypeRootManager
 		case FINISHED:
 			if(e.getSource() instanceof ContentTypeRefManager) {
 				ContentTypeRefManager contentTypeRefManager  = ContentTypeRefManager.class.cast(e.getSource());
-				for(ContentTypeRef contentTypeRef : contentTypeRefManager) {
-					ContentType contentType = contentTypeRefManager.get(contentTypeRef);
-					contentTypeIndex.put(contentTypeRef, contentType);
-				}
+				contentTypeIndex.put(contentTypeRefManager.getKey(), contentTypeRefManager.getValue());
 			} else if(e.getSource() instanceof FieldRefManager) {
 				FieldRefManager fieldRefManager = FieldRefManager.class.cast(e.getSource());
 				// Check only for FieldRef manager children
 				if (fieldRefManager.getParent() instanceof ContentTypeRootManager) {
-					for (FieldRef fieldRef : fieldRefManager) {
-						InputField inputField = fieldRefManager.get(fieldRef);
-						// Store FieldRef manager output data
-						this.fieldLibrary.put(fieldRef, inputField);
-					}
+					InputField inputField = fieldRefManager.getValue();
+					// Store FieldRef manager output data
+					this.fieldLibrary.put(fieldRefManager.getKey(), inputField);
 				}
 			} else if(e.getSource() instanceof ContentTypeManager) {
 				ContentTypeManager contentTypeManager = ContentTypeManager.class.cast(e.getSource());

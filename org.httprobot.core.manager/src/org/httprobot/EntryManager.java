@@ -2,7 +2,7 @@ package org.httprobot;
 
 import org.httprobot.event.ManagerEventArgs;
 
-public abstract class EntryManager<K extends XML,V,T extends Control<K>>
+public abstract class EntryManager<K extends XML,V,T extends Control<? extends XML>>
 	extends Manager<T> 
 		implements java.util.Map.Entry<K,V> {
 
@@ -11,11 +11,17 @@ public abstract class EntryManager<K extends XML,V,T extends Control<K>>
 	 */
 	private static final long serialVersionUID = 5788898149095657921L;
 
+	private K key;
 	private V value;
 	
 	@Override
 	public K getKey() {
-		return getControl().getMessage();
+		return key;
+	}
+	public K setKey(K key) {
+		K oldKey = this.key;
+		this.key = key;
+		return oldKey;
 	}
 	@Override
 	public V getValue() {
@@ -32,7 +38,7 @@ public abstract class EntryManager<K extends XML,V,T extends Control<K>>
 	public EntryManager() {
 
 	}
-	public EntryManager(K key, Class<T> type, ManagerListener parent) {
-		super(key, type, parent);
+	public EntryManager(XML message, Class<T> type, ManagerListener parent) {
+		super(message, type, parent);
 	}
 }
