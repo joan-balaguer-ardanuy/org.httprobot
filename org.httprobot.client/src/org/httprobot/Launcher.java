@@ -24,10 +24,6 @@ public class Launcher {
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Selenium} configuration XML message
-	 */
-	Selenium selenium;
-	/**
 	 * The {@link Precursor} XML message
 	 */
 	Precursor precursor;
@@ -36,40 +32,20 @@ public class Launcher {
 	 * {@link Launcher} default class constructor.
 	 * @param robotPath the path of {@link Selenium} XML message file.
 	 */
-	public Launcher(String robotPath, String serviceConnectionPath) {
-		// Load robot configuration
-		selenium = loadSeleniumFile(robotPath);
+	public Launcher(String serviceConnectionPath) {
 		// Load service connection data
 		serviceConnection = loadServiceConnectionFile(serviceConnectionPath);
 		// Initialize precursor
-		precursor = new Precursor(selenium, serviceConnection);
+		precursor = new Precursor(serviceConnection);
 		// Start precursor
 		precursor.start();
 	}
 	
 	/**
-	 * Loads the {@link Selenium} configuration XML message.
+	 * Loads the {@link ServiceConnection} configuration XML message.
 	 * @param path the path where file is located
-	 * @return the {@link Selenium} configuration XML message
+	 * @return the {@link ServiceConnection} configuration XML message
 	 */
-	private Selenium loadSeleniumFile(String path) {
-		Selenium selenium = new Selenium();
-		
-		File file = new File(path);
-		InputStream is;
-
-		try {
-			is = new FileInputStream(file);
-			selenium.unmarshal(is);
-			return selenium;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
 	private ServiceConnection loadServiceConnectionFile(String path) {
 		ServiceConnection serviceConnection = new ServiceConnection();
 
@@ -93,6 +69,6 @@ public class Launcher {
 	 * @param args {@code null}
 	 */
 	public static void main(String[] args) {
-		new Launcher("./selenium.xml", "./serviceConnection.xml");
+		new Launcher("./serviceConnection.xml");
 	}
 }

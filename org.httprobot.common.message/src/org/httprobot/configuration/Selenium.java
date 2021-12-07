@@ -35,7 +35,7 @@ public final class Selenium extends AbstractConfiguration {
 	/**
 	 * The Selenium's {@link WebDriver}.
 	 */
-	WebDriver webDriver;
+	private WebDriver webDriver;
 	
 	@XmlElement
 	public String getDriverProperty() {
@@ -58,18 +58,19 @@ public final class Selenium extends AbstractConfiguration {
 	public void setDriverPath(String driverPath) {
 		this.driverPath = driverPath;
 	}
+	@XmlElement
+	public Boolean getAllowImages() {
+		return allowImages;
+	}
+	public void setAllowImages(Boolean allowImages) {
+		this.allowImages = allowImages;
+	}
 	@XmlTransient
 	public WebDriver getWebDriver() {
 		return webDriver;
 	}
 	public void setWebDriver(WebDriver webDriver) {
 		this.webDriver = webDriver;
-	}
-	public Boolean getAllowImages() {
-		return allowImages;
-	}
-	public void setAllowImages(Boolean allowImages) {
-		this.allowImages = allowImages;
 	}
 	public void loadWebDriver() {
 		System.setProperty(getDriverProperty(), getDriverPath());
@@ -117,5 +118,6 @@ public final class Selenium extends AbstractConfiguration {
 		setDriverPath(selenium.getDriverPath());
 		setDriverProperty(selenium.getDriverProperty());
 		setBrowserVersion(selenium.getBrowserVersion());
+		setAllowImages(selenium.getAllowImages());
 	}
 }

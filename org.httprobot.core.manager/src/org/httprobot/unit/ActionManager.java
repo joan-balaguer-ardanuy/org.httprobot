@@ -14,6 +14,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
+import org.httprobot.configuration.Selenium;
 import org.httprobot.Manager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -38,6 +39,8 @@ public class ActionManager
 	WebLoaderManager webLoaderManager;
 	Map<Constant, ConstantManager> constantManagers;
 	ElementManager elementManager;
+	
+	Selenium selenium;
 	
 	WebDocument currentOutput;
 
@@ -69,7 +72,7 @@ public class ActionManager
 				TransformerFactory tf = TransformerFactory.newInstance();
 				Transformer transformer = tf.newTransformer();
 				transformer.transform(domSource, result);
-
+				// Implementation of Data URLs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 				htmlPage = getPage(driver, "data:text/html;charset=utf-8," + writer.toString());
 			} catch (TransformerException ex) {
 				ex.printStackTrace();

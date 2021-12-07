@@ -120,10 +120,8 @@ public final class Precursor
 	 * {@link Precursor} class constructor.
 	 * @param selenium the {@link Selenium} configuration XML message
 	 */
-	public Precursor(Selenium selenium, ServiceConnection serviceConnection) {
-		super(selenium.getUuid());
-		// Set Selenium XML message
-		this.selenium = selenium;
+	public Precursor(ServiceConnection serviceConnection) {
+		super(serviceConnection.getUuid());
 		// Set ServiceConnection XML message
 		this.serviceConnection = serviceConnection;
 		// Instance ServiceConnectionManager

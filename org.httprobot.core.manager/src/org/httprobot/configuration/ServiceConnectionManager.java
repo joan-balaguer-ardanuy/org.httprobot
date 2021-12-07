@@ -3,8 +3,6 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerEventType;
-import org.httprobot.AbstractManager;
 import org.httprobot.Manager;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
@@ -21,23 +19,6 @@ public final class ServiceConnectionManager
 	 */
 	private static final long serialVersionUID = 798195388983416568L;
 
-	WebService value;
-	
-	@Override
-	public ServiceConnection getKey() {
-		return getControl().getMessage();
-	}
-	@Override
-	public WebService getValue() {
-		return value;
-	}
-	@Override
-	public WebService setValue(WebService value) {
-		WebService oldValue = this.value;
-		this.value = value;
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
 	@Override
 	@XmlElement
 	public ServiceConnectionControl getControl() {
@@ -63,7 +44,7 @@ public final class ServiceConnectionManager
 	public void OnControlLoaded(ControlEventArgs e) {
 		if(e.getMessage() instanceof ServiceConnection) {
 			ServiceConnection message = ServiceConnection.class.cast(e.getMessage());
-			setValue(new WebService(message.getURL(), message.getQName()));
+			put(message, new WebService(message.getURL(), message.getQName()));
 		}
 	}
 	@Override

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<org.httprobot.configuration:selenium xmlns:org.httprobot="http://org.httprobot" xmlns:org.httprobot.configuration="http://org.httprobot/configuration">
-    <org.httprobot:browserVersion>FIREFOX</org.httprobot:browserVersion>
-    <org.httprobot.configuration:driverPath>/home/joan/lib/WebDriver/bin/geckodriver</org.httprobot.configuration:driverPath>
-    <org.httprobot.configuration:driverProperty>webdriver.gecko.driver</org.httprobot.configuration:driverProperty>
-</org.httprobot.configuration:selenium>
