@@ -1,12 +1,12 @@
 package org.httprobot.content;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ContentTypeRefManager 
-	extends Manager<ContentTypeRef, ContentType, ContentTypeRefControl> {
+	extends MapManager<ContentTypeRef, ContentType, ContentTypeRefControl> {
 
 	/**
 	 * 2966040272596645359L

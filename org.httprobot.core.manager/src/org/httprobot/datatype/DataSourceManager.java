@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.ManagerListener;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -30,7 +30,7 @@ import org.httprobot.unit.ActionManager;
 
 @XmlRootElement
 public final class DataSourceManager 
-	extends Manager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+	extends MapManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L

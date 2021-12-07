@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -12,7 +12,7 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebDocument;
 
 public class FieldRootManager
-	extends Manager<InputDocument, WebDocument, FieldRootControl> {
+	extends MapManager<InputDocument, WebDocument, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L

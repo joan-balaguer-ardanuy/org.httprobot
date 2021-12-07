@@ -1,11 +1,11 @@
 package org.httprobot.unit;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.event.ManagerEventArgs;
 
 public class IsInstanceManager
-	extends Manager<Object, Boolean, IsInstanceControl> {
+	extends MapManager<Object, Boolean, IsInstanceControl> {
 
 	/**
 	 * 313145130051473638L

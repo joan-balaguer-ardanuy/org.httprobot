@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.Data;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.content.ContentTypeRootManager;
@@ -21,7 +21,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class SourceManager
-	extends Manager<DataSource, DocumentLibrary, SourceControl> {
+	extends MapManager<DataSource, DocumentLibrary, SourceControl> {
 
 	/**
 	 * 634599347187276700L

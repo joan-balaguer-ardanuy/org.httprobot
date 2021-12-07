@@ -44,7 +44,7 @@ public final class Precursor
 	 */
 	Selenium selenium;
 	/**
-	 * The {@link ServiceConnection} XML message {@link Manager}.
+	 * The {@link ServiceConnection} XML message {@link MapManager}.
 	 */
 	ServiceConnectionManager serviceConnectionManager;
 	/**
@@ -52,7 +52,7 @@ public final class Precursor
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Source} configuration XML message {@link Manager}.
+	 * The {@link Source} configuration XML message {@link MapManager}.
 	 */
 	SourceManager sourceManager;
 	/**

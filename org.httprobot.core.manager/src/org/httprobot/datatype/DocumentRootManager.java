@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -24,7 +24,7 @@ import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 
 public class DocumentRootManager
-	extends Manager<Set<WebDocument>, Map<InputDocument, WebDocument>, DocumentRootControl> {
+	extends MapManager<Set<WebDocument>, Map<InputDocument, WebDocument>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L

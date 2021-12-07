@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 
 import org.httprobot.Data;
 import org.httprobot.NextPageMethod;
@@ -17,7 +17,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
-	extends Manager<String, WebDocument, WebLoaderControl> {
+	extends MapManager<String, WebDocument, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L

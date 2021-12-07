@@ -15,7 +15,7 @@ import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.configuration.Selenium;
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebDocument;
@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
-	extends Manager<WebDocument, Set<WebDocument>, ActionControl> {
+	extends MapManager<WebDocument, Set<WebDocument>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L

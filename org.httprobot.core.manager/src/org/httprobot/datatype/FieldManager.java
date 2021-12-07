@@ -2,7 +2,7 @@ package org.httprobot.datatype;
 
 import org.httprobot.ManagerListener;
 
-import org.httprobot.Manager;
+import org.httprobot.MapManager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.placeholder.HttpAddressControl;
 import org.httprobot.placeholder.HttpAddressManager;
 
 public class FieldManager
-	extends Manager<InputField, WebDocument, FieldControl> {
+	extends MapManager<InputField, WebDocument, FieldControl> {
 
 	/**
 	 * -8390181286230356701L

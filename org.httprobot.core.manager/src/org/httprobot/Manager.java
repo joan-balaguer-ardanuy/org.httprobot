@@ -1,117 +1,203 @@
 package org.httprobot;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.httprobot.configuration.Selenium;
+import org.httprobot.content.ContentTypeRoot;
+import org.httprobot.data.DocumentLibrary;
+import org.httprobot.data.TemplateLibrary;
+import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
-public abstract class Manager<K,V,T extends Control<?>> 
-	extends AbstractManager<T> 
-		implements DataMapping<K,V> {
+public abstract class Manager<T extends Control<? extends XML>> 
+	extends XML 
+		implements ControlListener, ManagerListener, 
+			Iterator<ManagerListener> {
 
 	/**
-	 * 1596083240511199085L
+	 * -4305679696716005954L
 	 */
-	private static final long serialVersionUID = 1596083240511199085L;
+	private static final long serialVersionUID = -4305679696716005954L;
 
-	Set<K> inputData;
-	Map<K,V> outputData;
+	T control;
+
+	Set<ManagerListener> managerListeners;
 	
-	K currentInput;
-	V currentOutput;
+	int currentManagerIndex;
+	List<ManagerListener> childManagers;
+
+	ManagerListener parent;
+	
+	ContentTypeRoot contentTypeRoot;
+	DocumentLibrary documentLibrary;
+	TemplateLibrary templateLibrary;
+	
+	Map<String, String> parameterConstants;
 	
 	@XmlTransient
-	@Override
-	public K getKey() {
-		return currentInput;
+	public ManagerListener getParent() {
+		return parent;
 	}
-	@Override
-	public K setKey(K key) {
-		K oldInput = currentInput;
-		currentInput = key;
-		return oldInput;
+	public void setParent(ManagerListener parent) {
+		this.parent = parent;
+	}
+	public T getControl() {
+		return control;
+	}
+	public void setControl(T control) {
+		this.control = control;
 	}
 	@XmlTransient
-	@Override
-	public V getValue() {
-		return currentOutput;
+	public ContentTypeRoot getContentTypeRoot() {
+		if (contentTypeRoot != null) {
+			return contentTypeRoot;
+		} else if (parent != null) {
+			return parent.getContentTypeRoot();
+		} else return null;
 	}
-	@Override
-	public V setValue(V value) {
-		V oldOutput = currentOutput;
-		currentOutput = value;
-		return oldOutput;
+	public void setContentTypeRoot(ContentTypeRoot contentTypeRoot) {
+		this.contentTypeRoot = contentTypeRoot;
+	}
+	@XmlTransient
+	public DocumentLibrary getDocumentLibrary() {
+		if (documentLibrary != null) {
+			return documentLibrary;
+		} else if (parent != null) {
+			return parent.getDocumentLibrary();
+		} else return null;
+	}
+	public void setDocumentLibrary(DocumentLibrary documentLibrary) {
+		this.documentLibrary = documentLibrary;
+	}
+	@XmlTransient
+	public TemplateLibrary getTemplateLibrary() {
+		if(templateLibrary != null) {
+			return templateLibrary;
+		} else if(parent != null) {
+			return parent.getTemplateLibrary();
+		} else return null;
+	}
+	public void setTemplateLibrary(TemplateLibrary templateLibrary) {
+		this.templateLibrary = templateLibrary;
+	}
+	@XmlTransient
+	public Map<String, String> getConstants() {
+		if (parameterConstants != null) {
+			return parameterConstants;
+		} else if (parent != null) {
+			return parent.getConstants();
+		} else return null;
+	}
+	public void setConstants(Map<String, String> constants) {
+		this.parameterConstants = constants;
+	}
+	@XmlTransient
+	public Selenium getSelenium() {
+		if (parent != null) {
+			return parent.getSelenium();
+		} else return null;
+	}
+	public void setSelenium(Selenium selenium) {
+		if(parent != null) {
+			parent.setSelenium(selenium);
+		}
 	}
 	
 	public Manager() {
-		super();
+		super(UUID.randomUUID());
+		
+		managerListeners = new LinkedHashSet<ManagerListener>();
+		
+		currentManagerIndex = 0;
+		childManagers = new ArrayList<ManagerListener>();
+		
+		addManagerListener(this);	
 	}
 	public Manager(XML message, Class<T> type, ManagerListener parent) {
-		super(message, type, parent);
-		inputData = new LinkedHashSet<K>();
-		outputData = new LinkedHashMap<K,V>();
+		super(message.getUuid());
+
+		control = instance(type, message, this);
+		
+		managerListeners = new LinkedHashSet<ManagerListener>();
+		
+		this.parent = parent;
+		
+		currentManagerIndex = 0;
+		childManagers = new ArrayList<ManagerListener>();
+		
+		addManagerListener(this);
+		addManagerListener(parent);
 	}
-	
-	@Override
-	public int size() {
-		return outputData.size();
+
+	public void addManagerListener(ManagerListener listener) {
+		managerListeners.add(listener);
 	}
-	@Override
-	public boolean isEmpty() {
-		return outputData.isEmpty();
+	public void removeManagerListener(ManagerListener listener) {
+		managerListeners.remove(listener);
 	}
-	@Override
-	public boolean containsKey(Object key) {
-		return inputData.contains(key);
-	}
-	@Override
-	public boolean containsValue(Object value) {
-		return outputData.containsValue(value);
-	}
-	@Override
-	public V get(Object key) {
-		return outputData.get(key);
-	}
-	@Override
-	public V put(K key, V value) {
-		V oldValue = outputData.put(key, value);
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
-		return oldValue;
-	}
-	@Override
-	public V remove(Object key) {
-		return outputData.remove(key);
-	}
-	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for(K input : m.keySet()) {
-			put(input, m.get(input));
+	protected void ManagerEvent(ManagerEventArgs e) {
+		for(ManagerListener listener : managerListeners) {
+			listener.OnManagerEvent(e);
 		}
 	}
-	@Override
-	public void clear() {
-		inputData.clear();
-		outputData.clear();
+	
+	public void addChildManager(ManagerListener manager) {
+		childManagers.add(manager);
+	}
+	public void reset() {
+		currentManagerIndex = 0;
+	}
+	public boolean hasChildManagers() {
+		boolean isEmpty = (childManagers != null ? childManagers.isEmpty() : true);
+		return !isEmpty;
 	}
 	@Override
-	public Set<K> keySet() {
-		return inputData;
+	public boolean hasNext() {
+		return currentManagerIndex < childManagers.size();
 	}
 	@Override
-	public Collection<V> values() {
-		return outputData.values();
+	public ManagerListener next() {
+		ManagerListener listener = childManagers.get(currentManagerIndex);
+		currentManagerIndex++;
+		return listener;
 	}
+
 	@Override
-	public Set<Entry<K, V>> entrySet() {
-		return outputData.entrySet();
+	public void start() {
+		control.loadControl();
 	}
+
 	@Override
-	public Iterator<K> iterator() {
-		return inputData.iterator();
+	public void stop() {
+		
+	}
+
+	@Override
+	public abstract void OnManagerEvent(ManagerEventArgs e);
+
+	@Override
+	public void OnControlInitialized(ControlEventArgs e) {
+		
+	}
+
+	@Override
+	public void OnControlLoaded(ControlEventArgs e) {
+		if (hasChildManagers()) {
+			// Start each child manager
+			while (hasNext()) {
+				ManagerListener manager = next();
+				manager.start();
+			}
+			reset();
+		}
+		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.STARTED));
 	}
 }
