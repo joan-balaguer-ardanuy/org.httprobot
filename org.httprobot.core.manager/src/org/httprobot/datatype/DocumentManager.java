@@ -81,16 +81,12 @@ public class DocumentManager
 			break;
 		case ACTION_WEB_LOADED:
 			if (e.getSource().equals(actionManager)) {
-				try {
-					currentResponse = (WebDocument) e.getValue();
+				currentResponse = (WebDocument) e.getValue();
 
-					InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
-					getDocumentLibrary().put(currentResponse, templateDocument);
-					getValue().put(templateDocument, currentResponse);
-					fieldRootManager.put(templateDocument, currentResponse);
-				} catch (ClassCastException exception) {
-					throw new Error("DocumentManager.OnManagerEvent: Unable to cast java.util.Map.Entry<WebRequest,HtmlPage>.", exception);
-				}
+				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
+				getDocumentLibrary().put(currentResponse, templateDocument);
+				getValue().put(templateDocument, currentResponse);
+				fieldRootManager.put(templateDocument, currentResponse);
 			}
 			break;
 		case DOCUMENT_COMPLETED:

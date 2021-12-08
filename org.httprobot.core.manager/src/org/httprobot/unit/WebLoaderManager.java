@@ -43,7 +43,7 @@ public class WebLoaderManager
 		super.put(key, value);
 		waitTime();
 		
-		WebDriver driver = getSelenium().getWebDriver();
+		WebDriver driver = getWebDriver().getWebDriver();
 		NextPageMethod method = (NextPageMethod) getControl().get(Data.NEXT_PAGE_METHOD);
 		
 		switch (method) {

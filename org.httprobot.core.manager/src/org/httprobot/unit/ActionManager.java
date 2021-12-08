@@ -1,6 +1,8 @@
 package org.httprobot.unit;
 
 import java.io.StringWriter;
+import java.time.Duration;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -11,10 +13,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.httprobot.Constants;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.configuration.Selenium;
+import org.httprobot.configuration.SeleniumControl;
+import org.httprobot.configuration.SeleniumManager;
 import org.httprobot.MapManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -26,6 +31,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
@@ -40,7 +51,7 @@ public class ActionManager
 	Map<Constant, ConstantManager> constantManagers;
 	ElementManager elementManager;
 	
-	Selenium selenium;
+	SeleniumManager seleniumManager;
 	
 	WebDocument currentOutput;
 
@@ -55,7 +66,7 @@ public class ActionManager
 	
 	@Override
 	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
-		WebDriver driver = getSelenium().getWebDriver();
+		WebDriver driver = seleniumManager.getValue();
 		WebElement htmlPage;
 		
 		if(key == null) {
@@ -111,6 +122,9 @@ public class ActionManager
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
 				}
+			} else if(e.getSource() instanceof SeleniumManager) {
+				SeleniumManager seleniumManager = SeleniumManager.class.cast(e.getSource());
+				seleniumManager.setValue(loadWebDriver(seleniumManager.getKey()));
 			}
 			break;
 		case FINISHED: 
@@ -119,13 +133,16 @@ public class ActionManager
 				getValue().add(currentOutput);
 				ManagerEvent(new ManagerEventArgs(this, currentOutput, ManagerEventType.ACTION_WEB_LOADED));
 			}
+			else if(e.getSource().equals(seleniumManager)) {
+				setWebDriver(seleniumManager.getValue());	
+			}
 			break;
 		case NEW_ELEMENT:
 			if(e.getSource() instanceof ElementManager) {
 				ElementManager elementManager = ElementManager.class.cast(e.getSource());
 				WebElement webElement = WebElement.class.cast(e.getValue());
 				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
-					WebDriver driver = getSelenium().getWebDriver();
+					WebDriver driver = getWebDriver();
 					Actions action = new Actions(driver);
 					
 					if(elementManager.getControl().get(Data.JAVASCRIPT) != null) {
@@ -172,6 +189,15 @@ public class ActionManager
 				}
 			}
 			break;
+		case SELENIUM_CONTROL_LOADED:
+			if(e.getSource() instanceof SeleniumControl) {
+				Selenium selenium = SeleniumControl.class.cast(e.getSource()).getMessage();
+				if(getControl().get(Data.SELENIUM).equals(selenium)) {
+					seleniumManager = new SeleniumManager(selenium, this);
+					addChildManager(seleniumManager);
+				}
+			}
+			break;
 		default:
 			break;
 		}
@@ -199,5 +225,40 @@ public class ActionManager
 			}
 		}
 		return url;
+	}
+	private WebDriver loadWebDriver(Selenium selenium) {
+		WebDriver webDriver;
+		System.setProperty(selenium.getDriverProperty(), selenium.getDriverPath());
+		switch (selenium.getBrowserVersion()) {
+		case FIREFOX:
+			webDriver = new FirefoxDriver(getFirefoxOptions(selenium.getAllowImages()));
+			webDriver.manage().window().maximize();
+			webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+			return webDriver;
+		case CHROME:
+			webDriver = new ChromeDriver(getChromeOptions(selenium.getAllowImages()));
+			webDriver.manage().window().maximize();
+			webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+			return webDriver;
+		default:
+			return null;
+		}
+	}
+	private FirefoxOptions getFirefoxOptions(Boolean allowImages) {
+		FirefoxOptions options = new FirefoxOptions();
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference(Constants.FIREFOX_PERMISSION_IMAGE, allowImages ? 1 : 2);
+		options.setProfile(profile);
+		options.setCapability(Capability.PROFILE, profile);
+		return options;
+	}
+	private ChromeOptions getChromeOptions(Boolean allowImages) {
+		ChromeOptions options = new ChromeOptions();
+		HashMap<String,Object> images = new HashMap<>();
+		images.put(Constants.CHROME_PERMISSION_IMAGE, allowImages ? 1 : 2);
+		HashMap<String,Object> preferences = new HashMap<>();
+		preferences.put(Constants.CHROME_PROFILE_DEFAULT_CONTENT, images);
+		options.setExperimentalOption(Constants.CHROME_PREFERENCES, preferences);
+		return null;
 	}
 }

@@ -20,6 +20,7 @@ import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Precursor class. Inherits {@link XML}.
@@ -40,9 +41,9 @@ public final class Precursor
 	private static final long serialVersionUID = 322360610738419712L;
 	
 	/**
-	 * The {@link Selenium} configuration XML message.
+	 * The current {@link WebDriver}.
 	 */
-	Selenium selenium;
+	WebDriver webDriver;
 	/**
 	 * The {@link ServiceConnection} XML message {@link MapManager}.
 	 */
@@ -101,13 +102,12 @@ public final class Precursor
 		sourceManager.setConstants(constants);
 	}
 	@Override
-	public Selenium getSelenium() {
-		return selenium;
+	public WebDriver getWebDriver() {
+		return webDriver;
 	}
 	@Override
-	public void setSelenium(Selenium selenium) {
-		this.selenium = selenium;
-		this.selenium.loadWebDriver();
+	public void setWebDriver(WebDriver webDriver) {
+		this.webDriver = webDriver;
 	}
 	
 	/**

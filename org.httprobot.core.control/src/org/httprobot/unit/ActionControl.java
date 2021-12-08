@@ -8,6 +8,7 @@ import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
+import org.httprobot.configuration.SeleniumControl;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.parameter.Constant;
@@ -25,6 +26,7 @@ public final class ActionControl
 	LinkedHashSet<ConstantControl> constant;
 	WebLoaderControl webLoaderControl;
 	ElementControl elementControl;
+	SeleniumControl seleniumControl;
 	
 	@XmlElement
 	public WebLoaderControl getPaginatorControl() {
@@ -34,10 +36,10 @@ public final class ActionControl
 		this.webLoaderControl = paginatorControl;
 	}
 	@XmlElement
-	public LinkedHashSet<ConstantControl> getConstant() {
+	public LinkedHashSet<ConstantControl> getConstantControl() {
 		return constant;
 	}
-	public void setConstant(LinkedHashSet<ConstantControl> constant) {
+	public void setConstantControl(LinkedHashSet<ConstantControl> constant) {
 		this.constant = constant;
 	}
 	@XmlElement
@@ -46,6 +48,20 @@ public final class ActionControl
 	}
 	public void setElementControl(ElementControl elementControl) {
 		this.elementControl = elementControl;
+	}
+	@XmlElement
+	public SeleniumControl getSeleniumControl() {
+		return seleniumControl;
+	}
+	public void setSeleniumControl(SeleniumControl seleniumControl) {
+		this.seleniumControl = seleniumControl;
+	}
+	@XmlElement
+	public WebLoaderControl getWebLoaderControl() {
+		return webLoaderControl;
+	}
+	public void setWebLoaderControl(WebLoaderControl webLoaderControl) {
+		this.webLoaderControl = webLoaderControl;
 	}
 	
 	public ActionControl() {
@@ -71,6 +87,9 @@ public final class ActionControl
 			if(action.getElement() != null) {
 				new ElementControl(action.getElement(), this);
 			}
+			if(action.getSelenium() != null) {
+				new SeleniumControl(action.getSelenium(), this);
+			}
 			for (Constant constant : action.getConstant()) {
 				new ConstantControl(constant, this);
 			}
@@ -85,6 +104,9 @@ public final class ActionControl
 		} else if(e.getSource() instanceof WebLoaderControl) {
 			webLoaderControl = WebLoaderControl.class.cast(e.getSource());
 			addChildControl(webLoaderControl);
+		} else if(e.getSource() instanceof SeleniumControl) {
+			seleniumControl = SeleniumControl.class.cast(e.getSource());
+			addChildControl(seleniumControl);
 		}
 	}
 	@Override
@@ -112,6 +134,9 @@ public final class ActionControl
 					} else if(control instanceof WebLoaderControl ?
 							webLoaderControl.equals(control) : false) {
 						webLoaderControl.loadControl();
+					} else if(control instanceof SeleniumControl ?
+							seleniumControl.equals(control) : false) {
+						seleniumControl.loadControl();
 					} else if(control instanceof ConstantControl ?
 							!action.getConstant().isEmpty() ?
 									constant.contains(control)
@@ -133,6 +158,10 @@ public final class ActionControl
 		else if (e.getSource() instanceof ElementControl) {
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.ELEMENT, e.getMessage());
+			}
+		} else if (e.getSource() instanceof SeleniumControl) {
+			if (getChildControls().contains(e.getSource())) {
+				put(Data.SELENIUM, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ConstantControl) {
 			if (getChildControls().contains(e.getSource())) {

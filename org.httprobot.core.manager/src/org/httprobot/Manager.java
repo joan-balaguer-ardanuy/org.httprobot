@@ -16,6 +16,7 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.openqa.selenium.WebDriver;
 
 public abstract class Manager<T extends Control<?>> 
 	extends XML 
@@ -100,14 +101,14 @@ public abstract class Manager<T extends Control<?>>
 		this.parameterConstants = constants;
 	}
 	@XmlTransient
-	public Selenium getSelenium() {
+	public WebDriver getWebDriver() {
 		if (parent != null) {
-			return parent.getSelenium();
+			return parent.getWebDriver();
 		} else return null;
 	}
-	public void setSelenium(Selenium selenium) {
+	public void setWebDriver(WebDriver webDriver) {
 		if(parent != null) {
-			parent.setSelenium(selenium);
+			parent.setWebDriver(webDriver);
 		}
 	}
 	

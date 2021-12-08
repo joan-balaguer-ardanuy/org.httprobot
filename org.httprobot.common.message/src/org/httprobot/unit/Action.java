@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractUnit;
+import org.httprobot.configuration.Selenium;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
 
@@ -17,20 +18,21 @@ public final class Action extends AbstractUnit {
 	 */
 	private static final long serialVersionUID = 798890955203009246L;
 
-	Boolean clearUrl;
+	Boolean clearQuery;
 	String httpAddress;
 	String method;
 	String javaScript;
+	Selenium selenium;
 	WebLoader webLoader;
 	Element element;
 	LinkedHashSet<Constant> constant;
 	
 	@XmlAttribute
 	public Boolean getClearQuery() {
-		return clearUrl;
+		return clearQuery;
 	}
-	public void setClearUrl(Boolean strictMode) {
-		this.clearUrl = strictMode;
+	public void setClearQuery(Boolean clearQuery) {
+		this.clearQuery = clearQuery;
 	}
 	@XmlElement
 	public String getHttpAddress() {
@@ -74,7 +76,13 @@ public final class Action extends AbstractUnit {
 	public void setElement(Element element) {
 		this.element = element;
 	}
-	
+	@XmlElement
+	public Selenium getSelenium() {
+		return selenium;
+	}
+	public void setSelenium(Selenium selenium) {
+		this.selenium = selenium;
+	}
 	public Action() {
 		super();
 		constant = new LinkedHashSet<Constant>();
@@ -85,10 +93,12 @@ public final class Action extends AbstractUnit {
 		super.OnMessageUnmarshalled(e);
 		
 		Action action = Action.class.cast(e.getSource());
-		setClearUrl(action.getClearQuery());
+		setClearQuery(action.getClearQuery());
 		setHttpAddress(action.getHttpAddress());
 		setMethod(action.getMethod());
 		setWebLoader(action.getWebLoader());
 		setConstant(action.getConstant());
+		setElement(action.getElement());
+		setSelenium(action.getSelenium());
 	}
 }
