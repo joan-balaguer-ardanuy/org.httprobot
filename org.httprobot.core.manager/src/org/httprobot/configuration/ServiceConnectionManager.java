@@ -18,6 +18,11 @@ public final class ServiceConnectionManager
 	private static final long serialVersionUID = 798195388983416568L;
 
 	@Override
+	public ServiceConnection getKey() {
+		return getControl().getMessage();
+	}
+	
+	@Override
 	@XmlElement
 	public ServiceConnectionControl getControl() {
 		return super.getControl();

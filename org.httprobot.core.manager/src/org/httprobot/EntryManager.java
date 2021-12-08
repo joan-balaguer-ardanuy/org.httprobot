@@ -2,8 +2,8 @@ package org.httprobot;
 
 import org.httprobot.event.ManagerEventArgs;
 
-public abstract class EntryManager<K extends XML,V,T extends Control<? extends XML>>
-	extends Manager<T> 
+public abstract class EntryManager<K,V,T extends Control<?>>
+	extends Manager<T>
 		implements java.util.Map.Entry<K,V> {
 
 	/**
@@ -11,18 +11,10 @@ public abstract class EntryManager<K extends XML,V,T extends Control<? extends X
 	 */
 	private static final long serialVersionUID = 5788898149095657921L;
 
-	private K key;
 	private V value;
 	
 	@Override
-	public K getKey() {
-		return key;
-	}
-	public K setKey(K key) {
-		K oldKey = this.key;
-		this.key = key;
-		return oldKey;
-	}
+	public abstract K getKey();
 	@Override
 	public V getValue() {
 		return value;

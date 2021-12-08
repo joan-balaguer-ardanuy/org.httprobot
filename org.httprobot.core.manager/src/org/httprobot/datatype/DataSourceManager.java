@@ -44,6 +44,21 @@ public final class DataSourceManager
 	StartUrlManager startUrlManager;
 	
 	ContentType currentContentType;
+
+	@Override
+	public ContentTypeRef getKey() {
+		return contentTypeRefManager.getKey();
+	}
+	@Override
+	public DocumentLibrary getValue() {
+		return super.getValue();
+	}
+	@Override
+	public DocumentLibrary setValue(DocumentLibrary value) {
+		setDocumentLibrary(value);
+		actionManager.put(null, new LinkedHashSet<WebDocument>());
+		return super.setValue(value);
+	}
 	
 	public DataSourceManager() {
 		super();
@@ -51,13 +66,7 @@ public final class DataSourceManager
 	public DataSourceManager(DataSource message, ManagerListener parent) {
 		super(message, DataSourceControl.class, parent);
 	}
-
-	@Override
-	public DocumentLibrary setValue(DocumentLibrary value) {
-		setDocumentLibrary(value);
-		actionManager.put(null, new LinkedHashSet<WebDocument>());
-		return super.setValue(value);
-	}
+	
 	@Override
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
@@ -135,7 +144,6 @@ public final class DataSourceManager
 		case CONTENT_TYPE_REF_CONTROL_LOADED:
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
-				setKey(contentTypeRef);
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
 					addChildManager(contentTypeRefManager);

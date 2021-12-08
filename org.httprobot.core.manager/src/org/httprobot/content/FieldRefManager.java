@@ -13,6 +13,11 @@ public class FieldRefManager
 	 */
 	private static final long serialVersionUID = 1140349784992668189L;
 	
+	@Override
+	public FieldRef getKey() {
+		return getControl().getMessage();
+	}
+	
 	public FieldRefManager() {
 		super();
 	}

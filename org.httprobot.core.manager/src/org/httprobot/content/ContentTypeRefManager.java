@@ -12,6 +12,11 @@ public class ContentTypeRefManager
 	 */
 	private static final long serialVersionUID = 2966040272596645359L;
 	
+	@Override
+	public ContentTypeRef getKey() {
+		return getControl().getMessage();
+	}
+	
 	public ContentTypeRefManager() {
 		super();
 	}

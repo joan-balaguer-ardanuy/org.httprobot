@@ -35,6 +35,10 @@ public final class ContentTypeRootManager
 	FieldLibrary<FieldRef> fieldLibrary;
 
 	@Override
+	public ContentTypeRoot getKey() {
+		return getControl().getMessage();
+	}
+	@Override
 	@XmlElement
 	public ContentTypeRootControl getControl() {
 		return super.getControl();
@@ -69,12 +73,6 @@ public final class ContentTypeRootManager
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case CONTENT_TYPE_ROOT_CONTROL_LOADED:
-			if(e.getSource() instanceof ContentTypeRootControl) {
-				ContentTypeRoot contentTypeRoot = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
-				setKey(contentTypeRoot);
-			}
-			break;
 		case FIELD_REF_CONTROL_LOADED:
 			if(e.getSource() instanceof FieldRefControl) {
 				FieldRefControl fieldRefControl = FieldRefControl.class.cast(e.getSource());

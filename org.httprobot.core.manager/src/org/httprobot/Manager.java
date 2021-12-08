@@ -17,7 +17,7 @@ import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
-public abstract class Manager<T extends Control<? extends XML>> 
+public abstract class Manager<T extends Control<?>> 
 	extends XML 
 		implements ControlListener, ManagerListener, 
 			Iterator<ManagerListener> {
