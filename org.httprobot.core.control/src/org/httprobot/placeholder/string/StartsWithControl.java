@@ -55,7 +55,7 @@ public final class StartsWithControl
 			
 			put(Data.VALUE, startsWith.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.STARTS_WITH_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.STARTS_WITH_CONTROL_LOADED));
 		}
 	}
 }

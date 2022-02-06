@@ -19,8 +19,16 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.MessageEventArgs;
 
+/**
+ * XML message. Inherits {@link AbstractCommandListener}.
+ * It is {@link MessageListener}. All objects of the framework will inherit
+ * this class except the event arguments.
+ * 
+ * @author joan
+ *
+ */
 public abstract class XML 
-	extends CLI 
+	extends AbstractCommandListener 
 		implements MessageListener {
 	
 	/**
@@ -28,8 +36,10 @@ public abstract class XML
 	 */
 	private static final long serialVersionUID = 5362492597715736613L;
 
-	UUID uuid;
-	
+	/**
+	 * The universal unique ID
+	 */
+	private UUID uuid;
 	/**
 	 * JAXB context
 	 */
@@ -43,12 +53,16 @@ public abstract class XML
 	 */
 	private Unmarshaller jaxbUnmarshaller;
 	
+	/**
+	 * The {@link Set} of {@link MessageListener}.
+	 */
+	Set<MessageListener> xmlListeners;
+	
 	@Override
 	@XmlAttribute
 	public UUID getUuid() {
 		return uuid;
 	}
-
 	@Override
 	public void setUuid(UUID uuid) {
 		if(uuid != null) {
@@ -59,12 +73,17 @@ public abstract class XML
 		}
 	}
 	
-	Set<MessageListener> xmlListeners;
-	
+	/**
+	 * {@link XML} message default class constructor.
+	 */
 	public XML() {
 		xmlListeners = new LinkedHashSet<MessageListener>();
 		addMessageListener(this);
 	}
+	/**
+	 * {@link XML} message class constructor.
+	 * @param uuid {@link UUID} the universal unique ID.
+	 */
 	public XML(UUID uuid) {
 		this();
 		this.uuid = uuid;
@@ -77,24 +96,40 @@ public abstract class XML
 
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
+		// Cast event source.
 		MessageListener xml = MessageListener.class.cast(e.getSource());
+		// Set read UUID
 		setUuid(xml.getUuid());
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
-		CommandLineEvent(e);
+		CommandListenerEvent(e);
 	}
 	
+	/**
+	 * Adds new {@link MessageListener} to message listeners {@link Set}.
+	 * @param listener
+	 */
 	public final void addMessageListener(MessageListener listener) {
 		xmlListeners.add(listener);
 	}
+	/**
+	 * Removes old {@link MessageListener} from message listeners {@link Set}.
+	 * @param listener
+	 */
 	public final void removeMessageListener(MessageListener listener) {
 		xmlListeners.remove(listener);
 	}
+	/**
+	 * Fires XML event
+	 * @param e {@link MessageEventArgs} the arguments of the event.
+	 */
 	protected final void XmlEvent(MessageEventArgs e)
 	{
+		// For each MessageListeener in XML listeners set
 		for (MessageListener listener : xmlListeners) 
 		{
+			// comute XML event type
 			switch (e.getXmlEventType()) 
 			{
 				case MESSAGE_MARSHALLED:
@@ -108,6 +143,12 @@ public abstract class XML
 			}
 		}
 	}
+	/**
+	 * XML unmarshall method. Generates new {@link JAXBContext} for current class,
+	 * instances new {@link Unmarshaller} object and unmarshalls the {@link InputStream} argument.
+	 * @param inputStream {@link InputStream} the input stream to be unmarshalled.
+	 * @throws JAXBException thrown when something is wrong
+	 */
 	public final void unmarshal(InputStream inputStream) throws JAXBException {
 		try {
 			jaxbContext = JAXBContext.newInstance(this.getClass());
@@ -118,6 +159,12 @@ public abstract class XML
 			throw new JAXBException(e.getMessage(), e.getCause());
 		}
 	}
+	/**
+	 * XML marshall method. Generates new {@link JAXBContext} for current class,
+	 * instances new {@link Marshaller} object and marshalls the {@link OutputStream} argument.
+	 * @param outputStrem {@link OutputStream} the output stream to be marshalled.
+	 * @throws JAXBException when something is wrong
+	 */
 	public final void marshal(OutputStream outputStrem) throws JAXBException {
 		try {
 			jaxbContext = JAXBContext.newInstance(this.getClass());
@@ -133,36 +180,49 @@ public abstract class XML
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public java.lang.String toString() 
+	public String toString() 
 	{
 		try 
 		{
+			// instances new JAXBContext for current class
 			jaxbContext = JAXBContext.newInstance(this.getClass());
+			// create marshaller
 			jaxbMarshaller = jaxbContext.createMarshaller();
-
 			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
+			// instances new StringWriter
 			StringWriter sw = new StringWriter();
-			jaxbMarshaller.marshal(this, sw);	
-			java.lang.String strXml = sw.toString();
-			
+			// marshall XML message into StringWriter
+			jaxbMarshaller.marshal(this, sw);
+			// get the XML message as string
+			String strXml = sw.toString();
+			// return string XML message
 			return strXml;
 		} 
-		catch (JAXBException e) 
-		{
+		catch (JAXBException e) {
+			// is something is wrong print stack trace
 			e.printStackTrace();
 			return null;
 		}
 	}
-	public void toFile(java.lang.String path) {
-		java.lang.String str = toString();
+	/**
+	 * Writes the string XML message into a file.
+	 * @param path {@link String} the destination path of the string XML message.
+	 */
+	public void toFile(String path) {
+		// parse XML message into string.
+		String str = toString();
+		// declare new buffered writer
 	    BufferedWriter writer;
 		try {
+			// instances buffered writer with new file writer with destination path as argument
 			writer = new BufferedWriter(new FileWriter(path));
+			// write the string to the file
 		    writer.write(str);
+		    // close writer
 		    writer.close();
 		} catch (IOException e) {
+			// if something is wrong print stack trace
 			e.printStackTrace();
 		}
 	}

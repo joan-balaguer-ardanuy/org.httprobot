@@ -84,7 +84,7 @@ public final class ElementControl
 			}
 			reset();
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.ELEMENT_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.ELEMENT_CONTROL_LOADED));
 		}
 	}
 }

@@ -1,10 +1,10 @@
 package org.httprobot;
 
 import java.util.Map;
+import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.configuration.Selenium;
 import org.httprobot.configuration.Source;
 import org.httprobot.configuration.SourceManager;
 import org.httprobot.configuration.ServiceConnection;
@@ -121,7 +121,7 @@ public final class Precursor
 	 * @param selenium the {@link Selenium} configuration XML message
 	 */
 	public Precursor(ServiceConnection serviceConnection) {
-		super(serviceConnection.getUuid());
+		super(UUID.randomUUID());
 		// Set ServiceConnection XML message
 		this.serviceConnection = serviceConnection;
 		// Instance ServiceConnectionManager

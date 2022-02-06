@@ -41,7 +41,7 @@ public final class ConstantControl
 			put(Data.KEY, constant.getKey());
 			put(Data.VALUE, constant.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.CONSTANT_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.CONSTANT_CONTROL_LOADED));
 		}
 	}
 }

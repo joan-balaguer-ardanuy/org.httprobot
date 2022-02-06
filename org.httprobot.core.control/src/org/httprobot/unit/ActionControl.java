@@ -152,7 +152,7 @@ public final class ActionControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.ACTION_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.ACTION_CONTROL_LOADED));
 			}
 		}
 		else if (e.getSource() instanceof ElementControl) {

@@ -115,7 +115,7 @@ public final class PageControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.PAGE_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.PAGE_CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof AnchorControl) {

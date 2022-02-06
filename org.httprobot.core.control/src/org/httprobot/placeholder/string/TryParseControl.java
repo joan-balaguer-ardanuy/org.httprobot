@@ -43,7 +43,7 @@ public final class TryParseControl
 			if(tryParse.getFieldType() != null) {
 				put(Data.FIELD_TYPE, tryParse.getFieldType());
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.TRY_PARSE_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.TRY_PARSE_CONTROL_LOADED));
 			}
 		}
 	}

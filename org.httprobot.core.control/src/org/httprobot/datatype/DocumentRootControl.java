@@ -152,7 +152,7 @@ public final class DocumentRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.DOCUMENT_ROOT_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.DOCUMENT_ROOT_CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof FieldRootControl) {
 			if (getChildControls().contains(e.getSource())) {

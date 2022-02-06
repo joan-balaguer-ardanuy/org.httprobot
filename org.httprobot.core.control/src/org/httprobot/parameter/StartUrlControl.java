@@ -40,7 +40,7 @@ public final class StartUrlControl
 			StartUrl startUrl = StartUrl.class.cast(e.getMessage());
 			put(Data.KEY, startUrl.getKey());
 			put(Data.VALUE, startUrl.getValue());
-			CommandLineEvent(new CommandEventArgs(this, Command.START_URL_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.START_URL_CONTROL_LOADED));
 		}
 	}
 }

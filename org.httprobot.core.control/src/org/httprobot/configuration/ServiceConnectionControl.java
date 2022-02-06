@@ -59,7 +59,7 @@ public final class ServiceConnectionControl
 				put(Data.Q_NAME, serviceOptions.getQName());
 				put(Data.URL, serviceOptions.getURL());	
 				//Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.SERVICE_CONNECTION_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.SERVICE_CONNECTION_CONTROL_LOADED));
 			}
 			else
 			{

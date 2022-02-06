@@ -55,7 +55,7 @@ public final class FieldRefControl
 				put(Data.FIELD_NAME, fieldRef.getName());
 				put(Data.FIELD_TYPE, fieldRef.getDataType());
 				//Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.FIELD_REF_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.FIELD_REF_CONTROL_LOADED));
 			}
 			else {
 				throw new Error("FieldRefControl.OnControlLoaded: UUID cannot be null.");

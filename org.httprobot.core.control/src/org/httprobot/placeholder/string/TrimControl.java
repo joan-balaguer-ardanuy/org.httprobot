@@ -48,7 +48,7 @@ public final class TrimControl
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.TRIM_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.TRIM_CONTROL_LOADED));
 		}
 	}
 }

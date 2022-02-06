@@ -44,7 +44,7 @@ public final class EqualsControl
 
 			put(Data.VALUE, equals.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.EQUALS_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.EQUALS_CONTROL_LOADED));
 		}
 	}
 }

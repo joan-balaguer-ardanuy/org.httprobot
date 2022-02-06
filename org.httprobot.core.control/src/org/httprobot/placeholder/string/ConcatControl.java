@@ -42,7 +42,7 @@ public final class ConcatControl
 			
 			put(Data.VALUE, concat.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.CONCAT_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.CONCAT_CONTROL_LOADED));
 		}
 		
 	}

@@ -2,6 +2,7 @@ package org.httprobot;
 
 public enum ManagerEventType {
 	ACTION_WEB_LOADED,
+	ALL_PAGES_LOADED,
 	DATA_SOURCE_LIST_LOADED,
 	DATA_SOURCE_LOADED,
 	DOCUMENT_COMPLETED,

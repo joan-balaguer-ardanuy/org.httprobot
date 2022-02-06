@@ -46,7 +46,7 @@ public final class ToUpperCaseControl
 		super.OnControlLoaded(e);
 		if(e.getSource().equals(this)) {
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.TO_UPPER_CASE_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.TO_UPPER_CASE_CONTROL_LOADED));
 		}
 	}
 }

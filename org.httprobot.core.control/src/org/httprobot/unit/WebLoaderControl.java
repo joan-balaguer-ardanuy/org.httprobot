@@ -45,7 +45,7 @@ public class WebLoaderControl extends Control<WebLoader> {
 			
 			
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.WEB_LOADER_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.WEB_LOADER_CONTROL_LOADED));
 		}
 	}
 

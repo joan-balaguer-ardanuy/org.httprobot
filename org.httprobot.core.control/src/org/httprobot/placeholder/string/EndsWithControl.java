@@ -55,7 +55,7 @@ public final class EndsWithControl
 			
 			put(Data.VALUE, endsWith.getValue());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.ENDS_WITH_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.ENDS_WITH_CONTROL_LOADED));
 		}
 	}
 }

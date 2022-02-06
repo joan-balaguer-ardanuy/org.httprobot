@@ -126,7 +126,7 @@ public final class ContentTypeControl
 					}
 				}
 				reset();
-				CommandLineEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_CONTROL_LOADED));
 			} else {
 				throw new Error("ContentTypeControl.OnControlLoaded: XML message controls missing.");
 			}

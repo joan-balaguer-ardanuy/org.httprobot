@@ -168,7 +168,7 @@ public final class DataSourceControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.DATA_SOURCE_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.DATA_SOURCE_CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof DocumentRootControl) {
 			if (getChildControls().contains(e.getSource())) {

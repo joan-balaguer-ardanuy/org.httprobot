@@ -153,7 +153,7 @@ public final class ContentTypeRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_ROOT_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_ROOT_CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof ContentTypeControl) {
 			if (getChildControls().contains(e.getSource())) {

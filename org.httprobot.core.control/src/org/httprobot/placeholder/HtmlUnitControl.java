@@ -71,7 +71,7 @@ public final class HtmlUnitControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.HTML_UNIT_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.HTML_UNIT_CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof PageControl) {

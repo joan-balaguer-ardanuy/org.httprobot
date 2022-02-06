@@ -2,7 +2,10 @@ package org.httprobot.unit;
 
 import org.httprobot.MapManager;
 
+import java.util.List;
+
 import org.httprobot.Data;
+import org.httprobot.ManagerEventType;
 import org.httprobot.NextPageMethod;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
@@ -43,41 +46,80 @@ public class WebLoaderManager
 		super.put(key, value);
 		waitTime();
 		
-		WebDriver driver = getWebDriver().getWebDriver();
+		WebDriver driver = getWebDriver();
 		NextPageMethod method = (NextPageMethod) getControl().get(Data.NEXT_PAGE_METHOD);
 		
 		switch (method) {
 		case CLICK_NEXT_ELEMENT:
-			findNextElement(driver);
+			setNextPageElement(driver);
 
 			if (nextPageElement != null) {
 
 				Actions action = new Actions(driver);
 				clickElementAction(driver, action);
 
-				key = nextPageElement.getAttribute((String) getControl().get(Data.NEXT_PAGE_ATTRIBUTE));
+				key = driver.getCurrentUrl();
 				value = new WebDocument(key, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 
 				put(key, value);
 			}
+			else {
+				ManagerEvent(new ManagerEventArgs(this, ManagerEventType.ALL_PAGES_LOADED));
+			}
 			break;
 		case INCREMENTAL_HTTP_GET:
-			String url = key + ((String) getControl().get(Data.URL_PATTERN)).replace("[#]", pageNumber.toString());;
-			pageNumber++;
-			driver.get(url);
-			value = new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
-			put(key, value);
+			if (!isNextPageMissing(driver)) {
+				String url = key + ((String) getControl().get(Data.URL_PATTERN)).replace("[#]", pageNumber.toString());
+				pageNumber++;
+				driver.get(url);
+				value = new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
+				put(key, value);
+			} else {
+				ManagerEvent(new ManagerEventArgs(this, ManagerEventType.ALL_PAGES_LOADED));
+			}
 			break;
 		default:
 			break;
 		}
 		return null;
 	}
-	private void findNextElement(WebDriver driver) {
-		WebElement element = driver.findElement(By.xpath((String) getControl().get(Data.XPATH)));
-		if (element.isDisplayed() || element.isEnabled()) {
-			if (element.getText().contains((String) getControl().get(Data.NEXT_PAGE_TEXT))) {
-				nextPageElement = element;
+	private boolean isNextPageMissing(WebDriver driver) {
+		List<WebElement> elements = driver.findElements(By.xpath((String) getControl().get(Data.XPATH)));
+		if (elements.size() > 0) {
+			WebElement element = elements.get(0);
+			if (element.isDisplayed()) {
+				if(getControl().get(Data.NEXT_PAGE_TEXT) != null) {
+					if (element.getText().contains((String) getControl().get(Data.NEXT_PAGE_TEXT))) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+				else {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	private void setNextPageElement(WebDriver driver) {
+		List<WebElement> elements = driver.findElements(By.xpath((String) getControl().get(Data.XPATH)));
+		if (elements.size() > 0) {
+			WebElement element = elements.get(0);
+			if (element.isDisplayed()) {
+				if (getControl().get(Data.NEXT_PAGE_TEXT) != null) {
+					if (element.getText().contains((String) getControl().get(Data.NEXT_PAGE_TEXT))) {
+						nextPageElement = element;
+					} else {
+						nextPageElement = null;
+					}
+				} else {
+					nextPageElement = element;
+				}
 			} else {
 				nextPageElement = null;
 			}

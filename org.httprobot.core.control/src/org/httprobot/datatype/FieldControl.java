@@ -100,7 +100,7 @@ public final class FieldControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.FIELD_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.FIELD_CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof HtmlUnitControl) {

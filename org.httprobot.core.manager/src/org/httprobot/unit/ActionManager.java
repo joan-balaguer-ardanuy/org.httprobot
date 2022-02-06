@@ -66,7 +66,7 @@ public class ActionManager
 	
 	@Override
 	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
-		WebDriver driver = seleniumManager.getValue();
+		WebDriver driver = getWebDriver();
 		WebElement htmlPage;
 		
 		if(key == null) {
@@ -134,8 +134,12 @@ public class ActionManager
 				ManagerEvent(new ManagerEventArgs(this, currentOutput, ManagerEventType.ACTION_WEB_LOADED));
 			}
 			else if(e.getSource().equals(seleniumManager)) {
-				setWebDriver(seleniumManager.getValue());	
+				setWebDriver(seleniumManager.getValue());
 			}
+			break;
+		case ALL_PAGES_LOADED:
+			getWebDriver().quit();
+			setWebDriver(null);
 			break;
 		case NEW_ELEMENT:
 			if(e.getSource() instanceof ElementManager) {

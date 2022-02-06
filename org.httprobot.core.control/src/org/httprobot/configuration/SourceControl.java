@@ -132,7 +132,7 @@ public final class SourceControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.CONFIGURATION_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONFIGURATION_CONTROL_LOADED));
 			} else {
 				throw new Error(
 						"ConfigurationControl.OnControlLoaded: Control must have XML message child controls.");

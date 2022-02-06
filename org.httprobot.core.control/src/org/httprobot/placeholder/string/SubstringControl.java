@@ -44,7 +44,7 @@ public final class SubstringControl
 			put(Data.START_INDEX, message.getStartIndex());
 			put(Data.END_INDEX, message.getEndIndex());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.SUBSTRING_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.SUBSTRING_CONTROL_LOADED));
 		}
 	}
 }

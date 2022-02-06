@@ -64,7 +64,7 @@ public final class SeleniumControl extends Control<Selenium> {
 			put(Data.DRIVER_PROPERTY, selenium.getDriverProperty());
 			put(Data.ALLOW_IMAGES, selenium.getAllowImages());
 			
-			CommandLineEvent(new CommandEventArgs(this, Command.SELENIUM_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.SELENIUM_CONTROL_LOADED));
 		}	
 	}
 }

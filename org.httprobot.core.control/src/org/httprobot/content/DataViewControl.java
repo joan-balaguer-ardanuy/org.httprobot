@@ -85,7 +85,7 @@ public final class DataViewControl
 				// Set XML message control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandLineEvent(new CommandEventArgs(this, Command.DATA_VIEW_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.DATA_VIEW_CONTROL_LOADED));
 			} else {
 				throw new Error("DataViewControl.OnControlLoaded: child XML message controls expected");
 			}

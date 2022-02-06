@@ -40,7 +40,7 @@ public final class ServerUrlControl
 			ServerUrl serverUrl = ServerUrl.class.cast(e.getMessage());
 			put(Data.KEY, serverUrl.getKey());
 			put(Data.VALUE, serverUrl.getValue());
-			CommandLineEvent(new CommandEventArgs(this, Command.SERVER_URL_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.SERVER_URL_CONTROL_LOADED));
 		}
 	}
 }

@@ -63,7 +63,7 @@ public final class AnchorControl
 				put(Data.TARGET, anchor.getTarget());
 			}
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.ANCHOR_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.ANCHOR_CONTROL_LOADED));
 		}
 	}
 }

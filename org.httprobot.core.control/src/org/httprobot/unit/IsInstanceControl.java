@@ -52,7 +52,7 @@ public final class IsInstanceControl extends Control<IsInstance> {
 			
 			put(Data.CLASS_NAME, isInstance.getClassName());
 			// Send event to parent
-			CommandLineEvent(new CommandEventArgs(this, Command.IS_INSTANCE_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.IS_INSTANCE_CONTROL_LOADED));
 		}
 	}
 }
