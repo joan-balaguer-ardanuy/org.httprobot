@@ -34,6 +34,7 @@ public final class Source extends AbstractConfiguration {
 	public void setDataSource(LinkedHashSet<DataSource> dataSource) {
 		this.dataSource = dataSource;
 	}
+	
 	public Source() {
 		super();
 	}
@@ -42,8 +43,8 @@ public final class Source extends AbstractConfiguration {
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		
-		Source configuration = Source.class.cast(e.getSource());
-		setContentTypeRoot(configuration.getContentTypeRoot());
-		setDataSource(configuration.getDataSource());
+		Source source = Source.class.cast(e.getSource());
+		setContentTypeRoot(source.getContentTypeRoot());
+		setDataSource(source.getDataSource());
 	}
 }

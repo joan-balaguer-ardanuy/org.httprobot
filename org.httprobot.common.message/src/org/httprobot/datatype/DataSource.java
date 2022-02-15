@@ -1,11 +1,14 @@
 package org.httprobot.datatype;
 
+import java.util.LinkedHashSet;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractDataType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.event.MessageEventArgs;
+import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ServerUrl;
 import org.httprobot.parameter.StartUrl;
 import org.httprobot.unit.Action;
@@ -22,8 +25,7 @@ public final class DataSource extends AbstractDataType {
 	ContentTypeRef contentTypeRef;
 	DocumentRoot documentRoot;
 	String sourceName;
-	ServerUrl serverUrl;
-	StartUrl startUrl;
+	LinkedHashSet<Constant> constant;
 	
 	@XmlElement
 	public Action getAction() {
@@ -56,21 +58,12 @@ public final class DataSource extends AbstractDataType {
 	public void setSourceName(String sourceName) {
 		this.sourceName = sourceName;
 	}
-	
 	@XmlElement
-	public ServerUrl getServerUrl() {
-		return serverUrl;
+	public LinkedHashSet<Constant> getConstant() {
+		return constant;
 	}
-	public void setServerUrl(ServerUrl serverUrl) {
-		this.serverUrl = serverUrl;
-	}
-	
-	@XmlElement
-	public StartUrl getStartUrl() {
-		return startUrl;
-	}
-	public void setStartUrl(StartUrl startUrl) {
-		this.startUrl = startUrl;
+	public void setConstant(LinkedHashSet<Constant> constant) {
+		this.constant = constant;
 	}
 
 	public DataSource() {
@@ -86,7 +79,6 @@ public final class DataSource extends AbstractDataType {
 		setContentTypeRef(dataSource.getContentTypeRef());
 		setDocumentRoot(dataSource.getDocumentRoot());
 		setSourceName(dataSource.getSourceName());
-		setServerUrl(dataSource.getServerUrl());
-		setStartUrl(dataSource.getStartUrl());
+		setConstant(dataSource.getConstant());
 	}
 }

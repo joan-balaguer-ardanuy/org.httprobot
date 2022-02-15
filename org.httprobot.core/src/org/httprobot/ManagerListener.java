@@ -12,12 +12,12 @@ import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Manager listener interface. Inherits {@link MessageListener}.
+ * Manager listener interface. Inherits {@link Message}.
  * All implementing instances will be able to listen any XML message manager.
  * @author joan
  *
  */
-public interface ManagerListener extends MessageListener {
+public interface ManagerListener extends Message {
 	
 	/**
 	 * Starts {@link ManagerListener}.

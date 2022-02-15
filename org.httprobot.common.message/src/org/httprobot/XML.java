@@ -21,7 +21,7 @@ import org.httprobot.event.MessageEventArgs;
 
 /**
  * XML message. Inherits {@link AbstractCommandListener}.
- * It is {@link MessageListener}. All objects of the framework will inherit
+ * It is {@link Message}. All objects of the framework will inherit
  * this class except the event arguments.
  * 
  * @author joan
@@ -29,7 +29,7 @@ import org.httprobot.event.MessageEventArgs;
  */
 public abstract class XML 
 	extends AbstractCommandListener 
-		implements MessageListener {
+		implements Message {
 	
 	/**
 	 * 5362492597715736613L
@@ -52,11 +52,10 @@ public abstract class XML
 	 * The unmarshaller
 	 */
 	private Unmarshaller jaxbUnmarshaller;
-	
 	/**
-	 * The {@link Set} of {@link MessageListener}.
+	 * The {@link Set} of {@link Message}.
 	 */
-	Set<MessageListener> xmlListeners;
+	Set<Message> xmlListeners;
 	
 	@Override
 	@XmlAttribute
@@ -77,7 +76,7 @@ public abstract class XML
 	 * {@link XML} message default class constructor.
 	 */
 	public XML() {
-		xmlListeners = new LinkedHashSet<MessageListener>();
+		xmlListeners = new LinkedHashSet<Message>();
 		addMessageListener(this);
 	}
 	/**
@@ -97,7 +96,7 @@ public abstract class XML
 	@Override
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		// Cast event source.
-		MessageListener xml = MessageListener.class.cast(e.getSource());
+		Message xml = Message.class.cast(e.getSource());
 		// Set read UUID
 		setUuid(xml.getUuid());
 	}
@@ -107,17 +106,17 @@ public abstract class XML
 	}
 	
 	/**
-	 * Adds new {@link MessageListener} to message listeners {@link Set}.
+	 * Adds new {@link Message} to message listeners {@link Set}.
 	 * @param listener
 	 */
-	public final void addMessageListener(MessageListener listener) {
+	public final void addMessageListener(Message listener) {
 		xmlListeners.add(listener);
 	}
 	/**
-	 * Removes old {@link MessageListener} from message listeners {@link Set}.
+	 * Removes old {@link Message} from message listeners {@link Set}.
 	 * @param listener
 	 */
-	public final void removeMessageListener(MessageListener listener) {
+	public final void removeMessageListener(Message listener) {
 		xmlListeners.remove(listener);
 	}
 	/**
@@ -127,7 +126,7 @@ public abstract class XML
 	protected final void XmlEvent(MessageEventArgs e)
 	{
 		// For each MessageListeener in XML listeners set
-		for (MessageListener listener : xmlListeners) 
+		for (Message listener : xmlListeners) 
 		{
 			// comute XML event type
 			switch (e.getXmlEventType()) 
@@ -153,7 +152,7 @@ public abstract class XML
 		try {
 			jaxbContext = JAXBContext.newInstance(this.getClass());
 			jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			MessageListener obj = MessageListener.class.cast(jaxbUnmarshaller.unmarshal(inputStream));
+			Message obj = Message.class.cast(jaxbUnmarshaller.unmarshal(inputStream));
 			XmlEvent(new MessageEventArgs(obj, XmlEventType.MESSAGE_UNMARSHALLED));
 		} catch (Exception e) {
 			throw new JAXBException(e.getMessage(), e.getCause());

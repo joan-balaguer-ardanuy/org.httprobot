@@ -2,6 +2,7 @@ package org.httprobot.datatype;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Data;
 import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.Message;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -17,13 +19,10 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
-import org.httprobot.parameter.ServerUrl;
-import org.httprobot.parameter.ServerUrlControl;
-import org.httprobot.parameter.ServerUrlManager;
-import org.httprobot.parameter.StartUrl;
-import org.httprobot.parameter.StartUrlControl;
-import org.httprobot.parameter.StartUrlManager;
+import org.httprobot.net.HtmlPage;
+import org.httprobot.parameter.Constant;
+import org.httprobot.parameter.ConstantControl;
+import org.httprobot.parameter.ConstantManager;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
@@ -37,13 +36,22 @@ public final class DataSourceManager
 	 */
 	private static final long serialVersionUID = -8406916752533216986L;
 
+	/**
+	 * The action XML message manager
+	 */
 	ActionManager actionManager;
+	/**
+	 * The content type reference XML message manager
+	 */
 	ContentTypeRefManager contentTypeRefManager;
+	/**
+	 * The document root XML message manager
+	 */
 	DocumentRootManager documentRootManager;
-	ServerUrlManager serverUrlManager;
-	StartUrlManager startUrlManager;
-	
-	ContentType currentContentType;
+	/**
+	 * The constant XML message managers
+	 */
+	Map<Constant, ConstantManager> constantManagers;
 
 	@Override
 	public ContentTypeRef getKey() {
@@ -56,7 +64,7 @@ public final class DataSourceManager
 	@Override
 	public DocumentLibrary setValue(DocumentLibrary value) {
 		setDocumentLibrary(value);
-		actionManager.put(null, new LinkedHashSet<WebDocument>());
+		actionManager.put(null, new LinkedHashSet<HtmlPage>());
 		return super.setValue(value);
 	}
 	
@@ -77,23 +85,19 @@ public final class DataSourceManager
 						contentTypeRefManager.setValue(contentType);
 					}
 				}
-			} else if(e.getSource().equals(serverUrlManager)) {
-				getConstants().put(serverUrlManager.getKey(), serverUrlManager.getValue());
-			} else if(e.getSource().equals(startUrlManager)) {
-				getConstants().put(startUrlManager.getKey(), startUrlManager.getValue());
+			} else if(constantManagers.containsValue(e.getSource())) {
+				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
+				getConstants().put(constantManager.getKey(), constantManager.getValue());
 			}
 			break;
 		case FINISHED:
-			if (e.getSource().equals(contentTypeRefManager)) {
-				//Set current content type
-				this.currentContentType = this.contentTypeRefManager.getValue();
-			} else if (e.getSource().equals(actionManager)) {
+			if (e.getSource().equals(actionManager)) {
 				// No more than one expected.
-				for (WebDocument key : actionManager) {
+				for (HtmlPage key : actionManager) {
 					// Get the returned pages by first request.
-					Set<WebDocument> actiontData = this.actionManager.get(key);
+					Set<HtmlPage> actiontData = this.actionManager.get(key);
 					// Put loaded data on document root message manager
-					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, WebDocument>());
+					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, HtmlPage>());
 				}
 			}
 			break;
@@ -105,21 +109,15 @@ public final class DataSourceManager
 	public void OnCommandReceived(CommandEventArgs e) {
 
 		switch (e.getCommand()) {
-		case SERVER_URL_CONTROL_LOADED:
-			if(e.getSource() instanceof ServerUrlControl) {
-				ServerUrl serverUrl = ServerUrlControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.SERVER_URL).equals(serverUrl)) {
-					serverUrlManager = new ServerUrlManager(serverUrl, this);
-					addChildManager(serverUrlManager);
-				}
-			}
-			break;
-		case START_URL_CONTROL_LOADED:
-			if(e.getSource() instanceof StartUrlControl) {
-				StartUrl startUrl = StartUrlControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.START_URL).equals(startUrl)) {
-					startUrlManager = new StartUrlManager(startUrl, this);
-					addChildManager(startUrlManager);
+		case CONSTANT_CONTROL_LOADED:
+			if(e.getSource() instanceof ConstantControl) {
+				Constant message = ConstantControl.class.cast(e.getSource()).getMessage();
+				@SuppressWarnings("unchecked")
+				Set<Message> set = (Set<Message>) getControl().get(Data.CONSTANT);
+				if(set.contains(message)) {
+					ConstantManager constantManager = new ConstantManager(message, this);
+					constantManagers.put(message, constantManager);
+					addChildManager(constantManager);
 				}
 			}
 			break;

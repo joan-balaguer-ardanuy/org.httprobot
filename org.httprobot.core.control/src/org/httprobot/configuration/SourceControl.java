@@ -1,6 +1,8 @@
 package org.httprobot.configuration;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,6 +10,7 @@ import org.httprobot.Command;
 import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Data;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
@@ -55,8 +58,6 @@ public final class SourceControl
 	
 	public SourceControl() {
 		super();
-
-		setMessage(new Source());
 	}
 	public SourceControl(Source message, ControlListener parent) {
 		super(message, parent);
@@ -78,7 +79,7 @@ public final class SourceControl
 				dataSourceControl = new LinkedHashSet<DataSourceControl>();
 				// For each dataSource in Configuration XML message
 				for (DataSource dataSource : config.getDataSource()) {
-					// This instance listens for it's OnCommand event
+					// This instance listens for it's OnCommandReceived event
 					new DataSourceControl(dataSource, this);
 				}
 			} else {
@@ -95,6 +96,7 @@ public final class SourceControl
 			addChildControl(dataSourceControl);
 		}
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
@@ -139,7 +141,14 @@ public final class SourceControl
 			}
 		} else if (e.getSource() instanceof DataSourceControl) {
 			if (getChildControls().contains(e.getSource())) {
-				put(Data.DATA_SOURCE, e.getMessage());
+				if(get(Data.DATA_SOURCE) == null) {
+					Set<Message> set = new LinkedHashSet<Message>();
+					set.add(e.getMessage());
+					put(Data.DATA_SOURCE, set);
+				} else {
+					Object set = get(Data.DATA_SOURCE);
+					((Set<Message>) set).add(e.getMessage());
+				}
 			}
 		} else if (e.getSource() instanceof ContentTypeRootControl) {
 			if (getChildControls().contains(e.getSource())) {

@@ -8,7 +8,7 @@ import org.httprobot.MapManager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 import org.httprobot.placeholder.HtmlUnitControl;
 import org.httprobot.placeholder.HtmlManager;
 import org.httprobot.placeholder.HttpAddressControl;
@@ -16,7 +16,7 @@ import org.httprobot.placeholder.HttpAddressManager;
 
 @XmlRootElement
 public final class FieldManager
-	extends MapManager<InputField, WebDocument, FieldControl> {
+	extends MapManager<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
@@ -34,7 +34,7 @@ public final class FieldManager
 	}
 	
 	@Override
-	public WebDocument put(InputField key, WebDocument value) {
+	public HtmlPage put(InputField key, HtmlPage value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);

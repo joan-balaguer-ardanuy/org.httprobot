@@ -2,7 +2,7 @@ package org.httprobot.event;
 
 import org.httprobot.ControlEventType;
 import org.httprobot.EventType;
-import org.httprobot.MessageListener;
+import org.httprobot.Message;
 
 public class ControlEventArgs extends EventArgs {
 
@@ -12,17 +12,17 @@ public class ControlEventArgs extends EventArgs {
 	private static final long serialVersionUID = 4204262239190271773L;
 	
 	ControlEventType controlEventType;
-	MessageListener message;
+	Message message;
 	
 	public ControlEventType getControlEventType() {
 		return controlEventType;
 	}
 	
-	public MessageListener getMessage() {
+	public Message getMessage() {
 		return message;
 	}
 
-	public ControlEventArgs(Object source, MessageListener message, ControlEventType controlEventType) {
+	public ControlEventArgs(Object source, Message message, ControlEventType controlEventType) {
 		super(source, EventType.CONTROL);
 		this.controlEventType = controlEventType;
 		this.message = message;

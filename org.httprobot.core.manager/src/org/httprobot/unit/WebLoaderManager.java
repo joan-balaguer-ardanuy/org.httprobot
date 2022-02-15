@@ -10,7 +10,7 @@ import org.httprobot.NextPageMethod;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
-	extends MapManager<String, WebDocument, WebLoaderControl> {
+	extends MapManager<String, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
@@ -38,7 +38,7 @@ public class WebLoaderManager
 		pageNumber = message.getStartIndex();
 	}
 	@Override
-	public WebDocument put(String key, WebDocument value) {
+	public HtmlPage put(String key, HtmlPage value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
@@ -59,7 +59,7 @@ public class WebLoaderManager
 				clickElementAction(driver, action);
 
 				key = driver.getCurrentUrl();
-				value = new WebDocument(key, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
+				value = new HtmlPage(key, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 
 				put(key, value);
 			}
@@ -72,7 +72,7 @@ public class WebLoaderManager
 				String url = key + ((String) getControl().get(Data.URL_PATTERN)).replace("[#]", pageNumber.toString());
 				pageNumber++;
 				driver.get(url);
-				value = new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
+				value = new HtmlPage(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 				put(key, value);
 			} else {
 				ManagerEvent(new ManagerEventArgs(this, ManagerEventType.ALL_PAGES_LOADED));

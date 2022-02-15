@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class WebDocument {
+public class HtmlPage {
 
 	String url;
 	Document document;
@@ -29,14 +29,14 @@ public class WebDocument {
 	public void setDocument(Document document) {
 		this.document = document;
 	}
-	public WebDocument() {
+	public HtmlPage() {
 
 	}
-	public WebDocument(String url, Document document) {
+	public HtmlPage(String url, Document document) {
 		this.url = url;
 		this.document = document;
 	}
-	public WebDocument(String url, String xmlString) {
+	public HtmlPage(String url, String xmlString) {
 		this(url, convertStringToXMLDocument(xmlString));
 	}
 	

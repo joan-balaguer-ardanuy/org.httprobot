@@ -2,7 +2,7 @@ package org.httprobot.event;
 
 import org.httprobot.EventType;
 import org.httprobot.WebServiceEventType;
-import org.httprobot.MessageListener;
+import org.httprobot.Message;
 
 public class WebServiceEventArgs extends EventArgs {
 
@@ -10,16 +10,16 @@ public class WebServiceEventArgs extends EventArgs {
 	 * 7710813033701492909L
 	 */
 	private static final long serialVersionUID = 7710813033701492909L;
-	private	MessageListener message;
+	private	Message message;
 	private WebServiceEventType webServiceEventType;
 	
 	public WebServiceEventType getWebServiceEventType() {
 		return webServiceEventType;
 	}
-	public MessageListener getMessage() {
+	public Message getMessage() {
 		return message;
 	}
-	public WebServiceEventArgs(Object source, MessageListener message, WebServiceEventType webServiceEventType) {
+	public WebServiceEventArgs(Object source, Message message, WebServiceEventType webServiceEventType) {
 		super(source, EventType.NET);
 		this.message = message;
 	}

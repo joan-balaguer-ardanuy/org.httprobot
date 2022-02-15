@@ -2,7 +2,7 @@ package org.httprobot.event;
 
 import org.httprobot.Command;
 import org.httprobot.EventType;
-import org.httprobot.MessageListener;
+import org.httprobot.Message;
 
 public class CommandEventArgs extends EventArgs {
 
@@ -17,7 +17,7 @@ public class CommandEventArgs extends EventArgs {
 		return command;
 	}
 
-	public CommandEventArgs(MessageListener source, Command command) {
+	public CommandEventArgs(Message source, Command command) {
 		super(source, EventType.CLI);
 		this.command = command;
 	}

@@ -2,7 +2,7 @@ package org.httprobot.event;
 
 import org.httprobot.EventType;
 import org.httprobot.XmlEventType;
-import org.httprobot.MessageListener;
+import org.httprobot.Message;
 
 public class MessageEventArgs extends EventArgs {
 
@@ -17,7 +17,7 @@ public class MessageEventArgs extends EventArgs {
 		return xmlEventType;
 	}
 
-	public MessageEventArgs(MessageListener source, XmlEventType eventType) {
+	public MessageEventArgs(Message source, XmlEventType eventType) {
 		super(source, EventType.XML);
 		this.xmlEventType = eventType;
 	}

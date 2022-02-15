@@ -2,12 +2,15 @@ package org.httprobot.configuration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.Data;
 import org.httprobot.MapManager;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.content.ContentTypeRootManager;
@@ -77,10 +80,12 @@ public final class SourceManager
 		case DATA_SOURCE_CONTROL_LOADED:
 			if(e.getSource() instanceof DataSourceControl) {
 				DataSource message = DataSourceControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.DATA_SOURCE).equals(message)) {
+				@SuppressWarnings("unchecked")
+				Set<Message> set = (Set<Message>) getControl().get(Data.DATA_SOURCE);
+				if(set.contains(message)) {
 					DataSourceManager dataSourceManager = new DataSourceManager(message, this);
-					addChildManager(dataSourceManager);
 					dataSouceManagers.put(message, dataSourceManager);
+					addChildManager(dataSourceManager);
 				}
 			}
 		default:

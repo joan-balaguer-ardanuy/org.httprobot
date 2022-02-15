@@ -5,11 +5,11 @@ import org.httprobot.event.ControlEventArgs;
 /**
  * XML message control listener interface. 
  * {@link XML} controls implement it when reading XML messages. 
- * It is {@link MessageListener}.
+ * It is {@link Message}.
  * @author joan
  *
  */
-public interface ControlListener extends MessageListener {
+public interface ControlListener extends Message {
 	
 	/**
 	 * Triggered when XML message is initialized.

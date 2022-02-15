@@ -8,7 +8,7 @@ import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.placeholder.html.PageControl;
+import org.httprobot.unit.ElementControl;
 
 @XmlRootElement
 public final class HtmlUnitControl 
@@ -19,14 +19,14 @@ public final class HtmlUnitControl
 	 */
 	private static final long serialVersionUID = -5062725452790453335L;
 	
-	PageControl pageControl;
+	ElementControl elementControl;
 	
 	@XmlElement
-	public PageControl getPageControl() {
-		return pageControl;
+	public ElementControl getPageControl() {
+		return elementControl;
 	}
-	public void setPageControl(PageControl pageControl) {
-		this.pageControl = pageControl;
+	public void setPageControl(ElementControl pageControl) {
+		this.elementControl = pageControl;
 	}
 	
 	public HtmlUnitControl() {
@@ -41,13 +41,13 @@ public final class HtmlUnitControl
 		if(e.getSource().equals(this)) {
 			HtmlUnit htmlUnit = HtmlUnit.class.cast(e.getMessage());
 			
-			if(htmlUnit.getPage() != null) {
-				new PageControl(htmlUnit.getPage(), this);
+			if(htmlUnit.getElement() != null) {
+				new ElementControl(htmlUnit.getElement(), this);
 			}
 		} 
-		else if(e.getSource() instanceof PageControl) {
-			pageControl = PageControl.class.cast(e.getSource());
-			addChildControl(pageControl);
+		else if(e.getSource() instanceof ElementControl) {
+			elementControl = ElementControl.class.cast(e.getSource());
+			addChildControl(elementControl);
 		}
 	}
 	@Override
@@ -61,11 +61,11 @@ public final class HtmlUnitControl
 				while (hasNext()) {
 					ControlListener control = next();
 					
-					if(control instanceof PageControl ?
-							htmlUnit.getPage() != null ?
-									pageControl.equals(control)
+					if(control instanceof ElementControl ?
+							htmlUnit.getElement() != null ?
+									elementControl.equals(control)
 									: false : false) {
-						pageControl.loadControl();
+						elementControl.loadControl();
 					}
 				}
 				// Set control ready to be iterated again.
@@ -74,7 +74,7 @@ public final class HtmlUnitControl
 				CommandListenerEvent(new CommandEventArgs(this, Command.HTML_UNIT_CONTROL_LOADED));
 			}
 		}
-		else if(e.getSource() instanceof PageControl) {
+		else if(e.getSource() instanceof ElementControl) {
 			if(getChildControls().contains(e.getSource())) {
 				put(Data.PAGE, e.getMessage());
 			}	

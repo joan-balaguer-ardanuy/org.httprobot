@@ -14,7 +14,7 @@ import org.httprobot.event.MessageEventArgs;
  * @author joan
  *
  */
-public interface MessageListener extends CommandListener {
+public interface Message extends CommandListener {
 
 	/**
 	 * Returns the universal unique ID of the message.

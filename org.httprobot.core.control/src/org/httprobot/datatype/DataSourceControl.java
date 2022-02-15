@@ -1,5 +1,8 @@
 package org.httprobot.datatype;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -7,11 +10,12 @@ import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRefControl;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.parameter.ServerUrlControl;
-import org.httprobot.parameter.StartUrlControl;
+import org.httprobot.parameter.Constant;
+import org.httprobot.parameter.ConstantControl;
 import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
@@ -26,8 +30,7 @@ public final class DataSourceControl
 	ActionControl actionControl;
 	ContentTypeRefControl contentTypeRefControl;
 	DocumentRootControl documentRootControl;
-	ServerUrlControl serverUrlControl;
-	StartUrlControl startUrlControl;
+	LinkedHashSet<ConstantControl> constantControl;
 	
 	@XmlElement
 	public ActionControl getActionControl() {
@@ -51,24 +54,19 @@ public final class DataSourceControl
 		this.documentRootControl = documentRootControl;
 	}
 	@XmlElement
-	public ServerUrlControl getServerUrlControl() {
-		return serverUrlControl;
+	public LinkedHashSet<ConstantControl> getConstantControl() {
+		if(constantControl == null) {
+			constantControl = new LinkedHashSet<ConstantControl>();
+		}
+		return constantControl;
 	}
-	public void setServerUrlControl(ServerUrlControl serverUrlControl) {
-		this.serverUrlControl = serverUrlControl;
+	public void setConstantControl(LinkedHashSet<ConstantControl> constantControl) {
+		this.constantControl = constantControl;
 	}
-	@XmlElement
-	public StartUrlControl getStartUrlControl() {
-		return startUrlControl;
-	}
-	public void setStartUrlControl(StartUrlControl startUrlControl) {
-		this.startUrlControl = startUrlControl;
-	}
+	
 	
 	public DataSourceControl() {
 		super();
-		
-		setMessage(new DataSource());
 	}
 	public DataSourceControl(DataSource message, ControlListener parent) {
 		super(message, parent);
@@ -93,42 +91,37 @@ public final class DataSourceControl
 			} else {
 				throw new Error("DataSourceControl.OnControlInitialized: DocumentRoot XML message missing.");
 			}
-			if (dataSource.getServerUrl() != null) {
-				new ServerUrlControl(dataSource.getServerUrl(), this);
+			if(dataSource.getConstant() != null) {
+				// Instance constant control message set
+				constantControl = new LinkedHashSet<ConstantControl>();
+				// For each constant in DataSource XML message
+				for(Constant constant : dataSource.getConstant()) {
+					// This instance listens for it's OnCommandReceived event
+					new ConstantControl(constant, this);
+				}
 			} else {
-				throw new Error("DataSourceControl.OnControlInitialized: ServerUrl XML message missing.");
+				throw new Error("DataSourceControl.OnControlInitialized: Constants XML messages missing.");
 			}
-			if (dataSource.getStartUrl() != null) {
-				new StartUrlControl(dataSource.getStartUrl(), this);
-			} else {
-				throw new Error("DataSourceControl.OnControlInitialized: StartUrl XML message missing.");
-			}
-		}
-		else if(e.getSource() instanceof DocumentRootControl) {
+		} else if(e.getSource() instanceof DocumentRootControl) {
 			documentRootControl = DocumentRootControl.class.cast(e.getSource());
 			addChildControl(documentRootControl);
-		}
-		else if(e.getSource() instanceof ActionControl) {
+		} else if(e.getSource() instanceof ActionControl) {
 			actionControl = ActionControl.class.cast(e.getSource());
 			//Store XML message control
 			addChildControl(actionControl);
-		}
-		else if(e.getSource() instanceof ContentTypeRefControl) {
+		} else if(e.getSource() instanceof ContentTypeRefControl) {
 			contentTypeRefControl = ContentTypeRefControl.class.cast(e.getSource());
 			//Store XML message control
 			addChildControl(contentTypeRefControl);
-		}
-		else if(e.getSource() instanceof StartUrlControl) {
-			//Cast event source
-			startUrlControl = StartUrlControl.class.cast(e.getSource());
-			//Store XML message control
-			addChildControl(startUrlControl);
-		}
-		else if(e.getSource() instanceof ServerUrlControl) {
-			serverUrlControl = ServerUrlControl.class.cast(e.getSource());
-			addChildControl(serverUrlControl);
+		} else if(e.getSource() instanceof ConstantControl) {
+			// Cast event source
+			ConstantControl constantControl = ConstantControl.class.cast(e.getSource());
+			// Store XML message control
+			getConstantControl().add(constantControl);
+			addChildControl(constantControl);
 		}
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
@@ -155,14 +148,19 @@ public final class DataSourceControl
 							documentRootControl.equals(control) 
 							: false) {
 						documentRootControl.loadControl();
-					} else if (control instanceof ServerUrlControl ? 
-							serverUrlControl.equals(control) 
+					} else if (control instanceof ConstantControl ? 
+							constantControl.contains(control) 
 							: false) {
-						serverUrlControl.loadControl();
-					} else if (control instanceof StartUrlControl ? 
-							startUrlControl.equals(control) 
-							: false) {
-						startUrlControl.loadControl();
+						// Cast message control
+						ConstantControl constantControl = ConstantControl.class.cast(control);
+						// Look for matching constant control's XML message.
+						for(Constant constant : dataSource.getConstant()) {
+							// By UUID
+							if(constantControl.getUuid().equals(constant.getUuid())) {
+								// Load XML message control.
+								constantControl.loadControl();
+							}
+						}
 					}
 				}
 				// Set control ready to be iterated again.
@@ -182,13 +180,16 @@ public final class DataSourceControl
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.CONTENT_TYPE_REF, e.getMessage());
 			}
-		} else if (e.getSource() instanceof StartUrlControl) {
+		} else if (e.getSource() instanceof ConstantControl) {
 			if (getChildControls().contains(e.getSource())) {
-				put(Data.START_URL, e.getMessage());
-			}
-		} else if (e.getSource() instanceof ServerUrlControl) {
-			if (getChildControls().contains(e.getSource())) {
-				put(Data.SERVER_URL, e.getMessage());
+				if(get(Data.CONSTANT) == null) {
+					Set<Message> set = new LinkedHashSet<Message>();
+					set.add(e.getMessage());
+					put(Data.CONSTANT, set);
+				} else {
+					Object set = get(Data.CONSTANT);
+					((Set<Message>) set).add(e.getMessage());
+				}
 			}
 		}
 	}

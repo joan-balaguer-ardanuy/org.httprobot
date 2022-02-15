@@ -23,7 +23,7 @@ import org.httprobot.configuration.SeleniumManager;
 import org.httprobot.MapManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantManager;
@@ -40,7 +40,7 @@ import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
-	extends MapManager<WebDocument, Set<WebDocument>, ActionControl> {
+	extends MapManager<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L
@@ -53,7 +53,7 @@ public class ActionManager
 	
 	SeleniumManager seleniumManager;
 	
-	WebDocument currentOutput;
+	HtmlPage currentOutput;
 
 	Set<WebElement> clickableElements;
 	
@@ -65,15 +65,15 @@ public class ActionManager
 	}
 	
 	@Override
-	public Set<WebDocument> put(WebDocument key, Set<WebDocument> value) {
+	public Set<HtmlPage> put(HtmlPage key, Set<HtmlPage> value) {
 		WebDriver driver = getWebDriver();
-		WebElement htmlPage;
+		WebElement htmlElement;
 		
 		if(key == null) {
 			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
 			httpAddress = deParameterizeURL(httpAddress);
-			htmlPage = getPage(driver, httpAddress);
-			key = new WebDocument(httpAddress, htmlPage.findElement(By.xpath("/html")).getAttribute("outerHTML"));
+			htmlElement = getPage(driver, httpAddress);
+			key = new HtmlPage(httpAddress, htmlElement.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 		}
 		else {
 			try {
@@ -84,7 +84,7 @@ public class ActionManager
 				Transformer transformer = tf.newTransformer();
 				transformer.transform(domSource, result);
 				// Implementation of Data URLs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
-				htmlPage = getPage(driver, "data:text/html;charset=utf-8," + writer.toString());
+				htmlElement = getPage(driver, "data:text/html;charset=utf-8," + writer.toString());
 			} catch (TransformerException ex) {
 				ex.printStackTrace();
 				return null;
@@ -95,7 +95,7 @@ public class ActionManager
 		setValue(value);
 
 		if (elementManager != null) {
-			elementManager.put(htmlPage, new LinkedHashSet<WebElement>());
+			elementManager.put(htmlElement, new LinkedHashSet<WebElement>());
 
 			Actions action = new Actions(driver);
 
@@ -213,7 +213,7 @@ public class ActionManager
 			url = url.substring(0, url.lastIndexOf('/') + 1);
 		}
 
-		webLoaderManager.put(url, new WebDocument(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
+		webLoaderManager.put(url, new HtmlPage(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML")));
 	}
 	private WebElement getPage(WebDriver driver, String url) {
 		driver.get(url);

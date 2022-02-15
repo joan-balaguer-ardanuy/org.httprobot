@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractPlaceholder;
 import org.httprobot.event.MessageEventArgs;
-import org.httprobot.placeholder.html.Page;
+import org.httprobot.unit.Element;
 
 @XmlRootElement
 public final class HtmlUnit extends AbstractPlaceholder {
@@ -15,14 +15,14 @@ public final class HtmlUnit extends AbstractPlaceholder {
 	 */
 	private static final long serialVersionUID = -5625666546941269503L;
 
-	Page page;
+	Element element;
 
 	@XmlElement
-	public Page getPage() {
-		return page;
+	public Element getElement() {
+		return element;
 	}
-	public void setPage(Page page) {
-		this.page = page;
+	public void setElement(Element page) {
+		this.element = page;
 	}
 
 	public HtmlUnit() {
@@ -34,6 +34,6 @@ public final class HtmlUnit extends AbstractPlaceholder {
 		super.OnMessageUnmarshalled(e);
 
 		HtmlUnit htmlUnit = HtmlUnit.class.cast(e.getSource());
-		setPage(htmlUnit.getPage());		
+		setElement(htmlUnit.getElement());		
 	}
 }

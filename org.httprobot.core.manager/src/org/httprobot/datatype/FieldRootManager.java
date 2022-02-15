@@ -9,10 +9,10 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 
 public class FieldRootManager
-	extends MapManager<InputDocument, WebDocument, FieldRootControl> {
+	extends MapManager<InputDocument, HtmlPage, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
@@ -29,7 +29,7 @@ public class FieldRootManager
 		fieldManagers = new LinkedHashMap<Field, FieldManager>();
 	}
 	@Override
-	public WebDocument put(InputDocument key, WebDocument value) {
+	public HtmlPage put(InputDocument key, HtmlPage value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);

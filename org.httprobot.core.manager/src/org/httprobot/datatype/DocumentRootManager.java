@@ -18,13 +18,13 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 
 public class DocumentRootManager
-	extends MapManager<Set<WebDocument>, Map<InputDocument, WebDocument>, DocumentRootControl> {
+	extends MapManager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L
@@ -36,7 +36,7 @@ public class DocumentRootManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
-	WebDocument currentResponse;
+	HtmlPage currentResponse;
 	
 	public DocumentRootManager() {
 		super();
@@ -46,12 +46,12 @@ public class DocumentRootManager
 	}
 	
 	@Override
-	public Map<InputDocument, WebDocument> put(Set<WebDocument> key, Map<InputDocument, WebDocument> value) {
+	public Map<InputDocument, HtmlPage> put(Set<HtmlPage> key, Map<InputDocument, HtmlPage> value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		for(WebDocument webDocument : key) {
-			actionManager.put(webDocument, new LinkedHashSet<WebDocument>());
+		for(HtmlPage webDocument : key) {
+			actionManager.put(webDocument, new LinkedHashSet<HtmlPage>());
 		}
 		return super.put(key, value);
 	}
@@ -74,14 +74,14 @@ public class DocumentRootManager
 				FieldLibrary<FieldRef> templateFields = getTemplateLibrary().getTemplateFieldLibrary();
 				setDocumentLibrary(new DocumentLibrary(contentTypeRefManager.getKey(), templateDocument, templateFields));
 			} else if (e.getSource().equals(actionManager)) {
-				Map<InputDocument, WebDocument> documentOutputData = new LinkedHashMap<InputDocument, WebDocument>();
+				Map<InputDocument, HtmlPage> documentOutputData = new LinkedHashMap<InputDocument, HtmlPage>();
 				documentManager.put(getValue(), documentOutputData);
 			}
 			break;
 		case ACTION_WEB_LOADED:
 			if(e.getSource().equals(actionManager)) {
 				try {
-					currentResponse = (WebDocument) e.getValue();
+					currentResponse = (HtmlPage) e.getValue();
 					
 					InputDocument rootTemplateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
 					getValue().put(rootTemplateDocument, currentResponse);
@@ -99,7 +99,7 @@ public class DocumentRootManager
 				currentDocument.addChildDocument(childDocument);
 			} else if(e.getSource().equals(fieldRootManager)) {
 				for(InputDocument inputDocument : fieldRootManager) {
-					WebDocument htmlPage = fieldRootManager.get(inputDocument);
+					HtmlPage htmlPage = fieldRootManager.get(inputDocument);
 					getDocumentLibrary().get(htmlPage).addInputDocument(inputDocument);
 				}
 			}

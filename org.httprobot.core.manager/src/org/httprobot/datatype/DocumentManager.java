@@ -18,13 +18,13 @@ import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.net.WebDocument;
+import org.httprobot.net.HtmlPage;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 
 public class DocumentManager
-	extends MapManager<Map<InputDocument, WebDocument>, Map<InputDocument, WebDocument>, DocumentControl> {
+	extends MapManager<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
 
 	/**
 	 * -7967388989379246404L
@@ -36,7 +36,7 @@ public class DocumentManager
 	FieldRootManager fieldRootManager;
 	DocumentManager documentManager;
 	
-	WebDocument currentResponse;
+	HtmlPage currentResponse;
 	
 	public DocumentManager() {
 		super();
@@ -46,13 +46,13 @@ public class DocumentManager
 	}
 	
 	@Override
-	public Map<InputDocument, WebDocument> put(Map<InputDocument, WebDocument> key, Map<InputDocument, WebDocument> value) {
+	public Map<InputDocument, HtmlPage> put(Map<InputDocument, HtmlPage> key, Map<InputDocument, HtmlPage> value) {
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
 		for(InputDocument inputDocument : key.keySet()) {
-			WebDocument pageKey = key.get(inputDocument);
-			Set<WebDocument> actionOutput = new LinkedHashSet<WebDocument>();
+			HtmlPage pageKey = key.get(inputDocument);
+			Set<HtmlPage> actionOutput = new LinkedHashSet<HtmlPage>();
 			actionManager.put(pageKey, actionOutput);
 		}
 		return super.put(key, value);
@@ -71,7 +71,7 @@ public class DocumentManager
 			break;
 		case FINISHED:
 			if(e.getSource().equals(actionManager)) {
-				Map<InputDocument, WebDocument> documentOutputData = new LinkedHashMap<InputDocument, WebDocument>();
+				Map<InputDocument, HtmlPage> documentOutputData = new LinkedHashMap<InputDocument, HtmlPage>();
 				documentManager.put(getValue(), documentOutputData);
 			} else if(e.getSource().equals(contentTypeRefManager)) {
 				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
@@ -81,7 +81,7 @@ public class DocumentManager
 			break;
 		case ACTION_WEB_LOADED:
 			if (e.getSource().equals(actionManager)) {
-				currentResponse = (WebDocument) e.getValue();
+				currentResponse = (HtmlPage) e.getValue();
 
 				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefManager.getKey());
 				getDocumentLibrary().put(currentResponse, templateDocument);

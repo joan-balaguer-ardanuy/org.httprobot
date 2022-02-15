@@ -1,5 +1,12 @@
 package org.httprobot;
 
+/**
+ * Abstract configuration {@link XML} message.
+ * It defines de properties of any configuration XML message.
+ * It's empty and is implemented for future abstractions.
+ * @author joan
+ *
+ */
 public abstract class AbstractConfiguration extends XML {
 
 	/**
