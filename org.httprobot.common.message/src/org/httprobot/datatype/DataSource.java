@@ -9,8 +9,6 @@ import org.httprobot.AbstractDataType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
-import org.httprobot.parameter.ServerUrl;
-import org.httprobot.parameter.StartUrl;
 import org.httprobot.unit.Action;
 
 @XmlRootElement
