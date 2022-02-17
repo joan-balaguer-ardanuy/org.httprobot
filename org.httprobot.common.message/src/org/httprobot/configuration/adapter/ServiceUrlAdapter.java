@@ -6,27 +6,27 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.httprobot.configuration.ServiceUrl;
 
-public class ServiceUrlAdapter extends XmlAdapter<ServiceUrl, URL>{
+/**
+ * {@link XmlAdapter} that unmarshals from {@link ServiceUrl} to {@link URL}
+ * and marshals from {@link URL} to {@link ServiceUrl}.
+ * 
+ * @author joan
+ */
+public class ServiceUrlAdapter
+	extends XmlAdapter<ServiceUrl, URL>{
 
 	public ServiceUrlAdapter() {
 	}
 	
 	@Override
 	public URL unmarshal(ServiceUrl v) throws Exception {
-		if(v.getProtocol() != null && v.getHost() != null && v.getPort() != null && v.getFile() != null)
-		{	
+		if (v.getProtocol() != null && v.getHost() != null && v.getPort() != null && v.getFile() != null) {
 			return new URL(v.getProtocol(), v.getHost(), v.getPort(), v.getFile());
-		}
-		else if(v.getProtocol() != null && v.getHost() != null && v.getFile() != null)
-		{	
+		} else if (v.getProtocol() != null && v.getHost() != null && v.getFile() != null) {
 			return new URL(v.getProtocol(), v.getHost(), v.getFile());
-		}
-		else if(v.getUrl() != null)
-		{
+		} else if (v.getUrl() != null) {
 			return new URL(v.getUrl());
-		}
-		else
-		{
+		} else {
 			throw new Exception();
 		}
 	}

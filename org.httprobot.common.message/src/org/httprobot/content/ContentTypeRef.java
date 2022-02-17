@@ -1,11 +1,16 @@
 package org.httprobot.content;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractContent;
-import org.httprobot.event.MessageEventArgs;
 
+/**
+ * Content type reference class. Inherits {@link AbstractContent}.
+ * This class makes reference to a {@link ContentType} and 
+ * {@link java.util.UUID} must match with the specified content type.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class ContentTypeRef extends AbstractContent {
 
@@ -14,25 +19,10 @@ public final class ContentTypeRef extends AbstractContent {
 	 */
 	private static final long serialVersionUID = -6701067711809325948L;
 	
-	String name;
-	
-	@XmlElement
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	/**
+	 * {@link ContentTypeRef} default class constructor.
+	 */
 	public ContentTypeRef() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		ContentTypeRef contentTypeRef = ContentTypeRef.class.cast(e.getSource());
-		setName(contentTypeRef.getName());
 	}
 }

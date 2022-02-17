@@ -78,12 +78,8 @@ public final class ContentTypeControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		
 		if (e.getSource().equals(this)) {
+			// Cast source
 			ContentType contentType = ContentType.class.cast(e.getMessage());
-
-			// Set non-controlled data
-			if (contentType.getInheritedType() != null) {
-				put(Data.INHERITED_TYPE, contentType.getInheritedType());
-			}
 
 			// Iterate through child controls and set it's messages.
 			if (hasChildControls()) {

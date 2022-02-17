@@ -114,7 +114,7 @@ public class ContentTypeManager
 						ContentType contentType = contentTypeRefManager.getValue();
 						ContentTypeManager contentTypeManager = new ContentTypeManager(contentType, this);
 						contentTypeManagers.put(key, contentTypeManager);
-						//contentTypeManager.start();
+						contentTypeManager.start();
 						
 						contentTypeRefCount++;
 						if(contentTypeRefCount == contentTypeRefManagers.size() - 1) {
