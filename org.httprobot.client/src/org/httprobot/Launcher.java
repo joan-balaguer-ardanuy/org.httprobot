@@ -13,7 +13,7 @@ import org.httprobot.configuration.ServiceConnection;
 /**
  * The robot launcher application.
  * The launcher encapsulates the {@link Selenium} configuration XML message
- * and the {@link Precursor} application that is the root XML message.
+ * and the {@link Root} application that is the root XML message.
  * @author joan
  *
  */
@@ -24,9 +24,9 @@ public class Launcher {
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Precursor} XML message
+	 * The {@link Root} XML message
 	 */
-	Precursor precursor;
+	Root precursor;
 	
 	/**
 	 * {@link Launcher} default class constructor.
@@ -36,7 +36,7 @@ public class Launcher {
 		// Load service connection data
 		serviceConnection = loadServiceConnectionFile(serviceConnectionPath);
 		// Initialize precursor
-		precursor = new Precursor(serviceConnection);
+		precursor = new Root(serviceConnection);
 		// Start precursor
 		precursor.start();
 	}

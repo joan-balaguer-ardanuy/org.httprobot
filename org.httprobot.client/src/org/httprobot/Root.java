@@ -31,7 +31,7 @@ import org.openqa.selenium.WebDriver;
  *
  */
 @XmlRootElement
-public final class Precursor
+public final class Root
 	extends XML
 		implements ManagerListener {
 
@@ -111,16 +111,16 @@ public final class Precursor
 	}
 	
 	/**
-	 * {@link Precursor} default class constructor.
+	 * {@link Root} default class constructor.
 	 */
-	public Precursor() {
+	public Root() {
 		super();
 	}
 	/**
-	 * {@link Precursor} class constructor.
+	 * {@link Root} class constructor.
 	 * @param selenium the {@link Selenium} configuration XML message
 	 */
-	public Precursor(ServiceConnection serviceConnection) {
+	public Root(ServiceConnection serviceConnection) {
 		super(UUID.randomUUID());
 		// Set ServiceConnection XML message
 		this.serviceConnection = serviceConnection;
