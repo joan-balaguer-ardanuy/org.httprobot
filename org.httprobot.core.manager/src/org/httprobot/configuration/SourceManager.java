@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.Data;
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
@@ -24,7 +24,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class SourceManager
-	extends MapManager<DataSource, DocumentLibrary, SourceControl> {
+	extends MappingManager<DataSource, DocumentLibrary, SourceControl> {
 
 	/**
 	 * 634599347187276700L
@@ -61,8 +61,9 @@ public final class SourceManager
 	public DocumentLibrary put(DataSource key, DocumentLibrary value) {
 		setKey(key);
 		setValue(value);
-		setDocumentLibrary(value);
-		dataSouceManagers.get(key).setValue(value);
+		DataSourceManager dataSourceManager = dataSouceManagers.get(key);
+		dataSourceManager.setDocumentLibrary(value);
+		
 		return super.put(key, value);
 	}
 	@Override

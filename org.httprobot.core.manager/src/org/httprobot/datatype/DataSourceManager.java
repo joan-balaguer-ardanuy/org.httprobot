@@ -8,8 +8,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
-import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.MappingManager;
 import org.httprobot.Message;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -29,7 +29,7 @@ import org.httprobot.unit.ActionManager;
 
 @XmlRootElement
 public final class DataSourceManager 
-	extends EntryManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+	extends MappingManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L
@@ -54,18 +54,10 @@ public final class DataSourceManager
 	Map<Constant, ConstantManager> constantManagers;
 
 	@Override
-	public ContentTypeRef getKey() {
-		return contentTypeRefManager.getKey();
-	}
-	@Override
-	public DocumentLibrary getValue() {
-		return super.getValue();
-	}
-	@Override
-	public DocumentLibrary setValue(DocumentLibrary value) {
+	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
 		setDocumentLibrary(value);
 		actionManager.put(null, new LinkedHashSet<HtmlPage>());
-		return super.setValue(value);
+		return super.put(key, value);
 	}
 	
 	public DataSourceManager() {

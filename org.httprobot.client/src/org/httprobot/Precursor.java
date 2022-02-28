@@ -45,7 +45,7 @@ public final class Precursor
 	 */
 	WebDriver webDriver;
 	/**
-	 * The {@link ServiceConnection} XML message {@link MapManager}.
+	 * The {@link ServiceConnection} XML message {@link MappingManager}.
 	 */
 	ServiceConnectionManager serviceConnectionManager;
 	/**
@@ -53,7 +53,7 @@ public final class Precursor
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Source} configuration XML message {@link MapManager}.
+	 * The {@link Source} configuration XML message {@link MappingManager}.
 	 */
 	SourceManager sourceManager;
 	/**

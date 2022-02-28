@@ -20,7 +20,7 @@ import org.httprobot.ManagerListener;
 import org.httprobot.configuration.Selenium;
 import org.httprobot.configuration.SeleniumControl;
 import org.httprobot.configuration.SeleniumManager;
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
@@ -40,7 +40,7 @@ import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionManager
-	extends MapManager<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends MappingManager<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L

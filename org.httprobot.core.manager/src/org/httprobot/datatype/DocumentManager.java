@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -24,7 +24,7 @@ import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 
 public class DocumentManager
-	extends MapManager<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
+	extends MappingManager<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
 
 	/**
 	 * -7967388989379246404L

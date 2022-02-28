@@ -3,25 +3,20 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.MappingManager;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 
 @XmlRootElement
 public final class ServiceConnectionManager 
-	extends EntryManager<ServiceConnection, WebService, ServiceConnectionControl> {
+	extends MappingManager<ServiceConnection, WebService, ServiceConnectionControl> {
 
 	/**
 	 * 798195388983416568L
 	 */
 	private static final long serialVersionUID = 798195388983416568L;
 
-	@Override
-	public ServiceConnection getKey() {
-		return getControl().getMessage();
-	}
-	
 	@Override
 	@XmlElement
 	public ServiceConnectionControl getControl() {

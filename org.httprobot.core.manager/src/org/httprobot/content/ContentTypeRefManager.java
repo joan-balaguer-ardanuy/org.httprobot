@@ -1,21 +1,16 @@
 package org.httprobot.content;
 
-import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.MappingManager;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ContentTypeRefManager 
-	extends EntryManager<ContentTypeRef, ContentType, ContentTypeRefControl> {
+	extends MappingManager<ContentTypeRef, ContentType, ContentTypeRefControl> {
 
 	/**
 	 * 2966040272596645359L
 	 */
 	private static final long serialVersionUID = 2966040272596645359L;
-	
-	@Override
-	public ContentTypeRef getKey() {
-		return getControl().getMessage();
-	}
 	
 	public ContentTypeRefManager() {
 		super();

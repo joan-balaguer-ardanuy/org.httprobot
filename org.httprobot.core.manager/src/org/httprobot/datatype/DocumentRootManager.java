@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -24,7 +24,7 @@ import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionManager;
 
 public class DocumentRootManager
-	extends MapManager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
+	extends MappingManager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L
@@ -50,8 +50,8 @@ public class DocumentRootManager
 		keySet().add(key);
 		setKey(key);
 		setValue(value);
-		for(HtmlPage webDocument : key) {
-			actionManager.put(webDocument, new LinkedHashSet<HtmlPage>());
+		for(HtmlPage htmlPage : key) {
+			actionManager.put(htmlPage, new LinkedHashSet<HtmlPage>());
 		}
 		return super.put(key, value);
 	}

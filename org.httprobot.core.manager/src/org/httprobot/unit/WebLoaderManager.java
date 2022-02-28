@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderManager
-	extends MapManager<String, HtmlPage, WebLoaderControl> {
+	extends MappingManager<String, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L

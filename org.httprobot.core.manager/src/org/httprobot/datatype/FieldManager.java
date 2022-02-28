@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 
-import org.httprobot.MapManager;
+import org.httprobot.MappingManager;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -16,7 +16,7 @@ import org.httprobot.placeholder.HttpAddressManager;
 
 @XmlRootElement
 public final class FieldManager
-	extends MapManager<InputField, HtmlPage, FieldControl> {
+	extends MappingManager<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L

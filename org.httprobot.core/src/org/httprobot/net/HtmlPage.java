@@ -8,6 +8,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.openqa.selenium.WebElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -37,7 +38,7 @@ public class HtmlPage {
 		this.document = document;
 	}
 	public HtmlPage(String url, String xmlString) {
-		this(url, convertStringToXMLDocument(xmlString));
+		this(url, stringToDocument(xmlString));
 	}
 	
 	public NodeList getByXpath(String expression) {
@@ -53,7 +54,12 @@ public class HtmlPage {
 		}
 	}
 	
-	public static Document convertStringToXMLDocument(String xmlString) {
+	public WebElement toWebElement() {
+		
+		return null;
+	}
+	
+	private static Document stringToDocument(String xmlString) {
 		// Parser that produces DOM object trees from XML content
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 

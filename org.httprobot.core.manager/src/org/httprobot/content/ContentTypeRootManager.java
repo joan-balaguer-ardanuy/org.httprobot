@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.EntryManager;
 import org.httprobot.ManagerListener;
+import org.httprobot.MappingManager;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
@@ -18,7 +18,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootManager 
-	extends EntryManager<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
+	extends MappingManager<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
 
 	/**
 	 * 1379517986287192515L
