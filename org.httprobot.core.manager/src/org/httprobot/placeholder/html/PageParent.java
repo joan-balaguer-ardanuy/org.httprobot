@@ -8,18 +8,18 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebElement;
 
-public class PageManager
-	extends AbstractHtmlManager<Map<InputField,Set<WebElement>>,Map<InputField,Set<WebElement>>, PageControl> {
+public class PageParent
+	extends AbstractHtmlParent<Map<InputField,Set<WebElement>>,Map<InputField,Set<WebElement>>, PageControl> {
 	
 	/**
 	 * 4976479148819311844L
 	 */
 	private static final long serialVersionUID = 4976479148819311844L;
 	
-	public PageManager() {
+	public PageParent() {
 		super();
 	}
-	public PageManager(Page message, ManagerListener parent) {
+	public PageParent(Page message, ManagerListener parent) {
 		super(message, PageControl.class, parent);
 	}
 	@Override

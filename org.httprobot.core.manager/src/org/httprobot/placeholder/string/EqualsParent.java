@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class EqualsManager 
-	extends AbstractStringManager<EqualsControl> {
+public final class EqualsParent 
+	extends AbstractStringParent<EqualsControl> {
 
 	/**
 	 * -481593600327061747L
@@ -25,10 +25,10 @@ public final class EqualsManager
 		super.setControl(control);
 	}
 	
-	public EqualsManager() {
+	public EqualsParent() {
 		super();
 	}
-	public EqualsManager(Equals message, ManagerListener parent) {
+	public EqualsParent(Equals message, ManagerListener parent) {
 		super(message, EqualsControl.class, parent);
 	}
 	

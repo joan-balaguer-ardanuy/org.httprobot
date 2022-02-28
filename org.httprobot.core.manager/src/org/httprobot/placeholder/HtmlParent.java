@@ -6,21 +6,21 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.placeholder.html.AbstractHtmlManager;
+import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.w3c.dom.Document;
 
 @XmlRootElement
-public final class HtmlManager
-	extends AbstractHtmlManager<InputField, Document, HtmlUnitControl> {
+public final class HtmlParent
+	extends AbstractHtmlParent<InputField, Document, HtmlUnitControl> {
 
 	/**
 	 * 239612135819734039L
 	 */
 	private static final long serialVersionUID = 239612135819734039L;
 	
-	public HtmlManager() {
+	public HtmlParent() {
 	}
-	public HtmlManager(HtmlUnit message, ManagerListener parent) {
+	public HtmlParent(HtmlUnit message, ManagerListener parent) {
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {

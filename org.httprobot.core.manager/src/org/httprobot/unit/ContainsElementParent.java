@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.placeholder.html.AbstractHtmlManager;
+import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class ContainsElementManager 
-	extends AbstractHtmlManager<WebElement, Boolean, ContainsElementControl>{
+public class ContainsElementParent 
+	extends AbstractHtmlParent<WebElement, Boolean, ContainsElementControl>{
 
 	/**
 	 * -756242644019692484L
 	 */
 	private static final long serialVersionUID = -756242644019692484L;
 
-	public ContainsElementManager() {
+	public ContainsElementParent() {
 		super();
 	}
-	public ContainsElementManager(ContainsElement message, ManagerListener parent) {
+	public ContainsElementParent(ContainsElement message, ManagerListener parent) {
 		super(message, ContainsElementControl.class, parent);
 	}
 

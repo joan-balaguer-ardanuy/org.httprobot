@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public class ToUpperCaseManager
-	extends AbstractStringManager<ToUpperCaseControl> {
+public class ToUpperCaseParent
+	extends AbstractStringParent<ToUpperCaseControl> {
 
 	@Override
 	@XmlElement
@@ -25,10 +25,10 @@ public class ToUpperCaseManager
 	 */
 	private static final long serialVersionUID = -7874627263860439318L;
 
-	public ToUpperCaseManager() {
+	public ToUpperCaseParent() {
 		super();
 	}
-	public ToUpperCaseManager(ToUpperCase message, ManagerListener parent) {
+	public ToUpperCaseParent(ToUpperCase message, ManagerListener parent) {
 		super(message, ToUpperCaseControl.class, parent);
 	}
 	

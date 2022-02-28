@@ -4,32 +4,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
 
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.placeholder.HtmlUnitControl;
-import org.httprobot.placeholder.HtmlManager;
+import org.httprobot.placeholder.HtmlParent;
 import org.httprobot.placeholder.HttpAddressControl;
-import org.httprobot.placeholder.HttpAddressManager;
+import org.httprobot.placeholder.HttpAddressParent;
 
 @XmlRootElement
-public final class FieldManager
-	extends MappingManager<InputField, HtmlPage, FieldControl> {
+public final class FieldParent
+	extends MappingParent<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
 	 */
 	private static final long serialVersionUID = -8390181286230356701L;
 		
-	HtmlManager htmlManager;
-	HttpAddressManager httpAddressManager;
+	HtmlParent htmlManager;
+	HttpAddressParent httpAddressManager;
 	
-	public FieldManager() {
+	public FieldParent() {
 		super();
 	}
-	public FieldManager(Field message, ManagerListener parent) {
+	public FieldParent(Field message, ManagerListener parent) {
 		super(message, FieldControl.class, parent);
 	}
 	
@@ -56,14 +56,14 @@ public final class FieldManager
 		case HTML_UNIT_CONTROL_LOADED:
 			if(e.getSource() instanceof HtmlUnitControl) {
 				HtmlUnitControl htmlUnitControl = HtmlUnitControl.class.cast(e.getSource());
-				htmlManager = new HtmlManager(htmlUnitControl.getMessage(), this);
+				htmlManager = new HtmlParent(htmlUnitControl.getMessage(), this);
 				addChildManager(htmlManager);
 			}
 			break;
 		case HTTP_ADDRESS_CONTROL_LOADED:
 			if(e.getSource() instanceof HttpAddressControl) {
 				HttpAddressControl httpAddressControl = HttpAddressControl.class.cast(e.getSource());
-				httpAddressManager = new HttpAddressManager(httpAddressControl.getMessage(), this);
+				httpAddressManager = new HttpAddressParent(httpAddressControl.getMessage(), this);
 				addChildManager(httpAddressManager);
 			}
 			break;

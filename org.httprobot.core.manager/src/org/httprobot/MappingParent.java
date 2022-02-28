@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.httprobot.event.ManagerEventArgs;
 
-public abstract class MappingManager<K,V,T extends Control<? extends XML>> 
-	extends Manager<T> 
+public abstract class MappingParent<K,V,T extends Control<? extends XML>> 
+	extends Parent<T> 
 		implements DataMapping<K,V> {
 
 	/**
@@ -48,10 +48,10 @@ public abstract class MappingManager<K,V,T extends Control<? extends XML>>
 		return oldOutput;
 	}
 	
-	public MappingManager() {
+	public MappingParent() {
 		super();
 	}
-	public MappingManager(XML message, Class<T> type, ManagerListener parent) {
+	public MappingParent(XML message, Class<T> type, ManagerListener parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

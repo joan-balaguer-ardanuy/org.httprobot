@@ -1,22 +1,22 @@
 package org.httprobot.configuration;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebDriver;
 
-public class SeleniumManager 
-	extends MappingManager<Selenium, WebDriver, SeleniumControl> {
+public class SeleniumParent 
+	extends MappingParent<Selenium, WebDriver, SeleniumControl> {
 
 	/**
 	 * 7948356877406296858L
 	 */
 	private static final long serialVersionUID = 7948356877406296858L;
 	
-	public SeleniumManager() {
+	public SeleniumParent() {
 		super();
 	}
-	public SeleniumManager(Selenium message, ManagerListener parent) {
+	public SeleniumParent(Selenium message, ManagerListener parent) {
 		super(message, SeleniumControl.class, parent);
 	}
 

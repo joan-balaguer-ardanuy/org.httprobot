@@ -7,18 +7,18 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebElement;
 
-public class AnchorManager
-	extends AbstractHtmlManager<InputField, Set<WebElement>, AnchorControl>{
+public class AnchorParent
+	extends AbstractHtmlParent<InputField, Set<WebElement>, AnchorControl>{
 
 	/**
 	 * 2578347858674092447L
 	 */
 	private static final long serialVersionUID = 2578347858674092447L;
 	
-	public AnchorManager() {
+	public AnchorParent() {
 		super();
 	}
-	public AnchorManager(Anchor message, ManagerListener parent) {
+	public AnchorParent(Anchor message, ManagerListener parent) {
 		super(message, AnchorControl.class, parent);
 	}
 	@Override

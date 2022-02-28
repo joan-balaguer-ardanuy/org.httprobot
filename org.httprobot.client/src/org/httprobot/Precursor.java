@@ -6,9 +6,9 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.configuration.Source;
-import org.httprobot.configuration.SourceManager;
+import org.httprobot.configuration.SourceParent;
 import org.httprobot.configuration.ServiceConnection;
-import org.httprobot.configuration.ServiceConnectionManager;
+import org.httprobot.configuration.ServiceConnectionParent;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRoot;
@@ -26,7 +26,7 @@ import org.openqa.selenium.WebDriver;
  * Precursor class. Inherits {@link XML}.
  * This class is the parent of parents XML messages.
  * It is {@link ManagerListener} and listens for
- * {@link ServiceConnectionManager} and {@link SourceManager}.
+ * {@link ServiceConnectionParent} and {@link SourceParent}.
  * @author joan
  *
  */
@@ -45,17 +45,17 @@ public final class Precursor
 	 */
 	WebDriver webDriver;
 	/**
-	 * The {@link ServiceConnection} XML message {@link MappingManager}.
+	 * The {@link ServiceConnection} XML message {@link MappingParent}.
 	 */
-	ServiceConnectionManager serviceConnectionManager;
+	ServiceConnectionParent serviceConnectionManager;
 	/**
 	 * The {@link ServiceConnection} XML message.
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Source} configuration XML message {@link MappingManager}.
+	 * The {@link Source} configuration XML message {@link MappingParent}.
 	 */
-	SourceManager sourceManager;
+	SourceParent sourceManager;
 	/**
 	 * The {@link Source} XML message.
 	 */
@@ -125,7 +125,7 @@ public final class Precursor
 		// Set ServiceConnection XML message
 		this.serviceConnection = serviceConnection;
 		// Instance ServiceConnectionManager
-		serviceConnectionManager = new ServiceConnectionManager(serviceConnection, this);
+		serviceConnectionManager = new ServiceConnectionParent(serviceConnection, this);
 	}
 	@Override
 	public void start() {
@@ -166,7 +166,7 @@ public final class Precursor
 			if(e.getSource().equals(serviceConnectionManager)) {
 				WebService webService = serviceConnectionManager.getValue();
 				source = webService.getSource();
-				sourceManager = new SourceManager(source, this);
+				sourceManager = new SourceParent(source, this);
 				sourceManager.start();
 			}
 			break;

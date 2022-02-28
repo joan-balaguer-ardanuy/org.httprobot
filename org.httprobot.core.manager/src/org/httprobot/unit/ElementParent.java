@@ -12,21 +12,21 @@ import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.placeholder.html.AbstractHtmlManager;
+import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 @XmlRootElement
-public final class ElementManager
-	extends AbstractHtmlManager<WebElement, Set<WebElement>, ElementControl> {
+public final class ElementParent
+	extends AbstractHtmlParent<WebElement, Set<WebElement>, ElementControl> {
 
 	/**
 	 * 8813593464366243836L
 	 */
 	private static final long serialVersionUID = 8813593464366243836L;
 	
-	ElementManager elementManager;
-	ContainsElementManager containsElementManager;
+	ElementParent elementManager;
+	ContainsElementParent containsElementManager;
 	
 	@Override
 	@XmlElement
@@ -38,10 +38,10 @@ public final class ElementManager
 		super.setControl(control);
 	}
 	
-	public ElementManager() {
+	public ElementParent() {
 		super();
 	}
-	public ElementManager(Element message, ManagerListener parent) {
+	public ElementParent(Element message, ManagerListener parent) {
 		super(message, ElementControl.class, parent);
 	}
 	@Override
@@ -89,7 +89,7 @@ public final class ElementManager
 			if(e.getSource() instanceof ContainsElementControl) {
 				ContainsElement containsElement = ContainsElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTAINS_ELEMENT).equals(containsElement)) {
-					containsElementManager = new ContainsElementManager(containsElement, this);
+					containsElementManager = new ContainsElementParent(containsElement, this);
 					addChildManager(containsElementManager);
 				}
 			}
@@ -98,7 +98,7 @@ public final class ElementManager
 			if(e.getSource() instanceof ElementControl) {
 				Element containsElement = ElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.ELEMENT).equals(containsElement)) {
-					elementManager = new ElementManager(containsElement, this);
+					elementManager = new ElementParent(containsElement, this);
 					addChildManager(elementManager);
 				}
 			}

@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class ContainsManager
-	extends AbstractStringManager<ContainsControl> {
+public final class ContainsParent
+	extends AbstractStringParent<ContainsControl> {
 
 	/**
 	 * 6954038560443161414L
@@ -25,10 +25,10 @@ public final class ContainsManager
 		super.setControl(control);
 	}
 	
-	public ContainsManager() {
+	public ContainsParent() {
 		super();
 	}
-	public ContainsManager(Contains message, ManagerListener parent) {
+	public ContainsParent(Contains message, ManagerListener parent) {
 		super(message, ContainsControl.class, parent);
 	}
 	

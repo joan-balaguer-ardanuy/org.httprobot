@@ -1,21 +1,21 @@
 package org.httprobot.content;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 
-public class ContentTypeRefManager 
-	extends MappingManager<ContentTypeRef, ContentType, ContentTypeRefControl> {
+public class ContentTypeRefParent 
+	extends MappingParent<ContentTypeRef, ContentType, ContentTypeRefControl> {
 
 	/**
 	 * 2966040272596645359L
 	 */
 	private static final long serialVersionUID = 2966040272596645359L;
 	
-	public ContentTypeRefManager() {
+	public ContentTypeRefParent() {
 		super();
 	}
-	public ContentTypeRefManager(ContentTypeRef message, ManagerListener parent) {
+	public ContentTypeRefParent(ContentTypeRef message, ManagerListener parent) {
 		super(message, ContentTypeRefControl.class, parent);
 	}
 	@Override

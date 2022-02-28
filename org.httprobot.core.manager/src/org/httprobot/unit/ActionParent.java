@@ -19,14 +19,14 @@ import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.configuration.Selenium;
 import org.httprobot.configuration.SeleniumControl;
-import org.httprobot.configuration.SeleniumManager;
-import org.httprobot.MappingManager;
+import org.httprobot.configuration.SeleniumParent;
+import org.httprobot.MappingParent;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
-import org.httprobot.parameter.ConstantManager;
+import org.httprobot.parameter.ConstantParent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -39,28 +39,28 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
-public class ActionManager
-	extends MappingManager<HtmlPage, Set<HtmlPage>, ActionControl> {
+public class ActionParent
+	extends MappingParent<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L
 	 */
 	private static final long serialVersionUID = -6659121403717296708L;
 
-	WebLoaderManager webLoaderManager;
-	Map<Constant, ConstantManager> constantManagers;
-	ElementManager elementManager;
+	WebLoaderParent webLoaderManager;
+	Map<Constant, ConstantParent> constantManagers;
+	ElementParent elementManager;
 	
-	SeleniumManager seleniumManager;
+	SeleniumParent seleniumManager;
 	
 	HtmlPage currentOutput;
 
 	Set<WebElement> clickableElements;
 	
-	public ActionManager() {
+	public ActionParent() {
 		super();
 	}
-	public ActionManager(Action message, ManagerListener parent) {
+	public ActionParent(Action message, ManagerListener parent) {
 		super(message, ActionControl.class, parent);
 	}
 	
@@ -117,13 +117,13 @@ public class ActionManager
 	public void OnManagerEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource() instanceof ConstantManager) {
-				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
+			if(e.getSource() instanceof ConstantParent) {
+				ConstantParent constantManager = ConstantParent.class.cast(e.getSource());
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
 				}
-			} else if(e.getSource() instanceof SeleniumManager) {
-				SeleniumManager seleniumManager = SeleniumManager.class.cast(e.getSource());
+			} else if(e.getSource() instanceof SeleniumParent) {
+				SeleniumParent seleniumManager = SeleniumParent.class.cast(e.getSource());
 				seleniumManager.setValue(loadWebDriver(seleniumManager.getKey()));
 			}
 			break;
@@ -142,8 +142,8 @@ public class ActionManager
 			setWebDriver(null);
 			break;
 		case NEW_ELEMENT:
-			if(e.getSource() instanceof ElementManager) {
-				ElementManager elementManager = ElementManager.class.cast(e.getSource());
+			if(e.getSource() instanceof ElementParent) {
+				ElementParent elementManager = ElementParent.class.cast(e.getSource());
 				WebElement webElement = WebElement.class.cast(e.getValue());
 				if((Boolean) elementManager.getControl().get(Data.CLICK)) {
 					WebDriver driver = getWebDriver();
@@ -169,7 +169,7 @@ public class ActionManager
 			if(e.getSource() instanceof WebLoaderControl) {
 				WebLoader webLoader = WebLoaderControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(webLoader)) {
-					webLoaderManager = new WebLoaderManager(webLoader, this);
+					webLoaderManager = new WebLoaderParent(webLoader, this);
 					addChildManager(webLoaderManager);
 				}
 			}
@@ -178,7 +178,7 @@ public class ActionManager
 			if(e.getSource() instanceof ConstantControl) {
 				Constant constant = ConstantControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONSTANT).equals(constant)) {
-					ConstantManager constantManager = new ConstantManager(constant, this);
+					ConstantParent constantManager = new ConstantParent(constant, this);
 					constantManagers.put(constant, constantManager);
 					addChildManager(constantManager);
 				}
@@ -188,7 +188,7 @@ public class ActionManager
 			if(e.getSource() instanceof ElementControl) {
 				Element element = ElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(element)) {
-					elementManager = new ElementManager(element, this);
+					elementManager = new ElementParent(element, this);
 					addChildManager(elementManager);
 				}
 			}
@@ -197,7 +197,7 @@ public class ActionManager
 			if(e.getSource() instanceof SeleniumControl) {
 				Selenium selenium = SeleniumControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.SELENIUM).equals(selenium)) {
-					seleniumManager = new SeleniumManager(selenium, this);
+					seleniumManager = new SeleniumParent(selenium, this);
 					addChildManager(seleniumManager);
 				}
 			}

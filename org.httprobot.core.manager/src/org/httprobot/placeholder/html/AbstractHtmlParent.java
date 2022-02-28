@@ -3,10 +3,10 @@ package org.httprobot.placeholder.html;
 import org.httprobot.Control;
 import org.httprobot.AbstractHtml;
 import org.httprobot.ManagerListener;
-import org.httprobot.placeholder.AbstractPlaceholderManager;
+import org.httprobot.placeholder.AbstractPlaceholderParent;
 
-public abstract class AbstractHtmlManager<K,V,T extends Control<?>>
-	extends AbstractPlaceholderManager<K,V,T> {
+public abstract class AbstractHtmlParent<K,V,T extends Control<?>>
+	extends AbstractPlaceholderParent<K,V,T> {
 
 	/**
 	 * 957350695292804803L
@@ -14,10 +14,10 @@ public abstract class AbstractHtmlManager<K,V,T extends Control<?>>
 	private static final long serialVersionUID = 957350695292804803L;
 
 
-	public AbstractHtmlManager() {
+	public AbstractHtmlParent() {
 		super();
 	}
-	public AbstractHtmlManager(AbstractHtml message, Class<T> type, ManagerListener parent) {
+	public AbstractHtmlParent(AbstractHtml message, Class<T> type, ManagerListener parent) {
 		super(message, type, parent);
 	}
 	

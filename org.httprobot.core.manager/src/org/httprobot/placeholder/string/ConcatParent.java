@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class ConcatManager
-	extends AbstractStringManager<ConcatControl> {
+public final class ConcatParent
+	extends AbstractStringParent<ConcatControl> {
 
 	/**
 	 * -2674949404675117218L
@@ -25,10 +25,10 @@ public final class ConcatManager
 		super.setControl(control);
 	}
 	
-	public ConcatManager() {
+	public ConcatParent() {
 		super();
 	}
-	public ConcatManager(Concat message, ManagerListener parent) {
+	public ConcatParent(Concat message, ManagerListener parent) {
 		super(message, ConcatControl.class, parent);
 	}
 	

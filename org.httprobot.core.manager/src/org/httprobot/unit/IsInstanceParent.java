@@ -1,21 +1,21 @@
 package org.httprobot.unit;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 
-public class IsInstanceManager
-	extends MappingManager<Object, Boolean, IsInstanceControl> {
+public class IsInstanceParent
+	extends MappingParent<Object, Boolean, IsInstanceControl> {
 
 	/**
 	 * 313145130051473638L
 	 */
 	private static final long serialVersionUID = 313145130051473638L;
 	
-	public IsInstanceManager() {
+	public IsInstanceParent() {
 		super();
 	}
-	public IsInstanceManager(IsInstance message, ManagerListener parent) {
+	public IsInstanceParent(IsInstance message, ManagerListener parent) {
 		super(message, IsInstanceControl.class, parent);
 	}
 	@Override

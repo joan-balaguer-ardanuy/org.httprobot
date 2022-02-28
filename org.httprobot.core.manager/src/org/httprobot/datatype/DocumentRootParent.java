@@ -7,11 +7,11 @@ import java.util.Set;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
-import org.httprobot.content.ContentTypeRefManager;
+import org.httprobot.content.ContentTypeRefParent;
 import org.httprobot.content.FieldRef;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
@@ -21,27 +21,27 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
-import org.httprobot.unit.ActionManager;
+import org.httprobot.unit.ActionParent;
 
-public class DocumentRootManager
-	extends MappingManager<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
+public class DocumentRootParent
+	extends MappingParent<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
 
 	/**
 	 * 9134669471992617702L
 	 */
 	private static final long serialVersionUID = 9134669471992617702L;
 
-	ActionManager actionManager;
-	ContentTypeRefManager contentTypeRefManager;
-	FieldRootManager fieldRootManager;
-	DocumentManager documentManager;
+	ActionParent actionManager;
+	ContentTypeRefParent contentTypeRefManager;
+	FieldRootParent fieldRootManager;
+	DocumentParent documentManager;
 	
 	HtmlPage currentResponse;
 	
-	public DocumentRootManager() {
+	public DocumentRootParent() {
 		super();
 	}
-	public DocumentRootManager(DocumentRoot message, ManagerListener parent) {
+	public DocumentRootParent(DocumentRoot message, ManagerListener parent) {
 		super(message, DocumentRootControl.class, parent);
 	}
 	
@@ -114,28 +114,28 @@ public class DocumentRootManager
 		case CONTENT_TYPE_REF_CONTROL_LOADED:
 			ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 			if(getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
-				contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
+				contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
 				addChildManager(contentTypeRefManager);
 			}
 			break;
 		case ACTION_CONTROL_LOADED:
 			Action action = ActionControl.class.cast(e.getSource()).getMessage();
 			if(getControl().get(Data.ACTION).equals(action)) {
-				actionManager = new ActionManager(action, this);
+				actionManager = new ActionParent(action, this);
 				addChildManager(actionManager);
 			}
 			break;
 		case FIELD_ROOT_CONTROL_LOADED:
 			FieldRoot fieldRoot = FieldRootControl.class.cast(e.getSource()).getMessage();
 			if(getControl().get(Data.FIELD_ROOT).equals(fieldRoot)) {
-				fieldRootManager = new FieldRootManager(fieldRoot, this);
+				fieldRootManager = new FieldRootParent(fieldRoot, this);
 				addChildManager(fieldRootManager);
 			}
 			break;
 		case DOCUMENT_CONTROL_LOADED:
 			Document document = DocumentControl.class.cast(e.getSource()).getMessage();
 			if(getControl().get(Data.DOCUMENT).equals(document)) {
-				documentManager = new DocumentManager(document, this);
+				documentManager = new DocumentParent(document, this);
 				addChildManager(documentManager);
 			}
 			break;

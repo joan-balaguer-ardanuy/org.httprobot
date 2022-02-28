@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class ReplaceManager
-	extends AbstractStringManager<ReplaceControl> {
+public final class ReplaceParent
+	extends AbstractStringParent<ReplaceControl> {
 
 	/**
 	 * -4082786732248275675L
@@ -25,10 +25,10 @@ public final class ReplaceManager
 		super.setControl(control);
 	}
 	
-	public ReplaceManager() {
+	public ReplaceParent() {
 		super();
 	}
-	public ReplaceManager(Replace message, ManagerListener parent) {
+	public ReplaceParent(Replace message, ManagerListener parent) {
 		super(message, ReplaceControl.class, parent);
 	}
 	

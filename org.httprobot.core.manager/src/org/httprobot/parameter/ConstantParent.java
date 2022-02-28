@@ -1,12 +1,12 @@
 package org.httprobot.parameter;
 
-import org.httprobot.Manager;
+import org.httprobot.Parent;
 import org.httprobot.ManagerEventType;
 import org.httprobot.ManagerListener;
 import org.httprobot.event.ManagerEventArgs;
 
-public class ConstantManager 
-	extends Manager<ConstantControl> 
+public class ConstantParent 
+	extends Parent<ConstantControl> 
 		implements java.util.Map.Entry<String, String> {
 
 	/**
@@ -29,9 +29,9 @@ public class ConstantManager
 		return null;
 	}
 	
-	public ConstantManager() {
+	public ConstantParent() {
 	}
-	public ConstantManager(Constant message, ManagerListener parent) {
+	public ConstantParent(Constant message, ManagerListener parent) {
 		super(message, ConstantControl.class, parent);
 	}
 	

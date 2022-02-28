@@ -12,8 +12,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public class TryParseManager 
-	extends AbstractStringManager<TryParseControl> {
+public class TryParseParent 
+	extends AbstractStringParent<TryParseControl> {
 
 	/**
 	 * 3702738941817036919L
@@ -30,10 +30,10 @@ public class TryParseManager
 		super.setControl(control);
 	}
 	
-	public TryParseManager() {
+	public TryParseParent() {
 		super();
 	}
-	public TryParseManager(TryParse message, ManagerListener parent) {
+	public TryParseParent(TryParse message, ManagerListener parent) {
 		super(message, TryParseControl.class, parent);
 	}
 

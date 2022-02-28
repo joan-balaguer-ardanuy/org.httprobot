@@ -4,13 +4,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 
 @XmlRootElement
-public final class ServiceConnectionManager 
-	extends MappingManager<ServiceConnection, WebService, ServiceConnectionControl> {
+public final class ServiceConnectionParent 
+	extends MappingParent<ServiceConnection, WebService, ServiceConnectionControl> {
 
 	/**
 	 * 798195388983416568L
@@ -27,10 +27,10 @@ public final class ServiceConnectionManager
 		super.setControl(control);
 	}
 	
-	public ServiceConnectionManager() {
+	public ServiceConnectionParent() {
 		super();
 	}
-	public ServiceConnectionManager(ServiceConnection message, ManagerListener parent) {
+	public ServiceConnectionParent(ServiceConnection message, ManagerListener parent) {
 		super(message, ServiceConnectionControl.class, parent);
 	}
 	

@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class StartsWithManager 
-	extends AbstractStringManager<StartsWithControl> {
+public final class StartsWithParent 
+	extends AbstractStringParent<StartsWithControl> {
 
 	/**
 	 * 7695767707161722927L
@@ -25,10 +25,10 @@ public final class StartsWithManager
 		super.setControl(control);
 	}
 	
-	public StartsWithManager() {
+	public StartsWithParent() {
 		super();
 	}
-	public StartsWithManager(StartsWith message, ManagerListener parent) {
+	public StartsWithParent(StartsWith message, ManagerListener parent) {
 		super(message, StartsWithControl.class, parent);
 	}
 	

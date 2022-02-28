@@ -17,7 +17,7 @@ import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebDriver;
 
-public abstract class Manager<T extends Control<?>> 
+public abstract class Parent<T extends Control<?>> 
 	extends XML 
 		implements ControlListener, ManagerListener, 
 			Iterator<ManagerListener> {
@@ -111,7 +111,7 @@ public abstract class Manager<T extends Control<?>>
 		}
 	}
 	
-	public Manager() {
+	public Parent() {
 		super(UUID.randomUUID());
 		
 		managerListeners = new LinkedHashSet<ManagerListener>();
@@ -121,7 +121,7 @@ public abstract class Manager<T extends Control<?>>
 		
 		addManagerListener(this);	
 	}
-	public Manager(XML message, Class<T> type, ManagerListener parent) {
+	public Parent(XML message, Class<T> type, ManagerListener parent) {
 		super(message.getUuid());
 
 		control = instance(type, message, this);

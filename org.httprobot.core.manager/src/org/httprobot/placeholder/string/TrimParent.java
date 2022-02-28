@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class TrimManager 
-	extends AbstractStringManager<TrimControl> {
+public final class TrimParent 
+	extends AbstractStringParent<TrimControl> {
 
 	/**
 	 * 8160161481205354596L
@@ -25,10 +25,10 @@ public final class TrimManager
 		super.setControl(control);
 	}
 	
-	public TrimManager() {
+	public TrimParent() {
 		super();
 	}
-	public TrimManager(Trim message, ManagerListener parent) {
+	public TrimParent(Trim message, ManagerListener parent) {
 		super(message, TrimControl.class, parent);
 	}
 	

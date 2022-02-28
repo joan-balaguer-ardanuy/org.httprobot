@@ -5,20 +5,20 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.AbstractString;
-import org.httprobot.placeholder.AbstractPlaceholderManager;
+import org.httprobot.placeholder.AbstractPlaceholderParent;
 
-public abstract class AbstractStringManager<T extends Control<?>>
-	extends AbstractPlaceholderManager<InputField, String,T> {
+public abstract class AbstractStringParent<T extends Control<?>>
+	extends AbstractPlaceholderParent<InputField, String,T> {
 
 	/**
 	 * 9016980694923790707L
 	 */
 	private static final long serialVersionUID = 9016980694923790707L;
 	
-	public AbstractStringManager() {
+	public AbstractStringParent() {
 		super();
 	}
-	public AbstractStringManager(AbstractString message, Class<T> type, ManagerListener parent) {
+	public AbstractStringParent(AbstractString message, Class<T> type, ManagerListener parent) {
 		super(message, type, parent);
 	}
 	

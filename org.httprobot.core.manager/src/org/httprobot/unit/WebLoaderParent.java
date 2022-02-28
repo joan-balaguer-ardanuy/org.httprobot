@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
-public class WebLoaderManager
-	extends MappingManager<String, HtmlPage, WebLoaderControl> {
+public class WebLoaderParent
+	extends MappingParent<String, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
@@ -30,10 +30,10 @@ public class WebLoaderManager
 	WebElement nextPageElement;
 	Integer pageNumber;
 	
-	public WebLoaderManager() {
+	public WebLoaderParent() {
 		super();
 	}
-	public WebLoaderManager(WebLoader message, ManagerListener parent) {
+	public WebLoaderParent(WebLoader message, ManagerListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		pageNumber = message.getStartIndex();
 	}

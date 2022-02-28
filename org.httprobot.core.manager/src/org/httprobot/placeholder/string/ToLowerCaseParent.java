@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class ToLowerCaseManager 
-	extends AbstractStringManager<ToLowerCaseControl> {
+public final class ToLowerCaseParent 
+	extends AbstractStringParent<ToLowerCaseControl> {
 
 	/**
 	 * -912172374068787372L
@@ -25,10 +25,10 @@ public final class ToLowerCaseManager
 		super.setControl(control);
 	}
 	
-	public ToLowerCaseManager() {
+	public ToLowerCaseParent() {
 		super();
 	}
-	public ToLowerCaseManager(ToLowerCase message, ManagerListener parent) {
+	public ToLowerCaseParent(ToLowerCase message, ManagerListener parent) {
 		super(message, ToLowerCaseControl.class, parent);
 	}
 	

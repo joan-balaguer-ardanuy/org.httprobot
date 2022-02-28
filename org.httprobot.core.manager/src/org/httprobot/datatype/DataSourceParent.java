@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.Message;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
-import org.httprobot.content.ContentTypeRefManager;
+import org.httprobot.content.ContentTypeRefParent;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.event.CommandEventArgs;
@@ -22,14 +22,14 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
-import org.httprobot.parameter.ConstantManager;
+import org.httprobot.parameter.ConstantParent;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
-import org.httprobot.unit.ActionManager;
+import org.httprobot.unit.ActionParent;
 
 @XmlRootElement
-public final class DataSourceManager 
-	extends MappingManager<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+public final class DataSourceParent 
+	extends MappingParent<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L
@@ -39,19 +39,19 @@ public final class DataSourceManager
 	/**
 	 * The action XML message manager
 	 */
-	ActionManager actionManager;
+	ActionParent actionManager;
 	/**
 	 * The content type reference XML message manager
 	 */
-	ContentTypeRefManager contentTypeRefManager;
+	ContentTypeRefParent contentTypeRefManager;
 	/**
 	 * The document root XML message manager
 	 */
-	DocumentRootManager documentRootManager;
+	DocumentRootParent documentRootManager;
 	/**
 	 * The constant XML message managers
 	 */
-	Map<Constant, ConstantManager> constantManagers;
+	Map<Constant, ConstantParent> constantManagers;
 
 	@Override
 	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
@@ -60,10 +60,10 @@ public final class DataSourceManager
 		return super.put(key, value);
 	}
 	
-	public DataSourceManager() {
+	public DataSourceParent() {
 		super();
 	}
-	public DataSourceManager(DataSource message, ManagerListener parent) {
+	public DataSourceParent(DataSource message, ManagerListener parent) {
 		super(message, DataSourceControl.class, parent);
 	}
 	
@@ -78,7 +78,7 @@ public final class DataSourceManager
 					}
 				}
 			} else if(constantManagers.containsValue(e.getSource())) {
-				ConstantManager constantManager = ConstantManager.class.cast(e.getSource());
+				ConstantParent constantManager = ConstantParent.class.cast(e.getSource());
 				getConstants().put(constantManager.getKey(), constantManager.getValue());
 			}
 			break;
@@ -107,7 +107,7 @@ public final class DataSourceManager
 				@SuppressWarnings("unchecked")
 				Set<Message> set = (Set<Message>) getControl().get(Data.CONSTANT);
 				if(set.contains(message)) {
-					ConstantManager constantManager = new ConstantManager(message, this);
+					ConstantParent constantManager = new ConstantParent(message, this);
 					constantManagers.put(message, constantManager);
 					addChildManager(constantManager);
 				}
@@ -117,7 +117,7 @@ public final class DataSourceManager
 			if (e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.ACTION).equals(action)) {
-					actionManager = new ActionManager(action, this);
+					actionManager = new ActionParent(action, this);
 					addChildManager(actionManager);
 				}
 			}
@@ -126,7 +126,7 @@ public final class DataSourceManager
 			if (e.getSource() instanceof DocumentRootControl) {
 				DocumentRoot documentRoot = DocumentRootControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.DOCUMENT_ROOT).equals(documentRoot)) {
-					documentRootManager = new DocumentRootManager(documentRoot, this);
+					documentRootManager = new DocumentRootParent(documentRoot, this);
 					addChildManager(documentRootManager);
 				}
 			}
@@ -135,7 +135,7 @@ public final class DataSourceManager
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
-					contentTypeRefManager = new ContentTypeRefManager(contentTypeRef, this);
+					contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
 					addChildManager(contentTypeRefManager);
 				}
 			}

@@ -7,8 +7,8 @@ import org.httprobot.ManagerListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
-public final class SubstringManager
-	extends AbstractStringManager<SubstringControl> {
+public final class SubstringParent
+	extends AbstractStringParent<SubstringControl> {
 
 	/**
 	 * 7868954939148015302L
@@ -25,10 +25,10 @@ public final class SubstringManager
 		super.setControl(control);
 	}
 	
-	public SubstringManager() {
+	public SubstringParent() {
 		super();
 	}
-	public SubstringManager(Substring message, ManagerListener parent) {
+	public SubstringParent(Substring message, ManagerListener parent) {
 		super(message, SubstringControl.class, parent);
 	}
 	

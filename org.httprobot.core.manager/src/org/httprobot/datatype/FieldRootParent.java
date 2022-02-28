@@ -4,29 +4,29 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.httprobot.ManagerListener;
-import org.httprobot.MappingManager;
+import org.httprobot.MappingParent;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 
-public class FieldRootManager
-	extends MappingManager<InputDocument, HtmlPage, FieldRootControl> {
+public class FieldRootParent
+	extends MappingParent<InputDocument, HtmlPage, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
 	 */
 	private static final long serialVersionUID = 6156586566583864082L;
 
-	Map<Field, FieldManager> fieldManagers;
+	Map<Field, FieldParent> fieldManagers;
 	
-	public FieldRootManager() {
+	public FieldRootParent() {
 		super();
 	}
-	public FieldRootManager(FieldRoot message, ManagerListener parent) {
+	public FieldRootParent(FieldRoot message, ManagerListener parent) {
 		super(message, FieldRootControl.class, parent);
-		fieldManagers = new LinkedHashMap<Field, FieldManager>();
+		fieldManagers = new LinkedHashMap<Field, FieldParent>();
 	}
 	@Override
 	public HtmlPage put(InputDocument key, HtmlPage value) {
@@ -34,7 +34,7 @@ public class FieldRootManager
 		setKey(key);
 		setValue(value);
 		for(Field field : fieldManagers.keySet()) {
-			FieldManager fieldManager = fieldManagers.get(field);
+			FieldParent fieldManager = fieldManagers.get(field);
 			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByUUID(field.getUuid());
 			fieldManager.put(inputField, value);
 		}
@@ -46,7 +46,7 @@ public class FieldRootManager
 		case FIELD_CONTROL_LOADED:
 			if (e.getSource() instanceof FieldControl) {
 				Field field = FieldControl.class.cast(e.getSource()).getMessage();
-				FieldManager fieldManager = new FieldManager(field, this);
+				FieldParent fieldManager = new FieldParent(field, this);
 				fieldManagers.put(field, fieldManager);
 				addChildManager(fieldManager);
 			}

@@ -5,18 +5,18 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 
-public class HttpAddressManager 
-	extends AbstractPlaceholderManager<InputField, String, HttpAddressControl> {
+public class HttpAddressParent 
+	extends AbstractPlaceholderParent<InputField, String, HttpAddressControl> {
 
 	/**
 	 * 5782528861553476045L
 	 */
 	private static final long serialVersionUID = 5782528861553476045L;
 	
-	public HttpAddressManager() {
+	public HttpAddressParent() {
 		super();
 	}
-	public HttpAddressManager(HttpAddress message, ManagerListener parent) {
+	public HttpAddressParent(HttpAddress message, ManagerListener parent) {
 		super(message, HttpAddressControl.class, parent);
 	}
 	@Override
