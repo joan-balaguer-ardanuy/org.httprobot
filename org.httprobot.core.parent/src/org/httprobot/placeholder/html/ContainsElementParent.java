@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.httprobot.ParentListener;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.placeholder.html.ContainsElement;
-import org.httprobot.placeholder.html.ContainsElementControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

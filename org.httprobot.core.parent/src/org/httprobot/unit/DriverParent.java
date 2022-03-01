@@ -3,8 +3,6 @@ package org.httprobot.unit;
 import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.unit.Driver;
-import org.httprobot.unit.DriverControl;
 import org.openqa.selenium.WebDriver;
 
 public class DriverParent 
