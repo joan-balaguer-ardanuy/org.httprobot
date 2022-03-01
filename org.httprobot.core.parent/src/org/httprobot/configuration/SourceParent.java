@@ -67,7 +67,7 @@ public final class SourceParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case CONTENT_TYPE_ROOT_CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRootControl) {

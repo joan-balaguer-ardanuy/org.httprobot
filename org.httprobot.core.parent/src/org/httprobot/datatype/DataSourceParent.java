@@ -39,15 +39,15 @@ public final class DataSourceParent
 	/**
 	 * The action XML message manager
 	 */
-	ActionParent actionManager;
+	ActionParent actionParent;
 	/**
 	 * The content type reference XML message manager
 	 */
-	ContentTypeRefParent contentTypeRefManager;
+	ContentTypeRefParent contentTypeRefParent;
 	/**
 	 * The document root XML message manager
 	 */
-	DocumentRootParent documentRootManager;
+	DocumentRootParent documentRootParent;
 	/**
 	 * The constant XML message managers
 	 */
@@ -56,7 +56,7 @@ public final class DataSourceParent
 	@Override
 	public DocumentLibrary put(ContentTypeRef key, DocumentLibrary value) {
 		setDocumentLibrary(value);
-		actionManager.put(null, new LinkedHashSet<HtmlPage>());
+		actionParent.put(null, new LinkedHashSet<HtmlPage>());
 		return super.put(key, value);
 	}
 	
@@ -71,10 +71,10 @@ public final class DataSourceParent
 	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if (e.getSource().equals(contentTypeRefManager)) {
+			if (e.getSource().equals(contentTypeRefParent)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
-						contentTypeRefManager.setValue(contentType);
+					if (contentTypeRefParent.getUuid().equals(contentType.getUuid())) {
+						contentTypeRefParent.setValue(contentType);
 					}
 				}
 			} else if(constantManagers.containsValue(e.getSource())) {
@@ -83,13 +83,13 @@ public final class DataSourceParent
 			}
 			break;
 		case FINISHED:
-			if (e.getSource().equals(actionManager)) {
+			if (e.getSource().equals(actionParent)) {
 				// No more than one expected.
-				for (HtmlPage key : actionManager) {
+				for (HtmlPage key : actionParent) {
 					// Get the returned pages by first request.
-					Set<HtmlPage> actiontData = this.actionManager.get(key);
+					Set<HtmlPage> actiontData = this.actionParent.get(key);
 					// Put loaded data on document root message manager
-					documentRootManager.put(actiontData, new LinkedHashMap<InputDocument, HtmlPage>());
+					documentRootParent.put(actiontData, new LinkedHashMap<InputDocument, HtmlPage>());
 				}
 			}
 			break;
@@ -98,7 +98,7 @@ public final class DataSourceParent
 		}
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 
 		switch (e.getCommand()) {
 		case CONSTANT_CONTROL_LOADED:
@@ -117,8 +117,8 @@ public final class DataSourceParent
 			if (e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.ACTION).equals(action)) {
-					actionManager = new ActionParent(action, this);
-					addChildManager(actionManager);
+					actionParent = new ActionParent(action, this);
+					addChildManager(actionParent);
 				}
 			}
 			break;
@@ -126,8 +126,8 @@ public final class DataSourceParent
 			if (e.getSource() instanceof DocumentRootControl) {
 				DocumentRoot documentRoot = DocumentRootControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.DOCUMENT_ROOT).equals(documentRoot)) {
-					documentRootManager = new DocumentRootParent(documentRoot, this);
-					addChildManager(documentRootManager);
+					documentRootParent = new DocumentRootParent(documentRoot, this);
+					addChildManager(documentRootParent);
 				}
 			}
 			break;
@@ -135,8 +135,8 @@ public final class DataSourceParent
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
-					contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
-					addChildManager(contentTypeRefManager);
+					contentTypeRefParent = new ContentTypeRefParent(contentTypeRef, this);
+					addChildManager(contentTypeRefParent);
 				}
 			}
 			break;

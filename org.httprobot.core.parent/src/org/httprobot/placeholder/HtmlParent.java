@@ -23,8 +23,8 @@ public final class HtmlParent
 	public HtmlParent(HtmlUnit message, ParentListener parent) {
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
-		super.OnCommandReceived(e);
+	public void OnCommandEvent(CommandEventArgs e) {
+		super.OnCommandEvent(e);
 	}
 	@Override
 	public void OnParentEvent(ManagerEventArgs e) {

@@ -18,5 +18,5 @@ public interface CommandListener extends EventListener, Serializable {
 	 * Fired when command event is received.
 	 * @param e {@link CommandEventArgs} the arguments of the command event.
 	 */
-	void OnCommandReceived(CommandEventArgs e);
+	void OnCommandEvent(CommandEventArgs e);
 }

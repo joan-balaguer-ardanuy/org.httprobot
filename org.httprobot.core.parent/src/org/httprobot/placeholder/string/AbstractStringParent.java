@@ -25,30 +25,30 @@ public abstract class AbstractStringParent<T extends Control<?>>
 	@Override
 	public String put(InputField key, String value) {
 		if (key.getValue() != null && hasChildManagers()) {
-			if(concatManager != null) {
-				concatManager.put(key, value);
-			} else if (containsManager != null) {
-				containsManager.put(key, value);
-			} else if (endsWithManager != null) {
-				endsWithManager.put(key, value);
-			} else if (equalsManager != null) {
-				equalsManager.put(key, value);
-			} else if (replaceManager != null) {
-				replaceManager.put(key, value);
-			} else if (replaceManager != null) {
-				replaceManager.put(key, value);
-			} else if (startsWithManager != null) {
-				startsWithManager.put(key, value);
-			} else if (substringManager != null) {
-				substringManager.put(key, value);
-			} else if (toLowerCaseManager != null) {
-				toLowerCaseManager.put(key, value);
-			} else if (toUpperCaseManager != null) {
-				toUpperCaseManager.put(key, value);
-			} else if (trimManager != null) {
-				trimManager.put(key, value);
-			} else if (tryParseManager != null) {
-				tryParseManager.put(key, value);
+			if(concatParent != null) {
+				concatParent.put(key, value);
+			} else if (containsParent != null) {
+				containsParent.put(key, value);
+			} else if (endsWithParent != null) {
+				endsWithParent.put(key, value);
+			} else if (equalsParent != null) {
+				equalsParent.put(key, value);
+			} else if (replaceParent != null) {
+				replaceParent.put(key, value);
+			} else if (replaceParent != null) {
+				replaceParent.put(key, value);
+			} else if (startsWithParent != null) {
+				startsWithParent.put(key, value);
+			} else if (substringParent != null) {
+				substringParent.put(key, value);
+			} else if (toLowerCaseParent != null) {
+				toLowerCaseParent.put(key, value);
+			} else if (toUpperCaseParent != null) {
+				toUpperCaseParent.put(key, value);
+			} else if (trimParent != null) {
+				trimParent.put(key, value);
+			} else if (tryParseParent != null) {
+				tryParseParent.put(key, value);
 			}
 		}
 		return super.put(key, value);

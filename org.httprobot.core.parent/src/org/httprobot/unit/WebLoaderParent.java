@@ -150,7 +150,7 @@ public class WebLoaderParent
 		}
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		
 	}
 	@Override

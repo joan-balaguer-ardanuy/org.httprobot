@@ -51,7 +51,7 @@ public final class FieldParent
 	}
 
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case HTML_UNIT_CONTROL_LOADED:
 			if(e.getSource() instanceof HtmlUnitControl) {

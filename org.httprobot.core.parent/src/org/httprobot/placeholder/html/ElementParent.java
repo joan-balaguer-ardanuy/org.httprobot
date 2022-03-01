@@ -82,7 +82,7 @@ public final class ElementParent
 		}
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case CONTAINS_ELEMENT_CONTROL_LOADED:
 			if(e.getSource() instanceof ContainsElementControl) {

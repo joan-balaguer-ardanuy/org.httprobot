@@ -163,7 +163,7 @@ public class ActionParent
 		}
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case WEB_LOADER_CONTROL_LOADED:
 			if(e.getSource() instanceof WebLoaderControl) {

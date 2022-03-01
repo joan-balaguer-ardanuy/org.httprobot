@@ -20,8 +20,8 @@ public class HttpAddressParent
 		super(message, HttpAddressControl.class, parent);
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
-		super.OnCommandReceived(e);
+	public void OnCommandEvent(CommandEventArgs e) {
+		super.OnCommandEvent(e);
 	}
 	@Override
 	public void OnParentEvent(ManagerEventArgs e) {
@@ -35,10 +35,10 @@ public class HttpAddressParent
 		key.setValue(value.toString());
 		
 		if (hasChildManagers()) {
-			if (concatManager != null) {
-				concatManager.put(key, key.getValue().toString());
-			} else if (containsManager != null) {
-				containsManager.put(key, key.getValue().toString());
+			if (concatParent != null) {
+				concatParent.put(key, key.getValue().toString());
+			} else if (containsParent != null) {
+				containsParent.put(key, key.getValue().toString());
 			}
 		}
 		

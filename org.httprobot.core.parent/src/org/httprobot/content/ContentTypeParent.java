@@ -21,9 +21,9 @@ public class ContentTypeParent
 	 */
 	private static final long serialVersionUID = 7504962006510123725L;
 	
-	Map<ContentTypeRef, ContentTypeParent> contentTypeManagers;
-	Map<ContentTypeRef, ContentTypeRefParent> contentTypeRefManagers;
-	Map<FieldRef, FieldRefParent> fieldRefManagers;
+	Map<ContentTypeRef, ContentTypeParent> contentTypeParents;
+	Map<ContentTypeRef, ContentTypeRefParent> contentTypeRefParents;
+	Map<FieldRef, FieldRefParent> fieldRefParents;
 	
 	InputDocument templateDocument;
 	Integer contentTypeRefCount;
@@ -34,9 +34,9 @@ public class ContentTypeParent
 	public ContentTypeParent(ContentType message, ParentListener parent) {
 		super(message, ContentTypeControl.class, parent);
 		contentTypeRefCount = 0;
-		contentTypeManagers = new LinkedHashMap<ContentTypeRef, ContentTypeParent>();
-		contentTypeRefManagers = new LinkedHashMap<ContentTypeRef, ContentTypeRefParent>();
-		fieldRefManagers = new LinkedHashMap<FieldRef, FieldRefParent>();
+		contentTypeParents = new LinkedHashMap<ContentTypeRef, ContentTypeParent>();
+		contentTypeRefParents = new LinkedHashMap<ContentTypeRef, ContentTypeRefParent>();
+		fieldRefParents = new LinkedHashMap<FieldRef, FieldRefParent>();
 	}
 	@Override
 	public InputDocument put(ContentType key, InputDocument value) {
@@ -46,14 +46,14 @@ public class ContentTypeParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case CONTENT_TYPE_REF_CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				ContentTypeRefParent contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
 				addChildManager(contentTypeRefManager);
-				contentTypeRefManagers.put(contentTypeRef, contentTypeRefManager);
+				contentTypeRefParents.put(contentTypeRef, contentTypeRefManager);
 			}
 			break;
 		case FIELD_REF_CONTROL_LOADED:
@@ -61,7 +61,7 @@ public class ContentTypeParent
 				FieldRef fieldRef = FieldRefControl.class.cast(e.getSource()).getMessage();
 				FieldRefParent fieldRefManager = new FieldRefParent(fieldRef, this);
 				addChildManager(fieldRefManager);
-				fieldRefManagers.put(fieldRef, fieldRefManager);
+				fieldRefParents.put(fieldRef, fieldRefManager);
 			}
 			break;
 		case CONTENT_TYPE_CONTROL_LOADED:
@@ -79,22 +79,22 @@ public class ContentTypeParent
 		case STARTED:
 			if(e.getSource() instanceof FieldRefParent) {
 				FieldRefParent fieldRefManager = FieldRefParent.class.cast(e.getSource());
-				if(fieldRefManager.equals(fieldRefManagers.get(fieldRefManager.getKey()))) {
+				if(fieldRefManager.equals(fieldRefParents.get(fieldRefManager.getKey()))) {
 					InputField inputField = new InputField(fieldRefManager.getKey());
 					fieldRefManager.setValue(inputField);
 				}
 			} else if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager = ContentTypeRefParent.class.cast(e.getSource());
-				if(contentTypeRefManagers.containsValue(contentTypeRefManager)) {
+				if(contentTypeRefParents.containsValue(contentTypeRefManager)) {
 					for(ContentType contentType : getContentTypeRoot().getContentType()) {
 						contentTypeRefManager.setValue(contentType);
 					}
 				}
 			} else if(e.getSource() instanceof ContentTypeParent) {
 				ContentTypeParent contentTypeManager = ContentTypeParent.class.cast(e.getSource());
-				for(ContentTypeRef contentTypeRef : contentTypeManagers.keySet()) {
-					if(contentTypeManager.equals(contentTypeManagers.get(contentTypeRef))) {
-						ContentTypeRefParent contentTypeRefManager = contentTypeRefManagers.get(contentTypeRef);
+				for(ContentTypeRef contentTypeRef : contentTypeParents.keySet()) {
+					if(contentTypeManager.equals(contentTypeParents.get(contentTypeRef))) {
+						ContentTypeRefParent contentTypeRefManager = contentTypeRefParents.get(contentTypeRef);
 						ContentType contentType = contentTypeRefManager.getValue();
 						InputDocument templateDocument = new InputDocument(contentType);
 						contentTypeManager.put(contentType, templateDocument);
@@ -109,17 +109,17 @@ public class ContentTypeParent
 				templateDocument.put(fieldRefManager.getKey(), fieldRefManager.getValue());
 			} else if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager = ContentTypeRefParent.class.cast(e.getSource());
-				for(ContentTypeRef key : contentTypeRefManagers.keySet()) {
-					if(contentTypeRefManager.equals(contentTypeRefManagers.get(key))) {
+				for(ContentTypeRef key : contentTypeRefParents.keySet()) {
+					if(contentTypeRefManager.equals(contentTypeRefParents.get(key))) {
 						ContentType contentType = contentTypeRefManager.getValue();
 						ContentTypeParent contentTypeManager = new ContentTypeParent(contentType, this);
-						contentTypeManagers.put(key, contentTypeManager);
+						contentTypeParents.put(key, contentTypeManager);
 						contentTypeManager.start();
 						
 						contentTypeRefCount++;
-						if(contentTypeRefCount == contentTypeRefManagers.size() - 1) {
-							for(ContentTypeRef contentTypeRef : contentTypeManagers.keySet()) {
-								ContentTypeParent value = contentTypeManagers.get(contentTypeRef);
+						if(contentTypeRefCount == contentTypeRefParents.size() - 1) {
+							for(ContentTypeRef contentTypeRef : contentTypeParents.keySet()) {
+								ContentTypeParent value = contentTypeParents.get(contentTypeRef);
 								value.start();
 							}
 						}
@@ -128,8 +128,8 @@ public class ContentTypeParent
 				}
 			} else if(e.getSource() instanceof ContentTypeParent) {
 				ContentTypeParent contentTypeManager = ContentTypeParent.class.cast(e.getSource());
-				for(ContentTypeRef contentTypeRef : contentTypeManagers.keySet()) {
-					if(contentTypeManager.equals(contentTypeManagers.get(contentTypeRef))) {
+				for(ContentTypeRef contentTypeRef : contentTypeParents.keySet()) {
+					if(contentTypeManager.equals(contentTypeParents.get(contentTypeRef))) {
 						for(ContentType contentType : contentTypeManager.keySet()) {
 							templateDocument.addChildDocument(contentTypeManager.get(contentType));
 						}

@@ -41,7 +41,7 @@ public class FieldRootParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case FIELD_CONTROL_LOADED:
 			if (e.getSource() instanceof FieldControl) {

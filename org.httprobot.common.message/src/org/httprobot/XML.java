@@ -101,7 +101,7 @@ public abstract class XML
 		setUuid(xml.getUuid());
 	}
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		CommandListenerEvent(e);
 	}
 	

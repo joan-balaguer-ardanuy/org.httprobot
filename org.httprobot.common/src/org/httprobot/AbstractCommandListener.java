@@ -53,11 +53,11 @@ public abstract class AbstractCommandListener implements CommandListener {
 	 */
 	protected void CommandListenerEvent(CommandEventArgs e) {
 		for(CommandListener listener : commandListeners) {
-			listener.OnCommandReceived(e);
+			listener.OnCommandEvent(e);
 		}
 	}
 	@Override
-	public abstract void OnCommandReceived(CommandEventArgs e);
+	public abstract void OnCommandEvent(CommandEventArgs e);
 	
 	/**
 	 * Intances new object.

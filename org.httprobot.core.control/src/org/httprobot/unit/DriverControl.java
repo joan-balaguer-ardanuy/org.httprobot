@@ -9,7 +9,6 @@ import org.httprobot.ControlListener;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.unit.Driver;
 
 @XmlRootElement
 public final class DriverControl extends Control<Driver> {

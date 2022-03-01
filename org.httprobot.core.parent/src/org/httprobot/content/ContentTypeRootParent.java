@@ -27,9 +27,9 @@ public final class ContentTypeRootParent
 	
 	Map<ContentTypeRef, ContentType> contentTypeIndex;
 	
-	Map<ContentType, ContentTypeParent> contentTypeManagers;
-	Map<ContentTypeRef, ContentTypeRefParent> contentTypeRefManagers;
-	Map<FieldRef, FieldRefParent> fieldRefManagers;
+	Map<ContentType, ContentTypeParent> contentTypeParents;
+	Map<ContentTypeRef, ContentTypeRefParent> contentTypeRefParents;
+	Map<FieldRef, FieldRefParent> fieldRefParents;
 	
 	InputDocumentLibrary<ContentTypeRef, FieldRef> inputDocumentLibrary;
 	FieldLibrary<FieldRef> fieldLibrary;
@@ -55,9 +55,9 @@ public final class ContentTypeRootParent
 		super(message, ContentTypeRootControl.class, parent);
 		contentTypeIndex = new LinkedHashMap<ContentTypeRef, ContentType>();
 		
-		contentTypeManagers = new LinkedHashMap<ContentType, ContentTypeParent>();
-		contentTypeRefManagers = new LinkedHashMap<ContentTypeRef, ContentTypeRefParent>();
-		fieldRefManagers = new LinkedHashMap<FieldRef, FieldRefParent>();
+		contentTypeParents = new LinkedHashMap<ContentType, ContentTypeParent>();
+		contentTypeRefParents = new LinkedHashMap<ContentTypeRef, ContentTypeRefParent>();
+		fieldRefParents = new LinkedHashMap<FieldRef, FieldRefParent>();
 		
 		inputDocumentLibrary = new InputDocumentLibrary<ContentTypeRef, FieldRef>();
 		fieldLibrary = new FieldLibrary<FieldRef>();
@@ -71,7 +71,7 @@ public final class ContentTypeRootParent
 	}
 	
 	@Override
-	public void OnCommandReceived(CommandEventArgs e) {
+	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
 		case FIELD_REF_CONTROL_LOADED:
 			if(e.getSource() instanceof FieldRefControl) {
@@ -80,7 +80,7 @@ public final class ContentTypeRootParent
 				if(fieldRefControl.getParent() instanceof ContentTypeRootControl) {
 					FieldRefParent fieldRefManager = new FieldRefParent(fieldRefControl.getMessage(), this);
 					addChildManager(fieldRefManager);
-					fieldRefManagers.put(fieldRefControl.getMessage(), fieldRefManager);
+					fieldRefParents.put(fieldRefControl.getMessage(), fieldRefManager);
 				}
 			}
 			break;
@@ -91,7 +91,7 @@ public final class ContentTypeRootParent
 				if(contentTypeRefControl.getParent() instanceof ContentTypeRootControl) {
 					ContentTypeRefParent contentTypeRefManager = new ContentTypeRefParent(contentTypeRefControl.getMessage(), this);
 					addChildManager(contentTypeRefManager);
-					contentTypeRefManagers.put(contentTypeRefControl.getMessage(), contentTypeRefManager);
+					contentTypeRefParents.put(contentTypeRefControl.getMessage(), contentTypeRefManager);
 				}
 			}
 			break;
@@ -102,7 +102,7 @@ public final class ContentTypeRootParent
 				if(contentTypeControl.getParent() instanceof ContentTypeRootControl) {
 					ContentTypeParent contentTypeManager = new ContentTypeParent(contentTypeControl.getMessage(), this);
 					addChildManager(contentTypeManager);
-					contentTypeManagers.put(contentTypeControl.getMessage(), contentTypeManager);
+					contentTypeParents.put(contentTypeControl.getMessage(), contentTypeManager);
 				}
 			}
 			break;
@@ -116,7 +116,7 @@ public final class ContentTypeRootParent
 		case STARTED:
 			if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager = ContentTypeRefParent.class.cast(e.getSource());
-				for (ContentType contentType : contentTypeManagers.keySet()) {
+				for (ContentType contentType : contentTypeParents.keySet()) {
 					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
 						contentTypeRefManager.setValue(contentType);
 						break;
@@ -126,7 +126,7 @@ public final class ContentTypeRootParent
 				// Cast sources
 				FieldRefParent fieldRefManager = FieldRefParent.class.cast(e.getSource());
 				// Check if manager is a child of current object
-				if (fieldRefManager.equals(this.fieldRefManagers.get(fieldRefManager.getKey()))) {
+				if (fieldRefManager.equals(this.fieldRefParents.get(fieldRefManager.getKey()))) {
 					// Initialize new SOLR field
 					InputField inputField = new InputField(fieldRefManager.getKey());
 					// Set matching message as input data
@@ -136,7 +136,7 @@ public final class ContentTypeRootParent
 			} else if(e.getSource() instanceof ContentTypeParent) {
 				ContentTypeParent contentTypeManager = ContentTypeParent.class.cast(e.getSource());
 				for(ContentType contentType : contentTypeManager) {
-					if(contentTypeManager.equals(contentTypeManagers.get(contentType))) {
+					if(contentTypeManager.equals(contentTypeParents.get(contentType))) {
 						InputDocument templateDocument = new InputDocument(contentTypeManager.getControl().getMessage());
 						contentTypeManager.put(contentType, templateDocument);
 					}
@@ -159,7 +159,7 @@ public final class ContentTypeRootParent
 				ContentTypeParent contentTypeManager = ContentTypeParent.class.cast(e.getSource());
 				if(contentTypeManager.getParent() instanceof ContentTypeRootParent) {
 					for(ContentType contentType : contentTypeManager) {
-						if(contentTypeManager.equals(contentTypeManagers.get(contentType))) {
+						if(contentTypeManager.equals(contentTypeParents.get(contentType))) {
 							InputDocument templateDocument = contentTypeManager.get(contentType);
 							for(ContentTypeRef contentTypeRef : contentTypeIndex.keySet()) {
 								if(contentTypeRef.getUuid().equals(contentType.getUuid())) {
