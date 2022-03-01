@@ -1,4 +1,4 @@
-package org.httprobot.unit;
+package org.httprobot.placeholder.html;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;

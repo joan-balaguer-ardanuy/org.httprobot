@@ -13,6 +13,8 @@ import org.httprobot.ParentListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlParent;
+import org.httprobot.placeholder.html.ContainsElement;
+import org.httprobot.placeholder.html.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

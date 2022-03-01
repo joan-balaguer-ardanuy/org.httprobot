@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractPlaceholder;
 import org.httprobot.event.MessageEventArgs;
-import org.httprobot.unit.Element;
+import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
 public final class HtmlUnit extends AbstractPlaceholder {

@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.event.MessageEventArgs;
-import org.httprobot.unit.ContainsElement;
-import org.httprobot.unit.Element;
+import org.httprobot.placeholder.html.ContainsElement;
+import org.httprobot.placeholder.html.Element;
 
 public abstract class AbstractHtml extends AbstractString {
 

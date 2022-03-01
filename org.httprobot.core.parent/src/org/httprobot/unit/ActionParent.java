@@ -27,6 +27,7 @@ import org.httprobot.net.HtmlPage;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantParent;
+import org.httprobot.placeholder.html.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
