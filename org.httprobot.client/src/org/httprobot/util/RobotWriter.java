@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import javax.xml.bind.JAXBException;
 import org.httprobot.BrowserVersion;
 import org.httprobot.Constants;
-import org.httprobot.configuration.Driver;
+import org.httprobot.unit.Driver;
 
 public class RobotWriter {
 	

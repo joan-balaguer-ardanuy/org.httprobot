@@ -7,8 +7,8 @@ import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.httprobot.configuration.Driver;
 import org.httprobot.configuration.ServiceConnection;
+import org.httprobot.unit.Driver;
 
 /**
  * The robot launcher application.

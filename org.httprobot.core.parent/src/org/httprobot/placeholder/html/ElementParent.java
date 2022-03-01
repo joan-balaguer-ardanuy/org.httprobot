@@ -1,4 +1,4 @@
-package org.httprobot.unit;
+package org.httprobot.placeholder.html;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -12,9 +12,10 @@ import org.httprobot.ManagerEventType;
 import org.httprobot.ParentListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.httprobot.placeholder.html.ContainsElement;
+import org.httprobot.placeholder.html.ContainsElementControl;
 import org.httprobot.placeholder.html.Element;
+import org.httprobot.placeholder.html.ElementControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

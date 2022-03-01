@@ -8,7 +8,7 @@ import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.unit.ElementControl;
+import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class HtmlUnitControl 

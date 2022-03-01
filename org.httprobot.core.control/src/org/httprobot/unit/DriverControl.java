@@ -1,4 +1,4 @@
-package org.httprobot.configuration;
+package org.httprobot.unit;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,6 +9,7 @@ import org.httprobot.ControlListener;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.unit.Driver;
 
 @XmlRootElement
 public final class DriverControl extends Control<Driver> {

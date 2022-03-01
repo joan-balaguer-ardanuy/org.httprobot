@@ -8,11 +8,11 @@ import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
-import org.httprobot.configuration.DriverControl;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
+import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class ActionControl

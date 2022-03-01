@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractUnit;
-import org.httprobot.configuration.Driver;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
 import org.httprobot.placeholder.html.Element;

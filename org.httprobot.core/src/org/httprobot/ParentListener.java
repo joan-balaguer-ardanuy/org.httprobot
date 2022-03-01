@@ -3,12 +3,12 @@ package org.httprobot;
 import java.util.Map;
 
 import org.apache.solr.common.SolrInputDocument;
-import org.httprobot.configuration.Driver;
 import org.httprobot.configuration.Source;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.unit.Driver;
 import org.openqa.selenium.WebDriver;
 
 /**
