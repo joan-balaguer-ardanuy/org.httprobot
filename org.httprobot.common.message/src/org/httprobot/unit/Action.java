@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractUnit;
-import org.httprobot.configuration.Selenium;
+import org.httprobot.configuration.Driver;
 import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
 
@@ -22,7 +22,7 @@ public final class Action extends AbstractUnit {
 	String httpAddress;
 	String method;
 	String javaScript;
-	Selenium selenium;
+	Driver selenium;
 	WebLoader webLoader;
 	Element element;
 	LinkedHashSet<Constant> constant;
@@ -77,10 +77,10 @@ public final class Action extends AbstractUnit {
 		this.element = element;
 	}
 	@XmlElement
-	public Selenium getSelenium() {
+	public Driver getSelenium() {
 		return selenium;
 	}
-	public void setSelenium(Selenium selenium) {
+	public void setSelenium(Driver selenium) {
 		this.selenium = selenium;
 	}
 	public Action() {

@@ -16,10 +16,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.httprobot.Constants;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
-import org.httprobot.ManagerListener;
-import org.httprobot.configuration.Selenium;
-import org.httprobot.configuration.SeleniumControl;
-import org.httprobot.configuration.SeleniumParent;
+import org.httprobot.ParentListener;
+import org.httprobot.configuration.Driver;
+import org.httprobot.configuration.DriverControl;
+import org.httprobot.configuration.DriverParent;
 import org.httprobot.MappingParent;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -51,7 +51,7 @@ public class ActionParent
 	Map<Constant, ConstantParent> constantManagers;
 	ElementParent elementManager;
 	
-	SeleniumParent seleniumManager;
+	DriverParent seleniumManager;
 	
 	HtmlPage currentOutput;
 
@@ -60,7 +60,7 @@ public class ActionParent
 	public ActionParent() {
 		super();
 	}
-	public ActionParent(Action message, ManagerListener parent) {
+	public ActionParent(Action message, ParentListener parent) {
 		super(message, ActionControl.class, parent);
 	}
 	
@@ -114,7 +114,7 @@ public class ActionParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource() instanceof ConstantParent) {
@@ -122,8 +122,8 @@ public class ActionParent
 				if(constantManagers.containsValue(constantManager)) {
 					getConstants().put(constantManager.getKey(), constantManager.getValue());
 				}
-			} else if(e.getSource() instanceof SeleniumParent) {
-				SeleniumParent seleniumManager = SeleniumParent.class.cast(e.getSource());
+			} else if(e.getSource() instanceof DriverParent) {
+				DriverParent seleniumManager = DriverParent.class.cast(e.getSource());
 				seleniumManager.setValue(loadWebDriver(seleniumManager.getKey()));
 			}
 			break;
@@ -194,10 +194,10 @@ public class ActionParent
 			}
 			break;
 		case SELENIUM_CONTROL_LOADED:
-			if(e.getSource() instanceof SeleniumControl) {
-				Selenium selenium = SeleniumControl.class.cast(e.getSource()).getMessage();
+			if(e.getSource() instanceof DriverControl) {
+				Driver selenium = DriverControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.SELENIUM).equals(selenium)) {
-					seleniumManager = new SeleniumParent(selenium, this);
+					seleniumManager = new DriverParent(selenium, this);
 					addChildManager(seleniumManager);
 				}
 			}
@@ -230,7 +230,7 @@ public class ActionParent
 		}
 		return url;
 	}
-	private WebDriver loadWebDriver(Selenium selenium) {
+	private WebDriver loadWebDriver(Driver selenium) {
 		WebDriver webDriver;
 		System.setProperty(selenium.getDriverProperty(), selenium.getDriverPath());
 		switch (selenium.getBrowserVersion()) {

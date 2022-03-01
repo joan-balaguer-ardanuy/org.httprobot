@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.Data;
 import org.httprobot.MappingParent;
 import org.httprobot.Message;
@@ -31,8 +31,8 @@ public final class SourceParent
 	 */
 	private static final long serialVersionUID = 634599347187276700L;
 
-	ContentTypeRootParent contentTypeRootManager;
-	Map<DataSource, DataSourceParent> dataSouceManagers;
+	ContentTypeRootParent contentTypeRootParent;
+	Map<DataSource, DataSourceParent> dataSouceParents;
 
 	@Override
 	@XmlElement
@@ -46,13 +46,13 @@ public final class SourceParent
 	
 	public SourceParent() {
 		super();
-		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceParent>();
+		dataSouceParents = new LinkedHashMap<DataSource, DataSourceParent>();
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
 	}
-	public SourceParent(Source message, ManagerListener parent) {
+	public SourceParent(Source message, ParentListener parent) {
 		super(message, SourceControl.class, parent);
-		dataSouceManagers = new LinkedHashMap<DataSource, DataSourceParent>();
+		dataSouceParents = new LinkedHashMap<DataSource, DataSourceParent>();
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
 		setContentTypeRoot(message.getContentTypeRoot());
@@ -61,7 +61,7 @@ public final class SourceParent
 	public DocumentLibrary put(DataSource key, DocumentLibrary value) {
 		setKey(key);
 		setValue(value);
-		DataSourceParent dataSourceManager = dataSouceManagers.get(key);
+		DataSourceParent dataSourceManager = dataSouceParents.get(key);
 		dataSourceManager.setDocumentLibrary(value);
 		
 		return super.put(key, value);
@@ -73,8 +73,8 @@ public final class SourceParent
 			if(e.getSource() instanceof ContentTypeRootControl) {
 				ContentTypeRoot message = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTENT_TYPE_ROOT).equals(message)) {
-					contentTypeRootManager = new ContentTypeRootParent(message, this);
-					addChildManager(contentTypeRootManager);
+					contentTypeRootParent = new ContentTypeRootParent(message, this);
+					addChildManager(contentTypeRootParent);
 				}
 			}
 			break;
@@ -85,7 +85,7 @@ public final class SourceParent
 				Set<Message> set = (Set<Message>) getControl().get(Data.DATA_SOURCE);
 				if(set.contains(message)) {
 					DataSourceParent dataSourceManager = new DataSourceParent(message, this);
-					dataSouceManagers.put(message, dataSourceManager);
+					dataSouceParents.put(message, dataSourceManager);
 					addChildManager(dataSourceManager);
 				}
 			}
@@ -94,17 +94,17 @@ public final class SourceParent
 		}
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
-			if(e.getSource().equals(contentTypeRootManager)) {
-				contentTypeRootManager.setValue(getTemplateLibrary());
+			if(e.getSource().equals(contentTypeRootParent)) {
+				contentTypeRootParent.setValue(getTemplateLibrary());
 			}
 			break;
 		case FINISHED:
-			if(e.getSource().equals(contentTypeRootManager)) {
-				if(contentTypeRootManager.getKey().equals(getControl().get(Data.CONTENT_TYPE_ROOT))) {
-					getTemplateLibrary().putAll(contentTypeRootManager.getValue());
+			if(e.getSource().equals(contentTypeRootParent)) {
+				if(contentTypeRootParent.getKey().equals(getControl().get(Data.CONTENT_TYPE_ROOT))) {
+					getTemplateLibrary().putAll(contentTypeRootParent.getValue());
 				}
 			}
 			break;

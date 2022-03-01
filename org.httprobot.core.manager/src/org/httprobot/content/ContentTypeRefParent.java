@@ -1,6 +1,6 @@
 package org.httprobot.content;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -15,11 +15,11 @@ public class ContentTypeRefParent
 	public ContentTypeRefParent() {
 		super();
 	}
-	public ContentTypeRefParent(ContentTypeRef message, ManagerListener parent) {
+	public ContentTypeRefParent(ContentTypeRef message, ParentListener parent) {
 		super(message, ContentTypeRefControl.class, parent);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 }

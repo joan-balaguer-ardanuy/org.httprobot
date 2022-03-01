@@ -7,7 +7,7 @@ import java.util.List;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.NextPageMethod;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
@@ -33,7 +33,7 @@ public class WebLoaderParent
 	public WebLoaderParent() {
 		super();
 	}
-	public WebLoaderParent(WebLoader message, ManagerListener parent) {
+	public WebLoaderParent(WebLoader message, ParentListener parent) {
 		super(message, WebLoaderControl.class, parent);
 		pageNumber = message.getStartIndex();
 	}
@@ -154,7 +154,7 @@ public class WebLoaderParent
 		
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			break;

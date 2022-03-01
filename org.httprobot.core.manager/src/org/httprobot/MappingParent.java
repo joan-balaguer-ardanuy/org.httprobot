@@ -51,7 +51,7 @@ public abstract class MappingParent<K,V,T extends Control<? extends XML>>
 	public MappingParent() {
 		super();
 	}
-	public MappingParent(XML message, Class<T> type, ManagerListener parent) {
+	public MappingParent(XML message, Class<T> type, ParentListener parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

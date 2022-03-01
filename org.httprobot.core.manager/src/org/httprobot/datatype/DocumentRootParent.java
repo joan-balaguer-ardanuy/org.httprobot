@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.httprobot.Data;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -41,7 +41,7 @@ public class DocumentRootParent
 	public DocumentRootParent() {
 		super();
 	}
-	public DocumentRootParent(DocumentRoot message, ManagerListener parent) {
+	public DocumentRootParent(DocumentRoot message, ParentListener parent) {
 		super(message, DocumentRootControl.class, parent);
 	}
 	
@@ -57,7 +57,7 @@ public class DocumentRootParent
 	}
 
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefManager)) {

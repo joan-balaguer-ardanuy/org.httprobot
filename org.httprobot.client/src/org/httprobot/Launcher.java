@@ -7,12 +7,12 @@ import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.httprobot.configuration.Selenium;
+import org.httprobot.configuration.Driver;
 import org.httprobot.configuration.ServiceConnection;
 
 /**
  * The robot launcher application.
- * The launcher encapsulates the {@link Selenium} configuration XML message
+ * The launcher encapsulates the {@link Driver} configuration XML message
  * and the {@link Root} application that is the root XML message.
  * @author joan
  *
@@ -30,7 +30,7 @@ public class Launcher {
 	
 	/**
 	 * {@link Launcher} default class constructor.
-	 * @param robotPath the path of {@link Selenium} XML message file.
+	 * @param robotPath the path of {@link Driver} XML message file.
 	 */
 	public Launcher(String serviceConnectionPath) {
 		// Load service connection data

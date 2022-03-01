@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -28,7 +28,7 @@ public final class ToLowerCaseParent
 	public ToLowerCaseParent() {
 		super();
 	}
-	public ToLowerCaseParent(ToLowerCase message, ManagerListener parent) {
+	public ToLowerCaseParent(ToLowerCase message, ParentListener parent) {
 		super(message, ToLowerCaseControl.class, parent);
 	}
 	

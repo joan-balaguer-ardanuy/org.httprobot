@@ -11,7 +11,7 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
-public final class SeleniumControl extends Control<Selenium> {
+public final class DriverControl extends Control<Driver> {
 
 	/**
 	 * 7011339833433807856L
@@ -20,25 +20,25 @@ public final class SeleniumControl extends Control<Selenium> {
 
 	@Override
 	@XmlElement
-	public Selenium getMessage() {
+	public Driver getMessage() {
 		return super.getMessage();
 	}
 	@Override
-	public void setMessage(Selenium message) {
+	public void setMessage(Driver message) {
 		super.setMessage(message);
 	}
 	
-	public SeleniumControl() {
+	public DriverControl() {
 		super();
 	}
-	public SeleniumControl(Selenium message, ControlListener parent) {
+	public DriverControl(Driver message, ControlListener parent) {
 		super(message, parent);
 	}
 
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
-			Selenium selenium = Selenium.class.cast(e.getMessage());
+			Driver selenium = Driver.class.cast(e.getMessage());
 			
 			if(selenium.getBrowserVersion() == null) {
 				throw new Error("SeleniumControl.OnControlInitialized: BrowserVersion is missing.");
@@ -57,7 +57,7 @@ public final class SeleniumControl extends Control<Selenium> {
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
-			Selenium selenium = Selenium.class.cast(e.getMessage());
+			Driver selenium = Driver.class.cast(e.getMessage());
 			
 			put(Data.BROWSER_VERSION, selenium.getBrowserVersion());
 			put(Data.DRIVER_PATH, selenium.getDriverPath());

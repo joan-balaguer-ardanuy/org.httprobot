@@ -19,8 +19,8 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class Parent<T extends Control<?>> 
 	extends XML 
-		implements ControlListener, ManagerListener, 
-			Iterator<ManagerListener> {
+		implements ControlListener, ParentListener, 
+			Iterator<ParentListener> {
 
 	/**
 	 * -4305679696716005954L
@@ -29,12 +29,12 @@ public abstract class Parent<T extends Control<?>>
 
 	T control;
 
-	Set<ManagerListener> managerListeners;
+	Set<ParentListener> managerListeners;
 	
 	int currentManagerIndex;
-	List<ManagerListener> childManagers;
+	List<ParentListener> childManagers;
 
-	ManagerListener parent;
+	ParentListener parent;
 	
 	ContentTypeRoot contentTypeRoot;
 	DocumentLibrary documentLibrary;
@@ -43,10 +43,10 @@ public abstract class Parent<T extends Control<?>>
 	Map<String, String> parameterConstants;
 	
 	@XmlTransient
-	public ManagerListener getParent() {
+	public ParentListener getParent() {
 		return parent;
 	}
-	public void setParent(ManagerListener parent) {
+	public void setParent(ParentListener parent) {
 		this.parent = parent;
 	}
 	public T getControl() {
@@ -114,41 +114,41 @@ public abstract class Parent<T extends Control<?>>
 	public Parent() {
 		super(UUID.randomUUID());
 		
-		managerListeners = new LinkedHashSet<ManagerListener>();
+		managerListeners = new LinkedHashSet<ParentListener>();
 		
 		currentManagerIndex = 0;
-		childManagers = new ArrayList<ManagerListener>();
+		childManagers = new ArrayList<ParentListener>();
 		
 		addManagerListener(this);	
 	}
-	public Parent(XML message, Class<T> type, ManagerListener parent) {
+	public Parent(XML message, Class<T> type, ParentListener parent) {
 		super(message.getUuid());
 
 		control = instance(type, message, this);
 		
-		managerListeners = new LinkedHashSet<ManagerListener>();
+		managerListeners = new LinkedHashSet<ParentListener>();
 		
 		this.parent = parent;
 		
 		currentManagerIndex = 0;
-		childManagers = new ArrayList<ManagerListener>();
+		childManagers = new ArrayList<ParentListener>();
 		
 		addManagerListener(this);
 		addManagerListener(parent);
 	}
 
-	public void addManagerListener(ManagerListener listener) {
+	public void addManagerListener(ParentListener listener) {
 		managerListeners.add(listener);
 	}
-	public void removeManagerListener(ManagerListener listener) {
+	public void removeManagerListener(ParentListener listener) {
 		managerListeners.remove(listener);
 	}
 	protected void ManagerEvent(ManagerEventArgs e) {
-		for(ManagerListener listener : managerListeners) {
-			listener.OnManagerEvent(e);
+		for(ParentListener listener : managerListeners) {
+			listener.OnParentEvent(e);
 		}
 	}
-	public void addChildManager(ManagerListener manager) {
+	public void addChildManager(ParentListener manager) {
 		childManagers.add(manager);
 	}
 	public void reset() {
@@ -163,8 +163,8 @@ public abstract class Parent<T extends Control<?>>
 		return currentManagerIndex < childManagers.size();
 	}
 	@Override
-	public ManagerListener next() {
-		ManagerListener listener = childManagers.get(currentManagerIndex);
+	public ParentListener next() {
+		ParentListener listener = childManagers.get(currentManagerIndex);
 		currentManagerIndex++;
 		return listener;
 	}
@@ -177,7 +177,7 @@ public abstract class Parent<T extends Control<?>>
 		
 	}
 	@Override
-	public abstract void OnManagerEvent(ManagerEventArgs e);
+	public abstract void OnParentEvent(ManagerEventArgs e);
 
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
@@ -188,7 +188,7 @@ public abstract class Parent<T extends Control<?>>
 		if (hasChildManagers()) {
 			// Start each child manager
 			while (hasNext()) {
-				ManagerListener manager = next();
+				ParentListener manager = next();
 				manager.start();
 			}
 			reset();

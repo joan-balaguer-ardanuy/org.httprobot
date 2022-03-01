@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 
@@ -15,7 +15,7 @@ public class IsInstanceParent
 	public IsInstanceParent() {
 		super();
 	}
-	public IsInstanceParent(IsInstance message, ManagerListener parent) {
+	public IsInstanceParent(IsInstance message, ParentListener parent) {
 		super(message, IsInstanceControl.class, parent);
 	}
 	@Override
@@ -35,7 +35,7 @@ public class IsInstanceParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 

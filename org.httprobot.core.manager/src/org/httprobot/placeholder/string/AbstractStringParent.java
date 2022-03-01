@@ -1,7 +1,7 @@
 package org.httprobot.placeholder.string;
 
 import org.httprobot.Control;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.AbstractString;
@@ -18,7 +18,7 @@ public abstract class AbstractStringParent<T extends Control<?>>
 	public AbstractStringParent() {
 		super();
 	}
-	public AbstractStringParent(AbstractString message, Class<T> type, ManagerListener parent) {
+	public AbstractStringParent(AbstractString message, Class<T> type, ParentListener parent) {
 		super(message, type, parent);
 	}
 	
@@ -54,7 +54,7 @@ public abstract class AbstractStringParent<T extends Control<?>>
 		return super.put(key, value);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			

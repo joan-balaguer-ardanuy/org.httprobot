@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -28,7 +28,7 @@ public final class EqualsParent
 	public EqualsParent() {
 		super();
 	}
-	public EqualsParent(Equals message, ManagerListener parent) {
+	public EqualsParent(Equals message, ParentListener parent) {
 		super(message, EqualsControl.class, parent);
 	}
 	

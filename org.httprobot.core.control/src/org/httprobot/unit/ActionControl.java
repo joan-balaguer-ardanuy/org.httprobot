@@ -8,7 +8,7 @@ import org.httprobot.Control;
 import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
-import org.httprobot.configuration.SeleniumControl;
+import org.httprobot.configuration.DriverControl;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.parameter.Constant;
@@ -26,7 +26,7 @@ public final class ActionControl
 	LinkedHashSet<ConstantControl> constant;
 	WebLoaderControl webLoaderControl;
 	ElementControl elementControl;
-	SeleniumControl seleniumControl;
+	DriverControl seleniumControl;
 	
 	@XmlElement
 	public WebLoaderControl getPaginatorControl() {
@@ -50,10 +50,10 @@ public final class ActionControl
 		this.elementControl = elementControl;
 	}
 	@XmlElement
-	public SeleniumControl getSeleniumControl() {
+	public DriverControl getSeleniumControl() {
 		return seleniumControl;
 	}
-	public void setSeleniumControl(SeleniumControl seleniumControl) {
+	public void setSeleniumControl(DriverControl seleniumControl) {
 		this.seleniumControl = seleniumControl;
 	}
 	@XmlElement
@@ -88,7 +88,7 @@ public final class ActionControl
 				new ElementControl(action.getElement(), this);
 			}
 			if(action.getSelenium() != null) {
-				new SeleniumControl(action.getSelenium(), this);
+				new DriverControl(action.getSelenium(), this);
 			}
 			for (Constant constant : action.getConstant()) {
 				new ConstantControl(constant, this);
@@ -104,8 +104,8 @@ public final class ActionControl
 		} else if(e.getSource() instanceof WebLoaderControl) {
 			webLoaderControl = WebLoaderControl.class.cast(e.getSource());
 			addChildControl(webLoaderControl);
-		} else if(e.getSource() instanceof SeleniumControl) {
-			seleniumControl = SeleniumControl.class.cast(e.getSource());
+		} else if(e.getSource() instanceof DriverControl) {
+			seleniumControl = DriverControl.class.cast(e.getSource());
 			addChildControl(seleniumControl);
 		}
 	}
@@ -134,7 +134,7 @@ public final class ActionControl
 					} else if(control instanceof WebLoaderControl ?
 							webLoaderControl.equals(control) : false) {
 						webLoaderControl.loadControl();
-					} else if(control instanceof SeleniumControl ?
+					} else if(control instanceof DriverControl ?
 							seleniumControl.equals(control) : false) {
 						seleniumControl.loadControl();
 					} else if(control instanceof ConstantControl ?
@@ -159,7 +159,7 @@ public final class ActionControl
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.ELEMENT, e.getMessage());
 			}
-		} else if (e.getSource() instanceof SeleniumControl) {
+		} else if (e.getSource() instanceof DriverControl) {
 			if (getChildControls().contains(e.getSource())) {
 				put(Data.SELENIUM, e.getMessage());
 			}

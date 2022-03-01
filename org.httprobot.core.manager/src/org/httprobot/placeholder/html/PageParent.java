@@ -3,7 +3,7 @@ package org.httprobot.placeholder.html;
 import java.util.Map;
 import java.util.Set;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebElement;
@@ -19,11 +19,11 @@ public class PageParent
 	public PageParent() {
 		super();
 	}
-	public PageParent(Page message, ManagerListener parent) {
+	public PageParent(Page message, ParentListener parent) {
 		super(message, PageControl.class, parent);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 }

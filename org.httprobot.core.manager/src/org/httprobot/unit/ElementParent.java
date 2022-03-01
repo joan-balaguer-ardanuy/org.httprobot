@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlParent;
@@ -41,7 +41,7 @@ public final class ElementParent
 	public ElementParent() {
 		super();
 	}
-	public ElementParent(Element message, ManagerListener parent) {
+	public ElementParent(Element message, ParentListener parent) {
 		super(message, ElementControl.class, parent);
 	}
 	@Override
@@ -67,7 +67,7 @@ public final class ElementParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 
  		switch (e.getManagerEventType()) {
 		case STARTED:

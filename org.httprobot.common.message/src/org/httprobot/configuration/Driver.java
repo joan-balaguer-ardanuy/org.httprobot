@@ -7,7 +7,7 @@ import org.httprobot.BrowserVersion;
 import org.httprobot.event.MessageEventArgs;
 
 /**
- * Selenium abstract configuration XML message class.
+ * Robot abstract configuration XML message class.
  * Inherits {@link AbstractConfiguration}. It contains all the 
  * necessary data to instance an {@link org.openqa.selenium.WebDriver}.
  * It encapsulates a {@link BrowserVersion} to select the programatic navigator,
@@ -19,7 +19,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class Selenium
+public final class Driver
 	extends AbstractConfiguration {
 	
 	/**
@@ -110,9 +110,9 @@ public final class Selenium
 	}
 	
 	/**
-	 * {@link Selenium} default class constructor.
+	 * {@link Driver} default class constructor.
 	 */
-	public Selenium() {
+	public Driver() {
 		super();
 	}
 	
@@ -120,7 +120,7 @@ public final class Selenium
 	public void OnMessageUnmarshalled(MessageEventArgs e) {
 		super.OnMessageUnmarshalled(e);
 		// Cast source
-		Selenium selenium = Selenium.class.cast(e.getSource());
+		Driver selenium = Driver.class.cast(e.getSource());
 		// Set properties
 		setDriverPath(selenium.getDriverPath());
 		setDriverProperty(selenium.getDriverProperty());

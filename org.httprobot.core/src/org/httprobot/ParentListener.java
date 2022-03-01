@@ -3,7 +3,7 @@ package org.httprobot;
 import java.util.Map;
 
 import org.apache.solr.common.SolrInputDocument;
-import org.httprobot.configuration.Selenium;
+import org.httprobot.configuration.Driver;
 import org.httprobot.configuration.Source;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
@@ -17,27 +17,27 @@ import org.openqa.selenium.WebDriver;
  * @author joan
  *
  */
-public interface ManagerListener extends Message {
+public interface ParentListener extends Message {
 	
 	/**
-	 * Starts {@link ManagerListener}.
+	 * Starts {@link ParentListener}.
 	 */
 	void start();
 	/**
-	 * Stops {@link ManagerListener}
+	 * Stops {@link ParentListener}
 	 */
 	void stop();
 	
 	/**
-	 * Gets the parent {@link ManagerListener}.
-	 * @return the parent {@link ManagerListener}.
+	 * Gets the parent {@link ParentListener}.
+	 * @return the parent {@link ParentListener}.
 	 */
-	ManagerListener getParent();
+	ParentListener getParent();
 	/**
-	 * Sets the parent {@link ManagerListener}.
-	 * @param parent {@link ManagerListener} the parent to be set.
+	 * Sets the parent {@link ParentListener}.
+	 * @param parent {@link ParentListener} the parent to be set.
 	 */
-	void setParent(ManagerListener parent);
+	void setParent(ParentListener parent);
 
 	/**
 	 * Returns the Selenium's {@link WebDriver}.
@@ -45,8 +45,8 @@ public interface ManagerListener extends Message {
 	 */
 	WebDriver getWebDriver();
 	/**
-	 * Sets the {@link Selenium} configurationa XML message.
-	 * @param selenium the {@link Selenium} configurationa XML message.
+	 * Sets the {@link Driver} configurationa XML message.
+	 * @param selenium the {@link Driver} configurationa XML message.
 	 */
 	void setWebDriver(WebDriver webDriver);
 	
@@ -80,5 +80,5 @@ public interface ManagerListener extends Message {
 	 * The XML message manager event.
 	 * @param e {@link ManagerEventArgs} the XML message manager event arguments.
 	 */
-	void OnManagerEvent(ManagerEventArgs e);
+	void OnParentEvent(ManagerEventArgs e);
 }

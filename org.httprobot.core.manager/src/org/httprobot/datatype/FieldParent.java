@@ -2,7 +2,7 @@ package org.httprobot.datatype;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 
 import org.httprobot.MappingParent;
 import org.httprobot.data.field.InputField;
@@ -29,7 +29,7 @@ public final class FieldParent
 	public FieldParent() {
 		super();
 	}
-	public FieldParent(Field message, ManagerListener parent) {
+	public FieldParent(Field message, ParentListener parent) {
 		super(message, FieldControl.class, parent);
 	}
 	
@@ -73,7 +73,7 @@ public final class FieldParent
 	}
 
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		// TODO Auto-generated method stub
 		
 	}

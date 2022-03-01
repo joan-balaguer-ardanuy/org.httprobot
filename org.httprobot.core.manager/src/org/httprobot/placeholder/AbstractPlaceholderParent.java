@@ -1,7 +1,7 @@
 package org.httprobot.placeholder;
 
 import org.httprobot.Control;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.AbstractPlaceholder;
 import org.httprobot.event.CommandEventArgs;
@@ -62,7 +62,7 @@ public abstract class AbstractPlaceholderParent<K, V, T extends Control<?>>
 	public AbstractPlaceholderParent() {
 		super();
 	}
-	public AbstractPlaceholderParent(AbstractPlaceholder message, Class<T> type, ManagerListener parent) {
+	public AbstractPlaceholderParent(AbstractPlaceholder message, Class<T> type, ParentListener parent) {
 		super(message, type, parent);
 	}
 	

@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.Message;
 import org.httprobot.content.ContentType;
@@ -63,12 +63,12 @@ public final class DataSourceParent
 	public DataSourceParent() {
 		super();
 	}
-	public DataSourceParent(DataSource message, ManagerListener parent) {
+	public DataSourceParent(DataSource message, ParentListener parent) {
 		super(message, DataSourceControl.class, parent);
 	}
 	
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if (e.getSource().equals(contentTypeRefManager)) {

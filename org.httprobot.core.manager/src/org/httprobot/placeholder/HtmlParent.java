@@ -2,7 +2,7 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -20,14 +20,14 @@ public final class HtmlParent
 	
 	public HtmlParent() {
 	}
-	public HtmlParent(HtmlUnit message, ManagerListener parent) {
+	public HtmlParent(HtmlUnit message, ParentListener parent) {
 	}
 	@Override
 	public void OnCommandReceived(CommandEventArgs e) {
 		super.OnCommandReceived(e);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		// TODO Auto-generated method stub
 		
 	}

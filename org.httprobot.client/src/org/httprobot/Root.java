@@ -23,9 +23,9 @@ import org.httprobot.net.WebService;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Precursor class. Inherits {@link XML}.
+ * Root class. Inherits {@link XML}.
  * This class is the parent of parents XML messages.
- * It is {@link ManagerListener} and listens for
+ * It is {@link ParentListener} and listens for
  * {@link ServiceConnectionParent} and {@link SourceParent}.
  * @author joan
  *
@@ -33,7 +33,7 @@ import org.openqa.selenium.WebDriver;
 @XmlRootElement
 public final class Root
 	extends XML
-		implements ManagerListener {
+		implements ParentListener {
 
 	/**
 	 * 322360610738419712L
@@ -62,11 +62,11 @@ public final class Root
 	Source source;
 	
 	@Override
-	public ManagerListener getParent() {
+	public ParentListener getParent() {
 		return null;
 	}
 	@Override
-	public void setParent(ManagerListener parent) {
+	public void setParent(ParentListener parent) {
 		
 	}
 	@Override
@@ -118,7 +118,7 @@ public final class Root
 	}
 	/**
 	 * {@link Root} class constructor.
-	 * @param selenium the {@link Selenium} configuration XML message
+	 * @param selenium the {@link Driver} configuration XML message
 	 */
 	public Root(ServiceConnection serviceConnection) {
 		super(UUID.randomUUID());
@@ -137,7 +137,7 @@ public final class Root
 		
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if (e.getSource().equals(sourceManager)) {

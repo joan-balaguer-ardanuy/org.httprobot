@@ -3,7 +3,7 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
@@ -30,12 +30,12 @@ public final class ServiceConnectionParent
 	public ServiceConnectionParent() {
 		super();
 	}
-	public ServiceConnectionParent(ServiceConnection message, ManagerListener parent) {
+	public ServiceConnectionParent(ServiceConnection message, ParentListener parent) {
 		super(message, ServiceConnectionControl.class, parent);
 	}
 	
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 }

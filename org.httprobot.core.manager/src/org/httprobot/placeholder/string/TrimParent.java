@@ -3,7 +3,7 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 
 @XmlRootElement
@@ -28,7 +28,7 @@ public final class TrimParent
 	public TrimParent() {
 		super();
 	}
-	public TrimParent(Trim message, ManagerListener parent) {
+	public TrimParent(Trim message, ParentListener parent) {
 		super(message, TrimControl.class, parent);
 	}
 	

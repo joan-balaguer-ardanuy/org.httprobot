@@ -2,7 +2,7 @@ package org.httprobot.parameter;
 
 import org.httprobot.Parent;
 import org.httprobot.ManagerEventType;
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ConstantParent 
@@ -31,12 +31,12 @@ public class ConstantParent
 	
 	public ConstantParent() {
 	}
-	public ConstantParent(Constant message, ManagerListener parent) {
+	public ConstantParent(Constant message, ParentListener parent) {
 		super(message, ConstantControl.class, parent);
 	}
 	
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 }

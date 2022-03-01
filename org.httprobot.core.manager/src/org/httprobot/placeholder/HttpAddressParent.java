@@ -1,6 +1,6 @@
 package org.httprobot.placeholder;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -16,7 +16,7 @@ public class HttpAddressParent
 	public HttpAddressParent() {
 		super();
 	}
-	public HttpAddressParent(HttpAddress message, ManagerListener parent) {
+	public HttpAddressParent(HttpAddress message, ParentListener parent) {
 		super(message, HttpAddressControl.class, parent);
 	}
 	@Override
@@ -24,7 +24,7 @@ public class HttpAddressParent
 		super.OnCommandReceived(e);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 	@Override

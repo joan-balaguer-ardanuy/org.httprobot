@@ -2,7 +2,7 @@ package org.httprobot.unit;
 
 import java.util.List;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.openqa.selenium.By;
@@ -19,7 +19,7 @@ public class ContainsElementParent
 	public ContainsElementParent() {
 		super();
 	}
-	public ContainsElementParent(ContainsElement message, ManagerListener parent) {
+	public ContainsElementParent(ContainsElement message, ParentListener parent) {
 		super(message, ContainsElementControl.class, parent);
 	}
 
@@ -38,7 +38,7 @@ public class ContainsElementParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ManagerListener;
+import org.httprobot.ParentListener;
 import org.httprobot.MappingParent;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
@@ -51,7 +51,7 @@ public final class ContentTypeRootParent
 	public ContentTypeRootParent() {
 		super();
 	}
-	public ContentTypeRootParent(ContentTypeRoot message, ManagerListener parent) {
+	public ContentTypeRootParent(ContentTypeRoot message, ParentListener parent) {
 		super(message, ContentTypeRootControl.class, parent);
 		contentTypeIndex = new LinkedHashMap<ContentTypeRef, ContentType>();
 		
@@ -111,7 +111,7 @@ public final class ContentTypeRootParent
 		}
 	}
 	@Override
-	public void OnManagerEvent(ManagerEventArgs e) {
+	public void OnParentEvent(ManagerEventArgs e) {
 		switch (e.getManagerEventType()) {
 		case STARTED:
 			if(e.getSource() instanceof ContentTypeRefParent) {
