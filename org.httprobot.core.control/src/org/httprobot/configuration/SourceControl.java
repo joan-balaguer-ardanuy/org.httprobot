@@ -100,7 +100,7 @@ public final class SourceControl
 	@Override
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
-			Source config = Source.class.cast(e.getMessage());
+			Source source = Source.class.cast(e.getMessage());
 
 			// Check if control has child XML controls
 			if (hasChildControls()) {
@@ -121,7 +121,7 @@ public final class SourceControl
 						DataSourceControl dataSourceControl = DataSourceControl.class.cast(control);
 
 						// Look for matching dataSource control's XML message.
-						for (DataSource dataSource : config.getDataSource()) {
+						for (DataSource dataSource : source.getDataSource()) {
 							// by UUID.
 							if (dataSourceControl.getUuid().equals(dataSource.getUuid())) {
 								// Load the XML message control.
@@ -134,7 +134,7 @@ public final class SourceControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONFIGURATION_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			} else {
 				throw new Error(
 						"ConfigurationControl.OnControlLoaded: Control must have XML message child controls.");

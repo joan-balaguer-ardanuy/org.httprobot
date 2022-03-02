@@ -43,7 +43,7 @@ public class FieldRootParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case FIELD_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if (e.getSource() instanceof FieldControl) {
 				Field field = FieldControl.class.cast(e.getSource()).getMessage();
 				FieldParent fieldManager = new FieldParent(field, this);

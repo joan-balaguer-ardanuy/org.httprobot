@@ -48,24 +48,18 @@ public class ContentTypeParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case CONTENT_TYPE_REF_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				ContentTypeRefParent contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
 				addChildManager(contentTypeRefManager);
 				contentTypeRefParents.put(contentTypeRef, contentTypeRefManager);
-			}
-			break;
-		case FIELD_REF_CONTROL_LOADED:
-			if(e.getSource() instanceof FieldRefControl) {
+			} else if(e.getSource() instanceof FieldRefControl) {
 				FieldRef fieldRef = FieldRefControl.class.cast(e.getSource()).getMessage();
 				FieldRefParent fieldRefManager = new FieldRefParent(fieldRef, this);
 				addChildManager(fieldRefManager);
 				fieldRefParents.put(fieldRef, fieldRefManager);
-			}
-			break;
-		case CONTENT_TYPE_CONTROL_LOADED:
-			if(e.getSource() instanceof ContentTypeControl) {
+			} else if(e.getSource() instanceof ContentTypeControl) {
 				keySet().add(ContentTypeControl.class.cast(e.getSource()).getMessage());
 			}
 			break;

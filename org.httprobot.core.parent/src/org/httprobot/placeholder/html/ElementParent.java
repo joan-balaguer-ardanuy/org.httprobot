@@ -84,17 +84,14 @@ public final class ElementParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case CONTAINS_ELEMENT_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContainsElementControl) {
 				ContainsElement containsElement = ContainsElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTAINS_ELEMENT).equals(containsElement)) {
 					containsElementManager = new ContainsElementParent(containsElement, this);
 					addChildManager(containsElementManager);
 				}
-			}
-			break;
-		case ELEMENT_CONTROL_LOADED:
-			if(e.getSource() instanceof ElementControl) {
+			} else if(e.getSource() instanceof ElementControl) {
 				Element containsElement = ElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.ELEMENT).equals(containsElement)) {
 					elementManager = new ElementParent(containsElement, this);

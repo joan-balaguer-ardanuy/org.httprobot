@@ -11,7 +11,7 @@ import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
-public final class HtmlUnitControl 
+public final class HtmlControl 
 	extends AbstractPlaceholderControl<HtmlUnit> {
 
 	/**
@@ -29,10 +29,10 @@ public final class HtmlUnitControl
 		this.elementControl = pageControl;
 	}
 	
-	public HtmlUnitControl() {
+	public HtmlControl() {
 		super();
 	}
-	public HtmlUnitControl(HtmlUnit message, ControlListener parent) {
+	public HtmlControl(HtmlUnit message, ControlListener parent) {
 		super(message, parent);
 	}
 	
@@ -71,7 +71,7 @@ public final class HtmlUnitControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.HTML_UNIT_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof ElementControl) {

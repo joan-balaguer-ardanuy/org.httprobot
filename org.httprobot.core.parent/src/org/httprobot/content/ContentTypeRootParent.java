@@ -73,7 +73,7 @@ public final class ContentTypeRootParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case FIELD_REF_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof FieldRefControl) {
 				FieldRefControl fieldRefControl = FieldRefControl.class.cast(e.getSource());
 				
@@ -82,10 +82,7 @@ public final class ContentTypeRootParent
 					addChildManager(fieldRefManager);
 					fieldRefParents.put(fieldRefControl.getMessage(), fieldRefManager);
 				}
-			}
-			break;
-		case CONTENT_TYPE_REF_CONTROL_LOADED:
-			if(e.getSource() instanceof ContentTypeRefControl) {
+			} else if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRefControl contentTypeRefControl = ContentTypeRefControl.class.cast(e.getSource());
 				
 				if(contentTypeRefControl.getParent() instanceof ContentTypeRootControl) {
@@ -93,10 +90,7 @@ public final class ContentTypeRootParent
 					addChildManager(contentTypeRefManager);
 					contentTypeRefParents.put(contentTypeRefControl.getMessage(), contentTypeRefManager);
 				}
-			}
-			break;
-		case CONTENT_TYPE_CONTROL_LOADED:
-			if(e.getSource() instanceof ContentTypeControl) {
+			} else if(e.getSource() instanceof ContentTypeControl) {
 				ContentTypeControl contentTypeControl = ContentTypeControl.class.cast(e.getSource());
 				
 				if(contentTypeControl.getParent() instanceof ContentTypeRootControl) {

@@ -69,78 +69,48 @@ public abstract class AbstractPlaceholderParent<K, V, T extends Control<?>>
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case CONTAINS_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContainsControl) {
 				Contains message = ContainsControl.class.cast(e.getSource()).getMessage();
 				containsParent = new ContainsParent(message, this);
 				addChildManager(containsParent);
-			}
-			break;
-		case EQUALS_CONTROL_LOADED:
-			if(e.getSource() instanceof EqualsControl) {
+			} else if(e.getSource() instanceof EqualsControl) {
 				Equals message = EqualsControl.class.cast(e.getSource()).getMessage();
 				equalsParent = new EqualsParent(message, this);
 				addChildManager(equalsParent);
-			}
-			break;
-		case TRIM_CONTROL_LOADED:
-			if(e.getSource() instanceof TrimControl) {
+			} else if(e.getSource() instanceof TrimControl) {
 				Trim message = TrimControl.class.cast(e.getSource()).getMessage();
 				trimParent = new TrimParent(message, this);
 				addChildManager(trimParent);
-			}
-			break;
-		case REPLACE_CONTROL_LOADED:
-			if(e.getSource() instanceof ReplaceControl) {
+			} else if(e.getSource() instanceof ReplaceControl) {
 				Replace message = ReplaceControl.class.cast(e.getSource()).getMessage();
 				replaceParent = new ReplaceParent(message, this);
 				addChildManager(replaceParent);
-			}
-			break;
-		case CONCAT_CONTROL_LOADED:
-			if(e.getSource() instanceof ConcatControl) {
+			} else if(e.getSource() instanceof ConcatControl) {
 				Concat message = ConcatControl.class.cast(e.getSource()).getMessage();
 				concatParent = new ConcatParent(message, this);
 				addChildManager(concatParent);
-			}
-			break;
-		case SUBSTRING_CONTROL_LOADED:
-			if(e.getSource() instanceof SubstringControl) {
+			} else if(e.getSource() instanceof SubstringControl) {
 				Substring message = SubstringControl.class.cast(e.getSource()).getMessage();
 				substringParent = new SubstringParent(message, this);
 				addChildManager(substringParent);
-			}
-			break;
-		case TRY_PARSE_CONTROL_LOADED:
-			if(e.getSource() instanceof TryParseControl) {
+			} else if(e.getSource() instanceof TryParseControl) {
 				TryParse message = TryParseControl.class.cast(e.getSource()).getMessage();
 				tryParseParent = new TryParseParent(message, this);
 				addChildManager(tryParseParent);
-			}
-			break;
-		case STARTS_WITH_CONTROL_LOADED:
-			if(e.getSource() instanceof StartsWithControl) {
+			} else if(e.getSource() instanceof StartsWithControl) {
 				StartsWith message = StartsWithControl.class.cast(e.getSource()).getMessage();
 				startsWithParent = new StartsWithParent(message, this);
 				addChildManager(startsWithParent);
-			}
-			break;
-		case ENDS_WITH_CONTROL_LOADED:
-			if(e.getSource() instanceof EndsWithControl) {
+			} else if(e.getSource() instanceof EndsWithControl) {
 				EndsWith message = EndsWithControl.class.cast(e.getSource()).getMessage();
 				endsWithParent = new EndsWithParent(message, this);
 				addChildManager(endsWithParent);
-			}
-			break;
-		case TO_UPPER_CASE_CONTROL_LOADED:
-			if(e.getSource() instanceof ToUpperCaseControl) {
+			} else if(e.getSource() instanceof ToUpperCaseControl) {
 				ToUpperCase message = ToUpperCaseControl.class.cast(e.getSource()).getMessage();
 				toUpperCaseParent = new ToUpperCaseParent(message, this);
 				addChildManager(toUpperCaseParent);
-			}
-			break;
-		case TO_LOWER_CASE_CONTROL_LOADED:
-			if(e.getSource() instanceof ToLowerCaseControl) {
+			} else if(e.getSource() instanceof ToLowerCaseControl) {
 				ToLowerCase message = ToLowerCaseControl.class.cast(e.getSource()).getMessage();
 				toLowerCaseParent = new ToLowerCaseParent(message, this);
 				addChildManager(toLowerCaseParent);

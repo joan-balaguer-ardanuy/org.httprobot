@@ -58,7 +58,6 @@ public final class DocumentRootControl
 	
 	public DocumentRootControl() {
 		super();
-		setMessage(new DocumentRoot());
 	}
 	public DocumentRootControl(DocumentRoot message, ControlListener parent) {
 		super(message, parent);
@@ -152,7 +151,7 @@ public final class DocumentRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.DOCUMENT_ROOT_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof FieldRootControl) {
 			if (getChildControls().contains(e.getSource())) {

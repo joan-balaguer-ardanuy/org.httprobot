@@ -69,17 +69,14 @@ public final class SourceParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case CONTENT_TYPE_ROOT_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRootControl) {
 				ContentTypeRoot message = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTENT_TYPE_ROOT).equals(message)) {
 					contentTypeRootParent = new ContentTypeRootParent(message, this);
 					addChildManager(contentTypeRootParent);
 				}
-			}
-			break;
-		case DATA_SOURCE_CONTROL_LOADED:
-			if(e.getSource() instanceof DataSourceControl) {
+			} else if(e.getSource() instanceof DataSourceControl) {
 				DataSource message = DataSourceControl.class.cast(e.getSource()).getMessage();
 				@SuppressWarnings("unchecked")
 				Set<Message> set = (Set<Message>) getControl().get(Data.DATA_SOURCE);

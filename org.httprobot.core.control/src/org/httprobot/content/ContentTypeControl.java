@@ -38,7 +38,7 @@ public final class ContentTypeControl
 		this.contentTypeRefControl = contentTypeRefControl;
 	}
 	public ContentTypeControl() {
-		setMessage(new ContentType());
+		super();
 	}
 	public ContentTypeControl(ContentType message, ControlListener parent) {
 		super(message, parent);
@@ -122,7 +122,7 @@ public final class ContentTypeControl
 					}
 				}
 				reset();
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			} else {
 				throw new Error("ContentTypeControl.OnControlLoaded: XML message controls missing.");
 			}

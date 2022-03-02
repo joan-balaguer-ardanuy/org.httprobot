@@ -107,35 +107,26 @@ public class DocumentParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case ACTION_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.ACTION).equals(action)) {
 					actionParent = new ActionParent(action, this);
 					addChildManager(actionParent);
 				}
-			}
-			break;
-		case CONTENT_TYPE_REF_CONTROL_LOADED:
-			if(e.getSource() instanceof ContentTypeRefControl) {
+			} else if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefParent = new ContentTypeRefParent(contentTypeRef, this);
 					addChildManager(contentTypeRefParent);
 				}
-			}
-			break;
-		case FIELD_ROOT_CONTROL_LOADED:
-			if(e.getSource() instanceof FieldRootControl) {
+			} else if(e.getSource() instanceof FieldRootControl) {
 				FieldRoot fieldRoot = FieldRootControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.FIELD_ROOT).equals(fieldRoot)) {
 					fieldRootParent = new FieldRootParent(fieldRoot, this);
 					addChildManager(fieldRootParent);
 				}
-			}
-			break;
-		case DOCUMENT_CONTROL_LOADED:
-			if(e.getSource() instanceof DocumentControl) {
+			} else if(e.getSource() instanceof DocumentControl) {
 				Document document = DocumentControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.DOCUMENT).equals(document)) {
 					DocumentParent documentManager = new DocumentParent(document, this);

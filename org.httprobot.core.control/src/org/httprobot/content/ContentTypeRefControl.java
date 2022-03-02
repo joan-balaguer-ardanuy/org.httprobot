@@ -53,7 +53,7 @@ public final class ContentTypeRefControl
 			if (contentTypeRef.getUuid() != null) {
 				put(Data.NAME, contentTypeRef.getName());
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTENT_TYPE_REF_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			} else {
 				throw new Error("ContentTypeRefControl.OnControlLoaded: UUID cannot be null.");
 			}

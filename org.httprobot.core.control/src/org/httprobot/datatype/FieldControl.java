@@ -9,7 +9,7 @@ import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
-import org.httprobot.placeholder.HtmlUnitControl;
+import org.httprobot.placeholder.HtmlControl;
 import org.httprobot.placeholder.HttpAddressControl;
 
 @XmlRootElement
@@ -22,7 +22,7 @@ public final class FieldControl
 	private static final long serialVersionUID = 7351340591317735119L;
 
 	HttpAddressControl httpAddressControl;
-	HtmlUnitControl htmlUnitControl;
+	HtmlControl htmlUnitControl;
 	
 	@XmlElement
 	public HttpAddressControl getHttpAddressControl() {
@@ -32,10 +32,10 @@ public final class FieldControl
 		this.httpAddressControl = httpAddressControl;
 	}
 	@XmlElement
-	public HtmlUnitControl getHtmlUnitControl() {
+	public HtmlControl getHtmlUnitControl() {
 		return htmlUnitControl;
 	}
-	public void setHtmlUnitControl(HtmlUnitControl htmlUnitControl) {
+	public void setHtmlUnitControl(HtmlControl htmlUnitControl) {
 		this.htmlUnitControl = htmlUnitControl;
 	}
 	
@@ -56,14 +56,14 @@ public final class FieldControl
 				new HttpAddressControl(field.getHttpAddress(), this);
 			}
 			else if(field.getHtmlUnit() != null) {
-				new HtmlUnitControl(field.getHtmlUnit(), this);
+				new HtmlControl(field.getHtmlUnit(), this);
 			}
 			else {
 				throw new Error("FieldControl.OnControlInitialized: Inconsistent Field XML message.");
 			}
 		}
-		else if(e.getSource() instanceof HtmlUnitControl) {
-			htmlUnitControl = HtmlUnitControl.class.cast(e.getSource());
+		else if(e.getSource() instanceof HtmlControl) {
+			htmlUnitControl = HtmlControl.class.cast(e.getSource());
 			addChildControl(htmlUnitControl);
 		}
 		else if(e.getSource() instanceof HttpAddressControl) {
@@ -90,7 +90,7 @@ public final class FieldControl
 									: false : false) {
 						httpAddressControl.loadControl();
 					}
-					else if(control instanceof HtmlUnitControl ?
+					else if(control instanceof HtmlControl ?
 							field.getHtmlUnit() != null ?
 									htmlUnitControl.equals(control)
 									: false : false) {
@@ -100,10 +100,10 @@ public final class FieldControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.FIELD_CONTROL_LOADED));
+				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
-		else if(e.getSource() instanceof HtmlUnitControl) {
+		else if(e.getSource() instanceof HtmlControl) {
 			if(getChildControls().contains(e.getSource())) {
 				put(Data.HTML_UNIT, e.getMessage());
 			}	

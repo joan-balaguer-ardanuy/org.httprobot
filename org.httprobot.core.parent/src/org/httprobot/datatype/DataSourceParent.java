@@ -101,7 +101,7 @@ public final class DataSourceParent
 	public void OnCommandEvent(CommandEventArgs e) {
 
 		switch (e.getCommand()) {
-		case CONSTANT_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof ConstantControl) {
 				Constant message = ConstantControl.class.cast(e.getSource()).getMessage();
 				@SuppressWarnings("unchecked")
@@ -111,28 +111,19 @@ public final class DataSourceParent
 					constantManagers.put(message, constantManager);
 					addChildManager(constantManager);
 				}
-			}
-			break;
-		case ACTION_CONTROL_LOADED:
-			if (e.getSource() instanceof ActionControl) {
+			} else if (e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.ACTION).equals(action)) {
 					actionParent = new ActionParent(action, this);
 					addChildManager(actionParent);
 				}
-			}
-			break;
-		case DOCUMENT_ROOT_CONTROL_LOADED:
-			if (e.getSource() instanceof DocumentRootControl) {
+			} else if (e.getSource() instanceof DocumentRootControl) {
 				DocumentRoot documentRoot = DocumentRootControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.DOCUMENT_ROOT).equals(documentRoot)) {
 					documentRootParent = new DocumentRootParent(documentRoot, this);
 					addChildManager(documentRootParent);
 				}
-			}
-			break;
-		case CONTENT_TYPE_REF_CONTROL_LOADED:
-			if (e.getSource() instanceof ContentTypeRefControl) {
+			} else if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefParent = new ContentTypeRefParent(contentTypeRef, this);

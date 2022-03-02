@@ -30,6 +30,6 @@ public final class HttpAddressControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		// Send event to parent
-		CommandListenerEvent(new CommandEventArgs(this, Command.HTTP_ADDRESS_CONTROL_LOADED));
+		CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 	}
 }

@@ -46,7 +46,7 @@ public final class ToLowerCaseControl
 		super.OnControlLoaded(e);
 		if(e.getSource().equals(this)) {
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.TO_LOWER_CASE_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

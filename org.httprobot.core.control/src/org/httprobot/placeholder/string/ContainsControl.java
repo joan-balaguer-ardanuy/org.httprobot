@@ -44,7 +44,7 @@ public final class ContainsControl
 			
 			put(Data.VALUE, contains.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTAINS_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

@@ -165,36 +165,27 @@ public class ActionParent
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
 		switch (e.getCommand()) {
-		case WEB_LOADER_CONTROL_LOADED:
+		case CONTROL_LOADED:
 			if(e.getSource() instanceof WebLoaderControl) {
 				WebLoader webLoader = WebLoaderControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(webLoader)) {
 					webLoaderManager = new WebLoaderParent(webLoader, this);
 					addChildManager(webLoaderManager);
 				}
-			}
-			break;
-		case CONSTANT_CONTROL_LOADED:
-			if(e.getSource() instanceof ConstantControl) {
+			} else if(e.getSource() instanceof ConstantControl) {
 				Constant constant = ConstantControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONSTANT).equals(constant)) {
 					ConstantParent constantManager = new ConstantParent(constant, this);
 					constantManagers.put(constant, constantManager);
 					addChildManager(constantManager);
 				}
-			}
-			break;
-		case ELEMENT_CONTROL_LOADED:
-			if(e.getSource() instanceof ElementControl) {
+			} else if(e.getSource() instanceof ElementControl) {
 				Element element = ElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(element)) {
 					elementManager = new ElementParent(element, this);
 					addChildManager(elementManager);
 				}
-			}
-			break;
-		case SELENIUM_CONTROL_LOADED:
-			if(e.getSource() instanceof DriverControl) {
+			} else if(e.getSource() instanceof DriverControl) {
 				Driver selenium = DriverControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.SELENIUM).equals(selenium)) {
 					seleniumManager = new DriverParent(selenium, this);

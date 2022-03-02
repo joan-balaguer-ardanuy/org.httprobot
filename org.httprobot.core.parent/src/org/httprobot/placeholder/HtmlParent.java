@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 
 @XmlRootElement
 public final class HtmlParent
-	extends AbstractHtmlParent<InputField, Document, HtmlUnitControl> {
+	extends AbstractHtmlParent<InputField, Document, HtmlControl> {
 
 	/**
 	 * 239612135819734039L

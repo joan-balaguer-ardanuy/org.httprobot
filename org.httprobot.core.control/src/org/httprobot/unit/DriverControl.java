@@ -38,19 +38,19 @@ public final class DriverControl extends Control<Driver> {
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
-			Driver selenium = Driver.class.cast(e.getMessage());
+			Driver driver = Driver.class.cast(e.getMessage());
 			
-			if(selenium.getBrowserVersion() == null) {
-				throw new Error("SeleniumControl.OnControlInitialized: BrowserVersion is missing.");
+			if(driver.getBrowserVersion() == null) {
+				throw new Error("DriverControl.OnControlInitialized: BrowserVersion is missing.");
 			}
-			if(selenium.getDriverPath() == null) {
-				throw new Error("SeleniumControl.OnControlInitialized: driver path is missing.");
+			if(driver.getDriverPath() == null) {
+				throw new Error("DriverControl.OnControlInitialized: driver path is missing.");
 			}
-			if(selenium.getDriverProperty() == null) {
-				throw new Error("SeleniumControl.OnControlInitialized: driver property is missing.");
+			if(driver.getDriverProperty() == null) {
+				throw new Error("DriverControl.OnControlInitialized: driver property is missing.");
 			}
-			if(selenium.getAllowImages() == null) {
-				throw new Error("SeleniumControl.OnControlInitialized: allow images is missing.");
+			if(driver.getAllowImages() == null) {
+				throw new Error("DriverControl.OnControlInitialized: allow images is missing.");
 			}
 		}
 	}
@@ -64,7 +64,7 @@ public final class DriverControl extends Control<Driver> {
 			put(Data.DRIVER_PROPERTY, selenium.getDriverProperty());
 			put(Data.ALLOW_IMAGES, selenium.getAllowImages());
 			
-			CommandListenerEvent(new CommandEventArgs(this, Command.SELENIUM_CONTROL_LOADED));
+			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}	
 	}
 }
