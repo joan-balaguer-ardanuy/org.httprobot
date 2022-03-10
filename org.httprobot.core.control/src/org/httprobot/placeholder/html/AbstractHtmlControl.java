@@ -1,6 +1,6 @@
 package org.httprobot.placeholder.html;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.AbstractHtml;
 import org.httprobot.Data;
 import org.httprobot.event.ControlEventArgs;
@@ -20,7 +20,7 @@ public class AbstractHtmlControl<TMessage extends AbstractHtml>
 	public AbstractHtmlControl() {
 		super();
 	}
-	public AbstractHtmlControl(TMessage message, ControlListener parent) {
+	public AbstractHtmlControl(TMessage message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -72,7 +72,7 @@ public class AbstractHtmlControl<TMessage extends AbstractHtml>
 				while(hasNext())
 				{
 					//Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof ContainsElementControl ?
 							containsElementControl.equals(control) : false) {

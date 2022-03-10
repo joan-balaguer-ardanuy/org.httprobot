@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class FieldRootControl
-	extends Control<FieldRoot> {
+	extends AbstractControl<FieldRoot> {
 
 	/**
 	 * 2468967859806729944L
@@ -34,7 +34,7 @@ public final class FieldRootControl
 		super();
 		fieldControl = new LinkedHashSet<FieldControl>();
 	}
-	public FieldRootControl(FieldRoot message, ControlListener parent) {
+	public FieldRootControl(FieldRoot message, Control parent) {
 		super(message, parent);
 
 	}
@@ -69,7 +69,7 @@ public final class FieldRootControl
 				while(hasNext())
 				{
 					//Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof FieldControl ?
 							!fieldRoot.getField().isEmpty() ?
@@ -79,7 +79,7 @@ public final class FieldRootControl
 						FieldControl childFieldControl = FieldControl.class.cast(control);
 						
 						for(Field field : fieldRoot.getField()) {
-							if(field.getUuid().equals(childFieldControl.getUuid())) {
+							if(field.getName().equals(childFieldControl.getName())) {
 								childFieldControl.loadControl();
 								break;
 							}
@@ -89,11 +89,11 @@ public final class FieldRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof FieldControl) {
-			if(getChildControls().contains(e.getSource())) {
+			if(getChildren().contains(e.getSource())) {
 				put(Data.FIELD, e.getMessage());
 			}
 		}

@@ -1,0 +1,30 @@
+package org.httprobot.operator;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.httprobot.AbstractOperator;
+import org.httprobot.operator.html.Element;
+
+@XmlRootElement
+public final class Html extends AbstractOperator {
+
+	/**
+	 * -5625666546941269503L
+	 */
+	private static final long serialVersionUID = -5625666546941269503L;
+
+	Element element;
+
+	@XmlElement
+	public Element getElement() {
+		return element;
+	}
+	public void setElement(Element element) {
+		this.element = element;
+	}
+
+	public Html() {
+		super();
+	}
+}

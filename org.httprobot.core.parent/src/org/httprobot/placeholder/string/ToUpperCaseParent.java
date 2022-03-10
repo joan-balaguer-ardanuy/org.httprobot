@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.ToUpperCase;
 
 @XmlRootElement
 public class ToUpperCaseParent
@@ -28,7 +29,7 @@ public class ToUpperCaseParent
 	public ToUpperCaseParent() {
 		super();
 	}
-	public ToUpperCaseParent(ToUpperCase message, ParentListener parent) {
+	public ToUpperCaseParent(ToUpperCase message, Listener parent) {
 		super(message, ToUpperCaseControl.class, parent);
 	}
 	

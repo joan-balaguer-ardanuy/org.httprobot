@@ -8,8 +8,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.Message;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -29,7 +29,7 @@ import org.httprobot.unit.ActionParent;
 
 @XmlRootElement
 public final class DataSourceParent 
-	extends MappingParent<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+	extends Entry<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L
@@ -63,7 +63,7 @@ public final class DataSourceParent
 	public DataSourceParent() {
 		super();
 	}
-	public DataSourceParent(DataSource message, ParentListener parent) {
+	public DataSourceParent(DataSource message, Listener parent) {
 		super(message, DataSourceControl.class, parent);
 	}
 	
@@ -73,7 +73,7 @@ public final class DataSourceParent
 		case STARTED:
 			if (e.getSource().equals(contentTypeRefParent)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					if (contentTypeRefParent.getUuid().equals(contentType.getUuid())) {
+					if (contentTypeRefParent.getName().equals(contentType.getName())) {
 						contentTypeRefParent.setValue(contentType);
 					}
 				}

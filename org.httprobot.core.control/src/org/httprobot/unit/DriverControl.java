@@ -4,14 +4,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Command;
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
-public final class DriverControl extends Control<Driver> {
+public final class DriverControl extends AbstractControl<Driver> {
 
 	/**
 	 * 7011339833433807856L
@@ -31,7 +31,7 @@ public final class DriverControl extends Control<Driver> {
 	public DriverControl() {
 		super();
 	}
-	public DriverControl(Driver message, ControlListener parent) {
+	public DriverControl(Driver message, Control parent) {
 		super(message, parent);
 	}
 
@@ -64,7 +64,7 @@ public final class DriverControl extends Control<Driver> {
 			put(Data.DRIVER_PROPERTY, selenium.getDriverProperty());
 			put(Data.ALLOW_IMAGES, selenium.getAllowImages());
 			
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}	
 	}
 }

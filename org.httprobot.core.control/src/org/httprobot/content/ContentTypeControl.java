@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ContentTypeControl 
-	extends Control<ContentType> {
+	extends AbstractControl<ContentType> {
 
 	/**
 	 * -3238737080863615932L
@@ -40,7 +40,7 @@ public final class ContentTypeControl
 	public ContentTypeControl() {
 		super();
 	}
-	public ContentTypeControl(ContentType message, ControlListener parent) {
+	public ContentTypeControl(ContentType message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -84,7 +84,7 @@ public final class ContentTypeControl
 			// Iterate through child controls and set it's messages.
 			if (hasChildControls()) {
 				while (hasNext()) {
-					ControlListener control = next();
+					Control control = next();
 
 					// Check if FieldRef has been stored before.
 					if (getFieldRefControl().contains(control) ? 
@@ -96,7 +96,7 @@ public final class ContentTypeControl
 
 						for (FieldRef fieldRef : contentType.getFieldRef()) {
 							// Match by UUID.
-							if (fieldRefControl.getUuid().equals(fieldRef.getUuid())) {
+							if (fieldRefControl.getName().equals(fieldRef.getName())) {
 								// Load the message
 								fieldRefControl.loadControl();
 								break;
@@ -113,7 +113,7 @@ public final class ContentTypeControl
 
 						for (ContentTypeRef contentTypeRef : contentType.getContentTypeRef()) {
 							// Match by UUID.
-							if (contentTypeRefControl.getUuid().equals(contentTypeRef.getUuid())) {
+							if (contentTypeRefControl.getName().equals(contentTypeRef.getName())) {
 								// Load the message
 								contentTypeRefControl.loadControl();
 								break;
@@ -122,16 +122,16 @@ public final class ContentTypeControl
 					}
 				}
 				reset();
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			} else {
 				throw new Error("ContentTypeControl.OnControlLoaded: XML message controls missing.");
 			}
 		} else if (e.getSource() instanceof FieldRefControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.FIELD_REF, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ContentTypeRefControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONTENT_TYPE_REF, e.getMessage());
 			}
 		}

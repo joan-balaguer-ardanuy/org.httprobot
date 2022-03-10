@@ -3,8 +3,8 @@ package org.httprobot.content;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -12,7 +12,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRefControl 
-	extends Control<ContentTypeRef> {
+	extends AbstractControl<ContentTypeRef> {
 
 	/**
 	 * 740303867514973622L
@@ -32,7 +32,7 @@ public final class ContentTypeRefControl
 	public ContentTypeRefControl() {
 		setMessage(new ContentTypeRef());
 	}
-	public ContentTypeRefControl(ContentTypeRef message, ControlListener parent) {
+	public ContentTypeRefControl(ContentTypeRef message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -40,7 +40,7 @@ public final class ContentTypeRefControl
 		if (e.getSource().equals(this)) {
 			ContentTypeRef contentTypeRef = ContentTypeRef.class.cast(e.getMessage());
 			// Cbeck required data
-			if (contentTypeRef.getUuid() == null || contentTypeRef.getName() == null) {
+			if (contentTypeRef.getName() == null || contentTypeRef.getName() == null) {
 				throw new Error("ContentTypeRefControl.OnControlInitialized: UUID cannot be null.");
 			}
 		}
@@ -50,10 +50,10 @@ public final class ContentTypeRefControl
 		if (e.getSource().equals(this)) {
 			ContentTypeRef contentTypeRef = ContentTypeRef.class.cast(e.getMessage());
 
-			if (contentTypeRef.getUuid() != null) {
+			if (contentTypeRef.getName() != null) {
 				put(Data.NAME, contentTypeRef.getName());
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			} else {
 				throw new Error("ContentTypeRefControl.OnControlLoaded: UUID cannot be null.");
 			}

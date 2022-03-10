@@ -5,8 +5,7 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractContent;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
  * The root content type class. Inherits {@link AbstractContent}.
@@ -18,7 +17,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class ContentTypeRoot extends AbstractContent {
+public final class ContentTypeRoot extends XML {
 
 	/**
 	 * 1632447667657457711L
@@ -91,16 +90,5 @@ public final class ContentTypeRoot extends AbstractContent {
 	 */
 	public ContentTypeRoot() {
 		super();
-	}
-	
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		ContentTypeRoot contentTypeRoot = ContentTypeRoot.class.cast(e.getSource());
-		// Set properties
-		setContentType(contentTypeRoot.getContentType());
-		setContentTypeRef(contentTypeRoot.getContentTypeRef());
-		setFieldRef(contentTypeRoot.getFieldRef());
 	}
 }

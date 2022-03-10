@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.Concat;
 
 @XmlRootElement
 public final class ConcatParent
@@ -28,7 +29,7 @@ public final class ConcatParent
 	public ConcatParent() {
 		super();
 	}
-	public ConcatParent(Concat message, ParentListener parent) {
+	public ConcatParent(Concat message, Listener parent) {
 		super(message, ConcatControl.class, parent);
 	}
 	

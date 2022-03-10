@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.Replace;
 
 @XmlRootElement
 public final class ReplaceParent
@@ -28,7 +29,7 @@ public final class ReplaceParent
 	public ReplaceParent() {
 		super();
 	}
-	public ReplaceParent(Replace message, ParentListener parent) {
+	public ReplaceParent(Replace message, Listener parent) {
 		super(message, ReplaceControl.class, parent);
 	}
 	

@@ -1,13 +1,13 @@
 package org.httprobot.placeholder.string;
 
-import org.httprobot.Control;
-import org.httprobot.ParentListener;
+import org.httprobot.AbstractControl;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.AbstractString;
 import org.httprobot.placeholder.AbstractPlaceholderParent;
 
-public abstract class AbstractStringParent<T extends Control<?>>
+public abstract class AbstractStringParent<T extends AbstractControl<?>>
 	extends AbstractPlaceholderParent<InputField, String,T> {
 
 	/**
@@ -18,7 +18,7 @@ public abstract class AbstractStringParent<T extends Control<?>>
 	public AbstractStringParent() {
 		super();
 	}
-	public AbstractStringParent(AbstractString message, Class<T> type, ParentListener parent) {
+	public AbstractStringParent(AbstractString message, Class<T> type, Listener parent) {
 		super(message, type, parent);
 	}
 	

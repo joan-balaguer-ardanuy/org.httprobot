@@ -5,11 +5,10 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractDataType;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 @XmlRootElement
-public final class FieldRoot extends AbstractDataType {
+public final class FieldRoot extends XML {
 
 	/**
 	 * -4698409081823244264L
@@ -29,13 +28,5 @@ public final class FieldRoot extends AbstractDataType {
 	public FieldRoot() {
 		super();
 		field = new LinkedHashSet<Field>();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		FieldRoot fieldRoot = FieldRoot.class.cast(e.getSource());
-		setField(fieldRoot.getField());
 	}
 }

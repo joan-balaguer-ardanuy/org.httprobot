@@ -1,6 +1,6 @@
 package org.httprobot.placeholder.string;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.AbstractString;
 import org.httprobot.placeholder.AbstractPlaceholderControl;
 
@@ -15,7 +15,7 @@ public abstract class AbstractStringControl<TMessage extends AbstractString>
 	public AbstractStringControl() {
 		super();
 	}
-	public AbstractStringControl(TMessage message, ControlListener parent) {
+	public AbstractStringControl(TMessage message, Control parent) {
 		super(message, parent);
 	}
 

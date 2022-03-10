@@ -1,0 +1,151 @@
+package org.httprobot;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.httprobot.content.ContentTypeRoot;
+import org.httprobot.data.DocumentLibrary;
+import org.httprobot.data.TemplateLibrary;
+import org.httprobot.event.ControlEventArgs;
+import org.httprobot.event.EventArgs;
+import org.httprobot.event.ManagerEventArgs;
+import org.openqa.selenium.WebDriver;
+
+public abstract class AbstractParent<T extends AbstractControl<?>> 
+	extends XML 
+		implements Parent {
+
+	/**
+	 * -4305679696716005954L
+	 */
+	private static final long serialVersionUID = -4305679696716005954L;
+
+	T control;
+
+	ContentTypeRoot contentTypeRoot;
+	DocumentLibrary documentLibrary;
+	TemplateLibrary templateLibrary;
+	
+	Map<String, String> parameters;
+	
+	public T getControl() {
+		return control;
+	}
+	public void setControl(T control) {
+		this.control = control;
+	}
+	@Override
+	public Parent getParent() {
+		return super.getParent() != null ? (Parent) super.getParent() : null;
+	}
+	@Override
+	public void setParent(Listener parent) {
+		if(parent instanceof Parent) {
+			super.setParent(parent);
+		} else {
+			throw new Error("Parent.setParent: parent instance must be ParentListener");
+		}
+	}
+	@XmlTransient
+	public ContentTypeRoot getContentTypeRoot() {
+		if (contentTypeRoot != null) {
+			return contentTypeRoot;
+		} else if (parent != null) {
+			return getParent().getContentTypeRoot();
+		} else return null;
+	}
+	public void setContentTypeRoot(ContentTypeRoot contentTypeRoot) {
+		this.contentTypeRoot = contentTypeRoot;
+	}
+	@XmlTransient
+	public DocumentLibrary getDocumentLibrary() {
+		if (documentLibrary != null) {
+			return documentLibrary;
+		} else if (parent != null) {
+			return getParent().getDocumentLibrary();
+		} else return null;
+	}
+	public void setDocumentLibrary(DocumentLibrary documentLibrary) {
+		this.documentLibrary = documentLibrary;
+	}
+	@XmlTransient
+	public TemplateLibrary getTemplateLibrary() {
+		if(templateLibrary != null) {
+			return templateLibrary;
+		} else if(parent != null) {
+			return getParent().getTemplateLibrary();
+		} else return null;
+	}
+	public void setTemplateLibrary(TemplateLibrary templateLibrary) {
+		this.templateLibrary = templateLibrary;
+	}
+	@XmlTransient
+	public Map<String, String> getConstants() {
+		if (parameters != null) {
+			return parameters;
+		} else if (parent != null) {
+			return getParent().getConstants();
+		} else return null;
+	}
+	public void setConstants(Map<String, String> constants) {
+		this.parameters = constants;
+	}
+	@XmlTransient
+	public WebDriver getWebDriver() {
+		if (parent != null) {
+			return getParent().getWebDriver();
+		} else return null;
+	}
+	public void setWebDriver(WebDriver webDriver) {
+		if(parent != null) {
+			getParent().setWebDriver(webDriver);
+		}
+	}
+	
+	public AbstractParent() {
+		super(UUID.randomUUID());
+	}
+	public AbstractParent(XML message, Class<T> type, AbstractParent<?> parent) {
+		super(message.getName());
+
+		control = instance(type, message);
+	}
+	@Override
+	public void start() {
+		control.load();
+	}
+	@Override
+	public void stop() {
+		
+	}
+
+	@Override
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_INITIALIZED:
+			break;
+		case CONTROL_LOADED:
+			if (hasChildren()) {
+				// Start each child manager
+				while (hasNext()) {
+					Parent manager = (Parent) next();
+					manager.start();
+				}
+				reset();
+			}
+			SendEvent(new EventArgs(this, EventType.PARENT_STARTED));
+			break;
+
+		default:
+			break;
+		}
+	}
+}

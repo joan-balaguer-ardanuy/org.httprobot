@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
@@ -18,7 +18,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootParent 
-	extends MappingParent<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
+	extends Entry<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
 
 	/**
 	 * 1379517986287192515L
@@ -51,7 +51,7 @@ public final class ContentTypeRootParent
 	public ContentTypeRootParent() {
 		super();
 	}
-	public ContentTypeRootParent(ContentTypeRoot message, ParentListener parent) {
+	public ContentTypeRootParent(ContentTypeRoot message, Listener parent) {
 		super(message, ContentTypeRootControl.class, parent);
 		contentTypeIndex = new LinkedHashMap<ContentTypeRef, ContentType>();
 		
@@ -111,7 +111,7 @@ public final class ContentTypeRootParent
 			if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager = ContentTypeRefParent.class.cast(e.getSource());
 				for (ContentType contentType : contentTypeParents.keySet()) {
-					if (contentTypeRefManager.getUuid().equals(contentType.getUuid())) {
+					if (contentTypeRefManager.getName().equals(contentType.getName())) {
 						contentTypeRefManager.setValue(contentType);
 						break;
 					}
@@ -156,7 +156,7 @@ public final class ContentTypeRootParent
 						if(contentTypeManager.equals(contentTypeParents.get(contentType))) {
 							InputDocument templateDocument = contentTypeManager.get(contentType);
 							for(ContentTypeRef contentTypeRef : contentTypeIndex.keySet()) {
-								if(contentTypeRef.getUuid().equals(contentType.getUuid())) {
+								if(contentTypeRef.getName().equals(contentType.getName())) {
 									inputDocumentLibrary.put(contentTypeRef, templateDocument);
 								}
 							}

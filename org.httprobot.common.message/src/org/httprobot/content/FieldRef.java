@@ -3,18 +3,17 @@ package org.httprobot.content;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractContent;
 import org.httprobot.DataType;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
- * Field reference class. The {@link java.util.UUID} of this message
- * must match with {@link org.httprobot.datatype.Field}'s UUID.
+ * Field reference class. The name of this message
+ * must match with {@link org.httprobot.datatype.Field}'s name.
  * @author joan
  *
  */
 @XmlRootElement
-public final class FieldRef extends AbstractContent {
+public final class FieldRef extends XML {
 
 	/**
 	 * 210911811831590239L
@@ -47,14 +46,5 @@ public final class FieldRef extends AbstractContent {
 	 */
 	public FieldRef() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		FieldRef fieldRef = FieldRef.class.cast(e.getSource());
-		// set data type property
-		setDataType(fieldRef.getDataType());
 	}
 }

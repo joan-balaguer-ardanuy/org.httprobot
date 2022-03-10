@@ -4,8 +4,7 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractContent;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
  * Content type class. Inherits {@link AbstractContent}.
@@ -17,7 +16,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class ContentType extends AbstractContent {
+public final class ContentType extends XML {
 
 	/**
 	 * 5107630251956423519L
@@ -69,15 +68,5 @@ public final class ContentType extends AbstractContent {
 	 */
 	public ContentType() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		ContentType contentType = ContentType.class.cast(e.getSource());
-		// Set properties
-		setContentTypeRef(contentType.getContentTypeRef());
-		setFieldRef(contentType.getFieldRef());
 	}
 }

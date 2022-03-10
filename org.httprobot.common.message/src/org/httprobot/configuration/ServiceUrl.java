@@ -3,8 +3,7 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractConfiguration;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
  * Service URL configuration XML message class.
@@ -19,8 +18,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class ServiceUrl
-	extends AbstractConfiguration {
+public final class ServiceUrl extends XML {
 
 	/**
 	 * 8383249175803013880L
@@ -138,18 +136,5 @@ public final class ServiceUrl
 	 */
 	public ServiceUrl() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		ServiceUrl serviceUrl = ServiceUrl.class.cast(e.getSource());
-		// Set XML attributes
-		setUrl(serviceUrl.getUrl());
-		setProtocol(serviceUrl.getProtocol());
-		setHost(serviceUrl.getHost());
-		setPort(serviceUrl.getPort());
-		setFile(serviceUrl.getFile());
 	}
 }

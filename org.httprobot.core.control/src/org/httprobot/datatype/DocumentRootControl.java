@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.content.ContentTypeRefControl;
@@ -15,7 +15,7 @@ import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
 public final class DocumentRootControl
-	extends Control<DocumentRoot> {
+	extends AbstractControl<DocumentRoot> {
 
 	/**
 	 * 5728744970361838580L
@@ -59,7 +59,7 @@ public final class DocumentRootControl
 	public DocumentRootControl() {
 		super();
 	}
-	public DocumentRootControl(DocumentRoot message, ControlListener parent) {
+	public DocumentRootControl(DocumentRoot message, Control parent) {
 		super(message, parent);
 	}
 	
@@ -117,7 +117,7 @@ public final class DocumentRootControl
 				// Iterate through child XML message controls
 				while (hasNext()) {
 					// Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 
 					if (control instanceof ActionControl ? 
 							documentRoot.getAction() != null ? 
@@ -136,7 +136,7 @@ public final class DocumentRootControl
 						DocumentControl childDocumentControl = DocumentControl.class.cast(control);
 
 						for (Document document : documentRoot.getDocument()) {
-							if (childDocumentControl.getUuid().equals(document.getUuid())) {
+							if (childDocumentControl.getName().equals(document.getName())) {
 								childDocumentControl.loadControl();
 								break;
 							}
@@ -151,22 +151,22 @@ public final class DocumentRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof FieldRootControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.FIELD_ROOT, e.getMessage());
 			}
 		} else if (e.getSource() instanceof DocumentControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.DOCUMENT, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ContentTypeRefControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONTENT_TYPE_REF, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ActionControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.ACTION, getMessage());
 			}
 		}

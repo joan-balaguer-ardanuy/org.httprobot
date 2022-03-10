@@ -2,8 +2,9 @@ package org.httprobot.placeholder.html;
 
 import java.util.List;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.html.ContainsElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,7 +19,7 @@ public class ContainsElementParent
 	public ContainsElementParent() {
 		super();
 	}
-	public ContainsElementParent(ContainsElement message, ParentListener parent) {
+	public ContainsElementParent(ContainsElement message, Listener parent) {
 		super(message, ContainsElementControl.class, parent);
 	}
 

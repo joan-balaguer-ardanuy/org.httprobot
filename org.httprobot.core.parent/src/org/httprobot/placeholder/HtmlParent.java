@@ -2,10 +2,11 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.Html;
 import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.w3c.dom.Document;
 
@@ -20,11 +21,11 @@ public final class HtmlParent
 	
 	public HtmlParent() {
 	}
-	public HtmlParent(HtmlUnit message, ParentListener parent) {
+	public HtmlParent(Html message, Listener parent) {
 	}
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
-		super.OnCommandEvent(e);
+		super.OnEventReceived(e);
 	}
 	@Override
 	public void OnParentEvent(ManagerEventArgs e) {

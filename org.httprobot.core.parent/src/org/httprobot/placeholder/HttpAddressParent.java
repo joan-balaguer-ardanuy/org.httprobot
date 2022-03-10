@@ -1,9 +1,10 @@
 package org.httprobot.placeholder;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.Url;
 
 public class HttpAddressParent 
 	extends AbstractPlaceholderParent<InputField, String, HttpAddressControl> {
@@ -16,12 +17,12 @@ public class HttpAddressParent
 	public HttpAddressParent() {
 		super();
 	}
-	public HttpAddressParent(HttpAddress message, ParentListener parent) {
+	public HttpAddressParent(Url message, Listener parent) {
 		super(message, HttpAddressControl.class, parent);
 	}
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {
-		super.OnCommandEvent(e);
+		super.OnEventReceived(e);
 	}
 	@Override
 	public void OnParentEvent(ManagerEventArgs e) {

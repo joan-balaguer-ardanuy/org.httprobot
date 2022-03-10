@@ -2,11 +2,12 @@ package org.httprobot.placeholder.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Substring;
 
 @XmlRootElement
 public final class SubstringControl
@@ -21,7 +22,7 @@ public final class SubstringControl
 		super();
 		setMessage(new Substring());
 	}
-	public SubstringControl(Substring message, ControlListener parent) {
+	public SubstringControl(Substring message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -44,7 +45,7 @@ public final class SubstringControl
 			put(Data.START_INDEX, message.getStartIndex());
 			put(Data.END_INDEX, message.getEndIndex());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

@@ -2,9 +2,9 @@ package org.httprobot.datatype;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 
-import org.httprobot.MappingParent;
+import org.httprobot.Entry;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
@@ -16,7 +16,7 @@ import org.httprobot.placeholder.HttpAddressParent;
 
 @XmlRootElement
 public final class FieldParent
-	extends MappingParent<InputField, HtmlPage, FieldControl> {
+	extends Entry<InputField, HtmlPage, FieldControl> {
 
 	/**
 	 * -8390181286230356701L
@@ -29,7 +29,7 @@ public final class FieldParent
 	public FieldParent() {
 		super();
 	}
-	public FieldParent(Field message, ParentListener parent) {
+	public FieldParent(Field message, Listener parent) {
 		super(message, FieldControl.class, parent);
 	}
 	

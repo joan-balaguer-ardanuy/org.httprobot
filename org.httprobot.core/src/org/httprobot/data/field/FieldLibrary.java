@@ -66,7 +66,7 @@ public class FieldLibrary<K>
 		{
 			InputField inputField = this.inputFields.get(key);
 			
-			if(inputField.getFieldRef().getUuid().equals(uuid))
+			if(inputField.getFieldRef().getName().equals(uuid))
 			{
 				return inputField.deepInputCopy();
 			}

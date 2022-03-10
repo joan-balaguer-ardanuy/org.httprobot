@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.Substring;
 
 @XmlRootElement
 public final class SubstringParent
@@ -28,7 +29,7 @@ public final class SubstringParent
 	public SubstringParent() {
 		super();
 	}
-	public SubstringParent(Substring message, ParentListener parent) {
+	public SubstringParent(Substring message, Listener parent) {
 		super(message, SubstringControl.class, parent);
 	}
 	

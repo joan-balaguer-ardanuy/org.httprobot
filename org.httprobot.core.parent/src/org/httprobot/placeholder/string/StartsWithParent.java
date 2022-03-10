@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.StartsWith;
 
 @XmlRootElement
 public final class StartsWithParent 
@@ -28,7 +29,7 @@ public final class StartsWithParent
 	public StartsWithParent() {
 		super();
 	}
-	public StartsWithParent(StartsWith message, ParentListener parent) {
+	public StartsWithParent(StartsWith message, Listener parent) {
 		super(message, StartsWithControl.class, parent);
 	}
 	

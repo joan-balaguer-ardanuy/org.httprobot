@@ -2,11 +2,12 @@ package org.httprobot.placeholder.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Concat;
 
 @XmlRootElement
 public final class ConcatControl
@@ -20,7 +21,7 @@ public final class ConcatControl
 	public ConcatControl() {
 		super();
 	}
-	public ConcatControl(Concat message, ControlListener parent) {
+	public ConcatControl(Concat message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -42,7 +43,7 @@ public final class ConcatControl
 			
 			put(Data.VALUE, concat.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 		
 	}

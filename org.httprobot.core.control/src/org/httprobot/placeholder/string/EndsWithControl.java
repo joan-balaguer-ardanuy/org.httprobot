@@ -3,11 +3,12 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.EndsWith;
 
 @XmlRootElement
 public final class EndsWithControl
@@ -31,7 +32,7 @@ public final class EndsWithControl
 	public EndsWithControl() {
 		super();
 	}
-	public EndsWithControl(EndsWith message, ControlListener parent) {
+	public EndsWithControl(EndsWith message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -55,7 +56,7 @@ public final class EndsWithControl
 			
 			put(Data.VALUE, endsWith.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

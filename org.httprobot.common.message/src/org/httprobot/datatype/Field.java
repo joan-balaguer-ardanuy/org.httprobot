@@ -3,13 +3,12 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractDataType;
-import org.httprobot.event.MessageEventArgs;
-import org.httprobot.placeholder.HtmlUnit;
-import org.httprobot.placeholder.HttpAddress;
+import org.httprobot.XML;
+import org.httprobot.operator.Html;
+import org.httprobot.operator.Url;
 
 @XmlRootElement
-public final class Field extends AbstractDataType {
+public final class Field extends XML {
 
 	/**
 	 * -2640753397637192814L
@@ -17,8 +16,8 @@ public final class Field extends AbstractDataType {
 	private static final long serialVersionUID = -2640753397637192814L;
 
 	String fieldName;
-	HttpAddress httpAddress;
-	HtmlUnit htmlUnit;
+	Url httpAddress;
+	Html htmlUnit;
 	
 	@XmlElement
 	public String getFieldName() {
@@ -29,32 +28,22 @@ public final class Field extends AbstractDataType {
 	}
 
 	@XmlElement
-	public HttpAddress getHttpAddress() {
+	public Url getHttpAddress() {
 		return httpAddress;
 	}
-	public void setHttpAddress(HttpAddress httpAddress) {
+	public void setHttpAddress(Url httpAddress) {
 		this.httpAddress = httpAddress;
 	}
 
 	@XmlElement
-	public HtmlUnit getHtmlUnit() {
+	public Html getHtmlUnit() {
 		return htmlUnit;
 	}
-	public void setHtmlUnit(HtmlUnit htmlUnit) {
+	public void setHtmlUnit(Html htmlUnit) {
 		this.htmlUnit = htmlUnit;
 	}
 
 	public Field() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		Field field = Field.class.cast(e.getSource());
-		setFieldName(field.getFieldName());
-		setHttpAddress(field.getHttpAddress());
-		setHtmlUnit(field.getHtmlUnit());
 	}
 }

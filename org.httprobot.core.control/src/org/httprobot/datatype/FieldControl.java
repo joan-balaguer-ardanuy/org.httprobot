@@ -3,8 +3,8 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -14,7 +14,7 @@ import org.httprobot.placeholder.HttpAddressControl;
 
 @XmlRootElement
 public final class FieldControl
-	extends Control<Field> {
+	extends AbstractControl<Field> {
 
 	/**
 	 * 7351340591317735119L
@@ -43,7 +43,7 @@ public final class FieldControl
 		super();
 		setMessage(new Field());
 	}
-	public FieldControl(Field message, ControlListener parent) {
+	public FieldControl(Field message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -82,7 +82,7 @@ public final class FieldControl
 				while(hasNext())
 				{
 					//Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof HttpAddressControl ?
 							field.getHttpAddress() != null ?
@@ -100,16 +100,16 @@ public final class FieldControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof HtmlControl) {
-			if(getChildControls().contains(e.getSource())) {
+			if(getChildren().contains(e.getSource())) {
 				put(Data.HTML_UNIT, e.getMessage());
 			}	
 		}
 		else if(e.getSource() instanceof HttpAddressControl) {
-			if(getChildControls().contains(e.getSource())) {
+			if(getChildren().contains(e.getSource())) {
 				put(Data.HTTP_ADDRESS, e.getMessage());
 			}	
 		}

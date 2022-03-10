@@ -2,11 +2,12 @@ package org.httprobot.placeholder.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Replace;
 
 @XmlRootElement
 public final class ReplaceControl
@@ -21,7 +22,7 @@ public final class ReplaceControl
 		super();
 		setMessage(new Replace());
 	}
-	public ReplaceControl(Replace message, ControlListener parent) {
+	public ReplaceControl(Replace message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -55,7 +56,7 @@ public final class ReplaceControl
 				throw new Error("ReplaceControl.OnControlInitialized: NewString XML message element expected.");
 			}
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

@@ -2,8 +2,8 @@ package org.httprobot.parameter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -11,7 +11,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ConstantControl 
-	extends Control<Constant> {
+	extends AbstractControl<Constant> {
 
 	/**
 	 * 8308150241844524678L
@@ -21,7 +21,7 @@ public final class ConstantControl
 	public ConstantControl() {
 		super();	
 	}
-	public ConstantControl(Constant message, ControlListener parent) {
+	public ConstantControl(Constant message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -41,7 +41,7 @@ public final class ConstantControl
 			put(Data.KEY, constant.getKey());
 			put(Data.VALUE, constant.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

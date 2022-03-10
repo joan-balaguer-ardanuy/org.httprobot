@@ -9,9 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.html.ContainsElement;
+import org.httprobot.operator.html.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -40,7 +42,7 @@ public final class ElementParent
 	public ElementParent() {
 		super();
 	}
-	public ElementParent(Element message, ParentListener parent) {
+	public ElementParent(Element message, Listener parent) {
 		super(message, ElementControl.class, parent);
 	}
 	@Override

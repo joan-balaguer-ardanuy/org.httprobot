@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.Contains;
 
 @XmlRootElement
 public final class ContainsParent
@@ -28,7 +29,7 @@ public final class ContainsParent
 	public ContainsParent() {
 		super();
 	}
-	public ContainsParent(Contains message, ParentListener parent) {
+	public ContainsParent(Contains message, Listener parent) {
 		super(message, ContainsControl.class, parent);
 	}
 	

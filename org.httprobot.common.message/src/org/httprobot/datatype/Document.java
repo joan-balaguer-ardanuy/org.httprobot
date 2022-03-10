@@ -3,13 +3,12 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractDataType;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRef;
-import org.httprobot.event.MessageEventArgs;
 import org.httprobot.unit.Action;
 
 @XmlRootElement
-public final class Document extends AbstractDataType {
+public final class Document extends XML {
 
 	/**
 	 * -6444128980718357234L
@@ -55,16 +54,5 @@ public final class Document extends AbstractDataType {
 
 	public Document() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		Document document = Document.class.cast(e.getSource());
-		setAction(document.getAction());
-		setContentTypeRef(document.getContentTypeRef());
-		setFieldRoot(document.getFieldRoot());
-		setDocument(document.getDocument());
 	}
 }

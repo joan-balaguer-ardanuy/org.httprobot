@@ -6,10 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.httprobot.AbstractConfiguration;
+import org.httprobot.XML;
 import org.httprobot.configuration.adapter.ServiceQNameAdapter;
 import org.httprobot.configuration.adapter.ServiceUrlAdapter;
-import org.httprobot.event.MessageEventArgs;
 
 /**
  * Service connection XML configuration message class.
@@ -21,8 +20,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class ServiceConnection 
-	extends AbstractConfiguration {
+public final class ServiceConnection extends XML {
 
 	/**
 	 * 355219426287742894L
@@ -78,15 +76,5 @@ public final class ServiceConnection
 	 */
 	public ServiceConnection() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		ServiceConnection serviceConnection = ServiceConnection.class.cast(e.getSource());
-		// Set properties
-		setQName(serviceConnection.getQName());
-		setURL(serviceConnection.getURL());
 	}
 }

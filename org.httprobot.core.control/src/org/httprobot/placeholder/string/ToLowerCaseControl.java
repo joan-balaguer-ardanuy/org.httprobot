@@ -3,10 +3,11 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.ToLowerCase;
 
 @XmlRootElement
 public final class ToLowerCaseControl
@@ -30,7 +31,7 @@ public final class ToLowerCaseControl
 	public ToLowerCaseControl() {
 		super();
 	}
-	public ToLowerCaseControl(ToLowerCase message, ControlListener parent) {
+	public ToLowerCaseControl(ToLowerCase message, Control parent) {
 		super(message, parent);
 	}
 	
@@ -46,7 +47,7 @@ public final class ToLowerCaseControl
 		super.OnControlLoaded(e);
 		if(e.getSource().equals(this)) {
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

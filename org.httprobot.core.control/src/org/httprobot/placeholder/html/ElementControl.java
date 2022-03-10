@@ -3,11 +3,12 @@ package org.httprobot.placeholder.html;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.html.Element;
 
 @XmlRootElement
 public final class ElementControl 
@@ -34,7 +35,7 @@ public final class ElementControl
 	public ElementControl() {
 		super();
 	}
-	public ElementControl(Element message, ControlListener parent) {
+	public ElementControl(Element message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -70,7 +71,7 @@ public final class ElementControl
 				while(hasNext())
 				{
 					//Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) {
@@ -83,7 +84,7 @@ public final class ElementControl
 			}
 			reset();
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

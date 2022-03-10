@@ -3,8 +3,8 @@ package org.httprobot.datatype;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -12,7 +12,7 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 
 public class FieldRootParent
-	extends MappingParent<InputDocument, HtmlPage, FieldRootControl> {
+	extends Entry<InputDocument, HtmlPage, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L
@@ -24,7 +24,7 @@ public class FieldRootParent
 	public FieldRootParent() {
 		super();
 	}
-	public FieldRootParent(FieldRoot message, ParentListener parent) {
+	public FieldRootParent(FieldRoot message, Listener parent) {
 		super(message, FieldRootControl.class, parent);
 		fieldManagers = new LinkedHashMap<Field, FieldParent>();
 	}
@@ -35,7 +35,7 @@ public class FieldRootParent
 		setValue(value);
 		for(Field field : fieldManagers.keySet()) {
 			FieldParent fieldManager = fieldManagers.get(field);
-			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByUUID(field.getUuid());
+			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByUUID(field.getName());
 			fieldManager.put(inputField, value);
 		}
 		return super.put(key, value);

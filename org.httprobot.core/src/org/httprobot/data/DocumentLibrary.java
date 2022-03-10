@@ -26,7 +26,7 @@ public class DocumentLibrary extends InputDocumentLibrary<HtmlPage, FieldRef> {
 	@Override
 	public InputDocument put(HtmlPage key, InputDocument value) {
 		
-		if(value.getContentType().getUuid().equals(this.contentTypeRef.getUuid()))
+		if(value.getContentType().getName().equals(this.contentTypeRef.getName()))
 		{	
 			//Store document
 			super.put(key, value);

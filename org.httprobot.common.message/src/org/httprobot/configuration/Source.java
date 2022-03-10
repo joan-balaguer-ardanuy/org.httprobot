@@ -4,10 +4,9 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractConfiguration;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.datatype.DataSource;
-import org.httprobot.event.MessageEventArgs;
 
 /**
  * The source XML message of the org.httprobot.
@@ -20,8 +19,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class Source 
-	extends AbstractConfiguration {
+public final class Source extends XML {
 
 	/**
 	 * 8762442432069232238L
@@ -73,15 +71,5 @@ public final class Source
 	 */
 	public Source() {
 		super();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		Source source = Source.class.cast(e.getSource());
-		// Set properties
-		setContentTypeRoot(source.getContentTypeRoot());
-		setDataSource(source.getDataSource());
 	}
 }

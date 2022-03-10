@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -16,7 +16,7 @@ import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class ActionControl
-	extends Control<Action> {
+	extends AbstractControl<Action> {
 
 	/**
 	 * -3447883786428247992L
@@ -67,7 +67,7 @@ public final class ActionControl
 	public ActionControl() {
 		super();
 	}
-	public ActionControl(Action message, ControlListener parent) {
+	public ActionControl(Action message, Control parent) {
 		super(message, parent);
 	}
 	
@@ -126,7 +126,7 @@ public final class ActionControl
 				while(hasNext())
 				{
 					//Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof ElementControl ?
 							elementControl.equals(control) : false) { 
@@ -143,7 +143,7 @@ public final class ActionControl
 									: false : false) {
 						ConstantControl childConstantControl = ConstantControl.class.cast(control);
 						for(Constant constant : action.getConstant()) {
-							if(childConstantControl.getUuid().equals(constant.getUuid())) {
+							if(childConstantControl.getName().equals(constant.getName())) {
 								childConstantControl.loadControl();
 							}
 						}		
@@ -152,19 +152,19 @@ public final class ActionControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
 		else if (e.getSource() instanceof ElementControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.ELEMENT, e.getMessage());
 			}
 		} else if (e.getSource() instanceof DriverControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.SELENIUM, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ConstantControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONSTANT, e.getMessage());
 			}
 		}

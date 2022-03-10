@@ -47,14 +47,12 @@ public class Launcher {
 	 * @return the {@link ServiceConnection} configuration XML message
 	 */
 	private ServiceConnection loadServiceConnectionFile(String path) {
-		ServiceConnection serviceConnection = new ServiceConnection();
-
 		File file = new File(path);
 		InputStream is;
 
 		try {
 			is = new FileInputStream(file);
-			serviceConnection.unmarshal(is);
+			ServiceConnection serviceConnection = XML.read(ServiceConnection.class, is);
 			return serviceConnection;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

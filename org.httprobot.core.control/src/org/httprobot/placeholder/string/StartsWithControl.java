@@ -3,11 +3,12 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.StartsWith;
 
 @XmlRootElement
 public final class StartsWithControl 
@@ -31,7 +32,7 @@ public final class StartsWithControl
 	public StartsWithControl() {
 		super();
 	}
-	public StartsWithControl(StartsWith message, ControlListener parent) {
+	public StartsWithControl(StartsWith message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -55,7 +56,7 @@ public final class StartsWithControl
 			
 			put(Data.VALUE, startsWith.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

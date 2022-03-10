@@ -16,15 +16,15 @@ import javax.xml.transform.stream.StreamResult;
 import org.httprobot.Constants;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
+import org.httprobot.operator.html.Element;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantParent;
-import org.httprobot.placeholder.html.Element;
 import org.httprobot.placeholder.html.ElementControl;
 import org.httprobot.placeholder.html.ElementParent;
 import org.openqa.selenium.By;
@@ -40,7 +40,7 @@ import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionParent
-	extends MappingParent<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends Entry<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L
@@ -60,7 +60,7 @@ public class ActionParent
 	public ActionParent() {
 		super();
 	}
-	public ActionParent(Action message, ParentListener parent) {
+	public ActionParent(Action message, Listener parent) {
 		super(message, ActionControl.class, parent);
 	}
 	

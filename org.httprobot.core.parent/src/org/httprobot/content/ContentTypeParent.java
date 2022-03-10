@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -14,7 +14,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public class ContentTypeParent
-	extends MappingParent<ContentType, InputDocument, ContentTypeControl> {
+	extends Entry<ContentType, InputDocument, ContentTypeControl> {
 
 	/**
 	 * 7504962006510123725L
@@ -31,7 +31,7 @@ public class ContentTypeParent
 	public ContentTypeParent() {
 		super();
 	}
-	public ContentTypeParent(ContentType message, ParentListener parent) {
+	public ContentTypeParent(ContentType message, Listener parent) {
 		super(message, ContentTypeControl.class, parent);
 		contentTypeRefCount = 0;
 		contentTypeParents = new LinkedHashMap<ContentTypeRef, ContentTypeParent>();

@@ -3,8 +3,9 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
+import org.httprobot.operator.string.EndsWith;
 
 @XmlRootElement
 public final class EndsWithParent
@@ -28,7 +29,7 @@ public final class EndsWithParent
 	public EndsWithParent() {
 		super();
 	}
-	public EndsWithParent(EndsWith message, ParentListener parent) {
+	public EndsWithParent(EndsWith message, Listener parent) {
 		super(message, EndsWithControl.class, parent);
 	}
 	

@@ -3,11 +3,12 @@ package org.httprobot.placeholder.html;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.html.ContainsElement;
 
 @XmlRootElement
 public final class ContainsElementControl 
@@ -31,7 +32,7 @@ public final class ContainsElementControl
 	public ContainsElementControl() {
 		super();
 	}
-	public ContainsElementControl(ContainsElement message, ControlListener parent) {
+	public ContainsElementControl(ContainsElement message, Control parent) {
 		super(message, parent);
 	}
 	
@@ -51,7 +52,7 @@ public final class ContainsElementControl
 			ContainsElement element = ContainsElement.class.cast(e.getMessage());
 			put(Data.XPATH, element.getXPath());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

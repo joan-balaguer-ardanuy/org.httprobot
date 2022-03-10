@@ -31,7 +31,7 @@ public class RobotWriter {
 	{
 		try {
 			OutputStream os = new FileOutputStream(file);
-			selenium.marshal(os);
+			selenium.write(os);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

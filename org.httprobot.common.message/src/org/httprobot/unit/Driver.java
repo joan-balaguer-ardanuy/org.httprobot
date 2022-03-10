@@ -2,9 +2,9 @@ package org.httprobot.unit;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.httprobot.AbstractConfiguration;
+
 import org.httprobot.BrowserVersion;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
  * Robot abstract configuration XML message class.
@@ -19,8 +19,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class Driver
-	extends AbstractConfiguration {
+public final class Driver extends XML {
 	
 	/**
 	 * -7265402834372126641L
@@ -114,17 +113,5 @@ public final class Driver
 	 */
 	public Driver() {
 		super();
-	}
-	
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		Driver selenium = Driver.class.cast(e.getSource());
-		// Set properties
-		setDriverPath(selenium.getDriverPath());
-		setDriverProperty(selenium.getDriverProperty());
-		setBrowserVersion(selenium.getBrowserVersion());
-		setAllowImages(selenium.getAllowImages());
 	}
 }

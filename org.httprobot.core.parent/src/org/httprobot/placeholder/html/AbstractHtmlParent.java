@@ -1,11 +1,11 @@
 package org.httprobot.placeholder.html;
 
-import org.httprobot.Control;
+import org.httprobot.AbstractControl;
 import org.httprobot.AbstractHtml;
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.placeholder.AbstractPlaceholderParent;
 
-public abstract class AbstractHtmlParent<K,V,T extends Control<?>>
+public abstract class AbstractHtmlParent<K,V,T extends AbstractControl<?>>
 	extends AbstractPlaceholderParent<K,V,T> {
 
 	/**
@@ -17,7 +17,7 @@ public abstract class AbstractHtmlParent<K,V,T extends Control<?>>
 	public AbstractHtmlParent() {
 		super();
 	}
-	public AbstractHtmlParent(AbstractHtml message, Class<T> type, ParentListener parent) {
+	public AbstractHtmlParent(AbstractHtml message, Class<T> type, Listener parent) {
 		super(message, type, parent);
 	}
 	

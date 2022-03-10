@@ -2,14 +2,15 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.Url;
 
 @XmlRootElement
 public final class HttpAddressControl 
-	extends AbstractPlaceholderControl<HttpAddress> {
+	extends AbstractPlaceholderControl<Url> {
 
 	/**
 	 * 1246127918758222588L
@@ -19,7 +20,7 @@ public final class HttpAddressControl
 	public HttpAddressControl() {
 		super();
 	}
-	public HttpAddressControl(HttpAddress message, ControlListener parent) {
+	public HttpAddressControl(Url message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -30,6 +31,6 @@ public final class HttpAddressControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		super.OnControlLoaded(e);
 		// Send event to parent
-		CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+		SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 	}
 }

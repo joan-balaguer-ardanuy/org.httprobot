@@ -1,46 +1,46 @@
 package org.httprobot.placeholder;
 
-import org.httprobot.Control;
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
-import org.httprobot.AbstractPlaceholder;
+import org.httprobot.AbstractControl;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
+import org.httprobot.AbstractOperator;
 import org.httprobot.event.CommandEventArgs;
-import org.httprobot.placeholder.string.Contains;
+import org.httprobot.operator.string.Concat;
+import org.httprobot.operator.string.Contains;
+import org.httprobot.operator.string.EndsWith;
+import org.httprobot.operator.string.Equals;
+import org.httprobot.operator.string.Replace;
+import org.httprobot.operator.string.StartsWith;
+import org.httprobot.operator.string.Substring;
+import org.httprobot.operator.string.ToLowerCase;
+import org.httprobot.operator.string.ToUpperCase;
+import org.httprobot.operator.string.Trim;
+import org.httprobot.operator.string.TryParse;
 import org.httprobot.placeholder.string.ContainsControl;
 import org.httprobot.placeholder.string.ContainsParent;
-import org.httprobot.placeholder.string.EndsWith;
 import org.httprobot.placeholder.string.EndsWithControl;
 import org.httprobot.placeholder.string.EndsWithParent;
-import org.httprobot.placeholder.string.Equals;
 import org.httprobot.placeholder.string.EqualsControl;
 import org.httprobot.placeholder.string.EqualsParent;
-import org.httprobot.placeholder.string.Trim;
 import org.httprobot.placeholder.string.TrimControl;
 import org.httprobot.placeholder.string.TrimParent;
-import org.httprobot.placeholder.string.Replace;
 import org.httprobot.placeholder.string.ReplaceControl;
 import org.httprobot.placeholder.string.ReplaceParent;
-import org.httprobot.placeholder.string.StartsWith;
 import org.httprobot.placeholder.string.StartsWithControl;
 import org.httprobot.placeholder.string.StartsWithParent;
-import org.httprobot.placeholder.string.Concat;
 import org.httprobot.placeholder.string.ConcatControl;
 import org.httprobot.placeholder.string.ConcatParent;
-import org.httprobot.placeholder.string.Substring;
 import org.httprobot.placeholder.string.SubstringControl;
 import org.httprobot.placeholder.string.SubstringParent;
-import org.httprobot.placeholder.string.ToLowerCase;
 import org.httprobot.placeholder.string.ToLowerCaseControl;
 import org.httprobot.placeholder.string.ToLowerCaseParent;
-import org.httprobot.placeholder.string.ToUpperCase;
 import org.httprobot.placeholder.string.ToUpperCaseControl;
 import org.httprobot.placeholder.string.ToUpperCaseParent;
-import org.httprobot.placeholder.string.TryParse;
 import org.httprobot.placeholder.string.TryParseControl;
 import org.httprobot.placeholder.string.TryParseParent;
 
-public abstract class AbstractPlaceholderParent<K, V, T extends Control<?>>
-	extends MappingParent<K, V, T> {
+public abstract class AbstractPlaceholderParent<K, V, T extends AbstractControl<?>>
+	extends Entry<K, V, T> {
 
 	/**
 	 * -1728687948431462444L
@@ -62,7 +62,7 @@ public abstract class AbstractPlaceholderParent<K, V, T extends Control<?>>
 	public AbstractPlaceholderParent() {
 		super();
 	}
-	public AbstractPlaceholderParent(AbstractPlaceholder message, Class<T> type, ParentListener parent) {
+	public AbstractPlaceholderParent(AbstractOperator message, Class<T> type, Listener parent) {
 		super(message, type, parent);
 	}
 	

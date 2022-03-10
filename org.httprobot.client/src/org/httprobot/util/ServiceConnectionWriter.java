@@ -40,7 +40,7 @@ public class ServiceConnectionWriter {
 	{
 		try {
 			OutputStream os = new FileOutputStream(file);
-			serviceConnection.marshal(os);
+			serviceConnection.write(os);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

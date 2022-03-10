@@ -5,9 +5,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractDataType;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRef;
-import org.httprobot.event.MessageEventArgs;
 import org.httprobot.parameter.Constant;
 import org.httprobot.unit.Action;
 
@@ -23,7 +22,7 @@ import org.httprobot.unit.Action;
  *
  */
 @XmlRootElement
-public final class DataSource extends AbstractDataType {
+public final class DataSource extends XML {
 
 	/**
 	 * 5329113787974867972L
@@ -136,18 +135,5 @@ public final class DataSource extends AbstractDataType {
 	 */
 	public DataSource() {
 		super();
-	}
-	
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		DataSource dataSource = DataSource.class.cast(e.getSource());
-		// Set properties
-		setAction(dataSource.getAction());
-		setContentTypeRef(dataSource.getContentTypeRef());
-		setDocumentRoot(dataSource.getDocumentRoot());
-		setSourceName(dataSource.getSourceName());
-		setConstant(dataSource.getConstant());
 	}
 }

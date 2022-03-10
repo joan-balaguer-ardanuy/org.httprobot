@@ -3,28 +3,37 @@ package org.httprobot.parameter;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractParameter;
+import org.httprobot.XML;
 
 @XmlRootElement
-public final class Constant extends AbstractParameter {
+public final class Constant extends XML
+	implements java.util.Map.Entry<String,String> {
 
 	/**
 	 * 3549203523654599730L
 	 */
 	private static final long serialVersionUID = 3549203523654599730L;
 
-	@Override
+	String key;
+	String value;
+	
 	@XmlElement
 	public String getKey() {
-		return super.getKey();
+		return key;
 	}
-	@Override
 	public String setKey(String key) {
-		if(key.startsWith("[@") && key.endsWith("]")) {
-			return super.setKey(key);
-		} else {
-			throw new Error("org.httprobot.paramater.Constant: bad key format.");
-		}
+		String oldKey = this.key;
+		this.key = key;
+		return oldKey;
+	}
+	@XmlElement
+	public String getValue() {
+		return value;
+	}
+	public String setValue(String value) {
+		String oldValue = this.value;
+		this.value = value;
+		return oldValue;
 	}
 
 	public Constant() {

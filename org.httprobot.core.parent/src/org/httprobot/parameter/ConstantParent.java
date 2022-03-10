@@ -1,11 +1,11 @@
 package org.httprobot.parameter;
 
-import org.httprobot.MappingParent;
-import org.httprobot.ParentListener;
+import org.httprobot.Entry;
+import org.httprobot.Listener;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ConstantParent 
-	extends MappingParent<String, String, ConstantControl> 
+	extends Entry<String, String, ConstantControl> 
 		implements java.util.Map.Entry<String, String> {
 
 	/**
@@ -15,7 +15,7 @@ public class ConstantParent
 	
 	public ConstantParent() {
 	}
-	public ConstantParent(Constant message, ParentListener parent) {
+	public ConstantParent(Constant message, Listener parent) {
 		super(message, ConstantControl.class, parent);
 	}
 	

@@ -1,12 +1,12 @@
 package org.httprobot.unit;
 
-import org.httprobot.Control;
+import org.httprobot.AbstractControl;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
 
-public class WebLoaderControl extends Control<WebLoader> {
+public class WebLoaderControl extends AbstractControl<WebLoader> {
 
 	/**
 	 * -1373660850780191708L
@@ -45,7 +45,7 @@ public class WebLoaderControl extends Control<WebLoader> {
 			
 			
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 

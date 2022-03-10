@@ -3,12 +3,11 @@ package org.httprobot.unit;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractUnit;
 import org.httprobot.NextPageMethod;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 @XmlRootElement
-public final class WebLoader extends AbstractUnit {
+public final class WebLoader extends XML {
 
 	/**
 	 * 7700952400328745265L
@@ -83,20 +82,5 @@ public final class WebLoader extends AbstractUnit {
 
 	public WebLoader() {
 		
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		WebLoader webLoader = WebLoader.class.cast(e.getSource());
-		setTime(webLoader.getTime());
-		setNextPageMethod(webLoader.getNextPageMethod());
-		setJavaScript(webLoader.getJavaScript());
-		setNextPageAttribute(webLoader.getNextPageAttribute());
-		setNextPageText(webLoader.getNextPageText());
-		setXPath(webLoader.getXPath());
-		setUrlPattern(webLoader.getUrlPattern());
-		setStartIndex(webLoader.getStartIndex());
 	}
 }

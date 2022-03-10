@@ -3,10 +3,11 @@ package org.httprobot.placeholder.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Trim;
 
 @XmlRootElement
 public final class TrimControl
@@ -31,7 +32,7 @@ public final class TrimControl
 		super();
 		setMessage(new Trim());
 	}
-	public TrimControl(Trim message, ControlListener parent) {
+	public TrimControl(Trim message, Control parent) {
 		super(message, parent);
 	}
 	
@@ -48,7 +49,7 @@ public final class TrimControl
 		super.OnControlLoaded(e);
 		if (e.getSource().equals(this)) {
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

@@ -2,11 +2,12 @@ package org.httprobot.placeholder.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Contains;
 
 @XmlRootElement
 public final class ContainsControl 
@@ -20,7 +21,7 @@ public final class ContainsControl
 	public ContainsControl() {
 		super();
 	}
-	public ContainsControl(Contains message, ControlListener parent) {
+	public ContainsControl(Contains message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -44,7 +45,7 @@ public final class ContainsControl
 			
 			put(Data.VALUE, contains.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

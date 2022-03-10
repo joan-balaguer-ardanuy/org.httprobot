@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -13,7 +13,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class ContentTypeRootControl 
-	extends Control<ContentTypeRoot> {
+	extends AbstractControl<ContentTypeRoot> {
 
 	/**
 	 * 5044020805370638430L
@@ -48,10 +48,8 @@ public final class ContentTypeRootControl
 	
 	public ContentTypeRootControl() {
 		super();
-		
-		setMessage(new ContentTypeRoot());
 	}
-	public ContentTypeRootControl(ContentTypeRoot message, ControlListener parent) {
+	public ContentTypeRootControl(ContentTypeRoot message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -98,7 +96,7 @@ public final class ContentTypeRootControl
 			// Iterate through XML message child controls.
 			if (hasChildControls()) {
 				while (hasNext()) {
-					ControlListener control = next();
+					Control control = next();
 
 					if (control instanceof FieldRefControl ?
 							!contentTypeRoot.getFieldRef().isEmpty() ? 
@@ -110,7 +108,7 @@ public final class ContentTypeRootControl
 						// Look for current FieldRef message control.
 						for (FieldRef fieldRef : contentTypeRoot.getFieldRef()) {
 							// By UUID
-							if (fieldRefControl.getUuid().equals(fieldRef.getUuid())) {
+							if (fieldRefControl.getName().equals(fieldRef.getName())) {
 								// Load XML message control.
 								fieldRefControl.loadControl();
 								break;
@@ -126,7 +124,7 @@ public final class ContentTypeRootControl
 						// Look for current ContentTypeRef message control.
 						for (ContentTypeRef contentTypeRef : contentTypeRoot.getContentTypeRef()) {
 							// By UUID.
-							if (contentTypeRefControl.getUuid().equals(contentTypeRef.getUuid())) {
+							if (contentTypeRefControl.getName().equals(contentTypeRef.getName())) {
 								// Load XML message control.
 								contentTypeRefControl.loadControl();
 								break;
@@ -142,7 +140,7 @@ public final class ContentTypeRootControl
 						// Look for current ContentType message control.
 						for (ContentType contentType : contentTypeRoot.getContentType()) {
 							// By UUID
-							if (contentTypeControl.getUuid().equals(contentType.getUuid())) {
+							if (contentTypeControl.getName().equals(contentType.getName())) {
 								// Load XML message control
 								contentTypeControl.loadControl();
 								break;
@@ -153,18 +151,18 @@ public final class ContentTypeRootControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		} else if (e.getSource() instanceof ContentTypeControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONTENT_TYPE, e.getMessage());
 			}
 		} else if (e.getSource() instanceof FieldRefControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.FIELD_REF, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ContentTypeRefControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONTENT_TYPE_REF, e.getMessage());
 			}
 		}

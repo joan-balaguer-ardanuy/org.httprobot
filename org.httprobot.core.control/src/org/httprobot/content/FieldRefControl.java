@@ -3,8 +3,8 @@ package org.httprobot.content;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
@@ -12,7 +12,7 @@ import org.httprobot.event.ControlEventArgs;
 
 @XmlRootElement
 public final class FieldRefControl 
-	extends Control<FieldRef> {
+	extends AbstractControl<FieldRef> {
 
 	/**
 	 * 1646361821245878280L
@@ -33,7 +33,7 @@ public final class FieldRefControl
 		super();
 		setMessage(new FieldRef());
 	}
-	public FieldRefControl(FieldRef message, ControlListener parent) {
+	public FieldRefControl(FieldRef message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -51,11 +51,11 @@ public final class FieldRefControl
 		if(e.getSource().equals(this)) {
 			FieldRef fieldRef = FieldRef.class.cast(e.getMessage());
 			
-			if(fieldRef.getUuid() != null) {
+			if(fieldRef.getName() != null) {
 				put(Data.FIELD_NAME, fieldRef.getName());
 				put(Data.FIELD_TYPE, fieldRef.getDataType());
 				//Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 			else {
 				throw new Error("FieldRefControl.OnControlLoaded: UUID cannot be null.");

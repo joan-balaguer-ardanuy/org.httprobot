@@ -1,13 +1,13 @@
 package org.httprobot.unit;
 
-import org.httprobot.MappingParent;
+import org.httprobot.Entry;
 
 import java.util.List;
 
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.NextPageMethod;
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderParent
-	extends MappingParent<String, HtmlPage, WebLoaderControl> {
+	extends Entry<String, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L
@@ -33,7 +33,7 @@ public class WebLoaderParent
 	public WebLoaderParent() {
 		super();
 	}
-	public WebLoaderParent(WebLoader message, ParentListener parent) {
+	public WebLoaderParent(WebLoader message, Listener parent) {
 		super(message, WebLoaderControl.class, parent);
 		pageNumber = message.getStartIndex();
 	}

@@ -81,7 +81,7 @@ public class InputDocument extends SolrInputDocument {
 		if (this.getChildDocuments() != null) {
 			for (InputDocument child : this.getChildInputDocument()) {
 				for (ContentTypeRef contentTypeRef : this.contentType.getContentTypeRef()) {
-					if (contentTypeRef.getUuid().equals(child.getContentType().getUuid())) {
+					if (contentTypeRef.getName().equals(child.getContentType().getName())) {
 						clone.addChildDocument(child.deepInputCopy());
 						break;
 					}
@@ -92,7 +92,7 @@ public class InputDocument extends SolrInputDocument {
 	}
 	public void addChildDocument(InputDocument childDocument) {
 		for(ContentTypeRef contentTypeRef : contentType.getContentTypeRef()) {
-			if(contentTypeRef.getUuid().equals(childDocument.getContentType().getUuid())) {
+			if(contentTypeRef.getName().equals(childDocument.getContentType().getName())) {
 				this.childInputDocuments.put(contentTypeRef, childDocument);
 				super.addChildDocument(childDocument);
 				return;
@@ -101,11 +101,11 @@ public class InputDocument extends SolrInputDocument {
 	}
 	public void addInputDocument(InputDocument inputDocument)
 	{
-		if (!this.getContentType().getUuid().equals(inputDocument.getContentType().getUuid())) {
+		if (!this.getContentType().getName().equals(inputDocument.getContentType().getName())) {
 			Boolean found = false;
 
 			for (ContentTypeRef contentTypeRef : this.contentType.getContentTypeRef()) {
-				if (contentTypeRef.getUuid().equals(inputDocument.getContentType().getUuid())) {
+				if (contentTypeRef.getName().equals(inputDocument.getContentType().getName())) {
 					this.addChildDocument(inputDocument);
 					found = true;
 					break;
@@ -183,7 +183,7 @@ public class InputDocument extends SolrInputDocument {
 	public void removeChildDocument(InputDocument childInputDocument) {
 		if (getChildDocuments().remove(childInputDocument)) {
 			for (ContentTypeRef contentTypeRef : childInputDocuments.keySet()) {
-				if (contentTypeRef.getUuid().equals(childInputDocument.getContentType().getUuid())) {
+				if (contentTypeRef.getName().equals(childInputDocument.getContentType().getName())) {
 					childInputDocuments.remove(contentTypeRef);
 				}
 			}
@@ -194,12 +194,12 @@ public class InputDocument extends SolrInputDocument {
 		return this.findDocumentByUUID(this, contentTypeRef);
 	}
 	private InputDocument findDocumentByUUID(InputDocument currentDocument, UUID contentTypeRefID) {
-		if (!contentTypeRefID.equals(this.getContentType().getUuid())) {
+		if (!contentTypeRefID.equals(this.getContentType().getName())) {
 			if (currentDocument.hasChildDocuments()) {
 				for (ContentTypeRef contentTypeRef : this.childInputDocuments.keySet()) {
 					InputDocument inputDocument = this.childInputDocuments.get(contentTypeRef);
 
-					if (contentTypeRef.getUuid().equals(contentTypeRefID)) {
+					if (contentTypeRef.getName().equals(contentTypeRefID)) {
 						return inputDocument;
 					}
 				}

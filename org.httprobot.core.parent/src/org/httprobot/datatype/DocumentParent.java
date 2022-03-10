@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.httprobot.Data;
-import org.httprobot.ParentListener;
-import org.httprobot.MappingParent;
+import org.httprobot.Listener;
+import org.httprobot.Entry;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -24,7 +24,7 @@ import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionParent;
 
 public class DocumentParent
-	extends MappingParent<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
+	extends Entry<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
 
 	/**
 	 * -7967388989379246404L
@@ -41,7 +41,7 @@ public class DocumentParent
 	public DocumentParent() {
 		super();
 	}
-	public DocumentParent(Document message, ParentListener parent) {
+	public DocumentParent(Document message, Listener parent) {
 		super(message, DocumentControl.class, parent);
 	}
 	
@@ -63,7 +63,7 @@ public class DocumentParent
 		case STARTED:
 			if(e.getSource().equals(contentTypeRefParent)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
-					if (contentType.getUuid().equals(contentTypeRefParent.getUuid())) {
+					if (contentType.getName().equals(contentTypeRefParent.getName())) {
 						contentTypeRefParent.setValue(contentType);
 					}
 				}

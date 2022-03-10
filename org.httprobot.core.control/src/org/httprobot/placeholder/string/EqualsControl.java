@@ -2,11 +2,12 @@ package org.httprobot.placeholder.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.string.Equals;
 
 @XmlRootElement
 public final class EqualsControl
@@ -21,7 +22,7 @@ public final class EqualsControl
 		super();
 		setMessage(new Equals());
 	}
-	public EqualsControl(Equals message, ControlListener parent) {
+	public EqualsControl(Equals message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -44,7 +45,7 @@ public final class EqualsControl
 
 			put(Data.VALUE, equals.getValue());
 			// Send event to parent
-			CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 		}
 	}
 }

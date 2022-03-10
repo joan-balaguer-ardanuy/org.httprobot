@@ -2,9 +2,9 @@ package org.httprobot.placeholder;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.ControlListener;
-import org.httprobot.AbstractPlaceholder;
+import org.httprobot.AbstractOperator;
 import org.httprobot.Data;
 import org.httprobot.event.ControlEventArgs;
 import org.httprobot.placeholder.string.ContainsControl;
@@ -19,8 +19,8 @@ import org.httprobot.placeholder.string.ToLowerCaseControl;
 import org.httprobot.placeholder.string.ToUpperCaseControl;
 import org.httprobot.placeholder.string.TryParseControl;
 
-public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceholder>
-	extends Control<TMessage> {
+public abstract class AbstractPlaceholderControl<TMessage extends AbstractOperator>
+	extends AbstractControl<TMessage> {
 
 	/**
 	 * -138070185044904871L
@@ -120,7 +120,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	public AbstractPlaceholderControl() {
 		super();
 	}
-	public AbstractPlaceholderControl(TMessage message, ControlListener parent) {
+	public AbstractPlaceholderControl(TMessage message, Control parent) {
 		super(message, parent);
 	}
 
@@ -128,7 +128,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 	public void OnControlInitialized(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
 			
-			AbstractPlaceholder placeholder = AbstractPlaceholder.class.cast(e.getMessage());
+			AbstractOperator placeholder = AbstractOperator.class.cast(e.getMessage());
 			
 			if (placeholder.getContains() != null) {
 				new ContainsControl(placeholder.getContains(), this);
@@ -197,7 +197,7 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 				// Iterate through child XML message controls
 				while (hasNext()) {
 					// Get next child XML message control
-					ControlListener control = next();
+					Control control = next();
 
 					if (control instanceof ContainsControl ? 
 							containsControl.equals(control) : false) {
@@ -238,47 +238,47 @@ public abstract class AbstractPlaceholderControl<TMessage extends AbstractPlaceh
 				reset();
 			}
 		} else if (e.getSource() instanceof TryParseControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.TRY_PARSE, e.getMessage());
 			}
 		} else if (e.getSource() instanceof SubstringControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.SUBSTRING, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ConcatControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONCAT, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ReplaceControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.REPLACE, e.getMessage());
 			}
 		} else if (e.getSource() instanceof TrimControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.TRIM, e.getMessage());
 			}
 		} else if (e.getSource() instanceof EqualsControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.EQUALS, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ContainsControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.CONTAINS, e.getMessage());
 			}
 		} else if (e.getSource() instanceof StartsWithControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.STARTS_WITH, e.getMessage());
 			}
 		} else if (e.getSource() instanceof EndsWithControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.ENDS_WITH, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ToUpperCaseControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.TO_UPPER_CASE, e.getMessage());
 			}
 		} else if (e.getSource() instanceof ToLowerCaseControl) {
-			if (getChildControls().contains(e.getSource())) {
+			if (getChildren().contains(e.getSource())) {
 				put(Data.TO_LOWER_CASE, e.getMessage());
 			}
 		}

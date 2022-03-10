@@ -3,8 +3,7 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractConfiguration;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
 
 /**
  * Service QName configuration XML message class.
@@ -19,8 +18,7 @@ import org.httprobot.event.MessageEventArgs;
  *
  */
 @XmlRootElement
-public final class ServiceQName 
-	extends AbstractConfiguration {
+public final class ServiceQName extends XML {
 
 	/**
 	 * 5243372154742756420Ls
@@ -93,16 +91,5 @@ public final class ServiceQName
 	 */
 	public ServiceQName() {
 		super();
-	}
-	
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		// Cast source
-		ServiceQName serviceQName = ServiceQName.class.cast(e.getSource());
-		// Set XML attributes
-		setNamespaceURI(serviceQName.getNamespaceURI());
-		setLocalPart(serviceQName.getLocalPart());
-		setPrefix(serviceQName.getPrefix());
 	}
 }

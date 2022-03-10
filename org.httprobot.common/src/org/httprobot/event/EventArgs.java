@@ -11,7 +11,7 @@ import org.httprobot.EventType;
  * @author joan
  *
  */
-public abstract class EventArgs extends EventObject {
+public class EventArgs extends EventObject {
 
 	/**
 	 * 6347247597829991161L
@@ -31,6 +31,12 @@ public abstract class EventArgs extends EventObject {
 		return eventType;
 	}
 
+	Object value;
+	
+	public Object getValue() {
+		return value;
+	}
+	
 	/**
 	 * {@link EventArgs} default class constructor.
 	 * @param source {@link Object} the source of the event
@@ -38,6 +44,16 @@ public abstract class EventArgs extends EventObject {
 	 */
 	public EventArgs(Object source, EventType eventType) {
 		super(source);
+		this.eventType = eventType;
+	}
+	/**
+	 * {@link EventArgs} default class constructor.
+	 * @param source {@link Object} the source of the event
+	 * @param eventType {@link EventType} the event type
+	 */
+	public EventArgs(Object source, Object value, EventType eventType) {
+		super(source);
+		this.value = value;
 		this.eventType = eventType;
 	}
 }

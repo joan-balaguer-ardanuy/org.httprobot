@@ -5,13 +5,12 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.httprobot.AbstractUnit;
-import org.httprobot.event.MessageEventArgs;
+import org.httprobot.XML;
+import org.httprobot.operator.html.Element;
 import org.httprobot.parameter.Constant;
-import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
-public final class Action extends AbstractUnit {
+public final class Action extends XML {
 
 	/**
 	 * 798890955203009246L
@@ -22,7 +21,7 @@ public final class Action extends AbstractUnit {
 	String httpAddress;
 	String method;
 	String javaScript;
-	Driver selenium;
+	Driver driver;
 	WebLoader webLoader;
 	Element element;
 	LinkedHashSet<Constant> constant;
@@ -78,27 +77,13 @@ public final class Action extends AbstractUnit {
 	}
 	@XmlElement
 	public Driver getSelenium() {
-		return selenium;
+		return driver;
 	}
 	public void setSelenium(Driver selenium) {
-		this.selenium = selenium;
+		this.driver = selenium;
 	}
 	public Action() {
 		super();
 		constant = new LinkedHashSet<Constant>();
-	}
-
-	@Override
-	public void OnMessageUnmarshalled(MessageEventArgs e) {
-		super.OnMessageUnmarshalled(e);
-		
-		Action action = Action.class.cast(e.getSource());
-		setClearQuery(action.getClearQuery());
-		setHttpAddress(action.getHttpAddress());
-		setMethod(action.getMethod());
-		setWebLoader(action.getWebLoader());
-		setConstant(action.getConstant());
-		setElement(action.getElement());
-		setSelenium(action.getSelenium());
 	}
 }

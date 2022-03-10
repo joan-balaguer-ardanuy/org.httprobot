@@ -33,7 +33,7 @@ public class RobotSource implements MessageService {
 
 		try {
 			is = new FileInputStream(file);
-			source.unmarshal(is);
+			source.toXML(is);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

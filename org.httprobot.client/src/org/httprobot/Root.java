@@ -25,7 +25,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * Root class. Inherits {@link XML}.
  * This class is the parent of parents XML messages.
- * It is {@link ParentListener} and listens for
+ * It is {@link Listener} and listens for
  * {@link ServiceConnectionParent} and {@link SourceParent}.
  * @author joan
  *
@@ -33,7 +33,7 @@ import org.openqa.selenium.WebDriver;
 @XmlRootElement
 public final class Root
 	extends XML
-		implements ParentListener {
+		implements Listener {
 
 	/**
 	 * 322360610738419712L
@@ -45,7 +45,7 @@ public final class Root
 	 */
 	WebDriver webDriver;
 	/**
-	 * The {@link ServiceConnection} XML message {@link MappingParent}.
+	 * The {@link ServiceConnection} XML message {@link Entry}.
 	 */
 	ServiceConnectionParent serviceConnectionManager;
 	/**
@@ -53,7 +53,7 @@ public final class Root
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Source} configuration XML message {@link MappingParent}.
+	 * The {@link Source} configuration XML message {@link Entry}.
 	 */
 	SourceParent sourceManager;
 	/**
@@ -62,11 +62,11 @@ public final class Root
 	Source source;
 	
 	@Override
-	public ParentListener getParent() {
+	public Listener getParent() {
 		return null;
 	}
 	@Override
-	public void setParent(ParentListener parent) {
+	public void setParent(Listener parent) {
 		
 	}
 	@Override
@@ -147,7 +147,7 @@ public final class Root
 					// Look for matching content type
 					for (ContentType contentType : source.getContentTypeRoot().getContentType()) {
 						// Match UUID
-						if (contentTypeRef.getUuid().equals(contentType.getUuid())) {
+						if (contentTypeRef.getName().equals(contentType.getName())) {
 							InputDocument templateDocument = sourceManager.getTemplateLibrary().get(contentTypeRef);
 							FieldLibrary<FieldRef> fieldTemplates = sourceManager.getTemplateLibrary().getTemplateFieldLibrary();
 							// Initialize document library

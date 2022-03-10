@@ -3,16 +3,17 @@ package org.httprobot.placeholder;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ControlListener;
+import org.httprobot.Control;
 import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ControlEventArgs;
+import org.httprobot.operator.Html;
 import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class HtmlControl 
-	extends AbstractPlaceholderControl<HtmlUnit> {
+	extends AbstractPlaceholderControl<Html> {
 
 	/**
 	 * -5062725452790453335L
@@ -32,14 +33,14 @@ public final class HtmlControl
 	public HtmlControl() {
 		super();
 	}
-	public HtmlControl(HtmlUnit message, ControlListener parent) {
+	public HtmlControl(Html message, Control parent) {
 		super(message, parent);
 	}
 	
 	@Override
 	public void OnControlInitialized(ControlEventArgs e) {
 		if(e.getSource().equals(this)) {
-			HtmlUnit htmlUnit = HtmlUnit.class.cast(e.getMessage());
+			Html htmlUnit = Html.class.cast(e.getMessage());
 			
 			if(htmlUnit.getElement() != null) {
 				new ElementControl(htmlUnit.getElement(), this);
@@ -54,12 +55,12 @@ public final class HtmlControl
 	public void OnControlLoaded(ControlEventArgs e) {
 		if (e.getSource().equals(this)) {
 
-			HtmlUnit htmlUnit = HtmlUnit.class.cast(e.getMessage());
+			Html htmlUnit = Html.class.cast(e.getMessage());
 
 			if (hasChildControls()) {
 
 				while (hasNext()) {
-					ControlListener control = next();
+					Control control = next();
 					
 					if(control instanceof ElementControl ?
 							htmlUnit.getElement() != null ?
@@ -71,11 +72,11 @@ public final class HtmlControl
 				// Set control ready to be iterated again.
 				reset();
 				// Send event to parent
-				CommandListenerEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
 		}
 		else if(e.getSource() instanceof ElementControl) {
-			if(getChildControls().contains(e.getSource())) {
+			if(getChildren().contains(e.getSource())) {
 				put(Data.PAGE, e.getMessage());
 			}	
 		}

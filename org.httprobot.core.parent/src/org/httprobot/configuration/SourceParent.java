@@ -7,9 +7,9 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.ParentListener;
+import org.httprobot.Listener;
 import org.httprobot.Data;
-import org.httprobot.MappingParent;
+import org.httprobot.Entry;
 import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
@@ -24,7 +24,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public final class SourceParent
-	extends MappingParent<DataSource, DocumentLibrary, SourceControl> {
+	extends Entry<DataSource, DocumentLibrary, SourceControl> {
 
 	/**
 	 * 634599347187276700L
@@ -50,7 +50,7 @@ public final class SourceParent
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
 	}
-	public SourceParent(Source message, ParentListener parent) {
+	public SourceParent(Source message, Listener parent) {
 		super(message, SourceControl.class, parent);
 		dataSouceParents = new LinkedHashMap<DataSource, DataSourceParent>();
 		setTemplateLibrary(new TemplateLibrary());
