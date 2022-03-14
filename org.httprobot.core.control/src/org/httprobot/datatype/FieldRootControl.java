@@ -6,10 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.Command;
 import org.httprobot.Data;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ControlEventArgs;
+import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class FieldRootControl
@@ -32,70 +30,68 @@ public final class FieldRootControl
 	
 	public FieldRootControl() {
 		super();
-		fieldControl = new LinkedHashSet<FieldControl>();
 	}
 	public FieldRootControl(FieldRoot message, Control parent) {
 		super(message, parent);
-
 	}
-	
 	@Override
-	public void OnControlInitialized(ControlEventArgs e) {
-		if(e.getSource().equals(this)) {
-			FieldRoot fieldRoot = FieldRoot.class.cast(e.getMessage());
-			fieldControl = new LinkedHashSet<FieldControl>();
-			
-			if(!fieldRoot.getField().isEmpty()) {
-				for(Field field : fieldRoot.getField()) {
-					new FieldControl(field, this);
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_INITIALIZED:
+			if(e.getSource().equals(this)) {
+				FieldRoot fieldRoot = FieldRoot.class.cast(e.getValue());
+				fieldControl = new LinkedHashSet<FieldControl>();
+				
+				if(!fieldRoot.getField().isEmpty()) {
+					for(Field field : fieldRoot.getField()) {
+						new FieldControl(field, this);
+					}
 				}
 			}
-		}
-		else if(e.getSource() instanceof FieldControl) {
-			FieldControl childFieldControl = FieldControl.class.cast(e.getSource());
-			fieldControl.add(childFieldControl);
-			addChildControl(childFieldControl);
-		}
-	}
-	@Override
-	public void OnControlLoaded(ControlEventArgs e) {
-		if(e.getSource().equals(this)) {
-			FieldRoot fieldRoot = FieldRoot.class.cast(e.getMessage());
-			
-			//Check if control has child XML message controls
-			if(hasChildControls())
-			{
-				//Iterate through child XML message controls
-				while(hasNext())
+			else if(e.getSource() instanceof FieldControl) {
+				FieldControl childFieldControl = FieldControl.class.cast(e.getSource());
+				fieldControl.add(childFieldControl);
+				addChild(childFieldControl);
+			}
+			break;
+		case CONTROL_LOADED:
+			if(e.getSource().equals(this)) {
+				FieldRoot fieldRoot = FieldRoot.class.cast(e.getValue());
+				
+				//Check if control has child XML message controls
+				if(hasChildren())
 				{
-					//Get next child XML message control
-					Control control = next();
-					
-					if(control instanceof FieldControl ?
-							!fieldRoot.getField().isEmpty() ?
-									fieldControl.contains(control)
-									: false : false) {
+					//Iterate through child XML message controls
+					while(hasNext())
+					{
+						//Get next child XML message control
+						Control control = next();
 						
-						FieldControl childFieldControl = FieldControl.class.cast(control);
-						
-						for(Field field : fieldRoot.getField()) {
-							if(field.getName().equals(childFieldControl.getName())) {
-								childFieldControl.loadControl();
-								break;
+						if(control instanceof FieldControl ?
+								!fieldRoot.getField().isEmpty() ?
+										fieldControl.contains(control)
+										: false : false) {
+							for(Field field : fieldRoot.getField()) {
+								if(field.getName().equals(control.getName())) {
+									control.load();
+									break;
+								}
 							}
 						}
 					}
+					// Set control ready to be iterated again.
+					reset();
 				}
-				// Set control ready to be iterated again.
-				reset();
-				// Send event to parent
-				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
 			}
-		}
-		else if(e.getSource() instanceof FieldControl) {
-			if(getChildren().contains(e.getSource())) {
-				put(Data.FIELD, e.getMessage());
+			else if(e.getSource() instanceof FieldControl) {
+				if(getChildren().contains(e.getSource())) {
+					put(Data.FIELD, e.getValue());
+				}
 			}
+			break;
+		default:
+			break;
 		}
 	}
 }

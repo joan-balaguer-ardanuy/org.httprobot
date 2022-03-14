@@ -22,10 +22,10 @@ import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.operator.html.Element;
+import org.httprobot.operator.html.ElementControl;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantParent;
-import org.httprobot.placeholder.html.ElementControl;
 import org.httprobot.placeholder.html.ElementParent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -153,7 +153,7 @@ public class ActionParent
 						((JavascriptExecutor) driver).executeScript((String) elementManager.getControl().get(Data.JAVASCRIPT), webElement);
 					}
 					action.moveToElement(webElement).click().perform();
-				} else if((Boolean) elementManager.getControl().get(Data.ADD)) {
+				} else if((Boolean) elementManager.getControl().get(Data.SAVE)) {
 					clickableElements.add(webElement);
 				}
 			}
@@ -187,7 +187,7 @@ public class ActionParent
 				}
 			} else if(e.getSource() instanceof DriverControl) {
 				Driver selenium = DriverControl.class.cast(e.getSource()).getMessage();
-				if(getControl().get(Data.SELENIUM).equals(selenium)) {
+				if(getControl().get(Data.DRIVER).equals(selenium)) {
 					seleniumManager = new DriverParent(selenium, this);
 					addChildManager(seleniumManager);
 				}

@@ -54,15 +54,12 @@ public final class SourceControl
 	
 	public SourceControl() {
 		super();
-		dataSourceControl = new LinkedHashSet<DataSourceControl>();
 	}
 	public SourceControl(Source message) {
 		super(message);
-		dataSourceControl = new LinkedHashSet<DataSourceControl>();
 	}
 	public SourceControl(Source message, Control parent) {
 		super(message, parent);
-		dataSourceControl = new LinkedHashSet<DataSourceControl>();
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -95,51 +92,18 @@ public final class SourceControl
 			} else if (e.getSource() instanceof ContentTypeRootControl) {
 				// set new control
 				contentTypeRootControl = ContentTypeRootControl.class.cast(e.getSource());
-				// save control.
+				// save control
 				addChild(contentTypeRootControl);
 			} else if (e.getSource() instanceof DataSourceControl) {			
 				DataSourceControl dataSourceControl = DataSourceControl.class.cast(e.getSource());
-				// save control.
+				// save control
 				getDataSourceControl().add(dataSourceControl);
 				addChild(dataSourceControl);
 			}
 			break;
 		case CONTROL_LOADED:
-			if (e.getSource().equals(this)) {
-				Source source = (Source) e.getValue();
-				// check if control has child XML controls
-				if (hasChildren()) {
-					// iterate through child controls
-					while (hasNext()) {
-						// get next XML child control
-						Control control = (Control) next();
-						// check if child control is expected
-						if (control instanceof ContentTypeRootControl ? 
-								contentTypeRootControl.equals(control)
-								: false) {
-							// load control
-							control.load();
-						} else if (control instanceof DataSourceControl ? 
-								dataSourceControl.contains(control) 
-								: false) {
-							// look for matching dataSource control's XML message.
-							for (DataSource dataSource : source.getDataSource()) {
-								// by UUID.
-								if (control.getName().equals(dataSource.getName())) {
-									// load the XML message control.
-									control.load();
-									break;
-								}
-							}
-						}
-					}
-					// set control ready to be iterated again.
-					reset();
-				} else {
-					throw new Error("SourceControl.OnEventReceived: Control must have XML message child controls.");
-				}
-				// look for data source control
-			} else if (e.getSource() instanceof DataSourceControl) {
+			if (e.getSource() instanceof DataSourceControl) {
+				DataSource dataSource = (DataSource) e.getValue();
 				// check if control has been initialitzed in this control
 				if (getChildren().contains(e.getSource())) {
 					// check if data source's data exists
@@ -147,13 +111,13 @@ public final class SourceControl
 						// instance new set
 						Set<Message> set = new LinkedHashSet<Message>();
 						// add first data source value to set
-						set.add((DataSource) e.getValue());
+						set.add(dataSource);
 						// set data
 						put(Data.DATA_SOURCE, set);
 					} else {
 						// add message to data
 						Object set = get(Data.DATA_SOURCE);
-						((Set<Message>) set).add((DataSource) e.getValue());
+						((Set<Message>) set).add(dataSource);
 					}
 				}
 				// look for content type root control

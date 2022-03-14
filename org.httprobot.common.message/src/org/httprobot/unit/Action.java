@@ -18,7 +18,7 @@ public final class Action extends XML {
 	private static final long serialVersionUID = 798890955203009246L;
 
 	Boolean clearQuery;
-	String httpAddress;
+	String url;
 	String method;
 	String javaScript;
 	Driver driver;
@@ -34,11 +34,11 @@ public final class Action extends XML {
 		this.clearQuery = clearQuery;
 	}
 	@XmlElement
-	public String getHttpAddress() {
-		return httpAddress;
+	public String getUrl() {
+		return url;
 	}
-	public void setHttpAddress(String httpAddress) {
-		this.httpAddress = httpAddress;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	@XmlElement
 	public String getMethod() {
@@ -76,11 +76,11 @@ public final class Action extends XML {
 		this.element = element;
 	}
 	@XmlElement
-	public Driver getSelenium() {
+	public Driver getDriver() {
 		return driver;
 	}
-	public void setSelenium(Driver selenium) {
-		this.driver = selenium;
+	public void setDriver(Driver driver) {
+		this.driver = driver;
 	}
 	public Action() {
 		super();

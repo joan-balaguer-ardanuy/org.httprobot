@@ -7,6 +7,7 @@ import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.operator.Html;
+import org.httprobot.operator.HtmlControl;
 import org.httprobot.placeholder.html.AbstractHtmlParent;
 import org.w3c.dom.Document;
 

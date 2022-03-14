@@ -1,8 +1,6 @@
 package org.httprobot;
 
 public enum EventType {
-	XML_MARSHALLED,
-	XML_UNMARSHALLED,
 	CONTROL_INITIALIZED,
 	CONTROL_LOADED,
 	PARENT_STARTED,

@@ -5,6 +5,7 @@ import java.util.List;
 import org.httprobot.Listener;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.operator.html.ContainsElement;
+import org.httprobot.operator.html.ContainsElementControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

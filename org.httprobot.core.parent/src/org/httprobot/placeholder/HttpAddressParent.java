@@ -4,10 +4,11 @@ import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.UrlControl;
 import org.httprobot.operator.Url;
 
 public class HttpAddressParent 
-	extends AbstractPlaceholderParent<InputField, String, HttpAddressControl> {
+	extends AbstractPlaceholderParent<InputField, String, UrlControl> {
 
 	/**
 	 * 5782528861553476045L
@@ -18,7 +19,7 @@ public class HttpAddressParent
 		super();
 	}
 	public HttpAddressParent(Url message, Listener parent) {
-		super(message, HttpAddressControl.class, parent);
+		super(message, UrlControl.class, parent);
 	}
 	@Override
 	public void OnCommandEvent(CommandEventArgs e) {

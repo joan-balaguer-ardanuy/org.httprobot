@@ -6,11 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.Command;
 import org.httprobot.Data;
 import org.httprobot.content.ContentTypeRefControl;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ControlEventArgs;
+import org.httprobot.event.EventArgs;
 import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
@@ -62,113 +60,113 @@ public final class DocumentRootControl
 	public DocumentRootControl(DocumentRoot message, Control parent) {
 		super(message, parent);
 	}
-	
 	@Override
-	public void OnControlInitialized(ControlEventArgs e) {
-		if(e.getSource().equals(this)) {
-			
-			DocumentRoot documentRoot = DocumentRoot.class.cast(e.getMessage());
-			documentControl = new LinkedHashSet<DocumentControl>();
-			
-			if(documentRoot.getAction() != null) {
-				new ActionControl(documentRoot.getAction(), this);
-			}
-			else {
-				throw new Error("DocumentRootControl.OnControlInitialized: Action XML message expected.");
-			}
-			if(documentRoot.getContentTypeRef() != null) {
-				new ContentTypeRefControl(documentRoot.getContentTypeRef(), this);
-			}
-			else {
-				throw new Error("DocumentRootControl.OnControlInitialized: ContentTypeRef XML message expected.");
-			}
-			for(Document document : documentRoot.getDocument()) {
-				new DocumentControl(document, this);
-			}
-			if(documentRoot.getFieldRoot() != null) {
-				new FieldRootControl(documentRoot.getFieldRoot(), this);
-			}
-		}
-		else if(e.getSource() instanceof FieldRootControl) {
-			fieldRootControl = FieldRootControl.class.cast(e.getSource());
-			addChildControl(fieldRootControl);
-		}
-		else if(e.getSource() instanceof DocumentControl) {
-			DocumentControl childDocumentControl = DocumentControl.class.cast(e.getSource());
-			documentControl.add(childDocumentControl);
-			addChildControl(childDocumentControl);
-		}
-		else if(e.getSource() instanceof ContentTypeRefControl) {
-			contentTypeRefControl = ContentTypeRefControl.class.cast(e.getSource());
-			addChildControl(contentTypeRefControl);
-		}
-		else if(e.getSource() instanceof ActionControl) {
-			actionControl = ActionControl.class.cast(e.getSource());
-			addChildControl(actionControl);
-		}
-	}
-	@Override
-	public void OnControlLoaded(ControlEventArgs e) {
-		if (e.getSource().equals(this)) {
-			DocumentRoot documentRoot = DocumentRoot.class.cast(e.getMessage());
-
-			// Check if control has child XML message controls
-			if (hasChildControls()) {
-				// Iterate through child XML message controls
-				while (hasNext()) {
-					// Get next child XML message control
-					Control control = next();
-
-					if (control instanceof ActionControl ? 
-							documentRoot.getAction() != null ? 
-									actionControl.equals(control) 
-									: false : false) {
-						actionControl.loadControl();
-					} else if (control instanceof ContentTypeRefControl ? 
-							documentRoot.getContentTypeRef() != null ? 
-									contentTypeRefControl.equals(control) 
-									: false : false) {
-						contentTypeRefControl.loadControl();
-					} else if (control instanceof DocumentControl ? 
-							documentRoot.getDocument() != null ? 
-									documentControl.contains(control) 
-									: false : false) {
-						DocumentControl childDocumentControl = DocumentControl.class.cast(control);
-
-						for (Document document : documentRoot.getDocument()) {
-							if (childDocumentControl.getName().equals(document.getName())) {
-								childDocumentControl.loadControl();
-								break;
-							}
-						}
-					} else if (control instanceof FieldRootControl ? 
-							documentRoot.getFieldRoot() != null ? 
-									fieldRootControl.equals(control)
-									: false : false) {
-						fieldRootControl.loadControl();
-					}
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_INITIALIZED:
+			if(e.getSource().equals(this)) {
+				
+				DocumentRoot documentRoot = DocumentRoot.class.cast(e.getValue());
+				documentControl = new LinkedHashSet<DocumentControl>();
+				
+				if(documentRoot.getAction() != null) {
+					new ActionControl(documentRoot.getAction(), this);
 				}
-				// Set control ready to be iterated again.
-				reset();
-				// Send event to parent
-				SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+				else {
+					throw new Error("DocumentRootControl.OnControlInitialized: Action XML message expected.");
+				}
+				if(documentRoot.getContentTypeRef() != null) {
+					new ContentTypeRefControl(documentRoot.getContentTypeRef(), this);
+				}
+				else {
+					throw new Error("DocumentRootControl.OnControlInitialized: ContentTypeRef XML message expected.");
+				}
+				for(Document document : documentRoot.getDocument()) {
+					new DocumentControl(document, this);
+				}
+				if(documentRoot.getFieldRoot() != null) {
+					new FieldRootControl(documentRoot.getFieldRoot(), this);
+				}
 			}
-		} else if (e.getSource() instanceof FieldRootControl) {
-			if (getChildren().contains(e.getSource())) {
-				put(Data.FIELD_ROOT, e.getMessage());
+			else if(e.getSource() instanceof FieldRootControl) {
+				fieldRootControl = FieldRootControl.class.cast(e.getSource());
+				addChild(fieldRootControl);
 			}
-		} else if (e.getSource() instanceof DocumentControl) {
-			if (getChildren().contains(e.getSource())) {
-				put(Data.DOCUMENT, e.getMessage());
+			else if(e.getSource() instanceof DocumentControl) {
+				DocumentControl childDocumentControl = DocumentControl.class.cast(e.getSource());
+				documentControl.add(childDocumentControl);
+				addChild(childDocumentControl);
 			}
-		} else if (e.getSource() instanceof ContentTypeRefControl) {
-			if (getChildren().contains(e.getSource())) {
-				put(Data.CONTENT_TYPE_REF, e.getMessage());
+			else if(e.getSource() instanceof ContentTypeRefControl) {
+				contentTypeRefControl = ContentTypeRefControl.class.cast(e.getSource());
+				addChild(contentTypeRefControl);
 			}
-		} else if (e.getSource() instanceof ActionControl) {
-			if (getChildren().contains(e.getSource())) {
-				put(Data.ACTION, getMessage());
+			else if(e.getSource() instanceof ActionControl) {
+				actionControl = ActionControl.class.cast(e.getSource());
+				addChild(actionControl);
 			}
+			break;
+		case CONTROL_LOADED:
+			if (e.getSource().equals(this)) {
+				DocumentRoot documentRoot = DocumentRoot.class.cast(e.getValue());
+				// Check if control has child XML message controls
+				if (hasChildren()) {
+					// Iterate through child XML message controls
+					while (hasNext()) {
+						// Get next child XML message control
+						Control control = next();
+
+						if (control instanceof ActionControl ? 
+								documentRoot.getAction() != null ? 
+										actionControl.equals(control) 
+										: false : false) {
+							control.load();
+						} else if (control instanceof ContentTypeRefControl ? 
+								documentRoot.getContentTypeRef() != null ? 
+										contentTypeRefControl.equals(control) 
+										: false : false) {
+							control.load();
+						} else if (control instanceof DocumentControl ? 
+								documentRoot.getDocument() != null ? 
+										documentControl.contains(control) 
+										: false : false) {
+							for (Document document : documentRoot.getDocument()) {
+								if (control.getName().equals(document.getName())) {
+									control.load();
+									break;
+								}
+							}
+						} else if (control instanceof FieldRootControl ? 
+								documentRoot.getFieldRoot() != null ? 
+										fieldRootControl.equals(control)
+										: false : false) {
+							control.load();
+						}
+					}
+					// Set control ready to be iterated again.
+					reset();
+				}
+			} else if (e.getSource() instanceof FieldRootControl) {
+				if (getChildren().contains(e.getSource())) {
+					put(Data.FIELD_ROOT, e.getValue());
+				}
+			} else if (e.getSource() instanceof DocumentControl) {
+				if (getChildren().contains(e.getSource())) {
+					put(Data.DOCUMENT, e.getValue());
+				}
+			} else if (e.getSource() instanceof ContentTypeRefControl) {
+				if (getChildren().contains(e.getSource())) {
+					put(Data.CONTENT_TYPE_REF, e.getValue());
+				}
+			} else if (e.getSource() instanceof ActionControl) {
+				if (getChildren().contains(e.getSource())) {
+					put(Data.ACTION, e.getValue());
+				}
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }

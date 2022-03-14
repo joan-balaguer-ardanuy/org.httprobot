@@ -59,6 +59,30 @@ public abstract class AbstractControl<T extends Message>
 		OnEventReceived(new EventArgs(this, message, EventType.CONTROL_LOADED));
 	}
 	@Override
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_LOADED:
+			if (e.getSource().equals(this)) {
+				// Check if control has child XML message controls
+				if (hasChildren()) {
+					// Iterate through child XML message controls
+					while (hasNext()) {
+						// Get next child XML message control
+						Control control = next();
+						control.load();
+					}
+					// Set control ready to be iterated again.
+					reset();
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	@Override
 	public int size() {
 		return data.size();
 	}

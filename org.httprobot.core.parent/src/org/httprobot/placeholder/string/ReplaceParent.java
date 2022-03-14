@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.operator.string.Replace;
+import org.httprobot.operator.string.ReplaceControl;
 
 @XmlRootElement
 public final class ReplaceParent

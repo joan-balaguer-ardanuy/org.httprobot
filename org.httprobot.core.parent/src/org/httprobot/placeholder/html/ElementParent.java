@@ -13,7 +13,9 @@ import org.httprobot.Listener;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.operator.html.ContainsElement;
+import org.httprobot.operator.html.ContainsElementControl;
 import org.httprobot.operator.html.Element;
+import org.httprobot.operator.html.ElementControl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

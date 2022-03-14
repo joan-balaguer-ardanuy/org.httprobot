@@ -1,25 +1,16 @@
 package org.httprobot;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
-import org.httprobot.event.ControlEventArgs;
 import org.httprobot.event.EventArgs;
-import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebDriver;
 
-public abstract class AbstractParent<T extends AbstractControl<?>> 
-	extends XML 
+public abstract class AbstractParent<T extends Control> 
+	extends AbstractListener<Parent> 
 		implements Parent {
 
 	/**
@@ -40,18 +31,6 @@ public abstract class AbstractParent<T extends AbstractControl<?>>
 	}
 	public void setControl(T control) {
 		this.control = control;
-	}
-	@Override
-	public Parent getParent() {
-		return super.getParent() != null ? (Parent) super.getParent() : null;
-	}
-	@Override
-	public void setParent(Listener parent) {
-		if(parent instanceof Parent) {
-			super.setParent(parent);
-		} else {
-			throw new Error("Parent.setParent: parent instance must be ParentListener");
-		}
 	}
 	@XmlTransient
 	public ContentTypeRoot getContentTypeRoot() {
@@ -110,7 +89,7 @@ public abstract class AbstractParent<T extends AbstractControl<?>>
 	}
 	
 	public AbstractParent() {
-		super(UUID.randomUUID());
+		super();
 	}
 	public AbstractParent(XML message, Class<T> type, AbstractParent<?> parent) {
 		super(message.getName());

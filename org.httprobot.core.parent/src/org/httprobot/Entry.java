@@ -8,9 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.httprobot.event.ManagerEventArgs;
-
-public abstract class Entry<K,V,T extends AbstractControl<? extends XML>> 
+public abstract class Entry<K,V,T extends Control> 
 	extends AbstractParent<T> 
 		implements DataMapping<K,V> {
 
@@ -51,7 +49,7 @@ public abstract class Entry<K,V,T extends AbstractControl<? extends XML>>
 	public Entry() {
 		super();
 	}
-	public Entry(XML message, Class<T> type, Listener parent) {
+	public Entry(XML message, Class<T> type, Parent parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

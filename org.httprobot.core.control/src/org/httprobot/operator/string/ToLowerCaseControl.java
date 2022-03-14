@@ -1,13 +1,10 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Control;
-import org.httprobot.Command;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ControlEventArgs;
-import org.httprobot.operator.string.ToLowerCase;
+import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ToLowerCaseControl
@@ -36,18 +33,18 @@ public final class ToLowerCaseControl
 	}
 	
 	@Override
-	public void OnControlInitialized(ControlEventArgs e) {
-		super.OnControlInitialized(e);
-		if(e.getSource().equals(this)) {
-			ToLowerCase.class.cast(e.getMessage());
-		}
-	}
-	@Override
-	public void OnControlLoaded(ControlEventArgs e) {
-		super.OnControlLoaded(e);
-		if(e.getSource().equals(this)) {
-			// Send event to parent
-			SendEvent(new CommandEventArgs(this, Command.CONTROL_LOADED));
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_INITIALIZED:
+			if(e.getSource().equals(this)) {
+				ToLowerCase.class.cast(e.getValue());
+			}
+			break;
+		case CONTROL_LOADED:
+			break;
+		default:
+			break;
 		}
 	}
 }

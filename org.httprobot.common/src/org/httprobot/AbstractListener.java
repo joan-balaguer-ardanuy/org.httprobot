@@ -6,8 +6,6 @@ import java.util.List;
 /**
  * Abstract listener class.
  * It's the implementation of {@link Listener} interface.
- * All instances of the framework will inherit this class.
- * 
  * @author joan
  *
  */
@@ -55,7 +53,22 @@ public abstract class AbstractListener<T extends Listener<T>>
 	/**
 	 * {@link AbstractListener} default class constructor.
 	 */
+	public AbstractListener(String name) {
+		super(name);
+	}
+	/**
+	 * {@link AbstractListener} class constructor.
+	 */
 	public AbstractListener(T parent) {
+		super();
+		this.parent = parent;
+		addEventListener(parent);
+	}
+	/**
+	 * {@link AbstractListener} class constructor.
+	 */
+	public AbstractListener(T parent, String name) {
+		super(name);
 		this.parent = parent;
 		addEventListener(parent);
 	}

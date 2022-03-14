@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.operator.string.Contains;
+import org.httprobot.operator.string.ContainsControl;
 
 @XmlRootElement
 public final class ContainsParent

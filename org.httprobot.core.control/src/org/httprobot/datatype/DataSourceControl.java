@@ -61,11 +61,9 @@ public final class DataSourceControl
 	
 	public DataSourceControl() {
 		super();
-		constantControl = new LinkedHashSet<ConstantControl>();
 	}
 	public DataSourceControl(DataSource message, Control parent) {
 		super(message, parent);
-		constantControl = new LinkedHashSet<ConstantControl>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -150,14 +148,12 @@ public final class DataSourceControl
 						} else if (control instanceof ConstantControl ? 
 								constantControl.contains(control) 
 								: false) {
-							// cast message control
-							ConstantControl constantControl = ConstantControl.class.cast(control);
 							// look for matching constant control's XML message.
 							for(Constant constant : dataSource.getConstant()) {
 								// by UUID
-								if(constantControl.getName().equals(constant.getName())) {
+								if(control.getName().equals(constant.getName())) {
 									// load XML message control.
-									constantControl.load();
+									control.load();
 								}
 							}
 						}

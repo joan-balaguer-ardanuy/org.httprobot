@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.operator.string.EndsWith;
+import org.httprobot.operator.string.EndsWithControl;
 
 @XmlRootElement
 public final class EndsWithParent

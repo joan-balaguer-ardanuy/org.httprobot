@@ -14,7 +14,15 @@ public abstract class AbstractHtml extends AbstractString {
 
 	Element element;
 	ContainsElement containsElement;
-	
+	String XPath;
+
+	@XmlElement
+	public String getXPath() {
+		return XPath;
+	}
+	public void setXPath(String xPath) {
+		this.XPath = xPath;
+	}
 	@XmlElement
 	public Element getElement() {
 		return element;
