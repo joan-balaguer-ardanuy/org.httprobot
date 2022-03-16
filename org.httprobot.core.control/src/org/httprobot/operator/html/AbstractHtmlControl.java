@@ -1,7 +1,7 @@
 package org.httprobot.operator.html;
 
-import org.httprobot.Control;
 import org.httprobot.AbstractHtml;
+import org.httprobot.Control;
 import org.httprobot.event.EventArgs;
 import org.httprobot.operator.string.AbstractStringControl;
 
@@ -23,5 +23,18 @@ public class AbstractHtmlControl<T extends AbstractHtml>
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case CONTROL_INITIALIZED:
+			if(e.getSource().equals(this)) {
+				AbstractHtml element = (AbstractHtml) e.getValue();
+				if (element.getXPath() == null) {
+					throw new Error("ElementControl.OnEventReceived: XPath expression is missing.");
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 }

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.BrowserVersion;
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 /**
  * Robot abstract configuration XML message class.
@@ -19,7 +19,7 @@ import org.httprobot.XML;
  *
  */
 @XmlRootElement
-public final class Driver extends XML {
+public final class Driver extends Message {
 	
 	/**
 	 * -7265402834372126641L

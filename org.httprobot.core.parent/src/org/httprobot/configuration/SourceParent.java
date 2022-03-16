@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Listener;
 import org.httprobot.Data;
 import org.httprobot.Entry;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.content.ContentTypeRootParent;
@@ -79,7 +79,7 @@ public final class SourceParent
 			} else if(e.getSource() instanceof DataSourceControl) {
 				DataSource message = DataSourceControl.class.cast(e.getSource()).getMessage();
 				@SuppressWarnings("unchecked")
-				Set<Message> set = (Set<Message>) getControl().get(Data.DATA_SOURCE);
+				Set<XML> set = (Set<XML>) getControl().get(Data.DATA_SOURCE);
 				if(set.contains(message)) {
 					DataSourceParent dataSourceManager = new DataSourceParent(message, this);
 					dataSouceParents.put(message, dataSourceManager);

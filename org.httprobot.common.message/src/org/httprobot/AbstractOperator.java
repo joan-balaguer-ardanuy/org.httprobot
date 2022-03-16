@@ -15,14 +15,14 @@ import org.httprobot.operator.string.Trim;
 import org.httprobot.operator.string.TryParse;
 
 /**
- * Abstract placeholder {@link XML} message.
+ * Abstract placeholder {@link Message} message.
  * It encapsulates the string operators to treat string objects.
  * Only one of these operators MUST be implemented, otherwise the program won't run properly.
  * 
  * @author joan
  *
  */
-public abstract class AbstractOperator extends XML {
+public abstract class AbstractOperator extends Message {
 
 	/**
 	 * 3345969046526629498L

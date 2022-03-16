@@ -4,10 +4,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.NextPageMethod;
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 @XmlRootElement
-public final class WebLoader extends XML {
+public final class WebLoader extends Message {
 
 	/**
 	 * 7700952400328745265L

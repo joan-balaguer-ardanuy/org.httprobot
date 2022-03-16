@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Data;
 import org.httprobot.Listener;
 import org.httprobot.Entry;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -105,7 +105,7 @@ public final class DataSourceParent
 			if(e.getSource() instanceof ConstantControl) {
 				Constant message = ConstantControl.class.cast(e.getSource()).getMessage();
 				@SuppressWarnings("unchecked")
-				Set<Message> set = (Set<Message>) getControl().get(Data.CONSTANT);
+				Set<XML> set = (Set<XML>) getControl().get(Data.CONSTANT);
 				if(set.contains(message)) {
 					ConstantParent constantManager = new ConstantParent(message, this);
 					constantManagers.put(message, constantManager);

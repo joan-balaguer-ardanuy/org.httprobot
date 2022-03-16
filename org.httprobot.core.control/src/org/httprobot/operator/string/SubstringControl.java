@@ -1,5 +1,6 @@
 package org.httprobot.operator.string;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Control;
@@ -14,10 +15,19 @@ public final class SubstringControl
 	 * -8786207254600689526L
 	 */
 	private static final long serialVersionUID = -8786207254600689526L;
-		
+
+	@Override
+	@XmlElement
+	public Substring getMessage() {
+		return super.getMessage();
+	}
+	@Override
+	public void setMessage(Substring message) {
+		super.setMessage(message);
+	}
+	
 	public SubstringControl() {
 		super();
-		setMessage(new Substring());
 	}
 	public SubstringControl(Substring message, Control parent) {
 		super(message, parent);

@@ -72,15 +72,13 @@ public final class DocumentRootControl
 				
 				if(documentRoot.getAction() != null) {
 					new ActionControl(documentRoot.getAction(), this);
-				}
-				else {
-					throw new Error("DocumentRootControl.OnControlInitialized: Action XML message expected.");
+				} else {
+					throw new Error("DocumentRootControl.OnEventReceived: Action XML message expected.");
 				}
 				if(documentRoot.getContentTypeRef() != null) {
 					new ContentTypeRefControl(documentRoot.getContentTypeRef(), this);
-				}
-				else {
-					throw new Error("DocumentRootControl.OnControlInitialized: ContentTypeRef XML message expected.");
+				} else {
+					throw new Error("DocumentRootControl.OnEventReceived: ContentTypeRef XML message expected.");
 				}
 				for(Document document : documentRoot.getDocument()) {
 					new DocumentControl(document, this);
@@ -88,8 +86,7 @@ public final class DocumentRootControl
 				if(documentRoot.getFieldRoot() != null) {
 					new FieldRootControl(documentRoot.getFieldRoot(), this);
 				}
-			}
-			else if(e.getSource() instanceof FieldRootControl) {
+			} else if(e.getSource() instanceof FieldRootControl) {
 				fieldRootControl = FieldRootControl.class.cast(e.getSource());
 				addChild(fieldRootControl);
 			}
@@ -108,46 +105,7 @@ public final class DocumentRootControl
 			}
 			break;
 		case CONTROL_LOADED:
-			if (e.getSource().equals(this)) {
-				DocumentRoot documentRoot = DocumentRoot.class.cast(e.getValue());
-				// Check if control has child XML message controls
-				if (hasChildren()) {
-					// Iterate through child XML message controls
-					while (hasNext()) {
-						// Get next child XML message control
-						Control control = next();
-
-						if (control instanceof ActionControl ? 
-								documentRoot.getAction() != null ? 
-										actionControl.equals(control) 
-										: false : false) {
-							control.load();
-						} else if (control instanceof ContentTypeRefControl ? 
-								documentRoot.getContentTypeRef() != null ? 
-										contentTypeRefControl.equals(control) 
-										: false : false) {
-							control.load();
-						} else if (control instanceof DocumentControl ? 
-								documentRoot.getDocument() != null ? 
-										documentControl.contains(control) 
-										: false : false) {
-							for (Document document : documentRoot.getDocument()) {
-								if (control.getName().equals(document.getName())) {
-									control.load();
-									break;
-								}
-							}
-						} else if (control instanceof FieldRootControl ? 
-								documentRoot.getFieldRoot() != null ? 
-										fieldRootControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-					}
-					// Set control ready to be iterated again.
-					reset();
-				}
-			} else if (e.getSource() instanceof FieldRootControl) {
+			if (e.getSource() instanceof FieldRootControl) {
 				if (getChildren().contains(e.getSource())) {
 					put(Data.FIELD_ROOT, e.getValue());
 				}

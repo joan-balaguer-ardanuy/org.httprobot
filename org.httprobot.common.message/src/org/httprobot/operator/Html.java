@@ -3,11 +3,12 @@ package org.httprobot.operator;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.httprobot.AbstractHtml;
 import org.httprobot.AbstractOperator;
 import org.httprobot.operator.html.Element;
 
 @XmlRootElement
-public final class Html extends AbstractOperator {
+public final class Html extends AbstractHtml {
 
 	/**
 	 * -5625666546941269503L

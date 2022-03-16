@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
@@ -103,13 +103,13 @@ public final class SourceControl
 			break;
 		case CONTROL_LOADED:
 			if (e.getSource() instanceof DataSourceControl) {
-				DataSource dataSource = (DataSource) e.getValue();
 				// check if control has been initialitzed in this control
 				if (getChildren().contains(e.getSource())) {
+					DataSource dataSource = (DataSource) e.getValue();
 					// check if data source's data exists
 					if(get(Data.DATA_SOURCE) == null) {
 						// instance new set
-						Set<Message> set = new LinkedHashSet<Message>();
+						Set<XML> set = new LinkedHashSet<XML>();
 						// add first data source value to set
 						set.add(dataSource);
 						// set data
@@ -117,7 +117,7 @@ public final class SourceControl
 					} else {
 						// add message to data
 						Object set = get(Data.DATA_SOURCE);
-						((Set<Message>) set).add(dataSource);
+						((Set<XML>) set).add(dataSource);
 					}
 				}
 				// look for content type root control

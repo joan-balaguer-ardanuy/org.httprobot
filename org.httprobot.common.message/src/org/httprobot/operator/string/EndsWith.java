@@ -2,9 +2,9 @@ package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import org.httprobot.AbstractString;
+import org.httprobot.AbstractOperator;
 
-public class EndsWith extends AbstractString {
+public class EndsWith extends AbstractOperator {
 	
 	/**
 	 * -1321370241140971639L

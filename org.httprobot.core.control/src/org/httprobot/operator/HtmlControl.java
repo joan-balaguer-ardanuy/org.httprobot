@@ -6,11 +6,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
+import org.httprobot.operator.html.AbstractHtmlControl;
 import org.httprobot.operator.html.ElementControl;
+import org.httprobot.operator.string.AbstractStringControl;
 
 @XmlRootElement
 public final class HtmlControl 
-	extends AbstractOperatorControl<Html> {
+	extends AbstractHtmlControl<Html> {
 
 	/**
 	 * -5062725452790453335L
@@ -20,11 +22,20 @@ public final class HtmlControl
 	ElementControl elementControl;
 	
 	@XmlElement
-	public ElementControl getPageControl() {
+	public ElementControl getElementControl() {
 		return elementControl;
 	}
-	public void setPageControl(ElementControl pageControl) {
+	public void setElementControl(ElementControl pageControl) {
 		this.elementControl = pageControl;
+	}
+	@Override
+	@XmlElement
+	public Html getMessage() {
+		return super.getMessage();
+	}
+	@Override
+	public void setMessage(Html message) {
+		super.setMessage(message);
 	}
 	
 	public HtmlControl() {

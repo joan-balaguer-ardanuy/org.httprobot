@@ -2,10 +2,10 @@ package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractString;
+import org.httprobot.AbstractOperator;
 
 @XmlRootElement
-public final class Trim extends AbstractString {
+public final class Trim extends AbstractOperator {
 
 	/**
 	 * 7723659999253778536L

@@ -52,7 +52,7 @@ public class Launcher {
 
 		try {
 			is = new FileInputStream(file);
-			ServiceConnection serviceConnection = XML.read(ServiceConnection.class, is);
+			ServiceConnection serviceConnection = Message.read(ServiceConnection.class, is);
 			return serviceConnection;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

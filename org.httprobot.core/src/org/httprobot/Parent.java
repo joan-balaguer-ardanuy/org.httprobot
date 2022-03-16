@@ -7,7 +7,7 @@ import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.TemplateLibrary;
 import org.openqa.selenium.WebDriver;
 
-public interface Parent extends Listener<Parent>, Message {
+public interface Parent extends Listener<Parent>, XML {
 	void start();
 	void stop();
 	

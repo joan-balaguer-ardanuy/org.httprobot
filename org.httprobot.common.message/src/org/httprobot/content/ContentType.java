@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 /**
  * Content type class. Inherits {@link AbstractContent}.
@@ -16,7 +16,7 @@ import org.httprobot.XML;
  *
  */
 @XmlRootElement
-public final class ContentType extends XML {
+public final class ContentType extends Message {
 
 	/**
 	 * 5107630251956423519L

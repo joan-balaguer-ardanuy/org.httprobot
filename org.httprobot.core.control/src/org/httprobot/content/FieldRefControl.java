@@ -42,20 +42,15 @@ public final class FieldRefControl
 				FieldRef fieldRef = FieldRef.class.cast(e.getValue());
 				
 				if(fieldRef.getName() == null || fieldRef.getDataType() == null) {
-					throw new Error("FieldRefControl.OnControlInitialized: FieldRef XML message missing fields");
+					throw new Error("FieldRefControl.OnEventReceived: FieldRef XML message missing fields");
 				}
 			}
 			break;
 		case CONTROL_LOADED:
 			if(e.getSource().equals(this)) {
 				FieldRef fieldRef = FieldRef.class.cast(e.getValue());
-				
-				if(fieldRef.getName() != null) {
-					put(Data.FIELD_NAME, fieldRef.getName());
-					put(Data.FIELD_TYPE, fieldRef.getDataType());
-				} else {
-					throw new Error("FieldRefControl.OnControlLoaded: name cannot be null.");
-				}
+				put(Data.FIELD_NAME, fieldRef.getName());
+				put(Data.FIELD_TYPE, fieldRef.getDataType());
 			}
 			break;
 		default:

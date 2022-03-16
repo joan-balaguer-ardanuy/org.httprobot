@@ -70,8 +70,7 @@ public final class DocumentControl
 				
 				if(document.getAction() != null) {
 					new ActionControl(document.getAction(), this);
-				}
-				else {
+				} else {
 					throw new Error("DocumentControl.OnControlInitialized: Action XML message expected.");
 				}
 				if(document.getContentTypeRef() != null) {
@@ -101,46 +100,7 @@ public final class DocumentControl
 			}
 			break;
 		case CONTROL_LOADED:
-			if(e.getSource().equals(this)) {
-				
-				Document document = Document.class.cast(e.getValue());
-				
-				if(hasChildren()) {
-					
-					while(hasNext()) {
-						
-						Control control = next();
-						
-						if(control instanceof ActionControl ?
-								document.getAction() != null ?
-										actionControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-						else if(control instanceof ContentTypeRefControl ?
-								document.getContentTypeRef() != null ?
-										contentTypeRefControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-						else if(control instanceof FieldRootControl ?
-								document.getFieldRoot() != null ?
-										fieldRootControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-						else if(control instanceof DocumentControl ?
-								document.getDocument() != null ?
-										documentControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-					}
-					// Set control ready to be iterated again.
-					reset();
-				}
-			}
-			else if(e.getSource() instanceof DocumentControl) {
+			if(e.getSource() instanceof DocumentControl) {
 				if (getChildren().contains(e.getSource())) {
 					put(Data.DOCUMENT, e.getValue());
 				}

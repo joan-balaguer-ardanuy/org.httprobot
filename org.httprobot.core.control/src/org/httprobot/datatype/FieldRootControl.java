@@ -1,12 +1,15 @@
 package org.httprobot.datatype;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
+import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 
 @XmlRootElement
@@ -34,6 +37,7 @@ public final class FieldRootControl
 	public FieldRootControl(FieldRoot message, Control parent) {
 		super(message, parent);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
@@ -56,37 +60,22 @@ public final class FieldRootControl
 			}
 			break;
 		case CONTROL_LOADED:
-			if(e.getSource().equals(this)) {
-				FieldRoot fieldRoot = FieldRoot.class.cast(e.getValue());
-				
-				//Check if control has child XML message controls
-				if(hasChildren())
-				{
-					//Iterate through child XML message controls
-					while(hasNext())
-					{
-						//Get next child XML message control
-						Control control = next();
-						
-						if(control instanceof FieldControl ?
-								!fieldRoot.getField().isEmpty() ?
-										fieldControl.contains(control)
-										: false : false) {
-							for(Field field : fieldRoot.getField()) {
-								if(field.getName().equals(control.getName())) {
-									control.load();
-									break;
-								}
-							}
-						}
-					}
-					// Set control ready to be iterated again.
-					reset();
-				}
-			}
-			else if(e.getSource() instanceof FieldControl) {
+			if(e.getSource() instanceof FieldControl) {
 				if(getChildren().contains(e.getSource())) {
-					put(Data.FIELD, e.getValue());
+					Field field = (Field) e.getValue();
+					// check if data source's data exists
+					if(get(Data.FIELD) == null) {
+						// instance new set
+						Set<XML> set = new LinkedHashSet<XML>();
+						// add first data source value to set
+						set.add(field);
+						// set data
+						put(Data.FIELD, set);
+					} else {
+						// add message to data
+						Object set = get(Data.FIELD);
+						((Set<XML>) set).add(field);
+					}
 				}
 			}
 			break;

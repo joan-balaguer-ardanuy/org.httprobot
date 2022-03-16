@@ -49,7 +49,7 @@ public abstract class Entry<K,V,T extends Control>
 	public Entry() {
 		super();
 	}
-	public Entry(XML message, Class<T> type, Parent parent) {
+	public Entry(Message message, Class<T> type, Parent parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

@@ -3,44 +3,35 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.operator.Html;
 import org.httprobot.operator.Url;
 
 @XmlRootElement
-public final class Field extends XML {
+public final class Field extends Message {
 
 	/**
 	 * -2640753397637192814L
 	 */
 	private static final long serialVersionUID = -2640753397637192814L;
 
-	String fieldName;
-	Url httpAddress;
-	Html htmlUnit;
+	Url url;
+	Html html;
 	
 	@XmlElement
-	public String getFieldName() {
-		return fieldName;
+	public Url getUrl() {
+		return url;
 	}
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
-
-	@XmlElement
-	public Url getHttpAddress() {
-		return httpAddress;
-	}
-	public void setHttpAddress(Url httpAddress) {
-		this.httpAddress = httpAddress;
+	public void setUrl(Url httpAddress) {
+		this.url = httpAddress;
 	}
 
 	@XmlElement
-	public Html getHtmlUnit() {
-		return htmlUnit;
+	public Html getHtml() {
+		return html;
 	}
-	public void setHtmlUnit(Html htmlUnit) {
-		this.htmlUnit = htmlUnit;
+	public void setHtml(Html htmlUnit) {
+		this.html = htmlUnit;
 	}
 
 	public Field() {

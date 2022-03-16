@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRefControl;
 import org.httprobot.event.EventArgs;
 import org.httprobot.parameter.Constant;
@@ -121,47 +121,7 @@ public final class DataSourceControl
 			}
 			break;
 		case CONTROL_LOADED:
-			if (e.getSource().equals(this)) {
-
-				DataSource dataSource = DataSource.class.cast(e.getValue());
-				put(Data.SOURCE_NAME, dataSource.getSourceName());
-
-				// check if control has child XML message controls
-				if (hasChildren()) {
-					// iterate through child XML message controls
-					while (hasNext()) {
-						// get next child XML message control
-						Control control = (Control) next();
-
-						if (control instanceof ActionControl ? 
-								actionControl.equals(control) 
-								: false) {
-							actionControl.load();
-						} else if (control instanceof ContentTypeRefControl ? 
-								contentTypeRefControl.equals(control)
-								: false) {
-							contentTypeRefControl.load();
-						} else if (control instanceof DocumentRootControl ? 
-								documentRootControl.equals(control) 
-								: false) {
-							documentRootControl.load();
-						} else if (control instanceof ConstantControl ? 
-								constantControl.contains(control) 
-								: false) {
-							// look for matching constant control's XML message.
-							for(Constant constant : dataSource.getConstant()) {
-								// by UUID
-								if(control.getName().equals(constant.getName())) {
-									// load XML message control.
-									control.load();
-								}
-							}
-						}
-					}
-					// Set control ready to be iterated again.
-					reset();
-				}
-			} else if (e.getSource() instanceof DocumentRootControl) {
+			if (e.getSource() instanceof DocumentRootControl) {
 				if (getChildren().contains(e.getSource())) {
 					put(Data.DOCUMENT_ROOT, e.getValue());
 				}
@@ -176,12 +136,12 @@ public final class DataSourceControl
 			} else if (e.getSource() instanceof ConstantControl) {
 				if (getChildren().contains(e.getSource())) {
 					if(get(Data.CONSTANT) == null) {
-						Set<Message> set = new LinkedHashSet<Message>();
-						set.add((Message) e.getValue());
+						Set<XML> set = new LinkedHashSet<XML>();
+						set.add((XML) e.getValue());
 						put(Data.CONSTANT, set);
 					} else {
 						Object set = get(Data.CONSTANT);
-						((Set<Message>) set).add((Message) e.getValue());
+						((Set<XML>) set).add((XML) e.getValue());
 					}
 				}
 			}

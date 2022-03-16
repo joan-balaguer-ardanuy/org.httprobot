@@ -3,10 +3,10 @@ package org.httprobot.operator.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractString;
+import org.httprobot.AbstractOperator;
 
 @XmlRootElement
-public final class Concat extends AbstractString {
+public final class Concat extends AbstractOperator {
 
 	/**
 	 * 7159704331152281866L

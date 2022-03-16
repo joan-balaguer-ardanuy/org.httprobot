@@ -3,7 +3,7 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 /**
  * Service QName configuration XML message class.
@@ -18,7 +18,7 @@ import org.httprobot.XML;
  *
  */
 @XmlRootElement
-public final class ServiceQName extends XML {
+public final class ServiceQName extends Message {
 
 	/**
 	 * 5243372154742756420Ls

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.DataType;
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 /**
  * Field reference class. The name of this message
@@ -13,7 +13,7 @@ import org.httprobot.XML;
  *
  */
 @XmlRootElement
-public final class FieldRef extends XML {
+public final class FieldRef extends Message {
 
 	/**
 	 * 210911811831590239L

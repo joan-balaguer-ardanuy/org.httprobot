@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.datatype.DataSource;
 
@@ -19,7 +19,7 @@ import org.httprobot.datatype.DataSource;
  *
  */
 @XmlRootElement
-public final class Source extends XML {
+public final class Source extends Message {
 
 	/**
 	 * 8762442432069232238L

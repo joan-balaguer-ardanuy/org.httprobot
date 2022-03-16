@@ -91,7 +91,7 @@ public abstract class AbstractParent<T extends Control>
 	public AbstractParent() {
 		super();
 	}
-	public AbstractParent(XML message, Class<T> type, AbstractParent<?> parent) {
+	public AbstractParent(Message message, Class<T> type, AbstractParent<?> parent) {
 		super(message.getName());
 
 		control = instance(type, message);

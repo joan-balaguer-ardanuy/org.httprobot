@@ -5,12 +5,12 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.operator.html.Element;
 import org.httprobot.parameter.Constant;
 
 @XmlRootElement
-public final class Action extends XML {
+public final class Action extends Message {
 
 	/**
 	 * 798890955203009246L

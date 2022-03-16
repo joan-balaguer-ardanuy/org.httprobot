@@ -30,9 +30,13 @@ public final class ServiceConnectionControl
 	public ServiceConnectionControl() {
 		super();
 	}
+	public ServiceConnectionControl(ServiceConnection message) {
+		super(message);
+	}
 	public ServiceConnectionControl(ServiceConnection message, Control parent) {
 		super(message, parent);
 	}
+	
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);

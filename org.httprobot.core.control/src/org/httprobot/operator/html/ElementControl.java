@@ -48,9 +48,6 @@ public final class ElementControl
 				if (element.getElement() != null) {
 					new ElementControl(element.getElement(), this);
 				}
-				if (element.getXPath() == null) {
-					throw new Error("ElementControl.OnControlInitialized: XPath expression is missing.");
-				}
 				if(element.getClick() == null) {
 					throw new Error("ElementControl.OnEventReceived: Click property is missing.");
 				}

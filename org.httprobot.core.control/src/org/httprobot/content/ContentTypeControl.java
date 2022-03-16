@@ -1,12 +1,15 @@
 package org.httprobot.content;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
+import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 
 @XmlRootElement
@@ -35,6 +38,7 @@ public final class ContentTypeControl
 	public void setContentTypeRefControl(LinkedHashSet<ContentTypeRefControl> contentTypeRefControl) {
 		this.contentTypeRefControl = contentTypeRefControl;
 	}
+	
 	public ContentTypeControl() {
 		super();
 	}
@@ -42,6 +46,7 @@ public final class ContentTypeControl
 		super(message, parent);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
@@ -78,55 +83,37 @@ public final class ContentTypeControl
 			}
 			break;
 		case CONTROL_LOADED:
-			if (e.getSource().equals(this)) {
-				// cast source
-				ContentType contentType = ContentType.class.cast(e.getValue());
-				// iterate through child controls and set it's messages.
-				if (hasChildren()) {
-					while (hasNext()) {
-						Control control = next();
-						// check if FieldRef has been saved before.
-						if (getFieldRefControl().contains(control) ? 
-								!contentType.getFieldRef().isEmpty() 
-								: false) {
-							// get the FieldRef message control.
-							FieldRefControl fieldRefControl = FieldRefControl.class.cast(control);
-
-							for (FieldRef fieldRef : contentType.getFieldRef()) {
-								// match by name.
-								if (fieldRefControl.getName().equals(fieldRef.getName())) {
-									// load the control
-									control.load();
-									break;
-								}
-							}
-						}
-						// Check if ContentTypeRef has been stored before.
-						if (getContentTypeRefControl().contains(control) ? 
-								!contentType.getContentTypeRef().isEmpty()
-								: false) {
-
-							for (ContentTypeRef contentTypeRef : contentType.getContentTypeRef()) {
-								// Match by UUID.
-								if (control.getName().equals(contentTypeRef.getName())) {
-									// Load the message
-									control.load();
-									break;
-								}
-							}
-						}
-					}
-					reset();
-				} else {
-					throw new Error("ContentTypeControl.OnControlLoaded: XML message controls missing.");
-				}
-			} else if (e.getSource() instanceof FieldRefControl) {
+			if (e.getSource() instanceof FieldRefControl) {
 				if (getChildren().contains(e.getSource())) {
-					put(Data.FIELD_REF, e.getValue());
+					// cast event's source value
+					FieldRef fieldRef = (FieldRef) e.getValue();
+					if(get(Data.FIELD_REF) == null) {
+						// instance new set
+						Set<XML> set = new LinkedHashSet<XML>();
+						// add first field reference value to set
+						set.add(fieldRef);
+						// set data
+						put(Data.FIELD_REF, set);
+					} else {
+						// add message to data
+						Object set = get(Data.FIELD_REF);
+						((Set<XML>) set).add(fieldRef);
+					}
 				}
 			} else if (e.getSource() instanceof ContentTypeRefControl) {
-				if (getChildren().contains(e.getSource())) {
-					put(Data.CONTENT_TYPE_REF, e.getValue());
+				// cast event's source value
+				ContentTypeRef contentTypeRef = (ContentTypeRef) e.getValue();
+				if(get(Data.CONTENT_TYPE_REF) == null) {
+					// instance new set
+					Set<XML> set = new LinkedHashSet<XML>();
+					// add first content type reference value to set
+					set.add(contentTypeRef);
+					// set data
+					put(Data.CONTENT_TYPE_REF, set);
+				} else {
+					// add message to data
+					Object set = get(Data.CONTENT_TYPE_REF);
+					((Set<XML>) set).add(contentTypeRef);
 				}
 			}
 			break;

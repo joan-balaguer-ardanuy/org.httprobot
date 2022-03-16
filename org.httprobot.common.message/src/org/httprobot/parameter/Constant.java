@@ -3,10 +3,10 @@ package org.httprobot.parameter;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 
 @XmlRootElement
-public final class Constant extends XML
+public final class Constant extends Message
 	implements java.util.Map.Entry<String,String> {
 
 	/**

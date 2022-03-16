@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.configuration.adapter.ServiceQNameAdapter;
 import org.httprobot.configuration.adapter.ServiceUrlAdapter;
 
@@ -20,7 +20,7 @@ import org.httprobot.configuration.adapter.ServiceUrlAdapter;
  *
  */
 @XmlRootElement
-public final class ServiceConnection extends XML {
+public final class ServiceConnection extends Message {
 
 	/**
 	 * 355219426287742894L

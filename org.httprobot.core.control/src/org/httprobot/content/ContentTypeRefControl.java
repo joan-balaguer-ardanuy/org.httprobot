@@ -28,7 +28,7 @@ public final class ContentTypeRefControl
 	}
 	
 	public ContentTypeRefControl() {
-		setMessage(new ContentTypeRef());
+		super();
 	}
 	public ContentTypeRefControl(ContentTypeRef message, Control parent) {
 		super(message, parent);
@@ -42,19 +42,14 @@ public final class ContentTypeRefControl
 				ContentTypeRef contentTypeRef = ContentTypeRef.class.cast(e.getValue());
 				// Cbeck required data
 				if (contentTypeRef.getName() == null || contentTypeRef.getName() == null) {
-					throw new Error("ContentTypeRefControl.OnControlInitialized: UUID cannot be null.");
+					throw new Error("ContentTypeRefControl.OnEventReceived: name cannot be null.");
 				}
-			}	
+			}
 			break;
 		case CONTROL_LOADED:
 			if (e.getSource().equals(this)) {
 				ContentTypeRef contentTypeRef = ContentTypeRef.class.cast(e.getValue());
-
-				if (contentTypeRef.getName() != null) {
-					put(Data.NAME, contentTypeRef.getName());
-				} else {
-					throw new Error("ContentTypeRefControl.OnControlLoaded: UUID cannot be null.");
-				}
+				put(Data.NAME, contentTypeRef.getName());
 			}
 			break;
 		default:

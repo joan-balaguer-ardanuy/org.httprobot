@@ -19,27 +19,26 @@ public final class FieldControl
 	 */
 	private static final long serialVersionUID = 7351340591317735119L;
 
-	UrlControl httpAddressControl;
-	HtmlControl htmlUnitControl;
+	UrlControl urlControl;
+	HtmlControl htmlControl;
 	
 	@XmlElement
-	public UrlControl getHttpAddressControl() {
-		return httpAddressControl;
+	public UrlControl getUrlControl() {
+		return urlControl;
 	}
-	public void setHttpAddressControl(UrlControl httpAddressControl) {
-		this.httpAddressControl = httpAddressControl;
+	public void setUrlControl(UrlControl httpAddressControl) {
+		this.urlControl = httpAddressControl;
 	}
 	@XmlElement
-	public HtmlControl getHtmlUnitControl() {
-		return htmlUnitControl;
+	public HtmlControl getHtmlControl() {
+		return htmlControl;
 	}
-	public void setHtmlUnitControl(HtmlControl htmlUnitControl) {
-		this.htmlUnitControl = htmlUnitControl;
+	public void setHtmlControl(HtmlControl htmlUnitControl) {
+		this.htmlControl = htmlUnitControl;
 	}
 	
 	public FieldControl() {
 		super();
-		setMessage(new Field());
 	}
 	public FieldControl(Field message, Control parent) {
 		super(message, parent);
@@ -53,62 +52,34 @@ public final class FieldControl
 				
 				Field field = Field.class.cast(e.getValue());
 				
-				if(field.getHttpAddress() != null) {
-					new UrlControl(field.getHttpAddress(), this);
+				if(field.getUrl() != null) {
+					new UrlControl(field.getUrl(), this);
 				}
-				else if(field.getHtmlUnit() != null) {
-					new HtmlControl(field.getHtmlUnit(), this);
+				else if(field.getHtml() != null) {
+					new HtmlControl(field.getHtml(), this);
 				}
 				else {
-					throw new Error("FieldControl.OnControlInitialized: Inconsistent Field XML message.");
+					throw new Error("FieldControl.OnEventReceived: Inconsistent Field XML message.");
 				}
 			}
 			else if(e.getSource() instanceof HtmlControl) {
-				htmlUnitControl = HtmlControl.class.cast(e.getSource());
-				addChild(htmlUnitControl);
+				htmlControl = HtmlControl.class.cast(e.getSource());
+				addChild(htmlControl);
 			}
 			else if(e.getSource() instanceof UrlControl) {
-				httpAddressControl = UrlControl.class.cast(e.getSource());
-				addChild(httpAddressControl);
+				urlControl = UrlControl.class.cast(e.getSource());
+				addChild(urlControl);
 			}
 			break;
 		case CONTROL_LOADED:
-			if(e.getSource().equals(this)) {
-				Field field = Field.class.cast(e.getValue());
-				//Check if control has child XML message controls
-				if(hasChildren())
-				{
-					//Iterate through child XML message controls
-					while(hasNext())
-					{
-						//Get next child XML message control
-						Control control = next();
-						
-						if(control instanceof UrlControl ?
-								field.getHttpAddress() != null ?
-										httpAddressControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-						else if(control instanceof HtmlControl ?
-								field.getHtmlUnit() != null ?
-										htmlUnitControl.equals(control)
-										: false : false) {
-							control.load();
-						}
-					}
-					// Set control ready to be iterated again.
-					reset();
-				}
-			}
-			else if(e.getSource() instanceof HtmlControl) {
+			if(e.getSource() instanceof HtmlControl) {
 				if(getChildren().contains(e.getSource())) {
-					put(Data.HTML_UNIT, e.getValue());
+					put(Data.HTML, e.getValue());
 				}	
 			}
 			else if(e.getSource() instanceof UrlControl) {
 				if(getChildren().contains(e.getSource())) {
-					put(Data.HTTP_ADDRESS, e.getValue());
+					put(Data.URL, e.getValue());
 				}	
 			}
 			break;
