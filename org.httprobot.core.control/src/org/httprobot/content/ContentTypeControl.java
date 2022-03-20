@@ -14,7 +14,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ContentTypeControl 
-	extends AbstractControl<ContentType> {
+	extends AbstractControl {
 
 	/**
 	 * -3238737080863615932L
@@ -37,6 +37,11 @@ public final class ContentTypeControl
 	}
 	public void setContentTypeRefControl(LinkedHashSet<ContentTypeRefControl> contentTypeRefControl) {
 		this.contentTypeRefControl = contentTypeRefControl;
+	}
+	@Override
+	@XmlElement
+	public ContentType getMessage() {
+		return (ContentType) super.getMessage();
 	}
 	
 	public ContentTypeControl() {

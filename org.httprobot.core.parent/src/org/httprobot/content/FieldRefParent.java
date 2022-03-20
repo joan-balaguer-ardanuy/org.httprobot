@@ -1,12 +1,12 @@
 package org.httprobot.content;
 
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.Listener;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.ManagerEventArgs;
 
 public class FieldRefParent 
-	extends Entry<FieldRef, InputField, FieldRefControl> {
+	extends ParentMapping<FieldRef, InputField, FieldRefControl> {
 
 	/**
 	 * 1140349784992668189L

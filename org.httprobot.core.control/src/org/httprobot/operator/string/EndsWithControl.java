@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class EndsWithControl
-	extends AbstractStringControl<EndsWith> {
+	extends AbstractStringControl {
 
 	/**
 	 * 3494988225577418938L
@@ -19,11 +19,7 @@ public final class EndsWithControl
 	@Override
 	@XmlElement
 	public EndsWith getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(EndsWith message) {
-		super.setMessage(message);
+		return (EndsWith) super.getMessage();
 	}
 	
 	public EndsWithControl() {

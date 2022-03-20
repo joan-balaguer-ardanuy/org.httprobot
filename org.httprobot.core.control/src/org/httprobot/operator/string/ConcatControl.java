@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ConcatControl
-	extends AbstractStringControl<Concat> {
+	extends AbstractStringControl {
 
 	/**
 	 * 4853020141248338937L
@@ -19,11 +19,7 @@ public final class ConcatControl
 	@Override
 	@XmlElement
 	public Concat getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Concat message) {
-		super.setMessage(message);
+		return (Concat) super.getMessage();
 	}
 	
 	public ConcatControl() {

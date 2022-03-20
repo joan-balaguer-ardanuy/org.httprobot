@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.httprobot.event.EventArgs;
 
-public abstract class AbstractControl<T extends Message> 
+public abstract class AbstractControl
 	extends AbstractListener<Control>
 		implements Control {
 
@@ -17,28 +17,25 @@ public abstract class AbstractControl<T extends Message>
 	 */
 	private static final long serialVersionUID = -8721125055676944109L;
 
-	T message;
+	XML message;
 	Map<Data,Object> data;
 	
 	Data currentKey;
 	Object currentValue;
 	
-	public T getMessage() {
+	public XML getMessage() {
 		return message;
 	}
-	public void setMessage(T message) {
-		this.message = message;
-	}
-	
+
 	public AbstractControl() {
 		super();
 	}
-	public AbstractControl(T message) {
+	public AbstractControl(XML message) {
 		super(message.getName());
 		this.message = message;
 		initialize();
 	}
-	public AbstractControl(T message, Control parent) {
+	public AbstractControl(XML message, Control parent) {
 		super(parent, message.getName());
 		this.message = message;
 		initialize();

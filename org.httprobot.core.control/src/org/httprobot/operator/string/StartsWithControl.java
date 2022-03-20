@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class StartsWithControl 
-	extends AbstractStringControl<StartsWith> {
+	extends AbstractStringControl {
 
 	/**
 	 * 6170464494921818052L
@@ -19,11 +19,7 @@ public final class StartsWithControl
 	@Override
 	@XmlElement
 	public StartsWith getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(StartsWith message) {
-		super.setMessage(message);
+		return (StartsWith) super.getMessage();
 	}
 	
 	public StartsWithControl() {

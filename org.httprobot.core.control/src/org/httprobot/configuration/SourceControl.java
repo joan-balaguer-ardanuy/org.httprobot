@@ -18,7 +18,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class SourceControl
-	extends AbstractControl<Source> {
+	extends AbstractControl {
 
 	/**
 	 * 352106218223736293L
@@ -45,11 +45,7 @@ public final class SourceControl
 	@Override
 	@XmlElement
 	public Source getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Source message) {
-		super.setMessage(message);
+		return (Source) super.getMessage();
 	}
 	
 	public SourceControl() {

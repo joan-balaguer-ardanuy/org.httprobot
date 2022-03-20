@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class EqualsControl
-	extends AbstractStringControl<Equals>{
+	extends AbstractStringControl{
 
 	/**
 	 * -9117585827351033039L
@@ -19,11 +19,7 @@ public final class EqualsControl
 	@Override
 	@XmlElement
 	public Equals getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Equals message) {
-		super.setMessage(message);
+		return (Equals) super.getMessage();
 	}
 	
 	public EqualsControl() {

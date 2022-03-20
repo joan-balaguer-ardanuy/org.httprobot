@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class SubstringControl
-	extends AbstractStringControl<Substring> {
+	extends AbstractStringControl {
 
 	/**
 	 * -8786207254600689526L
@@ -19,11 +19,7 @@ public final class SubstringControl
 	@Override
 	@XmlElement
 	public Substring getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Substring message) {
-		super.setMessage(message);
+		return (Substring) super.getMessage();
 	}
 	
 	public SubstringControl() {

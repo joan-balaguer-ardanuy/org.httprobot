@@ -1,12 +1,12 @@
 package org.httprobot.unit;
 
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.event.ManagerEventArgs;
 import org.openqa.selenium.WebDriver;
 
 public class DriverParent 
-	extends Entry<Driver, WebDriver, DriverControl> {
+	extends ParentMapping<Driver, WebDriver, DriverControl> {
 
 	/**
 	 * 7948356877406296858L

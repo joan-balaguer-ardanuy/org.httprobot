@@ -12,7 +12,7 @@ import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
 public final class DocumentControl 
-	extends AbstractControl<Document> {
+	extends AbstractControl {
 
 	/**
 	 * 992409643204748504L
@@ -51,6 +51,11 @@ public final class DocumentControl
 	}
 	public void setDocumentControl(DocumentControl documentControl) {
 		this.documentControl = documentControl;
+	}
+	@Override
+	@XmlElement
+	public Document getMessage() {
+		return (Document) super.getMessage();
 	}
 	
 	public DocumentControl() {

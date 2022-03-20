@@ -10,7 +10,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ContentTypeRefControl 
-	extends AbstractControl<ContentTypeRef> {
+	extends AbstractControl {
 
 	/**
 	 * 740303867514973622L
@@ -20,11 +20,7 @@ public final class ContentTypeRefControl
 	@Override
 	@XmlElement
 	public ContentTypeRef getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(ContentTypeRef message) {
-		super.setMessage(message);
+		return (ContentTypeRef) super.getMessage();
 	}
 	
 	public ContentTypeRefControl() {

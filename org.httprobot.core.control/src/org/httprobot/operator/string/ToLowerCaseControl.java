@@ -8,7 +8,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ToLowerCaseControl
-	extends AbstractStringControl<ToLowerCase> {
+	extends AbstractStringControl {
 
 	/**
 	 * -8140876774202456900L
@@ -18,11 +18,7 @@ public final class ToLowerCaseControl
 	@Override
 	@XmlElement
 	public ToLowerCase getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(ToLowerCase message) {
-		super.setMessage(message);
+		return (ToLowerCase) super.getMessage();
 	}
 	
 	public ToLowerCaseControl() {

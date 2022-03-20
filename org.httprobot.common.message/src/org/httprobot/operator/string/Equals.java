@@ -3,10 +3,10 @@ package org.httprobot.operator.string;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractOperator;
+import org.httprobot.AbstractString;
 
 @XmlRootElement
-public final class Equals extends AbstractOperator {
+public final class Equals extends AbstractString {
 
 	/**
 	 * -6773569233922871483L

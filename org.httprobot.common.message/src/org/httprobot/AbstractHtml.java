@@ -2,7 +2,7 @@ package org.httprobot;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public abstract class AbstractHtml extends AbstractOperator {
+public abstract class AbstractHtml extends AbstractString {
 
 	/**
 	 * -6047806638957555356L

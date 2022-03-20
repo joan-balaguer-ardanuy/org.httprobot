@@ -12,7 +12,7 @@ import org.httprobot.operator.UrlControl;
 
 @XmlRootElement
 public final class FieldControl
-	extends AbstractControl<Field> {
+	extends AbstractControl {
 
 	/**
 	 * 7351340591317735119L
@@ -35,6 +35,10 @@ public final class FieldControl
 	}
 	public void setHtmlControl(HtmlControl htmlUnitControl) {
 		this.htmlControl = htmlUnitControl;
+	}
+	@Override
+	public Field getMessage() {
+		return (Field) super.getMessage();
 	}
 	
 	public FieldControl() {

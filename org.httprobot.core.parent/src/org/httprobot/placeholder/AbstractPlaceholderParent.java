@@ -2,8 +2,8 @@ package org.httprobot.placeholder;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Listener;
-import org.httprobot.Entry;
-import org.httprobot.AbstractOperator;
+import org.httprobot.ParentMapping;
+import org.httprobot.AbstractString;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.operator.string.Concat;
 import org.httprobot.operator.string.ConcatControl;
@@ -40,7 +40,7 @@ import org.httprobot.placeholder.string.ToUpperCaseParent;
 import org.httprobot.placeholder.string.TryParseParent;
 
 public abstract class AbstractPlaceholderParent<K, V, T extends AbstractControl<?>>
-	extends Entry<K, V, T> {
+	extends ParentMapping<K, V, T> {
 
 	/**
 	 * -1728687948431462444L
@@ -62,7 +62,7 @@ public abstract class AbstractPlaceholderParent<K, V, T extends AbstractControl<
 	public AbstractPlaceholderParent() {
 		super();
 	}
-	public AbstractPlaceholderParent(AbstractOperator message, Class<T> type, Listener parent) {
+	public AbstractPlaceholderParent(AbstractString message, Class<T> type, Listener parent) {
 		super(message, type, parent);
 	}
 	

@@ -4,13 +4,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.WebService;
 
 @XmlRootElement
 public final class ServiceConnectionParent 
-	extends Entry<ServiceConnection, WebService, ServiceConnectionControl> {
+	extends ParentMapping<ServiceConnection, WebService, ServiceConnectionControl> {
 
 	/**
 	 * 798195388983416568L

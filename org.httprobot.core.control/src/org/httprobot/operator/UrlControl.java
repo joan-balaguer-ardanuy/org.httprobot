@@ -8,7 +8,7 @@ import org.httprobot.operator.string.AbstractStringControl;
 
 @XmlRootElement
 public final class UrlControl 
-	extends AbstractStringControl<Url> {
+	extends AbstractStringControl {
 
 	/**
 	 * 1246127918758222588L
@@ -18,11 +18,7 @@ public final class UrlControl
 	@Override
 	@XmlElement
 	public Url getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Url message) {
-		super.setMessage(message);
+		return (Url) super.getMessage();
 	}
 	
 	public UrlControl() {

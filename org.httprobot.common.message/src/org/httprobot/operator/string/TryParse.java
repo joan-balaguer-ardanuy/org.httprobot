@@ -4,10 +4,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.FieldType;
-import org.httprobot.AbstractOperator;
+import org.httprobot.AbstractString;
 
 @XmlRootElement
-public final class TryParse extends AbstractOperator {
+public final class TryParse extends AbstractString {
 
 	/**
 	 * 6864269372865421299L

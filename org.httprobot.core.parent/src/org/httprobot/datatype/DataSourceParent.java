@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Data;
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.XML;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
@@ -29,7 +29,7 @@ import org.httprobot.unit.ActionParent;
 
 @XmlRootElement
 public final class DataSourceParent 
-	extends Entry<ContentTypeRef, DocumentLibrary, DataSourceControl> {
+	extends ParentMapping<ContentTypeRef, DocumentLibrary, DataSourceControl> {
 
 	/**
 	 * -8406916752533216986L

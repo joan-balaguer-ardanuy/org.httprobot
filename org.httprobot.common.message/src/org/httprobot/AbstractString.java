@@ -22,7 +22,7 @@ import org.httprobot.operator.string.TryParse;
  * @author joan
  *
  */
-public abstract class AbstractOperator extends Message {
+public abstract class AbstractString extends Message {
 
 	/**
 	 * 3345969046526629498L
@@ -251,9 +251,9 @@ public abstract class AbstractOperator extends Message {
 	}
 	
 	/**
-	 * {@link AbstractOperator} default class constructor.
+	 * {@link AbstractString} default class constructor.
 	 */
-	public AbstractOperator() {
+	public AbstractString() {
 		super();
 	}
 }

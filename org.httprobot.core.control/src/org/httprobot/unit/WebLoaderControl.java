@@ -5,12 +5,17 @@ import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
 
-public class WebLoaderControl extends AbstractControl<WebLoader> {
+public class WebLoaderControl extends AbstractControl {
 
 	/**
 	 * -1373660850780191708L
 	 */
 	private static final long serialVersionUID = -1373660850780191708L;
+	
+	@Override
+	public WebLoader getMessage() {
+		return (WebLoader) super.getMessage();
+	}
 	
 	public WebLoaderControl() {
 		super();

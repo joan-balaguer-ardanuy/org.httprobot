@@ -10,7 +10,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class FieldRefControl 
-	extends AbstractControl<FieldRef> {
+	extends AbstractControl {
 
 	/**
 	 * 1646361821245878280L
@@ -20,11 +20,7 @@ public final class FieldRefControl
 	@XmlElement
 	@Override
 	public FieldRef getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(FieldRef message) {
-		super.setMessage(message);
+		return (FieldRef) super.getMessage();
 	}
 	
 	public FieldRefControl() {

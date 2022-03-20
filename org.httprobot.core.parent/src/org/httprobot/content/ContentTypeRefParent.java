@@ -1,11 +1,11 @@
 package org.httprobot.content;
 
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.event.ManagerEventArgs;
 
 public class ContentTypeRefParent 
-	extends Entry<ContentTypeRef, ContentType, ContentTypeRefControl> {
+	extends ParentMapping<ContentTypeRef, ContentType, ContentTypeRefControl> {
 
 	/**
 	 * 2966040272596645359L

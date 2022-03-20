@@ -8,7 +8,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ToUpperCaseControl
-	extends AbstractStringControl<ToUpperCase> {
+	extends AbstractStringControl {
 
 	/**
 	 * -8536577675929221898L
@@ -18,11 +18,7 @@ public final class ToUpperCaseControl
 	@Override
 	@XmlElement
 	public ToUpperCase getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(ToUpperCase message) {
-		super.setMessage(message);
+		return (ToUpperCase) super.getMessage();
 	}
 	
 	public ToUpperCaseControl() {

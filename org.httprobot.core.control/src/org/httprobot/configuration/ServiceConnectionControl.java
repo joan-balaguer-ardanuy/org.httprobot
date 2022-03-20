@@ -10,7 +10,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ServiceConnectionControl 
-	extends AbstractControl<ServiceConnection> {
+	extends AbstractControl {
 
 	/**
 	 * 4177732778336124009L
@@ -20,11 +20,7 @@ public final class ServiceConnectionControl
 	@Override
 	@XmlElement
 	public ServiceConnection getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(ServiceConnection message) {
-		super.setMessage(message);
+		return (ServiceConnection) super.getMessage();
 	}
 	
 	public ServiceConnectionControl() {
@@ -44,7 +40,7 @@ public final class ServiceConnectionControl
 		case CONTROL_INITIALIZED:
 			if(e.getSource().equals(this)) {
 				// cast XML message
-				ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getValue());
+				ServiceConnection serviceOptions = (ServiceConnection) e.getValue();
 				// check XML message integrity
 				if(serviceOptions.getQName() == null || serviceOptions.getURL() == null) {
 					throw new Error("ServiceConnectionControl.OnEventReceived: Malformed ServiceConnection XML message control exception");
@@ -54,15 +50,10 @@ public final class ServiceConnectionControl
 		case CONTROL_LOADED:
 			if(e.getSource().equals(this)) {
 				// cast message
-				ServiceConnection serviceOptions = ServiceConnection.class.cast(e.getValue());
-				
-				if(serviceOptions.getQName() != null && serviceOptions.getURL() != null) {
-					//Store data to current XML message control
-					put(Data.Q_NAME, serviceOptions.getQName());
-					put(Data.URL, serviceOptions.getURL());	
-				} else {
-					throw new Error("ServiceConnectionControl.OnEventReceived: Malformed ServiceConnection XML message control exception");
-				}
+				ServiceConnection serviceOptions = (ServiceConnection) e.getValue();
+				// store data to current XML message control
+				put(Data.Q_NAME, serviceOptions.getQName());
+				put(Data.URL, serviceOptions.getURL());	
 			}
 			break;
 		default:

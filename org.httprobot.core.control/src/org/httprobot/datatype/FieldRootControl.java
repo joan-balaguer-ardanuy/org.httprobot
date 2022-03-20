@@ -14,7 +14,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class FieldRootControl
-	extends AbstractControl<FieldRoot> {
+	extends AbstractControl {
 
 	/**
 	 * 2468967859806729944L
@@ -30,6 +30,10 @@ public final class FieldRootControl
 	public void setFieldControl(LinkedHashSet<FieldControl> fieldControl) {
 		this.fieldControl = fieldControl;
 	}
+	@Override
+	public FieldRoot getMessage() {
+		return (FieldRoot) super.getMessage();
+	}
 	
 	public FieldRootControl() {
 		super();
@@ -37,6 +41,7 @@ public final class FieldRootControl
 	public FieldRootControl(FieldRoot message, Control parent) {
 		super(message, parent);
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void OnEventReceived(EventArgs e) {

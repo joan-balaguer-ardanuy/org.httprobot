@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -14,7 +14,7 @@ import org.httprobot.event.ManagerEventArgs;
 
 @XmlRootElement
 public class ContentTypeParent
-	extends Entry<ContentType, InputDocument, ContentTypeControl> {
+	extends ParentMapping<ContentType, InputDocument, ContentTypeControl> {
 
 	/**
 	 * 7504962006510123725L

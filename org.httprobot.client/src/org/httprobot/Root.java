@@ -45,7 +45,7 @@ public final class Root
 	 */
 	WebDriver webDriver;
 	/**
-	 * The {@link ServiceConnection} XML message {@link Entry}.
+	 * The {@link ServiceConnection} XML message {@link ParentMapping}.
 	 */
 	ServiceConnectionParent serviceConnectionManager;
 	/**
@@ -53,7 +53,7 @@ public final class Root
 	 */
 	ServiceConnection serviceConnection;
 	/**
-	 * The {@link Source} configuration XML message {@link Entry}.
+	 * The {@link Source} configuration XML message {@link ParentMapping}.
 	 */
 	SourceParent sourceManager;
 	/**

@@ -1,5 +1,6 @@
 package org.httprobot.parameter;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractControl;
@@ -9,12 +10,18 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ConstantControl 
-	extends AbstractControl<Constant> {
+	extends AbstractControl {
 
 	/**
 	 * 8308150241844524678L
 	 */
 	private static final long serialVersionUID = 8308150241844524678L;
+	
+	@Override
+	@XmlElement
+	public Constant getMessage() {
+		return (Constant) super.getMessage();
+	}
 	
 	public ConstantControl() {
 		super();	

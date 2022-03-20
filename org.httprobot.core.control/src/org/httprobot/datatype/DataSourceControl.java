@@ -18,7 +18,7 @@ import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
 public final class DataSourceControl 
-	extends AbstractControl<DataSource> {
+	extends AbstractControl {
 
 	/**
 	 * -3180277017791845005L
@@ -57,6 +57,11 @@ public final class DataSourceControl
 	}
 	public void setConstantControl(LinkedHashSet<ConstantControl> constantControl) {
 		this.constantControl = constantControl;
+	}
+	
+	@Override
+	public DataSource getMessage() {
+		return (DataSource) super.getMessage();
 	}
 	
 	public DataSourceControl() {

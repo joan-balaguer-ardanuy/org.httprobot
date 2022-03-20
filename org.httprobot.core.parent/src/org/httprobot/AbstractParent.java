@@ -115,7 +115,7 @@ public abstract class AbstractParent<T extends Control>
 			if (hasChildren()) {
 				// Start each child manager
 				while (hasNext()) {
-					Parent manager = (Parent) next();
+					Parent manager = next();
 					manager.start();
 				}
 				reset();

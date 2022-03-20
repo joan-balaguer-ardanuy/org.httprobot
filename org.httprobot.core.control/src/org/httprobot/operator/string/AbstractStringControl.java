@@ -4,13 +4,13 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
-import org.httprobot.AbstractOperator;
+import org.httprobot.AbstractString;
 import org.httprobot.Data;
 import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 
-public abstract class AbstractStringControl<T extends AbstractOperator>
-	extends AbstractControl<T> {
+public abstract class AbstractStringControl
+	extends AbstractControl {
 
 	/**
 	 * -138070185044904871L
@@ -110,7 +110,7 @@ public abstract class AbstractStringControl<T extends AbstractOperator>
 	public AbstractStringControl() {
 		super();
 	}
-	public AbstractStringControl(T message, Control parent) {
+	public AbstractStringControl(XML message, Control parent) {
 		super(message, parent);
 	}
 	@Override
@@ -120,7 +120,7 @@ public abstract class AbstractStringControl<T extends AbstractOperator>
 		case CONTROL_INITIALIZED:
 			if(e.getSource().equals(this)) {
 				
-				AbstractOperator operator = AbstractOperator.class.cast(e.getValue());
+				AbstractString operator = AbstractString.class.cast(e.getValue());
 				
 				if (operator.getContains() != null) {
 					new ContainsControl(operator.getContains(), this);

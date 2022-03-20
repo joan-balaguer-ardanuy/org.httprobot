@@ -17,7 +17,7 @@ import org.httprobot.Constants;
 import org.httprobot.Data;
 import org.httprobot.ManagerEventType;
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.event.CommandEventArgs;
 import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
@@ -40,7 +40,7 @@ import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionParent
-	extends Entry<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends ParentMapping<HtmlPage, Set<HtmlPage>, ActionControl> {
 
 	/**
 	 * -6659121403717296708L

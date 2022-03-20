@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ElementControl 
-	extends AbstractHtmlControl<Element> {
+	extends AbstractHtmlControl {
 
 	/**
 	 * -1055172865009492574L
@@ -22,13 +22,8 @@ public final class ElementControl
 	@Override
 	@XmlElement
 	public Element getMessage() {
-		return super.getMessage();
+		return (Element) super.getMessage();
 	}
-	@Override
-	public void setMessage(Element message) {
-		super.setMessage(message);
-	}
-	
 	public ElementControl() {
 		super();
 	}

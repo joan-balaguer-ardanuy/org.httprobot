@@ -9,7 +9,7 @@ import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
 
 @XmlRootElement
-public final class DriverControl extends AbstractControl<Driver> {
+public final class DriverControl extends AbstractControl {
 
 	/**
 	 * 7011339833433807856L
@@ -19,11 +19,7 @@ public final class DriverControl extends AbstractControl<Driver> {
 	@Override
 	@XmlElement
 	public Driver getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Driver message) {
-		super.setMessage(message);
+		return (Driver) super.getMessage();
 	}
 	
 	public DriverControl() {

@@ -1,5 +1,6 @@
 package org.httprobot.operator.string;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Control;
@@ -8,12 +9,18 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class TryParseControl
-	extends AbstractStringControl<TryParse> {
+	extends AbstractStringControl {
 
 	/**
 	 * -5977456131566401187L
 	 */
 	private static final long serialVersionUID = -5977456131566401187L;
+	
+	@Override
+	@XmlElement
+	public TryParse getMessage() {
+		return (TryParse) super.getMessage();
+	}
 	
 	public TryParseControl() {
 		super();

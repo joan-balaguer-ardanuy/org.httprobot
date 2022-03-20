@@ -14,7 +14,7 @@ import org.httprobot.parameter.ConstantControl;
 
 @XmlRootElement
 public final class ActionControl
-	extends AbstractControl<Action> {
+	extends AbstractControl {
 
 	/**
 	 * -3447883786428247992L
@@ -29,12 +29,9 @@ public final class ActionControl
 	@Override
 	@XmlElement
 	public Action getMessage() {
-		return super.getMessage();
+		return (Action) super.getMessage();
 	}
-	@Override
-	public void setMessage(Action message) {
-		super.setMessage(message);
-	}
+
 	@XmlElement
 	public WebLoaderControl getPaginatorControl() {
 		return webLoaderControl;

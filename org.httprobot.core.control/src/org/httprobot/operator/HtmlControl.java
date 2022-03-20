@@ -8,11 +8,10 @@ import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
 import org.httprobot.operator.html.AbstractHtmlControl;
 import org.httprobot.operator.html.ElementControl;
-import org.httprobot.operator.string.AbstractStringControl;
 
 @XmlRootElement
 public final class HtmlControl 
-	extends AbstractHtmlControl<Html> {
+	extends AbstractHtmlControl {
 
 	/**
 	 * -5062725452790453335L
@@ -31,11 +30,7 @@ public final class HtmlControl
 	@Override
 	@XmlElement
 	public Html getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Html message) {
-		super.setMessage(message);
+		return (Html) super.getMessage();
 	}
 	
 	public HtmlControl() {

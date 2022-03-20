@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractHtml;
-import org.httprobot.AbstractOperator;
 import org.httprobot.operator.html.Element;
 
 @XmlRootElement

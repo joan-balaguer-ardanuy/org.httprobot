@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlTransient;
 
-public abstract class Entry<K,V,T extends Control> 
+public abstract class ParentMapping<K,V,T extends Control> 
 	extends AbstractParent<T> 
 		implements DataMapping<K,V> {
 
@@ -46,10 +46,10 @@ public abstract class Entry<K,V,T extends Control>
 		return oldOutput;
 	}
 	
-	public Entry() {
+	public ParentMapping() {
 		super();
 	}
-	public Entry(Message message, Class<T> type, Parent parent) {
+	public ParentMapping(Message message, Class<T> type, Parent parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

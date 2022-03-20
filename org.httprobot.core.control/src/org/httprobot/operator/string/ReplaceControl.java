@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ReplaceControl
-	extends AbstractStringControl<Replace> {
+	extends AbstractStringControl {
 
 	/**
 	 * 7760167926576384464L
@@ -19,11 +19,7 @@ public final class ReplaceControl
 	@Override
 	@XmlElement
 	public Replace getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Replace message) {
-		super.setMessage(message);
+		return (Replace) super.getMessage();
 	}
 	
 	public ReplaceControl() {

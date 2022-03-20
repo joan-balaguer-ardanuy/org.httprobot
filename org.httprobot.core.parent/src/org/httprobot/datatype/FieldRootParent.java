@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.httprobot.Listener;
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.CommandEventArgs;
@@ -12,7 +12,7 @@ import org.httprobot.event.ManagerEventArgs;
 import org.httprobot.net.HtmlPage;
 
 public class FieldRootParent
-	extends Entry<InputDocument, HtmlPage, FieldRootControl> {
+	extends ParentMapping<InputDocument, HtmlPage, FieldRootControl> {
 
 	/**
 	 * 6156586566583864082L

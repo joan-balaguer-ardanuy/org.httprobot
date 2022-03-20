@@ -5,8 +5,8 @@ import org.httprobot.Control;
 import org.httprobot.event.EventArgs;
 import org.httprobot.operator.string.AbstractStringControl;
 
-public class AbstractHtmlControl<T extends AbstractHtml>
-	extends AbstractStringControl<T> {
+public class AbstractHtmlControl
+	extends AbstractStringControl {
 
 	/**
 	 * 7409054080699637039L
@@ -16,7 +16,7 @@ public class AbstractHtmlControl<T extends AbstractHtml>
 	public AbstractHtmlControl() {
 		super();
 	}
-	public AbstractHtmlControl(T message, Control parent) {
+	public AbstractHtmlControl(AbstractHtml message, Control parent) {
 		super(message, parent);
 	}
 	

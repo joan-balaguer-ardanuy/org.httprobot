@@ -13,7 +13,7 @@ import org.httprobot.unit.ActionControl;
 
 @XmlRootElement
 public final class DocumentRootControl
-	extends AbstractControl<DocumentRoot> {
+	extends AbstractControl {
 
 	/**
 	 * 5728744970361838580L
@@ -52,6 +52,10 @@ public final class DocumentRootControl
 	}
 	public void setFieldRootControl(FieldRootControl fieldRootControl) {
 		this.fieldRootControl = fieldRootControl;
+	}
+	@Override
+	public DocumentRoot getMessage() {
+		return (DocumentRoot) super.getMessage();
 	}
 	
 	public DocumentRootControl() {

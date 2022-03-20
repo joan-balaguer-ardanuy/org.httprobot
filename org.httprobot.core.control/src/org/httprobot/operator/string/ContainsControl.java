@@ -9,7 +9,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class ContainsControl 
-	extends AbstractStringControl<Contains> {
+	extends AbstractStringControl {
 
 	/**
 	 * -5379321827008140153L
@@ -19,11 +19,7 @@ public final class ContainsControl
 	@Override
 	@XmlElement
 	public Contains getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Contains message) {
-		super.setMessage(message);
+		return (Contains) super.getMessage();
 	}
 	
 	public ContainsControl() {

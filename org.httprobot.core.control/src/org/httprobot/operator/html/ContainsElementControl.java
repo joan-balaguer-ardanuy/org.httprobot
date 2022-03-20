@@ -7,7 +7,7 @@ import org.httprobot.Control;
 
 @XmlRootElement
 public final class ContainsElementControl 
-	extends AbstractHtmlControl<ContainsElement> {
+	extends AbstractHtmlControl {
 
 	/**
 	 * -6845601402472213527L
@@ -17,11 +17,7 @@ public final class ContainsElementControl
 	@Override
 	@XmlElement
 	public ContainsElement getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(ContainsElement message) {
-		super.setMessage(message);
+		return (ContainsElement) super.getMessage();
 	}
 	
 	public ContainsElementControl() {

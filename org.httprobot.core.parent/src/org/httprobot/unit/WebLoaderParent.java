@@ -1,6 +1,6 @@
 package org.httprobot.unit;
 
-import org.httprobot.Entry;
+import org.httprobot.ParentMapping;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderParent
-	extends Entry<String, HtmlPage, WebLoaderControl> {
+	extends ParentMapping<String, HtmlPage, WebLoaderControl> {
 
 	/**
 	 * 7605117314181749897L

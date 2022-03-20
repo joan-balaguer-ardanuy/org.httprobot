@@ -8,7 +8,7 @@ import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class TrimControl
-	extends AbstractStringControl<Trim> {
+	extends AbstractStringControl {
 
 	/**
 	 * 807343815903651954L
@@ -18,11 +18,7 @@ public final class TrimControl
 	@Override
 	@XmlElement
 	public Trim getMessage() {
-		return super.getMessage();
-	}
-	@Override
-	public void setMessage(Trim message) {
-		super.setMessage(message);
+		return (Trim) super.getMessage();
 	}
 	
 	public TrimControl() {

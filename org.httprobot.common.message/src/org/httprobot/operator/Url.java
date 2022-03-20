@@ -2,10 +2,10 @@ package org.httprobot.operator;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.AbstractOperator;
+import org.httprobot.AbstractString;
 
 @XmlRootElement
-public final class Url extends AbstractOperator {
+public final class Url extends AbstractString {
 
 	/**
 	 * 7970525666408855948L
