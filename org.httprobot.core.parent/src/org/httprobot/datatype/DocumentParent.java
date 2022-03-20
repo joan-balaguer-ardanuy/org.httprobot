@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.httprobot.Data;
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -16,15 +16,14 @@ import org.httprobot.content.FieldRef;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionParent;
 
 public class DocumentParent
-	extends ParentMapping<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>, DocumentControl> {
+	extends ParentEntry<Map<InputDocument, HtmlPage>, Map<InputDocument, HtmlPage>> {
 
 	/**
 	 * -7967388989379246404L
@@ -41,7 +40,7 @@ public class DocumentParent
 	public DocumentParent() {
 		super();
 	}
-	public DocumentParent(Document message, Listener parent) {
+	public DocumentParent(Document message, Parent parent) {
 		super(message, DocumentControl.class, parent);
 	}
 	
@@ -58,9 +57,9 @@ public class DocumentParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+	public void OnEventReceived(EventArgs e) {
+		switch (e.getEventType()) {
+		case PARENT_STARTED:
 			if(e.getSource().equals(contentTypeRefParent)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
 					if (contentType.getName().equals(contentTypeRefParent.getName())) {
@@ -69,7 +68,7 @@ public class DocumentParent
 				}
 			}
 			break;
-		case FINISHED:
+		case PARENT_FINISHED:
 			if(e.getSource().equals(actionParent)) {
 				Map<InputDocument, HtmlPage> documentOutputData = new LinkedHashMap<InputDocument, HtmlPage>();
 				documentParent.put(getValue(), documentOutputData);
@@ -97,40 +96,33 @@ public class DocumentParent
 			} else if(e.getSource().equals(fieldRootParent)) {
 				InputDocument inputDocument = InputDocument.class.cast(e.getValue());
 				getDocumentLibrary().put(currentResponse, inputDocument);
-				ManagerEvent(e);
+				//ManagerEvent(e);
 			}
 			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.ACTION).equals(action)) {
 					actionParent = new ActionParent(action, this);
-					addChildManager(actionParent);
+					addChild(actionParent);
 				}
 			} else if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefParent = new ContentTypeRefParent(contentTypeRef, this);
-					addChildManager(contentTypeRefParent);
+					addChild(contentTypeRefParent);
 				}
 			} else if(e.getSource() instanceof FieldRootControl) {
 				FieldRoot fieldRoot = FieldRootControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.FIELD_ROOT).equals(fieldRoot)) {
 					fieldRootParent = new FieldRootParent(fieldRoot, this);
-					addChildManager(fieldRootParent);
+					addChild(fieldRootParent);
 				}
 			} else if(e.getSource() instanceof DocumentControl) {
 				Document document = DocumentControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.DOCUMENT).equals(document)) {
 					DocumentParent documentManager = new DocumentParent(document, this);
-					addChildManager(documentManager);
+					addChild(documentManager);
 				}
 			}
 			break;

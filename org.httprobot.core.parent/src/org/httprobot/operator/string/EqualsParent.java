@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Equals;
-import org.httprobot.operator.string.EqualsControl;
 
 @XmlRootElement
 public final class EqualsParent 
-	extends AbstractStringParent<EqualsControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * -481593600327061747L
@@ -20,17 +18,13 @@ public final class EqualsParent
 	@Override
 	@XmlElement
 	public EqualsControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(EqualsControl control) {
-		super.setControl(control);
+		return (EqualsControl) super.getControl();
 	}
 	
 	public EqualsParent() {
 		super();
 	}
-	public EqualsParent(Equals message, Listener parent) {
+	public EqualsParent(Equals message, Parent parent) {
 		super(message, EqualsControl.class, parent);
 	}
 	

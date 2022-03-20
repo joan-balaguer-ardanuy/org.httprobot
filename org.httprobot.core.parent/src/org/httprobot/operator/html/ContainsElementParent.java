@@ -1,26 +1,28 @@
-package org.httprobot.placeholder.html;
+package org.httprobot.operator.html;
 
 import java.util.List;
 
-import org.httprobot.Listener;
-import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.operator.html.ContainsElement;
-import org.httprobot.operator.html.ContainsElementControl;
+import org.httprobot.Parent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ContainsElementParent 
-	extends AbstractHtmlParent<WebElement, Boolean, ContainsElementControl>{
+	extends AbstractHtmlParent<WebElement, Boolean>{
 
 	/**
 	 * -756242644019692484L
 	 */
 	private static final long serialVersionUID = -756242644019692484L;
 
+	@Override
+	public ContainsElementControl getControl() {
+		return (ContainsElementControl) super.getControl();
+	}
+	
 	public ContainsElementParent() {
 		super();
 	}
-	public ContainsElementParent(ContainsElement message, Listener parent) {
+	public ContainsElementParent(ContainsElement message, Parent parent) {
 		super(message, ContainsElementControl.class, parent);
 	}
 
@@ -37,9 +39,5 @@ public class ContainsElementParent
 		}
 		setValue(value);
 		return super.put(key, value);
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		
 	}
 }

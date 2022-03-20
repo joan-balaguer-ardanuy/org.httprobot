@@ -2,21 +2,19 @@ package org.httprobot.datatype;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
-
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.operator.HtmlControl;
+import org.httprobot.operator.HtmlParent;
+import org.httprobot.operator.UrlParent;
 import org.httprobot.operator.UrlControl;
-import org.httprobot.placeholder.HtmlParent;
-import org.httprobot.placeholder.HttpAddressParent;
 
 @XmlRootElement
 public final class FieldParent
-	extends ParentMapping<InputField, HtmlPage, FieldControl> {
+	extends ParentEntry<InputField, HtmlPage> {
 
 	/**
 	 * -8390181286230356701L
@@ -24,12 +22,12 @@ public final class FieldParent
 	private static final long serialVersionUID = -8390181286230356701L;
 		
 	HtmlParent htmlManager;
-	HttpAddressParent httpAddressManager;
+	UrlParent httpAddressManager;
 	
 	public FieldParent() {
 		super();
 	}
-	public FieldParent(Field message, Listener parent) {
+	public FieldParent(Field message, Parent parent) {
 		super(message, FieldControl.class, parent);
 	}
 	
@@ -51,27 +49,22 @@ public final class FieldParent
 	}
 
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof HtmlControl) {
 				HtmlControl htmlUnitControl = HtmlControl.class.cast(e.getSource());
 				htmlManager = new HtmlParent(htmlUnitControl.getMessage(), this);
-				addChildManager(htmlManager);
+				addChild(htmlManager);
 			} else if(e.getSource() instanceof UrlControl) {
 				UrlControl httpAddressControl = UrlControl.class.cast(e.getSource());
-				httpAddressManager = new HttpAddressParent(httpAddressControl.getMessage(), this);
-				addChildManager(httpAddressManager);
+				httpAddressManager = new UrlParent(httpAddressControl.getMessage(), this);
+				addChild(httpAddressManager);
 			}
 			break;
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

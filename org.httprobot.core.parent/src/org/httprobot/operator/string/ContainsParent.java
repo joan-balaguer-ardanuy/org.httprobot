@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Contains;
-import org.httprobot.operator.string.ContainsControl;
 
 @XmlRootElement
 public final class ContainsParent
-	extends AbstractStringParent<ContainsControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 6954038560443161414L
@@ -20,17 +18,13 @@ public final class ContainsParent
 	@Override
 	@XmlElement
 	public ContainsControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ContainsControl control) {
-		super.setControl(control);
+		return (ContainsControl) super.getControl();
 	}
 	
 	public ContainsParent() {
 		super();
 	}
-	public ContainsParent(Contains message, Listener parent) {
+	public ContainsParent(Contains message, Parent parent) {
 		super(message, ContainsControl.class, parent);
 	}
 	

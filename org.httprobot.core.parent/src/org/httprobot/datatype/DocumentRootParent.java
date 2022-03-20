@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.httprobot.Data;
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.content.ContentType;
 import org.httprobot.content.ContentTypeRef;
 import org.httprobot.content.ContentTypeRefControl;
@@ -16,15 +16,14 @@ import org.httprobot.content.FieldRef;
 import org.httprobot.data.DocumentLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.FieldLibrary;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.unit.Action;
 import org.httprobot.unit.ActionControl;
 import org.httprobot.unit.ActionParent;
 
 public class DocumentRootParent
-	extends ParentMapping<Set<HtmlPage>, Map<InputDocument, HtmlPage>, DocumentRootControl> {
+	extends ParentEntry<Set<HtmlPage>, Map<InputDocument, HtmlPage>> {
 
 	/**
 	 * 9134669471992617702L
@@ -41,7 +40,7 @@ public class DocumentRootParent
 	public DocumentRootParent() {
 		super();
 	}
-	public DocumentRootParent(DocumentRoot message, Listener parent) {
+	public DocumentRootParent(DocumentRoot message, Parent parent) {
 		super(message, DocumentRootControl.class, parent);
 	}
 	
@@ -57,9 +56,11 @@ public class DocumentRootParent
 	}
 
 	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		
+		switch (e.getEventType()) {
+		case PARENT_STARTED:
 			if(e.getSource().equals(contentTypeRefParent)) {
 				for (ContentType contentType : getContentTypeRoot().getContentType()) {
 					if (contentType.getName().equals(contentTypeRefParent.getName())) {
@@ -68,7 +69,7 @@ public class DocumentRootParent
 				}
 			}
 			break;
-		case FINISHED:
+		case PARENT_FINISHED:
 			if(e.getSource().equals(contentTypeRefParent)) {
 				InputDocument templateDocument = getTemplateLibrary().get(contentTypeRefParent.getKey());
 				FieldLibrary<FieldRef> templateFields = getTemplateLibrary().getTemplateFieldLibrary();
@@ -104,37 +105,30 @@ public class DocumentRootParent
 				}
 			}
 			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
 		case CONTROL_LOADED:
 			if (e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONTENT_TYPE_REF).equals(contentTypeRef)) {
 					contentTypeRefParent = new ContentTypeRefParent(contentTypeRef, this);
-					addChildManager(contentTypeRefParent);
+					addChild(contentTypeRefParent);
 				}
 			} else if (e.getSource() instanceof ActionControl) {
 				Action action = ActionControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.ACTION).equals(action)) {
 					actionParent = new ActionParent(action, this);
-					addChildManager(actionParent);
+					addChild(actionParent);
 				}
 			} else if (e.getSource() instanceof FieldRootControl) {
 				FieldRoot fieldRoot = FieldRootControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.FIELD_ROOT).equals(fieldRoot)) {
 					fieldRootParent = new FieldRootParent(fieldRoot, this);
-					addChildManager(fieldRootParent);
+					addChild(fieldRootParent);
 				}
 			} else if (e.getSource() instanceof DocumentControl) {
 				Document document = DocumentControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.DOCUMENT).equals(document)) {
 					documentParent = new DocumentParent(document, this);
-					addChildManager(documentParent);
+					addChild(documentParent);
 				}
 			}
 			break;

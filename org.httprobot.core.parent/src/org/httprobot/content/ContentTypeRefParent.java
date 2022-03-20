@@ -1,11 +1,11 @@
 package org.httprobot.content;
 
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
+import org.httprobot.event.EventArgs;
 
 public class ContentTypeRefParent 
-	extends ParentMapping<ContentTypeRef, ContentType, ContentTypeRefControl> {
+	extends ParentEntry<ContentTypeRef, ContentType> {
 
 	/**
 	 * 2966040272596645359L
@@ -15,11 +15,11 @@ public class ContentTypeRefParent
 	public ContentTypeRefParent() {
 		super();
 	}
-	public ContentTypeRefParent(ContentTypeRef message, Listener parent) {
+	public ContentTypeRefParent(ContentTypeRef message, Parent parent) {
 		super(message, ContentTypeRefControl.class, parent);
 	}
 	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
 	}
 }

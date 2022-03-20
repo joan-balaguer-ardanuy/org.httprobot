@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlTransient;
 
-public abstract class ParentMapping<K,V,T extends Control> 
-	extends AbstractParent<T> 
+import org.httprobot.event.EventArgs;
+
+public abstract class ParentEntry<K,V> 
+	extends AbstractParent
 		implements DataMapping<K,V> {
 
 	/**
@@ -46,10 +48,10 @@ public abstract class ParentMapping<K,V,T extends Control>
 		return oldOutput;
 	}
 	
-	public ParentMapping() {
+	public ParentEntry() {
 		super();
 	}
-	public ParentMapping(Message message, Class<T> type, Parent parent) {
+	public ParentEntry(XML message, Class<? extends Control> type, Parent parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();
@@ -78,7 +80,7 @@ public abstract class ParentMapping<K,V,T extends Control>
 	@Override
 	public V put(K key, V value) {
 		V oldValue = outputData.put(key, value);
-		ManagerEvent(new ManagerEventArgs(this, ManagerEventType.FINISHED));
+		SendEvent(new EventArgs(this, EventType.PARENT_FINISHED));
 		return oldValue;
 	}
 	@Override

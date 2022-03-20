@@ -1,16 +1,16 @@
 package org.httprobot.unit;
 
-import org.httprobot.ParentMapping;
+import org.httprobot.ParentEntry;
 
 import java.util.List;
 
 import org.httprobot.Data;
-import org.httprobot.ManagerEventType;
+import org.httprobot.EventType;
 import org.httprobot.NextPageMethod;
-import org.httprobot.Listener;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.Parent;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 
 public class WebLoaderParent
-	extends ParentMapping<String, HtmlPage, WebLoaderControl> {
+	extends ParentEntry<String, HtmlPage> {
 
 	/**
 	 * 7605117314181749897L
@@ -30,10 +30,15 @@ public class WebLoaderParent
 	WebElement nextPageElement;
 	Integer pageNumber;
 	
+	@Override
+	public WebLoaderControl getControl() {
+		return (WebLoaderControl) super.getControl();
+	}
+	
 	public WebLoaderParent() {
 		super();
 	}
-	public WebLoaderParent(WebLoader message, Listener parent) {
+	public WebLoaderParent(WebLoader message, Parent parent) {
 		super(message, WebLoaderControl.class, parent);
 		pageNumber = message.getStartIndex();
 	}
@@ -64,7 +69,7 @@ public class WebLoaderParent
 				put(key, value);
 			}
 			else {
-				ManagerEvent(new ManagerEventArgs(this, ManagerEventType.ALL_PAGES_LOADED));
+				SendEvent(new EventArgs(this, EventType.ALL_PAGES_LOADED));
 			}
 			break;
 		case INCREMENTAL_HTTP_GET:
@@ -75,7 +80,7 @@ public class WebLoaderParent
 				value = new HtmlPage(url, driver.findElement(By.xpath("/html")).getAttribute("outerHTML"));
 				put(key, value);
 			} else {
-				ManagerEvent(new ManagerEventArgs(this, ManagerEventType.ALL_PAGES_LOADED));
+				SendEvent(new EventArgs(this, EventType.ALL_PAGES_LOADED));
 			}
 			break;
 		default:
@@ -147,22 +152,6 @@ public class WebLoaderParent
 			Thread.sleep((Integer) getControl().get(Data.TIME));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-	}
-	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			break;
-		case FINISHED:
-			
-			break;
-		default:
-			break;
 		}
 	}
 }

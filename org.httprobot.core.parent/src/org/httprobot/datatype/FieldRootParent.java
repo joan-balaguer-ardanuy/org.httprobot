@@ -3,16 +3,15 @@ package org.httprobot.datatype;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
 
 public class FieldRootParent
-	extends ParentMapping<InputDocument, HtmlPage, FieldRootControl> {
+	extends ParentEntry<InputDocument, HtmlPage> {
 
 	/**
 	 * 6156586566583864082L
@@ -24,7 +23,7 @@ public class FieldRootParent
 	public FieldRootParent() {
 		super();
 	}
-	public FieldRootParent(FieldRoot message, Listener parent) {
+	public FieldRootParent(FieldRoot message, Parent parent) {
 		super(message, FieldRootControl.class, parent);
 		fieldManagers = new LinkedHashMap<Field, FieldParent>();
 	}
@@ -35,28 +34,25 @@ public class FieldRootParent
 		setValue(value);
 		for(Field field : fieldManagers.keySet()) {
 			FieldParent fieldManager = fieldManagers.get(field);
-			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByUUID(field.getName());
+			InputField inputField = getTemplateLibrary().getTemplateFieldLibrary().getByName(field.getName());
 			fieldManager.put(inputField, value);
 		}
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if (e.getSource() instanceof FieldControl) {
 				Field field = FieldControl.class.cast(e.getSource()).getMessage();
 				FieldParent fieldManager = new FieldParent(field, this);
 				fieldManagers.put(field, fieldManager);
-				addChildManager(fieldManager);
+				addChild(fieldManager);
 			}
 			break;
 		default:
 			break;
 		}
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		
 	}
 }

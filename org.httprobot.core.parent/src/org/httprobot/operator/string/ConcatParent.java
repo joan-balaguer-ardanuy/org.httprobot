@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Concat;
-import org.httprobot.operator.string.ConcatControl;
 
 @XmlRootElement
 public final class ConcatParent
-	extends AbstractStringParent<ConcatControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * -2674949404675117218L
@@ -20,17 +18,13 @@ public final class ConcatParent
 	@Override
 	@XmlElement
 	public ConcatControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ConcatControl control) {
-		super.setControl(control);
+		return (ConcatControl) super.getControl();
 	}
 	
 	public ConcatParent() {
 		super();
 	}
-	public ConcatParent(Concat message, Listener parent) {
+	public ConcatParent(Concat message, Parent parent) {
 		super(message, ConcatControl.class, parent);
 	}
 	

@@ -5,16 +5,15 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public class ContentTypeParent
-	extends ParentMapping<ContentType, InputDocument, ContentTypeControl> {
+	extends ParentEntry<ContentType, InputDocument> {
 
 	/**
 	 * 7504962006510123725L
@@ -31,7 +30,7 @@ public class ContentTypeParent
 	public ContentTypeParent() {
 		super();
 	}
-	public ContentTypeParent(ContentType message, Listener parent) {
+	public ContentTypeParent(ContentType message, Parent parent) {
 		super(message, ContentTypeControl.class, parent);
 		contentTypeRefCount = 0;
 		contentTypeParents = new LinkedHashMap<ContentTypeRef, ContentTypeParent>();
@@ -46,31 +45,24 @@ public class ContentTypeParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
+	public void OnEventReceived(EventArgs e) {
+		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRefControl) {
 				ContentTypeRef contentTypeRef = ContentTypeRefControl.class.cast(e.getSource()).getMessage();
 				ContentTypeRefParent contentTypeRefManager = new ContentTypeRefParent(contentTypeRef, this);
-				addChildManager(contentTypeRefManager);
+				addChild(contentTypeRefManager);
 				contentTypeRefParents.put(contentTypeRef, contentTypeRefManager);
 			} else if(e.getSource() instanceof FieldRefControl) {
 				FieldRef fieldRef = FieldRefControl.class.cast(e.getSource()).getMessage();
 				FieldRefParent fieldRefManager = new FieldRefParent(fieldRef, this);
-				addChildManager(fieldRefManager);
+				addChild(fieldRefManager);
 				fieldRefParents.put(fieldRef, fieldRefManager);
 			} else if(e.getSource() instanceof ContentTypeControl) {
 				keySet().add(ContentTypeControl.class.cast(e.getSource()).getMessage());
 			}
 			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+		case PARENT_STARTED:
 			if(e.getSource() instanceof FieldRefParent) {
 				FieldRefParent fieldRefManager = FieldRefParent.class.cast(e.getSource());
 				if(fieldRefManager.equals(fieldRefParents.get(fieldRefManager.getKey()))) {
@@ -97,7 +89,7 @@ public class ContentTypeParent
 				}
 			}
 			break;
-		case FINISHED:
+		case PARENT_FINISHED:
 			if(e.getSource() instanceof FieldRefParent) {
 				FieldRefParent fieldRefManager = FieldRefParent.class.cast(e.getSource());
 				templateDocument.put(fieldRefManager.getKey(), fieldRefManager.getValue());

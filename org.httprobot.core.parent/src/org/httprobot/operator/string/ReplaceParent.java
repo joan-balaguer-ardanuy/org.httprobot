@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Replace;
-import org.httprobot.operator.string.ReplaceControl;
 
 @XmlRootElement
 public final class ReplaceParent
-	extends AbstractStringParent<ReplaceControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * -4082786732248275675L
@@ -20,17 +18,13 @@ public final class ReplaceParent
 	@Override
 	@XmlElement
 	public ReplaceControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ReplaceControl control) {
-		super.setControl(control);
+		return (ReplaceControl) super.getControl();
 	}
 	
 	public ReplaceParent() {
 		super();
 	}
-	public ReplaceParent(Replace message, Listener parent) {
+	public ReplaceParent(Replace message, Parent parent) {
 		super(message, ReplaceControl.class, parent);
 	}
 	

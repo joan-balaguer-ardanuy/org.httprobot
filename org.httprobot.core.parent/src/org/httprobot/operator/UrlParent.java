@@ -1,33 +1,31 @@
-package org.httprobot.placeholder;
+package org.httprobot.operator;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
-import org.httprobot.operator.UrlControl;
-import org.httprobot.operator.Url;
+import org.httprobot.event.EventArgs;
 
-public class HttpAddressParent 
-	extends AbstractPlaceholderParent<InputField, String, UrlControl> {
+public class UrlParent 
+	extends AbstractOperatorParent<InputField, String> {
 
 	/**
 	 * 5782528861553476045L
 	 */
 	private static final long serialVersionUID = 5782528861553476045L;
 	
-	public HttpAddressParent() {
+	@Override
+	public UrlControl getControl() {
+		return (UrlControl) super.getControl();
+	}
+	
+	public UrlParent() {
 		super();
 	}
-	public HttpAddressParent(Url message, Listener parent) {
+	public UrlParent(Url message, Parent parent) {
 		super(message, UrlControl.class, parent);
 	}
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
+	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		
 	}
 	@Override
 	public String put(InputField key, String value) {
@@ -36,7 +34,7 @@ public class HttpAddressParent
 		setValue(value);
 		key.setValue(value.toString());
 		
-		if (hasChildManagers()) {
+		if (hasChildren()) {
 			if (concatParent != null) {
 				concatParent.put(key, key.getValue().toString());
 			} else if (containsParent != null) {

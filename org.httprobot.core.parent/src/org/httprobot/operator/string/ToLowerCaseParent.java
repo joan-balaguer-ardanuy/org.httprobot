@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.ToLowerCase;
-import org.httprobot.operator.string.ToLowerCaseControl;
 
 @XmlRootElement
 public final class ToLowerCaseParent 
-	extends AbstractStringParent<ToLowerCaseControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * -912172374068787372L
@@ -20,17 +18,13 @@ public final class ToLowerCaseParent
 	@Override
 	@XmlElement
 	public ToLowerCaseControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ToLowerCaseControl control) {
-		super.setControl(control);
+		return (ToLowerCaseControl) super.getControl();
 	}
 	
 	public ToLowerCaseParent() {
 		super();
 	}
-	public ToLowerCaseParent(ToLowerCase message, Listener parent) {
+	public ToLowerCaseParent(ToLowerCase message, Parent parent) {
 		super(message, ToLowerCaseControl.class, parent);
 	}
 	

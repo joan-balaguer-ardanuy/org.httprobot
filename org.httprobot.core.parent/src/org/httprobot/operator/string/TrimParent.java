@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Trim;
-import org.httprobot.operator.string.TrimControl;
 
 @XmlRootElement
 public final class TrimParent 
-	extends AbstractStringParent<TrimControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 8160161481205354596L
@@ -20,17 +18,13 @@ public final class TrimParent
 	@Override
 	@XmlElement
 	public TrimControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(TrimControl control) {
-		super.setControl(control);
+		return (TrimControl) super.getControl();
 	}
 	
 	public TrimParent() {
 		super();
 	}
-	public TrimParent(Trim message, Listener parent) {
+	public TrimParent(Trim message, Parent parent) {
 		super(message, TrimControl.class, parent);
 	}
 	

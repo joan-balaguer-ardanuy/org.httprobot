@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
-
 import org.httprobot.DataMapping;
 
 public class FieldLibrary<K>
@@ -60,13 +58,13 @@ public class FieldLibrary<K>
 	public boolean containsValue(Object value) {
 		return inputFields.containsValue(value);
 	}
-	public InputField getByUUID(UUID uuid)
+	public InputField getByName(String name)
 	{
 		for(K key : this.inputFields.keySet())
 		{
 			InputField inputField = this.inputFields.get(key);
 			
-			if(inputField.getFieldRef().getName().equals(uuid))
+			if(inputField.getFieldRef().getName().equals(name))
 			{
 				return inputField.deepInputCopy();
 			}

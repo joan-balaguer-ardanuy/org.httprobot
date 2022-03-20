@@ -14,19 +14,18 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.httprobot.Constants;
+import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.ManagerEventType;
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
+import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
 import org.httprobot.operator.html.Element;
 import org.httprobot.operator.html.ElementControl;
+import org.httprobot.operator.html.ElementParent;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
 import org.httprobot.parameter.ConstantParent;
-import org.httprobot.placeholder.html.ElementParent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +39,7 @@ import org.openqa.selenium.firefox.FirefoxDriver.Capability;
 import org.openqa.selenium.interactions.Actions;
 
 public class ActionParent
-	extends ParentMapping<HtmlPage, Set<HtmlPage>, ActionControl> {
+	extends ParentEntry<HtmlPage, Set<HtmlPage>> {
 
 	/**
 	 * -6659121403717296708L
@@ -51,16 +50,21 @@ public class ActionParent
 	Map<Constant, ConstantParent> constantManagers;
 	ElementParent elementManager;
 	
-	DriverParent seleniumManager;
+	DriverParent driverManager;
 	
 	HtmlPage currentOutput;
 
 	Set<WebElement> clickableElements;
 	
+	@Override
+	public Control getControl() {
+		return (ActionControl) super.getControl();
+	}
+	
 	public ActionParent() {
 		super();
 	}
-	public ActionParent(Action message, Listener parent) {
+	public ActionParent(Action message, Parent parent) {
 		super(message, ActionControl.class, parent);
 	}
 	
@@ -70,7 +74,7 @@ public class ActionParent
 		WebElement htmlElement;
 		
 		if(key == null) {
-			String httpAddress = (String) getControl().get(Data.HTTP_ADDRESS);
+			String httpAddress = (String) getControl().get(Data.URL);
 			httpAddress = deParameterizeURL(httpAddress);
 			htmlElement = getPage(driver, httpAddress);
 			key = new HtmlPage(httpAddress, htmlElement.findElement(By.xpath("/html")).getAttribute("outerHTML"));
@@ -114,9 +118,10 @@ public class ActionParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
+		case PARENT_STARTED:
 			if(e.getSource() instanceof ConstantParent) {
 				ConstantParent constantManager = ConstantParent.class.cast(e.getSource());
 				if(constantManagers.containsValue(constantManager)) {
@@ -127,14 +132,14 @@ public class ActionParent
 				seleniumManager.setValue(loadWebDriver(seleniumManager.getKey()));
 			}
 			break;
-		case FINISHED: 
+		case PARENT_FINISHED: 
 			if(e.getSource().equals(webLoaderManager)) {
 				currentOutput = webLoaderManager.getValue();
 				getValue().add(currentOutput);
-				ManagerEvent(new ManagerEventArgs(this, currentOutput, ManagerEventType.ACTION_WEB_LOADED));
+//				ManagerEvent(new EventArgs(this, currentOutput, EventType.ACTION_WEB_LOADED));
 			}
-			else if(e.getSource().equals(seleniumManager)) {
-				setWebDriver(seleniumManager.getValue());
+			else if(e.getSource().equals(driverManager)) {
+				setWebDriver(driverManager.getValue());
 			}
 			break;
 		case ALL_PAGES_LOADED:
@@ -158,38 +163,31 @@ public class ActionParent
 				}
 			}
 			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof WebLoaderControl) {
 				WebLoader webLoader = WebLoaderControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(webLoader)) {
 					webLoaderManager = new WebLoaderParent(webLoader, this);
-					addChildManager(webLoaderManager);
+					addChild(webLoaderManager);
 				}
 			} else if(e.getSource() instanceof ConstantControl) {
 				Constant constant = ConstantControl.class.cast(e.getSource()).getMessage();
 				if (getControl().get(Data.CONSTANT).equals(constant)) {
 					ConstantParent constantManager = new ConstantParent(constant, this);
 					constantManagers.put(constant, constantManager);
-					addChildManager(constantManager);
+					addChild(constantManager);
 				}
 			} else if(e.getSource() instanceof ElementControl) {
 				Element element = ElementControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.WEB_LOADER).equals(element)) {
 					elementManager = new ElementParent(element, this);
-					addChildManager(elementManager);
+					addChild(elementManager);
 				}
 			} else if(e.getSource() instanceof DriverControl) {
 				Driver selenium = DriverControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.DRIVER).equals(selenium)) {
-					seleniumManager = new DriverParent(selenium, this);
-					addChildManager(seleniumManager);
+					driverManager = new DriverParent(selenium, this);
+					addChild(driverManager);
 				}
 			}
 			break;

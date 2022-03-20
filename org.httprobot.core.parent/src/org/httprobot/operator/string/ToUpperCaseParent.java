@@ -1,25 +1,19 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.ToUpperCase;
-import org.httprobot.operator.string.ToUpperCaseControl;
 
 @XmlRootElement
 public class ToUpperCaseParent
-	extends AbstractStringParent<ToUpperCaseControl> {
+	extends AbstractStringParent {
 
 	@Override
 	@XmlElement
 	public ToUpperCaseControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ToUpperCaseControl control) {
-		super.setControl(control);
+		return (ToUpperCaseControl) super.getControl();
 	}
 	
 	/**
@@ -30,7 +24,7 @@ public class ToUpperCaseParent
 	public ToUpperCaseParent() {
 		super();
 	}
-	public ToUpperCaseParent(ToUpperCase message, Listener parent) {
+	public ToUpperCaseParent(ToUpperCase message, Parent parent) {
 		super(message, ToUpperCaseControl.class, parent);
 	}
 	

@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.Substring;
-import org.httprobot.operator.string.SubstringControl;
 
 @XmlRootElement
 public final class SubstringParent
-	extends AbstractStringParent<SubstringControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 7868954939148015302L
@@ -20,17 +18,13 @@ public final class SubstringParent
 	@Override
 	@XmlElement
 	public SubstringControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(SubstringControl control) {
-		super.setControl(control);
+		return (SubstringControl) super.getControl();
 	}
 	
 	public SubstringParent() {
 		super();
 	}
-	public SubstringParent(Substring message, Listener parent) {
+	public SubstringParent(Substring message, Parent parent) {
 		super(message, SubstringControl.class, parent);
 	}
 	

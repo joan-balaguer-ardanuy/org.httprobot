@@ -1,14 +1,13 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
-import org.httprobot.AbstractControl;
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.operator.AbstractOperatorParent;
 import org.httprobot.AbstractString;
-import org.httprobot.placeholder.AbstractPlaceholderParent;
+import org.httprobot.Control;
 
-public abstract class AbstractStringParent<T extends AbstractControl<?>>
-	extends AbstractPlaceholderParent<InputField, String,T> {
+public abstract class AbstractStringParent
+	extends AbstractOperatorParent<InputField, String> {
 
 	/**
 	 * 9016980694923790707L
@@ -18,13 +17,13 @@ public abstract class AbstractStringParent<T extends AbstractControl<?>>
 	public AbstractStringParent() {
 		super();
 	}
-	public AbstractStringParent(AbstractString message, Class<T> type, Listener parent) {
+	public AbstractStringParent(AbstractString message, Class<? extends Control> type, Parent parent) {
 		super(message, type, parent);
 	}
 	
 	@Override
 	public String put(InputField key, String value) {
-		if (key.getValue() != null && hasChildManagers()) {
+		if (key.getValue() != null && hasChildren()) {
 			if(concatParent != null) {
 				concatParent.put(key, value);
 			} else if (containsParent != null) {
@@ -52,20 +51,5 @@ public abstract class AbstractStringParent<T extends AbstractControl<?>>
 			}
 		}
 		return super.put(key, value);
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
-			
-			break;
-		case FINISHED:
-			if(e.getSource().equals(this)) {
-				
-			}
-			break;
-		default:
-			break;
-		}
 	}
 }

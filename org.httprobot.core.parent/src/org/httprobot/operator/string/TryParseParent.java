@@ -1,4 +1,4 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import java.net.URL;
 import java.util.Base64;
@@ -8,14 +8,12 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.TryParse;
-import org.httprobot.operator.string.TryParseControl;
 
 @XmlRootElement
 public class TryParseParent 
-	extends AbstractStringParent<TryParseControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 3702738941817036919L
@@ -25,17 +23,13 @@ public class TryParseParent
 	@Override
 	@XmlElement
 	public TryParseControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(TryParseControl control) {
-		super.setControl(control);
+		return (TryParseControl) super.getControl();
 	}
 	
 	public TryParseParent() {
 		super();
 	}
-	public TryParseParent(TryParse message, Listener parent) {
+	public TryParseParent(TryParse message, Parent parent) {
 		super(message, TryParseControl.class, parent);
 	}
 

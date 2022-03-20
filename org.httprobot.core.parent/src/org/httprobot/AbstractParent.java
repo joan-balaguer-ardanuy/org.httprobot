@@ -9,7 +9,7 @@ import org.httprobot.data.TemplateLibrary;
 import org.httprobot.event.EventArgs;
 import org.openqa.selenium.WebDriver;
 
-public abstract class AbstractParent<T extends Control> 
+public abstract class AbstractParent
 	extends AbstractListener<Parent> 
 		implements Parent {
 
@@ -18,7 +18,7 @@ public abstract class AbstractParent<T extends Control>
 	 */
 	private static final long serialVersionUID = -4305679696716005954L;
 
-	T control;
+	Control control;
 
 	ContentTypeRoot contentTypeRoot;
 	DocumentLibrary documentLibrary;
@@ -26,12 +26,10 @@ public abstract class AbstractParent<T extends Control>
 	
 	Map<String, String> parameters;
 	
-	public T getControl() {
+	public Control getControl() {
 		return control;
 	}
-	public void setControl(T control) {
-		this.control = control;
-	}
+	
 	@XmlTransient
 	public ContentTypeRoot getContentTypeRoot() {
 		if (contentTypeRoot != null) {
@@ -91,7 +89,7 @@ public abstract class AbstractParent<T extends Control>
 	public AbstractParent() {
 		super();
 	}
-	public AbstractParent(Message message, Class<T> type, AbstractParent<?> parent) {
+	public AbstractParent(XML message, Class<? extends Control> type, Parent parent) {
 		super(message.getName());
 
 		control = instance(type, message);

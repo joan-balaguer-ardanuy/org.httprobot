@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.EndsWith;
-import org.httprobot.operator.string.EndsWithControl;
 
 @XmlRootElement
 public final class EndsWithParent
-	extends AbstractStringParent<EndsWithControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 7738501434061695663L
@@ -20,17 +18,13 @@ public final class EndsWithParent
 	@Override
 	@XmlElement
 	public EndsWithControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(EndsWithControl control) {
-		super.setControl(control);
+		return (EndsWithControl) super.getControl();
 	}
 	
 	public EndsWithParent() {
 		super();
 	}
-	public EndsWithParent(EndsWith message, Listener parent) {
+	public EndsWithParent(EndsWith message, Parent parent) {
 		super(message, EndsWithControl.class, parent);
 	}
 	

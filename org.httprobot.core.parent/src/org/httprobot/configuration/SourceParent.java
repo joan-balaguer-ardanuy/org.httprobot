@@ -7,9 +7,9 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.Data;
-import org.httprobot.ParentMapping;
+import org.httprobot.ParentEntry;
 import org.httprobot.XML;
 import org.httprobot.content.ContentTypeRoot;
 import org.httprobot.content.ContentTypeRootControl;
@@ -19,12 +19,11 @@ import org.httprobot.data.TemplateLibrary;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
 import org.httprobot.datatype.DataSourceParent;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 
 @XmlRootElement
 public final class SourceParent
-	extends ParentMapping<DataSource, DocumentLibrary, SourceControl> {
+	extends ParentEntry<DataSource, DocumentLibrary> {
 
 	/**
 	 * 634599347187276700L
@@ -37,11 +36,7 @@ public final class SourceParent
 	@Override
 	@XmlElement
 	public SourceControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(SourceControl control) {
-		super.setControl(control);
+		return (SourceControl) super.getControl();
 	}
 	
 	public SourceParent() {
@@ -50,7 +45,7 @@ public final class SourceParent
 		setTemplateLibrary(new TemplateLibrary());
 		setConstants(new LinkedHashMap<String,String>());
 	}
-	public SourceParent(Source message, Listener parent) {
+	public SourceParent(Source message, Parent parent) {
 		super(message, SourceControl.class, parent);
 		dataSouceParents = new LinkedHashMap<DataSource, DataSourceParent>();
 		setTemplateLibrary(new TemplateLibrary());
@@ -67,14 +62,15 @@ public final class SourceParent
 		return super.put(key, value);
 	}
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof ContentTypeRootControl) {
 				ContentTypeRoot message = ContentTypeRootControl.class.cast(e.getSource()).getMessage();
 				if(getControl().get(Data.CONTENT_TYPE_ROOT).equals(message)) {
 					contentTypeRootParent = new ContentTypeRootParent(message, this);
-					addChildManager(contentTypeRootParent);
+					addChild(contentTypeRootParent);
 				}
 			} else if(e.getSource() instanceof DataSourceControl) {
 				DataSource message = DataSourceControl.class.cast(e.getSource()).getMessage();
@@ -83,22 +79,15 @@ public final class SourceParent
 				if(set.contains(message)) {
 					DataSourceParent dataSourceManager = new DataSourceParent(message, this);
 					dataSouceParents.put(message, dataSourceManager);
-					addChildManager(dataSourceManager);
+					addChild(dataSourceManager);
 				}
 			}
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+		case PARENT_STARTED:
 			if(e.getSource().equals(contentTypeRootParent)) {
 				contentTypeRootParent.setValue(getTemplateLibrary());
 			}
 			break;
-		case FINISHED:
+		case PARENT_FINISHED:
 			if(e.getSource().equals(contentTypeRootParent)) {
 				if(contentTypeRootParent.getKey().equals(getControl().get(Data.CONTENT_TYPE_ROOT))) {
 					getTemplateLibrary().putAll(contentTypeRootParent.getValue());

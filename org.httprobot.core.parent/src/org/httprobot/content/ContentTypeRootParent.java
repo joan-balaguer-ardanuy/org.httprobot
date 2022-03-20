@@ -6,19 +6,18 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
-import org.httprobot.ParentMapping;
+import org.httprobot.Parent;
+import org.httprobot.ParentEntry;
 import org.httprobot.data.TemplateLibrary;
 import org.httprobot.data.document.InputDocument;
 import org.httprobot.data.document.InputDocumentLibrary;
 import org.httprobot.data.field.FieldLibrary;
 import org.httprobot.data.field.InputField;
-import org.httprobot.event.CommandEventArgs;
-import org.httprobot.event.ManagerEventArgs;
+import org.httprobot.event.EventArgs;
 
 @XmlRootElement
-public final class ContentTypeRootParent 
-	extends ParentMapping<ContentTypeRoot, TemplateLibrary, ContentTypeRootControl> {
+public final class ContentTypeRootParent
+	extends ParentEntry<ContentTypeRoot, TemplateLibrary> {
 
 	/**
 	 * 1379517986287192515L
@@ -41,17 +40,13 @@ public final class ContentTypeRootParent
 	@Override
 	@XmlElement
 	public ContentTypeRootControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(ContentTypeRootControl control) {
-		super.setControl(control);
+		return (ContentTypeRootControl) super.getControl();
 	}
 
 	public ContentTypeRootParent() {
 		super();
 	}
-	public ContentTypeRootParent(ContentTypeRoot message, Listener parent) {
+	public ContentTypeRootParent(ContentTypeRoot message, Parent parent) {
 		super(message, ContentTypeRootControl.class, parent);
 		contentTypeIndex = new LinkedHashMap<ContentTypeRef, ContentType>();
 		
@@ -71,15 +66,16 @@ public final class ContentTypeRootParent
 	}
 	
 	@Override
-	public void OnCommandEvent(CommandEventArgs e) {
-		switch (e.getCommand()) {
+	public void OnEventReceived(EventArgs e) {
+		super.OnEventReceived(e);
+		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if(e.getSource() instanceof FieldRefControl) {
 				FieldRefControl fieldRefControl = FieldRefControl.class.cast(e.getSource());
 				
 				if(fieldRefControl.getParent() instanceof ContentTypeRootControl) {
 					FieldRefParent fieldRefManager = new FieldRefParent(fieldRefControl.getMessage(), this);
-					addChildManager(fieldRefManager);
+					addChild(fieldRefManager);
 					fieldRefParents.put(fieldRefControl.getMessage(), fieldRefManager);
 				}
 			} else if(e.getSource() instanceof ContentTypeRefControl) {
@@ -87,7 +83,7 @@ public final class ContentTypeRootParent
 				
 				if(contentTypeRefControl.getParent() instanceof ContentTypeRootControl) {
 					ContentTypeRefParent contentTypeRefManager = new ContentTypeRefParent(contentTypeRefControl.getMessage(), this);
-					addChildManager(contentTypeRefManager);
+					addChild(contentTypeRefManager);
 					contentTypeRefParents.put(contentTypeRefControl.getMessage(), contentTypeRefManager);
 				}
 			} else if(e.getSource() instanceof ContentTypeControl) {
@@ -95,19 +91,12 @@ public final class ContentTypeRootParent
 				
 				if(contentTypeControl.getParent() instanceof ContentTypeRootControl) {
 					ContentTypeParent contentTypeManager = new ContentTypeParent(contentTypeControl.getMessage(), this);
-					addChildManager(contentTypeManager);
+					addChild(contentTypeManager);
 					contentTypeParents.put(contentTypeControl.getMessage(), contentTypeManager);
 				}
 			}
 			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void OnParentEvent(ManagerEventArgs e) {
-		switch (e.getManagerEventType()) {
-		case STARTED:
+		case PARENT_STARTED:
 			if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager = ContentTypeRefParent.class.cast(e.getSource());
 				for (ContentType contentType : contentTypeParents.keySet()) {
@@ -131,13 +120,13 @@ public final class ContentTypeRootParent
 				ContentTypeParent contentTypeManager = ContentTypeParent.class.cast(e.getSource());
 				for(ContentType contentType : contentTypeManager) {
 					if(contentTypeManager.equals(contentTypeParents.get(contentType))) {
-						InputDocument templateDocument = new InputDocument(contentTypeManager.getControl().getMessage());
+						InputDocument templateDocument = new InputDocument((ContentType) contentTypeManager.getControl().getMessage());
 						contentTypeManager.put(contentType, templateDocument);
 					}
 				}
 			}
 			break;
-		case FINISHED:
+		case PARENT_FINISHED:
 			if(e.getSource() instanceof ContentTypeRefParent) {
 				ContentTypeRefParent contentTypeRefManager  = ContentTypeRefParent.class.cast(e.getSource());
 				contentTypeIndex.put(contentTypeRefManager.getKey(), contentTypeRefManager.getValue());
@@ -164,7 +153,6 @@ public final class ContentTypeRootParent
 					}
 				}
 			}
-			break;
 		default:
 			break;
 		}

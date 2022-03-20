@@ -1,16 +1,14 @@
-package org.httprobot.placeholder.string;
+package org.httprobot.operator.string;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Listener;
+import org.httprobot.Parent;
 import org.httprobot.data.field.InputField;
-import org.httprobot.operator.string.StartsWith;
-import org.httprobot.operator.string.StartsWithControl;
 
 @XmlRootElement
 public final class StartsWithParent 
-	extends AbstractStringParent<StartsWithControl> {
+	extends AbstractStringParent {
 
 	/**
 	 * 7695767707161722927L
@@ -20,17 +18,13 @@ public final class StartsWithParent
 	@Override
 	@XmlElement
 	public StartsWithControl getControl() {
-		return super.getControl();
-	}
-	@Override
-	public void setControl(StartsWithControl control) {
-		super.setControl(control);
+		return (StartsWithControl) super.getControl();
 	}
 	
 	public StartsWithParent() {
 		super();
 	}
-	public StartsWithParent(StartsWith message, Listener parent) {
+	public StartsWithParent(StartsWith message, Parent parent) {
 		super(message, StartsWithControl.class, parent);
 	}
 	
