@@ -8,6 +8,12 @@ import java.util.Set;
 
 import org.httprobot.event.EventArgs;
 
+/**
+ * Abstract control class. Inherits {@link AbstractListener}.
+ * And it is also a {@link Control}.
+ * @author joan
+ *
+ */
 public abstract class AbstractControl
 	extends AbstractListener<Control>
 		implements Control {
@@ -17,24 +23,48 @@ public abstract class AbstractControl
 	 */
 	private static final long serialVersionUID = -8721125055676944109L;
 
+	/**
+	 * The XML messsage.
+	 */
 	XML message;
+	/**
+	 * The loaded data.
+	 */
 	Map<Data,Object> data;
 	
+	/**
+	 * Current key index
+	 */
 	Data currentKey;
+	/**
+	 * Currrent value mapped on currnet key
+	 */
 	Object currentValue;
 	
 	public XML getMessage() {
 		return message;
 	}
 
+	/**
+	 * {@link AbstractControl} default class contructor.
+	 */
 	public AbstractControl() {
 		super();
 	}
+	/**
+	 * {@link AbstractControl} class constructor.
+	 * @param message {@link XML} the message
+	 */
 	public AbstractControl(XML message) {
 		super(message.getName());
 		this.message = message;
 		initialize();
 	}
+	/**
+	 * {@link AbstractControl} class constructor.
+	 * @param message {@link XML} the message
+	 * @param parent {@link Control} the parent instance
+	 */
 	public AbstractControl(XML message, Control parent) {
 		super(parent, message.getName());
 		this.message = message;
@@ -47,7 +77,7 @@ public abstract class AbstractControl
 	}
 	@Override
 	public void load() {
-		if (message == null)
+		if (data == null)
 			throw new NullPointerException("Control.load: Control's message hasn't been initialized");
 
 		put(Data.PARENT, getParent());
@@ -61,15 +91,15 @@ public abstract class AbstractControl
 		switch (e.getEventType()) {
 		case CONTROL_LOADED:
 			if (e.getSource().equals(this)) {
-				// Check if control has child XML message controls
+				// check if control has child XML message controls
 				if (hasChildren()) {
-					// Iterate through child XML message controls
+					// iterate through child XML message controls
 					while (hasNext()) {
-						// Get next child XML message control
+						// get next child XML message control
 						Control control = next();
 						control.load();
 					}
-					// Set control ready to be iterated again.
+					// set control ready to be iterated again.
 					reset();
 				}
 			}

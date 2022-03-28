@@ -14,8 +14,9 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * XML {@link XML}. All objects of the framework will inherit
+ * Message {@link Message}. All objects of the framework will inherit
  * this class except the event arguments the enumeration types.
+ * It is {@link XML}.
  * 
  * @author joan
  *
@@ -110,7 +111,7 @@ public abstract class Message implements XML {
 			return strXml;
 		} 
 		catch (JAXBException e) {
-			// is something is wrong print stack trace
+			// if something is wrong print stack trace
 			e.printStackTrace();
 			return null;
 		}

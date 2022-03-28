@@ -8,6 +8,11 @@ import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
 
+/**
+ * Service connection XML message control. Inherits {@link AbstractControl}.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class ServiceConnectionControl 
 	extends AbstractControl {
@@ -23,12 +28,24 @@ public final class ServiceConnectionControl
 		return (ServiceConnection) super.getMessage();
 	}
 	
+	/**
+	 * {@link ServiceConnectionControl} default class constructor.
+	 */
 	public ServiceConnectionControl() {
 		super();
 	}
+	/**
+	 * {@link ServiceConnectionControl} class constructor.
+	 * @param message {@link ServiceConnection} the message.
+	 */
 	public ServiceConnectionControl(ServiceConnection message) {
 		super(message);
 	}
+	/**
+	 * {@link ServiceConnectionControl} class constructor.
+	 * @param message {@link ServiceConnection} the message.
+	 * @param parent {@link Control} the parent of current XML message control.
+	 */
 	public ServiceConnectionControl(ServiceConnection message, Control parent) {
 		super(message, parent);
 	}

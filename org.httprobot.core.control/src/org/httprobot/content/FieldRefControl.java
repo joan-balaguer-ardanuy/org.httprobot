@@ -6,8 +6,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
+import org.httprobot.Message;
 import org.httprobot.event.EventArgs;
 
+/**
+ * {@link FieldRef} {@link Message} {@link Control} class.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class FieldRefControl 
 	extends AbstractControl {
@@ -23,20 +29,30 @@ public final class FieldRefControl
 		return (FieldRef) super.getMessage();
 	}
 	
+	/**
+	 * {@link FieldRefControl} message default class constructor.
+	 */
 	public FieldRefControl() {
 		super();
 	}
+	/**
+	 * {@link FieldRefControl} message class constructor.
+	 * @param message {@link FieldRef} the message
+	 * @param parent {@link Control} the parent instance
+	 */
 	public FieldRefControl(FieldRef message, Control parent) {
 		super(message, parent);
 	}
+	
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
 		switch (e.getEventType()) {
 		case CONTROL_INITIALIZED:
 			if(e.getSource().equals(this)) {
-				FieldRef fieldRef = FieldRef.class.cast(e.getValue());
-				
+				// cast source
+				FieldRef fieldRef = (FieldRef) e.getValue();
+				// check message integrity
 				if(fieldRef.getName() == null || fieldRef.getDataType() == null) {
 					throw new Error("FieldRefControl.OnEventReceived: FieldRef XML message missing fields");
 				}
@@ -44,7 +60,9 @@ public final class FieldRefControl
 			break;
 		case CONTROL_LOADED:
 			if(e.getSource().equals(this)) {
-				FieldRef fieldRef = FieldRef.class.cast(e.getValue());
+				// cast source
+				FieldRef fieldRef = (FieldRef) e.getValue();
+				// set data
 				put(Data.FIELD_NAME, fieldRef.getName());
 				put(Data.FIELD_TYPE, fieldRef.getDataType());
 			}

@@ -7,6 +7,12 @@ import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
 
+/**
+ * {@link Concat} message {@link Control}.
+ * Inherits {@link AbstractStringControl}.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class ConcatControl
 	extends AbstractStringControl {
@@ -22,29 +28,40 @@ public final class ConcatControl
 		return (Concat) super.getMessage();
 	}
 	
+	/**
+	 * {@link ConcatControl} default class constructor.
+	 */
 	public ConcatControl() {
 		super();
 	}
+	/**
+	 * {@link ConcatControl} class constructor.
+	 * @param message {@link Concat} the message
+	 * @param parent {@link Control} the parent instance
+	 */
 	public ConcatControl(Concat message, Control parent) {
 		super(message, parent);
 	}
+	
 	@Override
 	public void OnEventReceived(EventArgs e) {
 		super.OnEventReceived(e);
 		switch (e.getEventType()) {
 		case CONTROL_INITIALIZED:
 			if(e.getSource().equals(this)) {
-				Concat split = Concat.class.cast(e.getValue());
-				
-				if(split.getValue() == null) {
+				// cast source's value
+				Concat concat = (Concat) e.getValue();
+				// check value is set
+				if(concat.getValue() == null) {
 					throw new Error("ConcatControl.OnEventReceived: XML Concat message value missing.");
 				}
 			}
 			break;
 		case CONTROL_LOADED:
 			if (e.getSource().equals(this)) {
-				Concat concat = Concat.class.cast(e.getSource());
-				// save value
+				// cast source's value
+				Concat concat = (Concat) e.getValue();
+				// store value
 				put(Data.VALUE, concat.getValue());
 			}
 			break;

@@ -11,19 +11,19 @@ import org.httprobot.unit.Driver;
 
 public class RobotWriter {
 	
-	static Driver selenium;
+	static Driver driver;
 	
 	public RobotWriter() {
 		
 	}
 
 	public static void main(String[] args) {
-		selenium = new Driver();
-		selenium.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
-		selenium.setDriverProperty(Constants.FIREFOX_DRIVER_PROPERTY);
-		selenium.setBrowserVersion(BrowserVersion.FIREFOX);
+		driver = new Driver();
+		driver.setDriverPath("/home/joan/lib/WebDriver/bin/geckodriver");
+		driver.setDriverProperty(Constants.FIREFOX_DRIVER_PROPERTY);
+		driver.setBrowserVersion(BrowserVersion.FIREFOX);
 	
-		File file = new File("selenium.xml");
+		File file = new File("driver.xml");
 		WriteAppConfig(file);
 	}
 	
@@ -31,7 +31,7 @@ public class RobotWriter {
 	{
 		try {
 			OutputStream os = new FileOutputStream(file);
-			selenium.write(os);
+			driver.write(os);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {

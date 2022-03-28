@@ -9,9 +9,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
+import org.httprobot.Message;
 import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 
+/**
+ * {@link ContentType} {@link Message} {@link Control} class. 
+ * Inherits {@link AbstractControl}.
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class ContentTypeControl 
 	extends AbstractControl {
@@ -21,20 +28,42 @@ public final class ContentTypeControl
 	 */
 	private static final long serialVersionUID = -3238737080863615932L;
 	
+	/**
+	 * The field reference control.
+	 */
 	LinkedHashSet<FieldRefControl> fieldRefControl;
+	/**
+	 * The content type reference control
+	 */
 	LinkedHashSet<ContentTypeRefControl> contentTypeRefControl;
 	
+	/**
+	 * Returns the {@link LinkedHashSet} of {@link FieldRefControl}.
+	 * @return the {@link LinkedHashSet} of {@link FieldRefControl}.
+	 */
 	@XmlElement
 	public LinkedHashSet<FieldRefControl> getFieldRefControl() {
 		return fieldRefControl;
 	}
+	/**
+	 * Sets the {@link LinkedHashSet} of {@link FieldRefControl}.
+	 * @param fieldRefControl {@link LinkedHashSet} of {@link FieldRefControl} the field reference to be set.
+	 */
 	public void setFieldRefControl(LinkedHashSet<FieldRefControl> fieldRefControl) {
 		this.fieldRefControl = fieldRefControl;
 	}
+	/**
+	 * Returns the {@link LinkedHashSet} of {@link ContentTypeRefControl}.
+	 * @return the {@link LinkedHashSet} of {@link ContentTypeRefControl}.
+	 */
 	@XmlElement
 	public LinkedHashSet<ContentTypeRefControl> getContentTypeRefControl() {
 		return contentTypeRefControl;
 	}
+	/**
+	 * Sets the {@link LinkedHashSet} of {@link ContentTypeControl}.
+	 * @param contentTypeRefControl {@link LinkedHashSet} of {@link ContentTypeRefControl} the content type reference control to be set.
+	 */
 	public void setContentTypeRefControl(LinkedHashSet<ContentTypeRefControl> contentTypeRefControl) {
 		this.contentTypeRefControl = contentTypeRefControl;
 	}
@@ -44,9 +73,17 @@ public final class ContentTypeControl
 		return (ContentType) super.getMessage();
 	}
 	
+	/**
+	 * {@link ContentTypeControl} default class constructor.
+	 */
 	public ContentTypeControl() {
 		super();
 	}
+	/**
+	 * {@link ContentTypeControl} class constructor.
+	 * @param message {@link ContentType} the message
+	 * @param parent {@link Control} the parent instance
+	 */
 	public ContentTypeControl(ContentType message, Control parent) {
 		super(message, parent);
 	}
@@ -59,12 +96,10 @@ public final class ContentTypeControl
 		case CONTROL_INITIALIZED:
 			if (e.getSource().equals(this)) {
 				// cast message
-				ContentType contentType = ContentType.class.cast(e.getValue());
-
+				ContentType contentType = (ContentType) e.getValue();
 				// instance fielRefControl and contentTypeRefControl sets
 				fieldRefControl = new LinkedHashSet<FieldRefControl>();
 				contentTypeRefControl = new LinkedHashSet<ContentTypeRefControl>();
-				
 				// check ContentTypeRef set
 				for (ContentTypeRef contentTypeRef : contentType.getContentTypeRef()) {
 					// instance ContentTypeRefControl for each ContentTypeRef message
@@ -76,14 +111,14 @@ public final class ContentTypeControl
 					new FieldRefControl(fieldRef, this);
 				}
 			} else if(e.getSource() instanceof FieldRefControl) {
-				FieldRefControl fieldRefControl = FieldRefControl.class.cast(e.getSource());
-				// save control
+				FieldRefControl fieldRefControl = (FieldRefControl) e.getSource();
+				// store control
 				getFieldRefControl().add(fieldRefControl);						
 				addChild(fieldRefControl);
 			} else if(e.getSource() instanceof ContentTypeRefControl) {
-				ContentTypeRefControl contentTypeRefControl = ContentTypeRefControl.class.cast(e.getSource());
-				// save control
-				getContentTypeRefControl().add(contentTypeRefControl);						
+				ContentTypeRefControl contentTypeRefControl = (ContentTypeRefControl) e.getSource();
+				// strore control
+				getContentTypeRefControl().add(contentTypeRefControl);
 				addChild(contentTypeRefControl);
 			}
 			break;

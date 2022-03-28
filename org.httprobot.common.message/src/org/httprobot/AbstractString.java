@@ -15,9 +15,10 @@ import org.httprobot.operator.string.Trim;
 import org.httprobot.operator.string.TryParse;
 
 /**
- * Abstract placeholder {@link Message} message.
+ * Abstract string operator {@link Message}.
  * It encapsulates the string operators to treat string objects.
- * Only one of these operators MUST be implemented, otherwise the program won't run properly.
+ * Only one of these operators MUST be implemented, 
+ * otherwise the program won't run properly.
  * 
  * @author joan
  *

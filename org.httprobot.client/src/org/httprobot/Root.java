@@ -118,7 +118,7 @@ public final class Root
 	}
 	/**
 	 * {@link Root} class constructor.
-	 * @param selenium the {@link Driver} configuration XML message
+	 * @param driver the {@link Driver} configuration XML message
 	 */
 	public Root(ServiceConnection serviceConnection) {
 		super(UUID.randomUUID());

@@ -21,12 +21,23 @@ public final class FieldRootControl
 	 */
 	private static final long serialVersionUID = 2468967859806729944L;
 	
+	/**
+	 * field control property set
+	 */
 	LinkedHashSet<FieldControl> fieldControl;
 	
+	/**
+	 * Returns the {@link LinkedHashSet} of {@link FieldControl}.
+	 * @return the {@link LinkedHashSet} of {@link FieldControl}.
+	 */
 	@XmlElement
 	public LinkedHashSet<FieldControl> getFieldControl() {
 		return fieldControl;
 	}
+	/**
+	 * Sets the {@link LinkedHashSet} of {@link FieldControl}.
+	 * @param fieldControl {@link LinkedHashSet} of {@link FieldControl} the field message control.
+	 */
 	public void setFieldControl(LinkedHashSet<FieldControl> fieldControl) {
 		this.fieldControl = fieldControl;
 	}
@@ -35,9 +46,17 @@ public final class FieldRootControl
 		return (FieldRoot) super.getMessage();
 	}
 	
+	/**
+	 * {@link FieldRootControl} default class constructor.
+	 */
 	public FieldRootControl() {
 		super();
 	}
+	/**
+	 * {@link FieldRootControl} class constructor.
+	 * @param message {@link FieldRoot} the message
+	 * @param parent {@link Control} the parent instance
+	 */
 	public FieldRootControl(FieldRoot message, Control parent) {
 		super(message, parent);
 	}
@@ -49,18 +68,24 @@ public final class FieldRootControl
 		switch (e.getEventType()) {
 		case CONTROL_INITIALIZED:
 			if(e.getSource().equals(this)) {
-				FieldRoot fieldRoot = FieldRoot.class.cast(e.getValue());
+				// cast event's value
+				FieldRoot fieldRoot = (FieldRoot) e.getValue();
+				// instance field message control set
 				fieldControl = new LinkedHashSet<FieldControl>();
-				
+				// check message
 				if(!fieldRoot.getField().isEmpty()) {
 					for(Field field : fieldRoot.getField()) {
+						// for each field message instance new field control message.
 						new FieldControl(field, this);
 					}
 				}
 			}
 			else if(e.getSource() instanceof FieldControl) {
-				FieldControl childFieldControl = FieldControl.class.cast(e.getSource());
+				// cast event's source
+				FieldControl childFieldControl = (FieldControl) e.getSource();
+				// set property
 				fieldControl.add(childFieldControl);
+				// store control
 				addChild(childFieldControl);
 			}
 			break;
