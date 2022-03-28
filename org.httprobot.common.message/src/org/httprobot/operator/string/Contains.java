@@ -5,6 +5,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * Contains
+ * @author joan
+ *
+ */
 @XmlRootElement
 public final class Contains extends AbstractString {
 
