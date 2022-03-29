@@ -5,6 +5,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * Equals XML message class. The presence of this XML element
+ * indicates that the value property will be equals as
+ * current {@link String} being processed.
+ * @author user
+ *
+ */
 @XmlRootElement
 public final class Equals extends AbstractString {
 

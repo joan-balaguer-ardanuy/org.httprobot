@@ -5,6 +5,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * Replace XML message class. The presence of this XML element
+ * indicates that the contained OldString property will be
+ * replaced by the NewString property.
+ * 
+ * @author user
+ *
+ */
 @XmlRootElement
 public final class Replace extends AbstractString {
 

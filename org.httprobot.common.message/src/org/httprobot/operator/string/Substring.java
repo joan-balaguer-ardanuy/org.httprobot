@@ -5,6 +5,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * Substring XML message class. The presence of this XML element
+ * indicates that a new {@link String} will be generated from the current
+ * string being processed. From StartIndex position to EndIndex position.
+ * @author user
+ *
+ */
 @XmlRootElement
 public final class Substring extends AbstractString {
 

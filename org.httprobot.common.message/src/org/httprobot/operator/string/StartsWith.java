@@ -5,6 +5,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * StartsWith XML message class. The presence of this XML element
+ * indicates that the {@link String} being processed will starts with the
+ * property value of current instance.
+ * @author user
+ *
+ */
 @XmlRootElement
 public final class StartsWith extends AbstractString {
 	

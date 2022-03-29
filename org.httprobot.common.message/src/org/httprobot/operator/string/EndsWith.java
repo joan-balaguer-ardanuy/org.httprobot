@@ -4,6 +4,13 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.httprobot.AbstractString;
 
+/**
+ * EndsWith XML message class. The presence of this XML element
+ * indicates that the {@link String} being processed will ends with the
+ * property value of current instance.
+ * @author user
+ *
+ */
 public class EndsWith extends AbstractString {
 	
 	/**

@@ -6,6 +6,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.FieldType;
 import org.httprobot.AbstractString;
 
+/**
+ * TryParse XML message class. The presence of this XML element
+ * indicates that the {@link String} being processed will be parsed
+ * as specified {@link FieldType} property 
+ * @author user
+ *
+ */
 @XmlRootElement
 public final class TryParse extends AbstractString {
 
@@ -14,25 +21,30 @@ public final class TryParse extends AbstractString {
 	 */
 	private static final long serialVersionUID = 6864269372865421299L;
 
+	/**
+	 * The field type
+	 */
 	FieldType fieldType;
-	String value;
 	
+	/**
+	 * Returns the {@link FieldType} of the current {@link String} that will be parsed.
+	 * @return the {@link FieldType} of the current {@link String} will be parsed.
+	 */
 	@XmlElement
 	public FieldType getFieldType() {
 		return fieldType;
 	}
+	/**
+	 * Sets the {@link FieldType} that the current {@link String} being processed will be parsed.
+	 * @param fieldType
+	 */
 	public void setFieldType(FieldType fieldType) {
 		this.fieldType = fieldType;
 	}
 
-	@XmlElement
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+	/**
+	 * {@link TryParse} default class constructor.
+	 */
 	public TryParse() {
 		super();
 	}

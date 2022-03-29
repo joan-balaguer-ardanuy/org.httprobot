@@ -6,9 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractString;
 
 /**
- * Concat XML message class. The presence of this XML element
- * indicates that the value property will be concatenated to the
- * current {@link String} being processed.
+ * Concat XML message class. Inherits {@link AbstractString} and
+ * encapsulates a {@link String} value property.
  * @author joan
  *
  */
@@ -32,14 +31,14 @@ public final class Concat extends AbstractString {
 	}
 	/**
 	 * Sets the {@link String} to concatenate.
-	 * @param value {@link String} the char array to concatenate
+	 * @param value {@link String} the string to concatenate
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
 
 	/**
-	 * {@link Concat} defualt class constructor.
+	 * {@link Concat} default class constructor.
 	 */
 	public Concat() {
 		super();
