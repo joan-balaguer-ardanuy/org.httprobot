@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRootControl;
 import org.httprobot.datatype.DataSource;
 import org.httprobot.datatype.DataSourceControl;
@@ -145,7 +145,7 @@ public final class SourceControl
 					// check if data source's data exists
 					if(get(Data.DATA_SOURCE) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first data source value to set
 						set.add(dataSource);
 						// set data
@@ -153,7 +153,7 @@ public final class SourceControl
 					} else {
 						// add message to data
 						Object set = get(Data.DATA_SOURCE);
-						((Set<XML>) set).add(dataSource);
+						((Set<Message>) set).add(dataSource);
 					}
 				}
 				// look for content type root control

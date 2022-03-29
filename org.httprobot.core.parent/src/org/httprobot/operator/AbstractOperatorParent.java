@@ -2,7 +2,7 @@ package org.httprobot.operator;
 
 import org.httprobot.Parent;
 import org.httprobot.ParentEntry;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.Control;
 import org.httprobot.event.EventArgs;
 import org.httprobot.operator.string.Concat;
@@ -62,7 +62,7 @@ public abstract class AbstractOperatorParent<K, V>
 	public AbstractOperatorParent() {
 		super();
 	}
-	public AbstractOperatorParent(XML message, Class<? extends Control> type, Parent parent) {
+	public AbstractOperatorParent(Message message, Class<? extends Control> type, Parent parent) {
 		super(message, type, parent);
 	}
 	

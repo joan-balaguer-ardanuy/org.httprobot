@@ -26,7 +26,7 @@ public abstract class AbstractControl
 	/**
 	 * The XML messsage.
 	 */
-	XML message;
+	Message message;
 	/**
 	 * The loaded data.
 	 */
@@ -41,7 +41,7 @@ public abstract class AbstractControl
 	 */
 	Object currentValue;
 	
-	public XML getMessage() {
+	public Message getMessage() {
 		return message;
 	}
 
@@ -53,19 +53,19 @@ public abstract class AbstractControl
 	}
 	/**
 	 * {@link AbstractControl} class constructor.
-	 * @param message {@link XML} the message
+	 * @param message {@link Message} the message
 	 */
-	public AbstractControl(XML message) {
+	public AbstractControl(Message message) {
 		super(message.getName());
 		this.message = message;
 		initialize();
 	}
 	/**
 	 * {@link AbstractControl} class constructor.
-	 * @param message {@link XML} the message
+	 * @param message {@link Message} the message
 	 * @param parent {@link Control} the parent instance
 	 */
-	public AbstractControl(XML message, Control parent) {
+	public AbstractControl(Message message, Control parent) {
 		super(parent, message.getName());
 		this.message = message;
 		initialize();

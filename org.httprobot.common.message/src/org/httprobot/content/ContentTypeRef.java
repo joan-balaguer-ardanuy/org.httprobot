@@ -2,7 +2,7 @@ package org.httprobot.content;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Message;
+import org.httprobot.XML;
 
 /**
  * Content type reference class. Inherits {@link AbstractContent}.
@@ -12,7 +12,7 @@ import org.httprobot.Message;
  *
  */
 @XmlRootElement
-public final class ContentTypeRef extends Message {
+public final class ContentTypeRef extends XML {
 
 	/**
 	 * -6701067711809325948L

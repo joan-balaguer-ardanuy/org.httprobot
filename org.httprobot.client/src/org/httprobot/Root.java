@@ -23,7 +23,7 @@ import org.httprobot.net.WebService;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Root class. Inherits {@link Message}.
+ * Root class. Inherits {@link XML}.
  * This class is the parent of parents XML messages.
  * It is {@link Listener} and listens for
  * {@link ServiceConnectionParent} and {@link SourceParent}.
@@ -32,7 +32,7 @@ import org.openqa.selenium.WebDriver;
  */
 @XmlRootElement
 public final class Root
-	extends Message
+	extends XML
 		implements Listener {
 
 	/**

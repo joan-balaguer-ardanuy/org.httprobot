@@ -5,14 +5,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 import org.httprobot.operator.html.AbstractHtmlControl;
 import org.httprobot.operator.html.Element;
 import org.httprobot.operator.html.ElementControl;
 
 /**
- * {@link Html} {@link Message} {@link Control} class.
+ * {@link Html} {@link XML} {@link Control} class.
  * It inherits {@link AbstractHtmlControl}.
  * @author joan
  *

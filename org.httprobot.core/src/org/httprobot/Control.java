@@ -13,7 +13,7 @@ public interface Control
 	 * Returns the message being controlled.
 	 * @return the message being controlled.
 	 */
-	XML getMessage();
+	Message getMessage();
 	/**
 	 * Initialitzation event fired when instance is being instanced.
 	 */

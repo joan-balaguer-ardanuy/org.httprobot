@@ -6,7 +6,7 @@ import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.AbstractString;
 import org.httprobot.Data;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.event.EventArgs;
 
 public abstract class AbstractStringControl
@@ -236,10 +236,10 @@ public abstract class AbstractStringControl
 	}
 	/**
 	 * {@link AbstractStringControl} class constructor.
-	 * @param message {@link XML} the message
+	 * @param message {@link Message} the message
 	 * @param parent {@link Control} the parent instance
 	 */
-	public AbstractStringControl(XML message, Control parent) {
+	public AbstractStringControl(Message message, Control parent) {
 		super(message, parent);
 	}
 	

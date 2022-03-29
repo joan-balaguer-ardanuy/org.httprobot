@@ -5,10 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractString;
 
 /**
- * ToUpperCase XML message class. The presence of this XML element
- * indicates that the {@link String} being processed will be coded
- * to upper case.
- * @author user
+ * ToUpperCase XML message class. Inherits {@link AbstractString}.
+ * @author joan
  *
  */
 @XmlRootElement

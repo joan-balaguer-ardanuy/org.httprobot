@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.event.EventArgs;
 
 /**
- * {@link FieldRef} {@link Message} {@link Control} class.
+ * {@link FieldRef} {@link XML} {@link Control} class.
  * @author joan
  *
  */

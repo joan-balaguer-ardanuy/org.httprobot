@@ -51,7 +51,7 @@ public abstract class ParentEntry<K,V>
 	public ParentEntry() {
 		super();
 	}
-	public ParentEntry(XML message, Class<? extends Control> type, Parent parent) {
+	public ParentEntry(Message message, Class<? extends Control> type, Parent parent) {
 		super(message, type, parent);
 		inputData = new LinkedHashSet<K>();
 		outputData = new LinkedHashMap<K,V>();

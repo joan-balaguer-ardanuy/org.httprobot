@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRefControl;
 import org.httprobot.event.EventArgs;
 import org.httprobot.parameter.Constant;
@@ -210,16 +210,16 @@ public final class DataSourceControl
 					// check if property exists
 					if(get(Data.CONSTANT) == null) {
 						// instance new set of XML messages
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// set data to set
-						set.add((XML) e.getValue());
+						set.add((Message) e.getValue());
 						// set data
 						put(Data.CONSTANT, set);
 					} else {
 						// get property data
 						Object set = get(Data.CONSTANT);
 						// set data to XML message set
-						((Set<XML>) set).add((XML) e.getValue());
+						((Set<Message>) set).add((Message) e.getValue());
 					}
 				}
 			}

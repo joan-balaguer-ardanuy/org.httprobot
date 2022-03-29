@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.Message;
 import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.event.EventArgs;
 
 /**
- * {@link ContentTypeRoot} {@link Message} {@link Control} class.
+ * {@link ContentTypeRoot} {@link XML} {@link Control} class.
  * Inherits {@link AbstractControl}.
  * @author joan
  *
@@ -158,7 +158,7 @@ public final class ContentTypeRootControl
 					ContentType contentType = (ContentType) e.getValue();
 					if(get(Data.CONTENT_TYPE) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first content type value to set
 						set.add(contentType);
 						// set data
@@ -166,7 +166,7 @@ public final class ContentTypeRootControl
 					} else {
 						// add message to data
 						Object set = get(Data.CONTENT_TYPE);
-						((Set<XML>) set).add(contentType);
+						((Set<Message>) set).add(contentType);
 					}
 				}
 			} else if (e.getSource() instanceof FieldRefControl) {
@@ -176,7 +176,7 @@ public final class ContentTypeRootControl
 					FieldRef fieldRef = (FieldRef) e.getValue();
 					if(get(Data.FIELD_REF) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first field reference value to set
 						set.add(fieldRef);
 						// set data
@@ -184,7 +184,7 @@ public final class ContentTypeRootControl
 					} else {
 						// add message to data
 						Object set = get(Data.FIELD_REF);
-						((Set<XML>) set).add(fieldRef);
+						((Set<Message>) set).add(fieldRef);
 					}
 				}
 			} else if (e.getSource() instanceof ContentTypeRefControl) {
@@ -194,7 +194,7 @@ public final class ContentTypeRootControl
 					ContentTypeRef contentTypeRef = (ContentTypeRef) e.getValue();
 					if(get(Data.CONTENT_TYPE_REF) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first content type reference value to set
 						set.add(contentTypeRef);
 						// set data
@@ -202,7 +202,7 @@ public final class ContentTypeRootControl
 					} else {
 						// add message to data
 						Object set = get(Data.CONTENT_TYPE_REF);
-						((Set<XML>) set).add(contentTypeRef);
+						((Set<Message>) set).add(contentTypeRef);
 					}
 				}
 			}

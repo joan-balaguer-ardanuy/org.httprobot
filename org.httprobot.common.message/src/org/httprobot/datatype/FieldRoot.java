@@ -5,10 +5,10 @@ import java.util.LinkedHashSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Message;
+import org.httprobot.XML;
 
 @XmlRootElement
-public final class FieldRoot extends Message {
+public final class FieldRoot extends XML {
 
 	/**
 	 * -4698409081823244264L

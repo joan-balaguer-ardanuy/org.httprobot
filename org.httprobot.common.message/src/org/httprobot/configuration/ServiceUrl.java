@@ -3,7 +3,7 @@ package org.httprobot.configuration;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Message;
+import org.httprobot.XML;
 
 /**
  * Service URL configuration XML message class.
@@ -18,7 +18,7 @@ import org.httprobot.Message;
  *
  */
 @XmlRootElement
-public final class ServiceUrl extends Message {
+public final class ServiceUrl extends XML {
 
 	/**
 	 * 8383249175803013880L

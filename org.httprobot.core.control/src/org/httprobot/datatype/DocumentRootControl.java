@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.content.ContentTypeRefControl;
 import org.httprobot.event.EventArgs;
 import org.httprobot.unit.ActionControl;
@@ -204,7 +204,7 @@ public final class DocumentRootControl
 					// check if document's data exists
 					if(get(Data.DOCUMENT) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first document value to set
 						set.add(document);
 						// set data
@@ -213,7 +213,7 @@ public final class DocumentRootControl
 						// add message to data
 						Object set = get(Data.DOCUMENT);
 						// add document to set
-						((Set<XML>) set).add(document);
+						((Set<Message>) set).add(document);
 					}
 				}
 			} else if (e.getSource() instanceof ContentTypeRefControl) {

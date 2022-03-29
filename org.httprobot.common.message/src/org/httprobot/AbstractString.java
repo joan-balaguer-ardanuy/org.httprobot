@@ -15,7 +15,7 @@ import org.httprobot.operator.string.Trim;
 import org.httprobot.operator.string.TryParse;
 
 /**
- * Abstract string operator {@link Message}.
+ * Abstract string operator {@link XML}.
  * It encapsulates the string operators to treat string objects.
  * Only one of these operators MUST be implemented, 
  * otherwise the program won't run properly.
@@ -23,7 +23,7 @@ import org.httprobot.operator.string.TryParse;
  * @author joan
  *
  */
-public abstract class AbstractString extends Message {
+public abstract class AbstractString extends XML {
 
 	/**
 	 * 3345969046526629498L

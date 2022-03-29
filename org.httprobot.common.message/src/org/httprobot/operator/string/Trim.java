@@ -5,10 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractString;
 
 /**
- * Trim XML message class. The presence of this XML element
- * indicates that the {@link String} being processed will be
- * free of whitespace at the beginning and at the end.
- * @author user
+ * Trim XML message class.Inherits {@link AbstractString}.
+ * @author joan
  *
  */
 @XmlRootElement

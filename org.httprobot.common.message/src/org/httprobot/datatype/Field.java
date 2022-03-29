@@ -3,12 +3,12 @@ package org.httprobot.datatype;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.httprobot.Message;
+import org.httprobot.XML;
 import org.httprobot.operator.Html;
 import org.httprobot.operator.Url;
 
 @XmlRootElement
-public final class Field extends Message {
+public final class Field extends XML {
 
 	/**
 	 * -2640753397637192814L

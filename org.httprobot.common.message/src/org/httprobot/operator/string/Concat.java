@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractString;
 
 /**
- * Concat XML message class. Inherits {@link AbstractString} and
- * encapsulates a {@link String} value property.
+ * Concat XML message class. Inherits {@link AbstractString}.
+ * It encapsulates a {@link String} value property.
  * @author joan
  *
  */
@@ -19,19 +19,22 @@ public final class Concat extends AbstractString {
 	 */
 	private static final long serialVersionUID = 7159704331152281866L;
 
+	/**
+	 * The string value property.
+	 */
 	String value;
 
 	/**
-	 * Returns the {@link String} to concatenate.
-	 * @return the {@link String} to concatenate.
+	 * Returns the {@link String} value property.
+	 * @return the {@link String} value property.
 	 */
 	@XmlElement
 	public String getValue() {
 		return value;
 	}
 	/**
-	 * Sets the {@link String} to concatenate.
-	 * @param value {@link String} the string to concatenate
+	 * Sets the {@link String} value property.
+	 * @param value {@link String} the string value property
 	 */
 	public void setValue(String value) {
 		this.value = value;

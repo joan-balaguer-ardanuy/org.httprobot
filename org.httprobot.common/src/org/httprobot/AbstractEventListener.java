@@ -11,7 +11,7 @@ import org.httprobot.event.EventArgs;
  *
  */
 public abstract class AbstractEventListener
-	extends Message
+	extends XML
 		implements EventListener {
 
 	/**

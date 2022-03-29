@@ -2,7 +2,7 @@ package org.httprobot.operator.html;
 
 import org.httprobot.Control;
 import org.httprobot.Parent;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.operator.AbstractOperatorParent;
 
 public abstract class AbstractHtmlParent<K,V>
@@ -17,7 +17,7 @@ public abstract class AbstractHtmlParent<K,V>
 	public AbstractHtmlParent() {
 		super();
 	}
-	public AbstractHtmlParent(XML message, Class<? extends Control> type, Parent parent) {
+	public AbstractHtmlParent(Message message, Class<? extends Control> type, Parent parent) {
 		super(message, type, parent);
 	}
 	

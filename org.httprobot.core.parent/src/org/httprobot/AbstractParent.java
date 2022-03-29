@@ -89,7 +89,7 @@ public abstract class AbstractParent
 	public AbstractParent() {
 		super();
 	}
-	public AbstractParent(XML message, Class<? extends Control> type, Parent parent) {
+	public AbstractParent(Message message, Class<? extends Control> type, Parent parent) {
 		super(message.getName());
 
 		control = instance(type, message);

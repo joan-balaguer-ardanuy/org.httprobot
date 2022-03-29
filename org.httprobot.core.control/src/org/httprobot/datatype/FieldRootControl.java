@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
-import org.httprobot.XML;
+import org.httprobot.Message;
 import org.httprobot.event.EventArgs;
 
 @XmlRootElement
@@ -96,7 +96,7 @@ public final class FieldRootControl
 					// check if data source's data exists
 					if(get(Data.FIELD) == null) {
 						// instance new set
-						Set<XML> set = new LinkedHashSet<XML>();
+						Set<Message> set = new LinkedHashSet<Message>();
 						// add first data source value to set
 						set.add(field);
 						// set data
@@ -104,7 +104,7 @@ public final class FieldRootControl
 					} else {
 						// add message to data
 						Object set = get(Data.FIELD);
-						((Set<XML>) set).add(field);
+						((Set<Message>) set).add(field);
 					}
 				}
 			}

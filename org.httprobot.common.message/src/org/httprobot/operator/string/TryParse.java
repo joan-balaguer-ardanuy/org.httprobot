@@ -7,10 +7,9 @@ import org.httprobot.FieldType;
 import org.httprobot.AbstractString;
 
 /**
- * TryParse XML message class. The presence of this XML element
- * indicates that the {@link String} being processed will be parsed
- * as specified {@link FieldType} property 
- * @author user
+ * TryParse XML message class. Inherits {@link AbstractString}.
+ * It encapsulates a {@link FieldType} field type property.
+ * @author joan
  *
  */
 @XmlRootElement
@@ -27,15 +26,15 @@ public final class TryParse extends AbstractString {
 	FieldType fieldType;
 	
 	/**
-	 * Returns the {@link FieldType} of the current {@link String} that will be parsed.
-	 * @return the {@link FieldType} of the current {@link String} will be parsed.
+	 * Returns the {@link FieldType} field type.
+	 * @return the {@link FieldType} field type.
 	 */
 	@XmlElement
 	public FieldType getFieldType() {
 		return fieldType;
 	}
 	/**
-	 * Sets the {@link FieldType} that the current {@link String} being processed will be parsed.
+	 * Sets the {@link FieldType} field type.
 	 * @param fieldType
 	 */
 	public void setFieldType(FieldType fieldType) {
