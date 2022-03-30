@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.httprobot.XML;
-import org.httprobot.operator.Html;
-import org.httprobot.operator.Url;
+import org.httprobot.placeholder.Html;
+import org.httprobot.placeholder.Url;
 
 @XmlRootElement
 public final class Field extends XML {

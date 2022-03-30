@@ -7,10 +7,10 @@ import org.httprobot.ParentEntry;
 import org.httprobot.data.field.InputField;
 import org.httprobot.event.EventArgs;
 import org.httprobot.net.HtmlPage;
-import org.httprobot.operator.HtmlControl;
-import org.httprobot.operator.HtmlParent;
-import org.httprobot.operator.UrlParent;
-import org.httprobot.operator.UrlControl;
+import org.httprobot.placeholder.HtmlControl;
+import org.httprobot.placeholder.HtmlParent;
+import org.httprobot.placeholder.UrlControl;
+import org.httprobot.placeholder.UrlParent;
 
 @XmlRootElement
 public final class FieldParent

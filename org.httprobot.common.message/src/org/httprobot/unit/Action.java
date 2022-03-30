@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.httprobot.XML;
-import org.httprobot.operator.html.Element;
 import org.httprobot.parameter.Constant;
+import org.httprobot.placeholder.html.Element;
 
 @XmlRootElement
 public final class Action extends XML {

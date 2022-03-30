@@ -7,8 +7,8 @@ import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
-import org.httprobot.operator.HtmlControl;
-import org.httprobot.operator.UrlControl;
+import org.httprobot.placeholder.HtmlControl;
+import org.httprobot.placeholder.UrlControl;
 
 /**
  * {@link Field} message {@link Control}.

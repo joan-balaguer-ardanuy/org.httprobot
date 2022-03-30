@@ -8,9 +8,9 @@ import org.httprobot.AbstractControl;
 import org.httprobot.Control;
 import org.httprobot.Data;
 import org.httprobot.event.EventArgs;
-import org.httprobot.operator.html.ElementControl;
 import org.httprobot.parameter.Constant;
 import org.httprobot.parameter.ConstantControl;
+import org.httprobot.placeholder.html.ElementControl;
 
 @XmlRootElement
 public final class ActionControl

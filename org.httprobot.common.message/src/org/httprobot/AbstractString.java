@@ -2,17 +2,17 @@ package org.httprobot;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import org.httprobot.operator.string.Concat;
-import org.httprobot.operator.string.Contains;
-import org.httprobot.operator.string.EndsWith;
-import org.httprobot.operator.string.Equals;
-import org.httprobot.operator.string.Replace;
-import org.httprobot.operator.string.StartsWith;
-import org.httprobot.operator.string.Substring;
-import org.httprobot.operator.string.ToLowerCase;
-import org.httprobot.operator.string.ToUpperCase;
-import org.httprobot.operator.string.Trim;
-import org.httprobot.operator.string.TryParse;
+import org.httprobot.placeholder.string.Concat;
+import org.httprobot.placeholder.string.Contains;
+import org.httprobot.placeholder.string.EndsWith;
+import org.httprobot.placeholder.string.Equals;
+import org.httprobot.placeholder.string.Replace;
+import org.httprobot.placeholder.string.StartsWith;
+import org.httprobot.placeholder.string.Substring;
+import org.httprobot.placeholder.string.ToLowerCase;
+import org.httprobot.placeholder.string.ToUpperCase;
+import org.httprobot.placeholder.string.Trim;
+import org.httprobot.placeholder.string.TryParse;
 
 /**
  * Abstract string operator {@link XML}.
